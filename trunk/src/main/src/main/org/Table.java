@@ -1,4 +1,4 @@
-package motion.org;
+package main.org;
 
 public class Table 
 {
