@@ -1,4 +1,4 @@
-package motion.org;
+package main.org;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class Ball
 	{
 		// if state is rolling, compute stationary time
 		
-		return events.size();
+		return 0;
 	}
 
 	public Vector3d getPos(double t) 
