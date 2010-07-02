@@ -79,7 +79,7 @@ public class Ball
 		// acceleration is rolling friction
 		// t = -v0/a
 		
-		double magnitude = e.vel.length();
+		double magnitude = e.vel.getNorm();
 		return -magnitude / accelRoll;		
 	}
 	
@@ -98,9 +98,9 @@ public class Ball
 	// when rolling acceleration opposes roll
 	public static Vector3D getRollingAccelerationVector(Event e)
 	{
-		Vector3D result = new Vector3D(e.vel);
+		Vector3D result = new Vector3D(1,e.vel);
 		result.normalize();
-		result.scale(accelRoll);
+		result.scalarMultiply(accelRoll);
 		return result;
 	}
 	
@@ -113,9 +113,9 @@ public class Ball
 		
 		// update vel
 		
-		Vector3D result = new Vector3D(e.vel);
+		Vector3D result = new Vector3D(1,e.vel);
 		Vector3D acc = getRollingAccelerationVector(e);
-		acc.scale(t);
+		acc.scalarMultiply(t);
 		result.add(acc);
 		return e;
 	}
