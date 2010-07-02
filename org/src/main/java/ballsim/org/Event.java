@@ -45,6 +45,18 @@ public class Event
 		this.type = e.type;
 	}
 	
+	public static Event getSimpleEvent()
+	{
+		return new  Event(
+				Vector3D.ZERO, 
+				Vector3D.ZERO, 
+				Vector3D.ZERO, 
+				Vector3D.ZERO, 
+				Vector3D.ZERO, 
+				new StateTime(State.Unknown,0), 
+				EventType.InitialHit);
+	}
+	
 	// when rolling acceleration opposes roll
 	public Vector3D getRollingAccelerationVector()
 	{
