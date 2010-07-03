@@ -13,4 +13,12 @@ public class Utilities {
 		e.angularVel = Vector3D.crossProduct(vel.scalarMultiply(1.0/Ball.R),Vector3D.PLUS_K);
 		return e;
 	}
+	
+	public static Event getStationary()
+	{
+		Event e = Event.getSimpleEvent();
+		e.state = State.Stationary;
+		return e;
+	}
+
 }

@@ -9,10 +9,12 @@ public class EventTest extends TestCase {
 
 	private Event e;
 	private Event roll;
+	private Event stationary;
 	
 	protected void setUp()
 	{
 		e = Event.getSimpleEvent();
+		stationary = Utilities.getStationary();
 	}
 
 	public final void testCopy() 
@@ -45,6 +47,16 @@ public class EventTest extends TestCase {
 
 		roll = Utilities.getRolling(Vector3D.ZERO);
 		Assert.assertFalse("At halting point acceleration should behave",Double.isNaN(roll.getAccelerationVector().getNorm()));		
+		
+		roll = Utilities.getRolling(Vector3D.PLUS_I);		
+		Assert.assertEquals("Acceleration magnitude independent of velocity",
+				roll.getAccelerationVector(),
+				Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(2.0)).getAccelerationVector());
+
+		Assert.assertEquals("Acceleration magnitude independent of velocity",
+				roll.getAccelerationVector().getNorm(),
+				Utilities.getRolling(Vector3D.PLUS_J).getAccelerationVector().getNorm() );
+
 	}
 
 	public final void testTimeToStopRolling() 
@@ -52,17 +64,26 @@ public class EventTest extends TestCase {
 		roll = Utilities.getRolling(Vector3D.PLUS_I);		
 		double t = roll.timeToStopRolling();
 		Assert.assertTrue("Rolling ball will stop", t > 0);
-	}
 
-	public final void testAdvanceRollingDelta() 
-	{
+		roll = Utilities.getRolling(Vector3D.ZERO);		
+		t = roll.timeToStopRolling();
+		Assert.assertTrue("Stationary ball stays stopped", t == 0);
+
+		t = stationary.timeToStopRolling();
+		Assert.assertTrue("Stationary ball stays stopped", t == 0);
 		
 	}
 
-
-	public final void testStationaryEvent() 
+	public final void testStationaryEventFromRolling() 
 	{
-		
+		roll = Utilities.getRolling(Vector3D.PLUS_I);		
+		Event next = roll.stationaryEventFromRolling();
+		Assert.assertEquals("Is stationary state",State.Stationary,next.state);
+		Assert.assertEquals("Is not moving",0.0,next.vel.getNorm());
+		Assert.assertEquals("Is not spinning",0.0,next.angularVel.getNorm());
+		Assert.assertTrue("Position changed",Vector3D.distance(next.pos, roll.pos) > 0);
 	}
+
+
 
 }
