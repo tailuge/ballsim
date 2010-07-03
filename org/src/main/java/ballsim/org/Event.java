@@ -3,6 +3,19 @@ package ballsim.org;
 import org.apache.commons.math.geometry.Vector3D;
 
 
+/**
+ * @author luke
+ *
+ * Primary concept in simulation, an Event represents the transition between states of a ball.
+ * It captures initial conditions at time of event, and State (Rolling,Sliding,Stationary)
+ * 
+ * Events can evolve naturally (Sliding->Rolling, Rolling->Stationary)
+ * Events can evolve due to external agents (Ball is hit, Balls collide, Ball hits cushion)
+ *
+ * Events are only recorded at transitions, Intermediate states can be interpolated
+ * using simple equations of motion.
+ * 
+ */
 public class Event 
 {
 
@@ -12,16 +25,18 @@ public class Event
 	public Vector3D angularVel;
 	public Vector3D spin;
 	public Vector3D sidespin;
-	public StateTime statetime;
+	public State state;
+	public double t;
 	public EventType type;
 	
-	public Event(
+	private Event(
 			Vector3D pos, 
 			Vector3D vel, 
 			Vector3D angularPos, 
 			Vector3D angularVel, 
 			Vector3D sidespin, 
-			StateTime statetime, 
+			State state, 
+			double t, 
 			EventType type) 
 	{
 		this.pos = pos;
@@ -29,7 +44,8 @@ public class Event
 		this.angularPos = angularPos;
 		this.angularVel = angularVel;
 		this.sidespin = sidespin;
-		this.statetime = statetime;
+		this.state = state;
+		this.t = t;
 		this.type = type;
 	}
 
@@ -41,7 +57,8 @@ public class Event
 		this.angularVel = e.angularVel;
 		this.spin = e.spin;
 		this.sidespin = e.sidespin;
-		this.statetime = e.statetime;
+		this.state = e.state;
+		this.t = e.t;
 		this.type = e.type;
 	}
 	
@@ -53,16 +70,66 @@ public class Event
 				Vector3D.ZERO, 
 				Vector3D.ZERO, 
 				Vector3D.ZERO, 
-				new StateTime(State.Unknown,0), 
+				State.Unknown,
+				0,
 				EventType.InitialHit);
 	}
+
 	
-	// when rolling acceleration opposes roll
-	public Vector3D getRollingAccelerationVector()
+	/**
+	 * When rolling acceleration opposes roll, magnitude independent of speed / spin
+	 * 
+	 * @return acceleration vector when rolling
+	 */
+	private Vector3D getRollingAccelerationVector()
 	{
-		return vel.normalize().scalarMultiply(Ball.accelRoll);
+		try
+		{
+			return vel.normalize().scalarMultiply(Ball.accelRoll);
+		}
+		catch (ArithmeticException e) 
+		{
+			return Vector3D.ZERO;
+		}		
+	}
+
+	// when sliding acceleration provided by angularVel
+	// since a moving but non spinning ball would also experience
+	// acceleration its relative to motion.
+	// magnitude independent of speed / spin
+	private Vector3D getSlidingAccelerationVector()
+	{
+		Vector3D dueToSpin = Vector3D.crossProduct(angularVel, Vector3D.PLUS_K).scalarMultiply(Ball.R);
+		Vector3D dueToMovement = vel.negate();
+		//todo
+		return dueToMovement.add(dueToSpin).normalize().scalarMultiply(1.0/Table.fslide);
 	}
 	
+	// notes:
+	// Vnr = V0*5/7 +Rw0*2/7
+	// acc = diff in v / t
+	// t = diff in v / acc
+	// |acc| for sliding ball is always same.  fslide
+
+	
+	/**
+	 * Acceleration magnitude is always independent speed / spin.
+	 * 
+	 * @return acceleration vector depending on state
+	 */
+	public Vector3D getAccelerationVector()
+	{
+		switch (state)
+		{
+		case Rolling:
+			return getRollingAccelerationVector();
+		case Sliding:
+			return getSlidingAccelerationVector();
+		default:
+			return Vector3D.ZERO;
+		}
+	}
+
 	public Event advanceRollingDelta(double t)
 	{
 
@@ -92,15 +159,15 @@ public class Event
 	
 	
 
-	public Event stationaryEvent()
+	public Event stationaryEventFromRolling()
 	{	
-		assert(statetime.state == State.Rolling);
+		assert(state == State.Rolling);
 		
 		double t = timeToStopRolling();
 
 		Event stationary = new Event(this);
 
-		stationary.statetime.state = State.Stationary;
+		stationary.state = State.Stationary;
 		
 		return stationary.advanceRollingDelta(t);
 	}
