@@ -96,7 +96,11 @@ public class EventTest extends TestCase {
 				Vector3D.distance(roll.pos, i1.pos) > Vector3D.distance(i1.pos, i2.pos)); 
 		Assert.assertTrue("Velocity reduces", i1.vel.getNorm() > i2.vel.getNorm());
 		Assert.assertTrue("Angular velocity reduces", i1.angularVel.getNorm() > i2.angularVel.getNorm());
-		
+
+		i1.infereState();
+		Assert.assertEquals("Expect still rolling state half way",State.Rolling,i1.state);
+		i2.infereState();
+		Assert.assertEquals("Expect stationary at end",State.Stationary,i2.state);
 	}
 
 	public final void testInspect() 
