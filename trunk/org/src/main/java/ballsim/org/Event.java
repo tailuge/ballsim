@@ -156,11 +156,18 @@ public class Event
 
 		result.pos = pos.add(vel.scalarMultiply(delta)).add(getRollingAccelerationVector().scalarMultiply(delta*delta/2.0));
 		
-		// w = w0 + aa * t
+		// av = av0 + aa * t
 		
 		result.angularVel = angularVel.add(getAngularAccelerationVector().scalarMultiply(delta));
+
+		// ap = ap0 + av0*t + aa*t*t/2
+
+		result.angularPos = angularPos.add(angularVel.scalarMultiply(delta)).add(getAngularAccelerationVector().scalarMultiply(delta*delta/2.0));
+
+		// advance time
 		
 		result.t = t + delta;
+		result.type = EventType.Interpolated;
 		
 		return result;
 	}
@@ -192,10 +199,9 @@ public class Event
 	{
 		// rolling if V = Rw
 		
-		if ((vel.getNorm() < Ball.stationaryTolerance) &&
-			(angularVel.getNorm() < Ball.stationaryAngularTolerance))
+		if ((vel.getNorm() < Ball.stationaryTolerance) && (angularVel.getNorm() < Ball.stationaryAngularTolerance))
 			state = State.Stationary;
-		else if (vel.subtract(crossUp(angularVel)).getNorm() < Ball.equilibriumTolerance)
+		else if (vel.add(crossUp(angularVel)).getNorm() < Ball.equilibriumTolerance)
 			state = State.Rolling;
 		else
 			state = State.Sliding;
