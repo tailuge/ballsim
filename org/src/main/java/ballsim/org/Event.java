@@ -130,12 +130,18 @@ public class Event
 		}
 	}
 
+	public Vector3D getAngularAccelerationVector()
+	{
+		//todo
+		return crossUp(getAccelerationVector()).scalarMultiply(1.0/Ball.R).negate();
+	}
+	
 	public Event advanceRollingDelta(double t)
 	{
 
 		Event e0 = new Event(this);
 		
-		// v = v0 + a * t   when v = 0
+		// v = v0 + a * t   
 		
 		vel = e0.vel.add(getRollingAccelerationVector().scalarMultiply(t));
 
@@ -143,6 +149,9 @@ public class Event
 
 		pos = e0.pos.add(e0.vel.scalarMultiply(t)).add(getRollingAccelerationVector()).scalarMultiply(t*t/2.0);
 		
+		// w = w0 + a * t
+		
+		angularVel = e0.angularVel.add(getAngularAccelerationVector().scalarMultiply(t));
 		return this;
 	}
 	
@@ -167,8 +176,28 @@ public class Event
 
 		Event stationary = new Event(this);
 
+		stationary.advanceRollingDelta(t);
+		
 		stationary.state = State.Stationary;
 		
-		return stationary.advanceRollingDelta(t);
+		return stationary;
+	}
+	
+	public void infereState()
+	{
+		// rolling if V = Rw
+		
+		if ((vel.getNorm() < Ball.stationaryTolerance) &&
+			(angularVel.getNorm() < Ball.stationaryAngularTolerance))
+			state = State.Stationary;
+		else if (vel.subtract(crossUp(angularVel)).getNorm() < Ball.equilibriumTolerance)
+			state = State.Rolling;
+		else
+			state = State.Sliding;
+	}
+	
+	private static Vector3D crossUp(Vector3D vec)
+	{
+		return Vector3D.crossProduct(vec, Vector3D.PLUS_K);
 	}
 }
