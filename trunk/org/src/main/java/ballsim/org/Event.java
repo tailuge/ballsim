@@ -1,5 +1,7 @@
 package ballsim.org;
 
+import java.text.DecimalFormat;
+
 import org.apache.commons.math.geometry.Vector3D;
 
 
@@ -51,15 +53,15 @@ public class Event
 
 	public Event(Event e) 
 	{
-		this.pos = e.pos;
-		this.vel = e.vel;
-		this.angularPos = e.angularPos;
-		this.angularVel = e.angularVel;
-		this.spin = e.spin;
-		this.sidespin = e.sidespin;
-		this.state = e.state;
-		this.t = e.t;
-		this.type = e.type;
+		pos = e.pos;
+		vel = e.vel;
+		angularPos = e.angularPos;
+		angularVel = e.angularVel;
+		spin = e.spin;
+		sidespin = e.sidespin;
+		state = e.state;
+		t = e.t;
+		type = e.type;
 	}
 	
 	public static Event getSimpleEvent()
@@ -133,33 +135,41 @@ public class Event
 	public Vector3D getAngularAccelerationVector()
 	{
 		//todo
-		return crossUp(getAccelerationVector()).scalarMultiply(1.0/Ball.R).negate();
+		return crossUp(getAccelerationVector()).scalarMultiply(1.0/Ball.R);
 	}
 	
-	public Event advanceRollingDelta(double t)
+	/**
+	 * Produces an event interpolated delta seconds into the future
+	 * 
+	 * @param seconds to advance event
+	 * @return Event t seconds into the future
+	 */
+	public Event advanceRollingDelta(double delta)
 	{
+		Event result = new Event(this);
 
-		Event e0 = new Event(this);
-		
 		// v = v0 + a * t   
 		
-		vel = e0.vel.add(getRollingAccelerationVector().scalarMultiply(t));
+		result.vel = vel.add(getRollingAccelerationVector().scalarMultiply(delta));
 
 		// p = p0 + v0*t + a*t*t/2
 
-		pos = e0.pos.add(e0.vel.scalarMultiply(t)).add(getRollingAccelerationVector()).scalarMultiply(t*t/2.0);
+		result.pos = pos.add(vel.scalarMultiply(delta)).add(getRollingAccelerationVector().scalarMultiply(delta*delta/2.0));
 		
-		// w = w0 + a * t
+		// w = w0 + aa * t
 		
-		angularVel = e0.angularVel.add(getAngularAccelerationVector().scalarMultiply(t));
-		return this;
+		result.angularVel = angularVel.add(getAngularAccelerationVector().scalarMultiply(delta));
+		
+		result.t = t + delta;
+		
+		return result;
 	}
 	
 	
 	public double timeToStopRolling()
 	{
 
-		// v = v0 + a * t   when v = 0
+		// solve v = v0 + a * t   when v = 0
 		// where acceleration is rolling friction
 		// gives t = -v0/a
 		
@@ -172,14 +182,9 @@ public class Event
 	{	
 		assert(state == State.Rolling);
 		
-		double t = timeToStopRolling();
-
-		Event stationary = new Event(this);
-
-		stationary.advanceRollingDelta(t);
-		
+		Event stationary = advanceRollingDelta(timeToStopRolling());		
 		stationary.state = State.Stationary;
-		
+		stationary.type = EventType.Stationary;
 		return stationary;
 	}
 	
@@ -199,5 +204,17 @@ public class Event
 	private static Vector3D crossUp(Vector3D vec)
 	{
 		return Vector3D.crossProduct(vec, Vector3D.PLUS_K);
+	}
+	
+	private DecimalFormat df = new DecimalFormat("0.00");
+	
+	public String toString()
+	{
+		return "t:" + df.format(t) + 
+			" p:" + pos + 
+			" v:" + vel +
+			" ap:" + angularPos +
+			" av:" + angularVel +
+			" s:" + state;
 	}
 }

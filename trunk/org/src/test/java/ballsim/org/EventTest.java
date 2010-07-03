@@ -82,8 +82,36 @@ public class EventTest extends TestCase {
 		Assert.assertEquals("Is not moving",0.0,next.vel.getNorm());
 		Assert.assertEquals("Is not spinning",0.0,next.angularVel.getNorm());
 		Assert.assertTrue("Position changed",Vector3D.distance(next.pos, roll.pos) > 0);
+
 	}
 
+	
+	public final void testAdvanceDelta() 
+	{
+		roll = Utilities.getRolling(Vector3D.PLUS_I);
+		double troll = roll.timeToStopRolling();		
+		Event i1 = roll.advanceRollingDelta(troll/2.0);
+		Event i2 = roll.advanceRollingDelta(troll);
+		Assert.assertTrue("More distance travelled in first half of time",
+				Vector3D.distance(roll.pos, i1.pos) > Vector3D.distance(i1.pos, i2.pos)); 
+		Assert.assertTrue("Velocity reduces", i1.vel.getNorm() > i2.vel.getNorm());
+		Assert.assertTrue("Angular velocity reduces", i1.angularVel.getNorm() > i2.angularVel.getNorm());
+		
+	}
 
-
+	public final void testInspect() 
+	{
+		roll = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(100));
+		double troll = roll.timeToStopRolling();
+		
+		double dt = 0;
+		while(dt < troll)
+		{
+			dt += troll/5.0;
+			Event interpolated = roll.advanceRollingDelta(dt);
+			Assert.assertNotNull(interpolated);
+			System.out.println(interpolated);
+		}
+		
+	}
 }
