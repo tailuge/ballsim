@@ -95,23 +95,7 @@ public class Event
 		}		
 	}
 
-	// when sliding acceleration provided by angularVel
-	// since a moving but non spinning ball would also experience
-	// acceleration its relative to motion.
-	// magnitude independent of speed / spin
-	private Vector3D getSlidingAccelerationVector()
-	{
-		Vector3D dueToSpin = Vector3D.crossProduct(angularVel, Vector3D.PLUS_K).scalarMultiply(Ball.R);
-		Vector3D dueToMovement = vel.negate();
-		//todo
-		return dueToMovement.add(dueToSpin).normalize().scalarMultiply(1.0/Table.fslide);
-	}
 	
-	// notes:
-	// Vnr = V0*5/7 +Rw0*2/7
-	// acc = diff in v / t
-	// t = diff in v / acc
-	// |acc| for sliding ball is always same.  fslide
 
 	
 	/**
@@ -137,6 +121,7 @@ public class Event
 		//todo
 		return crossUp(getAccelerationVector()).scalarMultiply(1.0/Ball.R);
 	}
+
 	
 	/**
 	 * Produces an event interpolated delta seconds into the future
@@ -144,17 +129,17 @@ public class Event
 	 * @param seconds to advance event
 	 * @return Event t seconds into the future
 	 */
-	public Event advanceRollingDelta(double delta)
+	public Event advanceDelta(double delta)
 	{
 		Event result = new Event(this);
 
 		// v = v0 + a * t   
 		
-		result.vel = vel.add(getRollingAccelerationVector().scalarMultiply(delta));
+		result.vel = vel.add(getAccelerationVector().scalarMultiply(delta));
 
 		// p = p0 + v0*t + a*t*t/2
 
-		result.pos = pos.add(vel.scalarMultiply(delta)).add(getRollingAccelerationVector().scalarMultiply(delta*delta/2.0));
+		result.pos = pos.add(vel.scalarMultiply(delta)).add(getAccelerationVector().scalarMultiply(delta*delta/2.0));
 		
 		// av = av0 + aa * t
 		
@@ -183,16 +168,55 @@ public class Event
 		return -vel.getNorm() / Ball.accelRoll;		
 	}
 	
+	public double timeToNaturalRollEquilibrium()
+	{
+
+		// notes:
+		// Vnr = V0*5/7 +Rw0*2/7
+		// acc = diff in v / t
+		// t = diff in v / acc
+		// |acc| for sliding ball is always same.  fslide
+
+		Vector3D nr = vel.scalarMultiply(5.0/7.0).add(crossUp(angularVel).scalarMultiply(Ball.R * 2.0/7.0));
+		
+		Vector3D changeInV = nr.subtract(vel);
+		
+		double timeToNr = changeInV.getNorm() / -Ball.accelSlide;
+		
+		return timeToNr;
+	}
 	
+	// when sliding acceleration provided by angularVel
+	// since a moving but non spinning ball would also experience
+	// acceleration its relative to motion.
+	// magnitude independent of speed / spin
+	private Vector3D getSlidingAccelerationVector()
+	{
+		Vector3D nr = vel.scalarMultiply(5.0/7.0).add(crossUp(angularVel).scalarMultiply(Ball.R * 2.0/7.0));
+		
+		Vector3D changeInV = nr.subtract(vel);
+
+		return changeInV.normalize().scalarMultiply(1.0/Table.fslide);
+	}
 
 	public Event stationaryEventFromRolling()
 	{	
 		assert(state == State.Rolling);
 		
-		Event stationary = advanceRollingDelta(timeToStopRolling());		
+		Event stationary = advanceDelta(timeToStopRolling());		
 		stationary.state = State.Stationary;
 		stationary.type = EventType.Stationary;
 		return stationary;
+	}
+	
+	public Event rollingEventFromSliding()
+	{
+		assert(state == State.Sliding);
+		
+		Event rolling = advanceDelta(timeToNaturalRollEquilibrium());		
+		rolling.state = State.Rolling;
+		rolling.type = EventType.RollEquilibrium;
+		return rolling;		
 	}
 	
 	public void infereState()

@@ -101,8 +101,8 @@ public class RollingEventTest {
 	{
 		roll = Utilities.getRolling(Vector3D.PLUS_I);
 		double troll = roll.timeToStopRolling();		
-		Event i1 = roll.advanceRollingDelta(troll/2.0);
-		Event i2 = roll.advanceRollingDelta(troll);
+		Event i1 = roll.advanceDelta(troll/2.0);
+		Event i2 = roll.advanceDelta(troll);
 		
 		assertTrue("More distance travelled in first half of time",
 				Vector3D.distance(roll.pos, i1.pos) > Vector3D.distance(i1.pos, i2.pos)); 
@@ -125,7 +125,7 @@ public class RollingEventTest {
 		while(dt < troll)
 		{
 			dt += troll/5.0;
-			Event interpolated = roll.advanceRollingDelta(dt);
+			Event interpolated = roll.advanceDelta(dt);
 			assertNotNull(interpolated);
 			System.out.println(interpolated);
 		}		
