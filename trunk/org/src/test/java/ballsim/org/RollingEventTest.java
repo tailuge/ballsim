@@ -66,6 +66,7 @@ public class RollingEventTest {
 				Utilities.getRolling(Vector3D.PLUS_J).getAccelerationVector().getNorm(),
 				0.0);
 
+		assertEquals("Acceleration of stationary expected 0",Vector3D.ZERO,Utilities.getStationary().getAccelerationVector());
 	}
 
 	@Test
