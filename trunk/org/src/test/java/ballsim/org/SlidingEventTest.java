@@ -53,9 +53,16 @@ public class SlidingEventTest
 	@Test
 	public final void testRollingEventFromSliding() 
 	{
+		System.out.println("start:"+slide);
+		System.out.println("delta:"+slide.getChangeToNr());
+
 		Event roll = slide.rollingEventFromSliding();
 		assertEquals("Expect roll",State.Rolling,roll.state);
 
+		
+		System.out.println("end  :"+roll);
+		System.out.println("expct:"+Utilities.getRolling(roll.vel));
+		
 		roll.infereState();
 		assertEquals("Expect conditions match rolling",State.Rolling,roll.state);
 		
@@ -85,7 +92,7 @@ public class SlidingEventTest
 	@Test
 	public final void testInspector() 
 	{
-		slide = Utilities.getSliding(Vector3D.PLUS_I.scalarMultiply(100),Vector3D.ZERO);
+		slide = Utilities.getSliding(Vector3D.PLUS_I.scalarMultiply(1000),Vector3D.ZERO);
 		double tslide = slide.timeToNaturalRollEquilibrium();
 		
 		double dt = 0;
@@ -94,6 +101,7 @@ public class SlidingEventTest
 			dt += tslide/5.0;
 			Event interpolated = slide.advanceDelta(dt);
 			assertNotNull(interpolated);
+			System.out.println(interpolated.getChangeToNr());
 			System.out.println(interpolated);
 		}		
 	}

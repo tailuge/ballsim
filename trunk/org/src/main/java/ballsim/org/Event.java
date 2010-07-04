@@ -176,12 +176,8 @@ public class Event
 		// acc = diff in v / t
 		// t = diff in v / acc
 		// |acc| for sliding ball is always same.  fslide
-
-		Vector3D nr = vel.scalarMultiply(5.0/7.0).add(crossUp(angularVel).scalarMultiply(Ball.R * 2.0/7.0));
 		
-		Vector3D changeInV = nr.subtract(vel);
-		
-		double timeToNr = changeInV.getNorm() / -Ball.accelSlide;
+		double timeToNr = getChangeToNr().getNorm() / -Ball.accelSlide;
 		
 		return timeToNr;
 	}
@@ -192,13 +188,17 @@ public class Event
 	// magnitude independent of speed / spin
 	private Vector3D getSlidingAccelerationVector()
 	{
-		Vector3D nr = vel.scalarMultiply(5.0/7.0).add(crossUp(angularVel).scalarMultiply(Ball.R * 2.0/7.0));
-		
-		Vector3D changeInV = nr.subtract(vel);
-
-		return changeInV.normalize().scalarMultiply(1.0/Table.fslide);
+		return getChangeToNr().normalize().scalarMultiply(-Ball.accelSlide);
 	}
 
+	// private but for unit test
+	public Vector3D getChangeToNr()
+	{
+		Vector3D nr = vel.scalarMultiply(5.0/7.0).add(crossUp(angularVel).scalarMultiply(Ball.R * 2.0/7.0));		
+		Vector3D changeInV = nr.subtract(vel);
+		return changeInV;
+	}
+	
 	public Event stationaryEventFromRolling()
 	{	
 		assert(state == State.Rolling);
