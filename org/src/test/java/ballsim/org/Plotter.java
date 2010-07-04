@@ -37,13 +37,13 @@ public class Plotter extends JPanel {
  	List<Event> events = new ArrayList<Event>();
  	Graphics2D g2d;
 
- 	Stroke thindashed = new BasicStroke(1.0f, // line width
+ 	final static Stroke thindashed = new BasicStroke(1.0f, // line width
  		      /* cap style */BasicStroke.CAP_BUTT,
  		      /* join style, miter limit */BasicStroke.JOIN_BEVEL, 1.0f,
  		      /* the dash pattern */new float[] { 8.0f, 3.0f, 2.0f, 3.0f },
  		      /* the dash phase */0.0f); /* on 8, off 3, on 2, off 3 */
 
- 	Stroke normal = new BasicStroke(1.0f);
+ 	final static Stroke normal = new BasicStroke(1.0f);
 
  	public void generateTestEventsSlide()
  	{
