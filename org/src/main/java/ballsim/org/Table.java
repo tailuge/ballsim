@@ -9,6 +9,6 @@ public class Table
 	public final static double xn = -xp;
 	
 	public final static double froll = 10;
-	public final static double fslide = 120;
+	public final static double fslide = 40;
 	
 }
