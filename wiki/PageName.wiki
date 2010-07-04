@@ -5,6 +5,8 @@
 
 Library to compute outcomes on a billiard table
 
+[http://ballsim.googlecode.com/files/masse.png]
+
 = Details =
 
   * Rolling physics
