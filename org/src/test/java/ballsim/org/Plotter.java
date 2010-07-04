@@ -1,10 +1,12 @@
 package ballsim.org;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,17 +30,33 @@ public class Plotter extends JPanel {
 
  	int w,h,r;
  	double scale;
+ 	
+ 	final static double velscale = 20;
+ 	final static double angscale = 50;
+
  	List<Event> events = new ArrayList<Event>();
  	Graphics2D g2d;
 
+ 	Stroke thindashed = new BasicStroke(1.0f, // line width
+ 		      /* cap style */BasicStroke.CAP_BUTT,
+ 		      /* join style, miter limit */BasicStroke.JOIN_BEVEL, 1.0f,
+ 		      /* the dash pattern */new float[] { 8.0f, 3.0f, 2.0f, 3.0f },
+ 		      /* the dash phase */0.0f); /* on 8, off 3, on 2, off 3 */
+
+ 	Stroke normal = new BasicStroke(1.0f);
+
  	public void generateTestEventsSlide()
  	{
-		Event slide = Utilities.getSliding(Vector3D.PLUS_I.scalarMultiply(30),Vector3D.PLUS_I.scalarMultiply(60));
+		Event slide = Utilities.getSliding(new Vector3D(20,-40,0),Vector3D.PLUS_I.scalarMultiply(190));
 		Event roll = slide.rollingEventFromSliding();
 		Event stationary = roll.stationaryEventFromRolling();
-		events.add(slide);
-		events.add(roll);
-		events.add(stationary);		
+		
+		List<Event> init  = new ArrayList<Event>();
+		init.add(slide);
+		init.add(roll);
+		init.add(stationary);		
+		Interpolator i = new Interpolator(init, 10);
+		events.addAll(i.getInterpolated());
  	}
 
  	public void generateTestEventsRoll()
@@ -55,7 +73,7 @@ public class Plotter extends JPanel {
  	public void generateTestEvents()
  	{
  		events.clear();
- 		generateTestEventsRoll();
+ 		//generateTestEventsRoll();
  		generateTestEventsSlide();
  	}
  	
@@ -91,16 +109,20 @@ public class Plotter extends JPanel {
         if (e.state == State.Stationary)
         	g2d.setColor(Color.black);
 
+        g2d.setStroke(normal);
         g2d.drawOval(x-r/2, y-r/2, r, r); 	
-        g2d.drawChars(e.state.toString().toCharArray(), 0, 4, x+r, y);
+        g2d.drawChars(e.state.toString().toCharArray(), 0, e.state.toString().length(), x+r, y);
 
-        int xvel = scaledX(e.pos.getX() + e.vel.getX()/10);
-        int yvel = scaledY(e.pos.getY() + e.vel.getY()/10);
+        int xvel = scaledX(e.pos.getX() + e.vel.getX()/velscale);
+        int yvel = scaledY(e.pos.getY() + e.vel.getY()/velscale);
 
-        int xavel = scaledX(e.pos.getX() + e.angularVel.getX()/10);
-        int yavel = scaledY(e.pos.getY() + e.angularVel.getY()/10);
+        int xavel = scaledX(e.pos.getX() + e.angularVel.getX()/angscale);
+        int yavel = scaledY(e.pos.getY() + e.angularVel.getY()/angscale);
 
+        g2d.setStroke(normal);
         g2d.drawLine(x, y, xvel, yvel);
+
+        g2d.setStroke(thindashed);
         g2d.drawLine(x, y, xavel, yavel);
  	}
  	

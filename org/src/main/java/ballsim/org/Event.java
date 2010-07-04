@@ -119,7 +119,9 @@ public class Event
 	public Vector3D getAngularAccelerationVector()
 	{
 		//todo
-		return crossUp(getAccelerationVector()).scalarMultiply(1.0/Ball.R);
+		double scale = state==State.Sliding ? -5.0/2.0 : 1.0 ;
+			
+		return crossUp(getAccelerationVector()).scalarMultiply(scale*Ball.R);
 	}
 
 	
@@ -194,7 +196,7 @@ public class Event
 	// private but for unit test
 	public Vector3D getChangeToNr()
 	{
-		Vector3D nr = vel.scalarMultiply(5.0/7.0).add(crossUp(angularVel).scalarMultiply(Ball.R * 2.0/7.0));		
+		Vector3D nr = vel.scalarMultiply(5.0/7.0).add(crossUp(angularVel).scalarMultiply(-Ball.R * 2.0/7.0));		
 		Vector3D changeInV = nr.subtract(vel);
 		return changeInV;
 	}
