@@ -45,6 +45,24 @@ public class Plotter extends JPanel {
 
  	final static Stroke normal = new BasicStroke(1.0f);
 
+ 	
+ 	public void generateTestEventsCushion()
+ 	{
+ 		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(100));
+ 		Event c1 = Cushion.xCollisionsWith(e, 2.0*Ball.R, Double.MAX_VALUE);
+// 		Event nr = c1.rollingEventFromSliding();
+ 		
+		List<Event> init  = new ArrayList<Event>();
+		e.pos = new Vector3D(1,0.2,0);
+		init.add(e);
+		init.add(c1);
+//		init.add(e.stationaryEventFromRolling());
+		Interpolator i = new Interpolator(init, 3);
+		//
+		//init.add(nr);	
+		events.addAll(i.getInterpolated());
+ 	}
+ 	
  	public void generateTestEventsSlide()
  	{
 		Event slide = Utilities.getSliding(new Vector3D(20,-40,0),Vector3D.PLUS_I.scalarMultiply(190));
@@ -74,7 +92,8 @@ public class Plotter extends JPanel {
  	{
  		events.clear();
  		//generateTestEventsRoll();
- 		generateTestEventsSlide();
+ 		//generateTestEventsSlide();
+ 		generateTestEventsCushion();
  	}
  	
  	public void plotEventList(List<Event> events)
@@ -128,10 +147,10 @@ public class Plotter extends JPanel {
  	
  	public void scaleToFit()
  	{
- 		double  minx = -Ball.R,
- 				maxx = Ball.R,
- 				miny = -Ball.R,
- 				maxy = Ball.R;
+ 		double  minx = events.get(0).pos.getX()-Ball.R,
+ 				maxx = events.get(0).pos.getX()+Ball.R,
+ 				miny = events.get(0).pos.getY()-Ball.R,
+ 				maxy = events.get(0).pos.getY()+Ball.R;
  		
  		for(Event e : events)
  		{
