@@ -1,5 +1,5 @@
-#summary Introduction.
-#labels Main
+#summary ballsim library.
+#labels Main,Featured
 
 = Introduction =
 
