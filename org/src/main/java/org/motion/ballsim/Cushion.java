@@ -35,6 +35,11 @@ public class Cushion
 		double C = e.pos.getX() - cushx;
 
 		Event collision = getCollisionEvent(e,A,B,C,maxt);
+		
+		if (collision == null)
+			return null;
+		
+		collision = latestEventXStillOnTableAtOrBeforeT(e,collision.t,cushx);
 
 		// reflect in cushion
 		if (collision != null)
@@ -61,7 +66,7 @@ public class Cushion
 
 	private static Event getCollisionEvent(Event e, double A, double B, double C, double maxt)
 	{
-		double tCollision = Quadratic.getClosestPointToRootFromBelow(A, B, C);
+		double tCollision = Quadratic.getLeastPositiveRoot(A, B, C);
 
 		if ((tCollision > 0) && (tCollision<maxt))
 		{
@@ -81,6 +86,30 @@ public class Cushion
 	}
 	
 
+	// hack to understand how to avoid using root that is beyond cushion.
+	
+	private static Event latestEventXStillOnTableAtOrBeforeT(Event e, double t, double cushion)
+	{
+		// initially which side of cushion is ball
+		double sign = Math.signum(e.pos.getX() - cushion);
+		
+		double last = t;
+		int count = 0;
+		
+		// reduce time from root until ball on same side as at start
+		while((last>0) && (last<=t) && (Math.signum(e.advanceDelta(last).pos.getX() - cushion) != sign))
+		{
+			last = Quadratic.nextSmallest(last);
+			count++;
+		}
+
+		System.out.println(count);
+
+		if (last>0)
+			return e.advanceDelta(last);
+		
+		return null;
+	}
 
 
 }
