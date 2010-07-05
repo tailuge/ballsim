@@ -7,25 +7,6 @@ public class Quadratic
 	{
 		return a*t*t + b*t + c;
 	}
-
-	static double getClosestPointToRootFromBelow(double a, double b, double c)
-	{
-		double root = getLeastPositiveRoot(a, b, c);
-		/*
-		if (root==0)
-			return 0;
-		
-		assert( evaluateAt(a,b,c,0) > 0);
-		
-		while(evaluateAt(a,b,c,root) <=0 )
-		{
-			System.out.println("root:"+root +" eval:"+evaluateAt(a, b, c, root));
-			root = nextSmallest(root);
-		}
-		System.out.println("final root:"+root +" eval:"+evaluateAt(a, b, c, root));
-		*/
-		return root;
-	}
 	
 	static double getLeastPositiveRoot(double a, double b, double c)
 	{
