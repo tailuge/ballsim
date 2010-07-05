@@ -12,7 +12,7 @@ public class Utilities {
 		Event e = Event.getSimpleEvent();
 		e.state = State.Rolling;
 		e.vel = vel;
-		e.angularVel = Vector3D.crossProduct(vel.scalarMultiply(1.0/Ball.R),Vector3D.PLUS_K);
+		e.angularVel = UtilVector3D.crossUp(vel.scalarMultiply(1.0/Ball.R));
 		return e;
 	}
 

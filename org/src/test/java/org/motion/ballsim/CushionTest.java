@@ -17,9 +17,10 @@ public class CushionTest {
 	public final void testXCollisionsPos() 
 	{
 		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(100));
+		Event stat = e.stationaryEventFromRolling();
 		
-		Event c1 = Cushion.xCollisionsWith(e, 2.0*Ball.R, Double.MAX_VALUE);
-		Event c2 = Cushion.xCollisionsWith(e, 3.0*Ball.R, Double.MAX_VALUE);
+		Event c1 = Cushion.xCollisionsWith(e, stat.pos.getX() / 3.0, stat.t);
+		Event c2 = Cushion.xCollisionsWith(e, stat.pos.getX() / 3.0, stat.t);
 		
 		assertTrue("Collides",c1.t > 0);
 		assertTrue("Further collides later",c2.t > c1.t);	
@@ -29,8 +30,7 @@ public class CushionTest {
 		System.out.println(e.stationaryEventFromRolling());
 
 		assertTrue("Collision before ball stops",c1.t < e.stationaryEventFromRolling().t);
-
-		assertEquals("Collision should be at cushion position",2.0*Ball.R,c1.pos.getX(),0.001);
+		assertEquals("Collision should be at cushion position",stat.pos.getX() / 3.0,c1.pos.getX(),0.001);
 		assertTrue("Velocity reflected",c1.vel.getX() < 0);
 		assertTrue("Velocity reflected",c2.vel.getX() < 0);
 	}
