@@ -37,7 +37,7 @@ public class Plotter extends JPanel {
  	double scale;
  	double minx,maxx,miny,maxy;
  	
- 	final static double velscale = 20;
+ 	final static double velscale = 50;
  	final static double angscale = 50;
 
  	List<Event> events = new ArrayList<Event>();
@@ -54,18 +54,19 @@ public class Plotter extends JPanel {
  	
  	public void generateTestEventsCushion()
  	{
- 		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(100));
- 		Event c1 = Cushion.xCollisionsWith(e, 2.0*Ball.R, Double.MAX_VALUE);
-// 		Event nr = c1.rollingEventFromSliding();
+ 		Event e = Utilities.getRolling(new Vector3D(20,20,0));
+ 		Event nr = e.stationaryEventFromRolling();
+ 		Event c1 = Cushion.xCollisionsWith(e, nr.pos.getX()/2.0, nr.t);
+ 		Event nr2 = c1.rollingEventFromSliding();
+ 		Event s = nr2.stationaryEventFromRolling();
  		
+ 		System.out.println("c1:"+c1);
 		List<Event> init  = new ArrayList<Event>();
-		e.pos = new Vector3D(1,0.2,0);
 		init.add(e);
 		init.add(c1);
-//		init.add(e.stationaryEventFromRolling());
-		Interpolator i = new Interpolator(init, 3);
-		//
-		//init.add(nr);	
+		init.add(nr2);
+		init.add(s);
+		Interpolator i = new Interpolator(init, 21);
 		events.addAll(i.getInterpolated());
  	}
  	
@@ -98,8 +99,8 @@ public class Plotter extends JPanel {
  	{
  		events.clear();
  		//generateTestEventsRoll();
- 		generateTestEventsSlide();
- 		//generateTestEventsCushion();
+ 		//generateTestEventsSlide();
+ 		generateTestEventsCushion();
  	}
  	
  	public void plotEventList(List<Event> events)
@@ -112,8 +113,6 @@ public class Plotter extends JPanel {
 
  	public int scaledX(double x)
  	{
- 		System.out.println((x-minx));
- 		System.out.println((int)((x-minx)/scale) + "  w:"+w);
  		return (int)((x-minx)*scale) ;
  	}
  	public int scaledY(double y)
@@ -137,9 +136,11 @@ public class Plotter extends JPanel {
         	g2d.setColor(Color.black);
 
         g2d.setStroke(normal);
-        g2d.drawOval(x-r/2, y-r/2, r, r); 	
-        g2d.drawChars(e.state.toString().toCharArray(), 0, e.state.toString().length(), x+r, y);
-
+        //if (e.type != EventType.Interpolated)
+        {
+        	g2d.drawOval(x-r/2, y-r/2, r, r); 	
+        	g2d.drawChars(e.state.toString().toCharArray(), 0, e.state.toString().length(), x+r, y);
+        }
         int xvel = scaledX(e.pos.getX() + e.vel.getX()/velscale);
         int yvel = scaledY(e.pos.getY() + e.vel.getY()/velscale);
 

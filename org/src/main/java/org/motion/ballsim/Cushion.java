@@ -30,9 +30,9 @@ public class Cushion
 		// B = vel0
 		// C = pos0 - cushx
 		
-		double C = e.getAccelerationVector().getX();
+		double A = e.getAccelerationVector().getX()*0.5;
 		double B = e.vel.getX();
-		double A = e.pos.getX() - cushx;
+		double C = e.pos.getX() - cushx;
 
 		Event collision = getCollisionEvent(e,A,B,C,maxt);
 
@@ -46,9 +46,9 @@ public class Cushion
 	
 	public static Event yCollisionsWith(Event e, double cushy, double maxt)
 	{
-		double C = e.getAccelerationVector().getY();
+		double A = e.getAccelerationVector().getY();
 		double B = e.vel.getY();
-		double A = e.pos.getY() - cushy;
+		double C = e.pos.getY() - cushy;
 
 		Event collision = getCollisionEvent(e,A,B,C,maxt);
 

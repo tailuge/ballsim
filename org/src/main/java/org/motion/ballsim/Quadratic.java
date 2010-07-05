@@ -3,8 +3,17 @@ package org.motion.ballsim;
 public class Quadratic 
 {
 
+	static double evaluateAt(double a, double b, double c,double t)
+	{
+		return a*t*t + b*t + c;
+	}
+	
 	static double getLeastPositiveRoot(double a, double b, double c)
 	{
+		System.out.println("a:"+a);
+		System.out.println("b:"+b);
+		System.out.println("c:"+c);
+		
 	     double discr = Math.sqrt((b * b) - (4 * a * c));
 	     // Determine number of roots
 
@@ -12,8 +21,13 @@ public class Quadratic
 
 	     if (discr > 0)
 	     {
-	    	 double r1 = (-b + discr)/2 * a;
-	         double r2 = (-b - discr)/2 * a;
+	    	 double r1 = (-b + discr)/(2 * a);
+	         double r2 = (-b - discr)/(2 * a);
+	         
+	         System.out.println("r1:"+r1);
+	         System.out.println("r2:"+r2);
+	         System.out.println("eval at r1:"+evaluateAt(a,b,c,r1));
+	         System.out.println("eval at r2:"+evaluateAt(a,b,c,r2));
 	         
 	         if (r1 > r2)
 	         {

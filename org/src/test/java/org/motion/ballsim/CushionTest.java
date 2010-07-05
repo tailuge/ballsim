@@ -1,6 +1,7 @@
 package org.motion.ballsim;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -16,13 +17,19 @@ public class CushionTest {
 	@Test
 	public final void testXCollisionsPos() 
 	{
-		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(100));
+		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(50));
 		Event stat = e.stationaryEventFromRolling();
 		
 		Event c1 = Cushion.xCollisionsWith(e, stat.pos.getX() / 3.0, stat.t);
-		Event c2 = Cushion.xCollisionsWith(e, stat.pos.getX() / 3.0, stat.t);
 		
-		assertTrue("Collides",c1.t > 0);
+		System.out.println("stat.t  :"+stat.t);
+		System.out.println("stat.x  :"+stat.pos.getX());
+		System.out.println("stat.x/3:"+(stat.pos.getX()/3.0));
+		
+		assertNotNull("Collides",c1);
+
+		Event c2 = Cushion.xCollisionsWith(e, stat.pos.getX() / 2.0, stat.t);
+
 		assertTrue("Further collides later",c2.t > c1.t);	
 		
 		System.out.println(e);
