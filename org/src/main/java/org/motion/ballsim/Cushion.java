@@ -48,6 +48,42 @@ public class Cushion
 		return collision;
 	}
 	
+
+	/**
+	 * Given a starting event and a candidate solution time t where
+	 * ball will hit cushion, search linearly backwards from t
+	 * until ball is on same side of cushion as when it started.
+	 * 
+	 * todo: fix it to work for x or y
+	 * 
+	 * @param e
+	 * @param t
+	 * @param cushion
+	 * @return
+	 */
+	private static Event latestEventXStillOnTableAtOrBeforeT(Event e, double t, double cushion)
+	{
+		// initially which side of cushion is ball
+		double sign = Math.signum(e.pos.getX() - cushion);
+		
+		double last = t;
+		int count = 0;
+		
+		// reduce time from root until ball on same side as at start
+		while((last>0) && (last<=t) && (Math.signum(e.advanceDelta(last).pos.getX() - cushion) != sign))
+		{
+			last = Quadratic.nextSmallest(last);
+			count++;
+		}
+
+		System.out.println(count);
+
+		if (last>0)
+			return e.advanceDelta(last);
+		
+		return null;
+	}
+
 	
 	public static Event yCollisionsWith(Event e, double cushy, double maxt)
 	{
@@ -86,30 +122,7 @@ public class Cushion
 	}
 	
 
-	// hack to understand how to avoid using root that is beyond cushion.
-	
-	private static Event latestEventXStillOnTableAtOrBeforeT(Event e, double t, double cushion)
-	{
-		// initially which side of cushion is ball
-		double sign = Math.signum(e.pos.getX() - cushion);
-		
-		double last = t;
-		int count = 0;
-		
-		// reduce time from root until ball on same side as at start
-		while((last>0) && (last<=t) && (Math.signum(e.advanceDelta(last).pos.getX() - cushion) != sign))
-		{
-			last = Quadratic.nextSmallest(last);
-			count++;
-		}
 
-		System.out.println(count);
-
-		if (last>0)
-			return e.advanceDelta(last);
-		
-		return null;
-	}
 
 
 }
