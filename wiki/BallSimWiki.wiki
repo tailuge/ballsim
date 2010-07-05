@@ -3,7 +3,7 @@
 
 = Introduction =
 
-Library to compute outcomes on a billiard table
+Library to statically compute outcomes on a billiard table without iteration.
 
 [http://ballsim.googlecode.com/files/masse.png]
 
