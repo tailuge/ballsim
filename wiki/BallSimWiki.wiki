@@ -16,3 +16,17 @@ Library to statically compute outcomes on a billiard table without iteration.
   * Sidespin at cushions
   * Expand events for multiple balls
   * Searching for good outcomes
+
+
+= Examples =
+
+
+[http://ballsim.googlecode.com/files/cushion.png]
+
+_bounce off cushion, ball takes time to reach rolling equilibrium after bounce_
+
+
+
+[http://ballsim.googlecode.com/files/masse.png]
+
+_masse shot gives curving path, then ball rolls to halt_
