@@ -61,8 +61,8 @@ public class Cushion
 
 	private static Event getCollisionEvent(Event e, double A, double B, double C, double maxt)
 	{
-		double tCollision = Quadratic.getLeastPositiveRoot(A, B, C);
-		
+		double tCollision = Quadratic.getClosestPointToRootFromBelow(A, B, C);
+
 		if ((tCollision > 0) && (tCollision<maxt))
 		{
 			Event collision = e.advanceDelta(tCollision);
@@ -79,5 +79,8 @@ public class Cushion
 		return null;
 		
 	}
+	
+
+
 
 }

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.math.geometry.Vector3D;
+import org.apache.commons.math.util.MathUtils;
 import org.junit.Test;
 import org.motion.ballsim.Ball;
 import org.motion.ballsim.Cushion;
@@ -94,4 +95,33 @@ public class CushionTest {
 		assertNull("No collision parallel to cushion",c1);	
 	}
 
+	@Test
+	public final void testManyCollisions() 
+	{
+		// generate large number of cushion hits and assert
+		// ball always still on table
+		
+		double v=0;
+		while(v<100)
+		{
+			Event e = Utilities.getRolling(new Vector3D(v,10,0));
+			Event s = e.stationaryEventFromRolling();
+
+			// choose distance very close to start
+			
+			// choose distance very close to halting point
+			double farx = s.pos.getX()-MathUtils.SAFE_MIN;
+			System.out.println("v:"+v);
+			Event c1 = Cushion.xCollisionsWith(e, farx, s.t);
+			if(c1 != null)
+			{
+				String state="v:"+v+" c1.x:"+c1.pos.getX()+" farx:"+farx;
+				assertTrue("At collision, must be on table:"+state,farx-c1.pos.getX() > 0);
+			}
+			
+			v++;
+		}
+		
+	}
+	
 }
