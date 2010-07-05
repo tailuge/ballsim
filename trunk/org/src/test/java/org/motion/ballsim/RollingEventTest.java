@@ -111,11 +111,8 @@ public class RollingEventTest {
 				Vector3D.distance(roll.pos, i1.pos) > Vector3D.distance(i1.pos, i2.pos)); 
 		assertTrue("Velocity reduces", i1.vel.getNorm() > i2.vel.getNorm());
 		assertTrue("Angular velocity reduces", i1.angularVel.getNorm() > i2.angularVel.getNorm());
-
-		i1.infereState();
-		assertEquals("Expect still rolling state half way",State.Rolling,i1.state);
-		i2.infereState();
-		assertEquals("Expect stationary at end",State.Stationary,i2.state);
+		assertEquals("Expect still rolling state half way",State.Rolling,i1.infereState());
+		assertEquals("Expect stationary at end",State.Stationary,i2.infereState());
 	}
 	
 	@Test

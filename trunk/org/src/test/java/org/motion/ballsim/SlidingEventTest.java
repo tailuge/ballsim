@@ -69,8 +69,7 @@ public class SlidingEventTest
 		System.out.println("end  :"+roll);
 		System.out.println("expct:"+Utilities.getRolling(roll.vel));
 		
-		roll.infereState();
-		assertEquals("Expect conditions match rolling",State.Rolling,roll.state);
+		assertEquals("Expect conditions match rolling",State.Rolling,roll.infereState());
 		
 		roll = masse.rollingEventFromSliding();
 		System.out.println("MASSE");
@@ -83,17 +82,15 @@ public class SlidingEventTest
 		System.out.println("end  :"+roll);
 		System.out.println("expct:"+Utilities.getRolling(roll.vel));
 
-		roll.infereState();
-		assertEquals("Expect conditions match rolling",State.Rolling,roll.state);
+		assertEquals("Expect conditions match rolling",State.Rolling,roll.infereState());
 
 	}
 
 	@Test
-	public final void testInfereState() {
-		slide.infereState();
-		masse.infereState();
-		assertEquals("Expect sliding state infered as sliding",State.Sliding, slide.state);
-		assertEquals("Expect masse state infered as sliding",State.Sliding, masse.state);
+	public final void testInfereState() 
+	{
+		assertEquals("Expect sliding state infered as sliding",State.Sliding, slide.infereState());
+		assertEquals("Expect masse state infered as sliding",State.Sliding, masse.infereState());
 	}
 
 	@Test

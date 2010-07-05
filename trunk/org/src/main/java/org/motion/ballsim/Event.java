@@ -83,7 +83,7 @@ public class Event
 	 * 
 	 * @return acceleration vector when rolling
 	 */
-	private Vector3D getRollingAccelerationVector()
+	public Vector3D getRollingAccelerationVector()
 	{
 		try
 		{
@@ -121,7 +121,7 @@ public class Event
 		//todo
 		double scale = state==State.Sliding ? -5.0/2.0 : 1.0 ;
 			
-		return crossUp(getAccelerationVector()).scalarMultiply(scale*Ball.R);
+		return UtilVector3D.crossUp(getAccelerationVector()).scalarMultiply(scale*Ball.R);
 	}
 
 	
@@ -188,7 +188,7 @@ public class Event
 	// since a moving but non spinning ball would also experience
 	// acceleration its relative to motion.
 	// magnitude independent of speed / spin
-	private Vector3D getSlidingAccelerationVector()
+	public Vector3D getSlidingAccelerationVector()
 	{
 		return getChangeToNr().normalize().scalarMultiply(-Ball.accelSlide);
 	}
@@ -196,7 +196,7 @@ public class Event
 	// private but for unit test
 	public Vector3D getChangeToNr()
 	{
-		Vector3D nr = vel.scalarMultiply(5.0/7.0).add(crossUp(angularVel).scalarMultiply(-Ball.R * 2.0/7.0));		
+		Vector3D nr = vel.scalarMultiply(5.0/7.0).add(UtilVector3D.crossUp(angularVel).scalarMultiply(-Ball.R * 2.0/7.0));		
 		Vector3D changeInV = nr.subtract(vel);
 		return changeInV;
 	}
@@ -221,22 +221,20 @@ public class Event
 		return rolling;		
 	}
 	
-	public void infereState()
+	public State infereState()
 	{
 		// rolling if V = Rw
 		
 		if ((vel.getNorm() < Ball.stationaryTolerance) && (angularVel.getNorm() < Ball.stationaryAngularTolerance))
-			state = State.Stationary;
-		else if (vel.add(crossUp(angularVel)).getNorm() < Ball.equilibriumTolerance)
-			state = State.Rolling;
-		else
-			state = State.Sliding;
+			return State.Stationary;
+
+		if (vel.add(UtilVector3D.crossUp(angularVel)).getNorm() < Ball.equilibriumTolerance)
+			return State.Rolling;
+
+		return State.Sliding;
 	}
 	
-	private static Vector3D crossUp(Vector3D vec)
-	{
-		return Vector3D.crossProduct(vec, Vector3D.PLUS_K);
-	}
+
 	
 	private DecimalFormat df = new DecimalFormat("0.00");
 	
