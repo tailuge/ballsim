@@ -35,6 +35,7 @@ public class Plotter extends JPanel {
 
  	int w,h,r;
  	double scale;
+ 	double minx,maxx,miny,maxy;
  	
  	final static double velscale = 20;
  	final static double angscale = 50;
@@ -42,11 +43,11 @@ public class Plotter extends JPanel {
  	List<Event> events = new ArrayList<Event>();
  	Graphics2D g2d;
 
- 	final static Stroke thindashed = new BasicStroke(1.0f, // line width
- 		      /* cap style */BasicStroke.CAP_BUTT,
- 		      /* join style, miter limit */BasicStroke.JOIN_BEVEL, 1.0f,
- 		      /* the dash pattern */new float[] { 8.0f, 3.0f, 2.0f, 3.0f },
- 		      /* the dash phase */0.0f); /* on 8, off 3, on 2, off 3 */
+ 	final static Stroke thindashed = new BasicStroke(1.0f,
+ 		      BasicStroke.CAP_BUTT,
+ 		      BasicStroke.JOIN_BEVEL, 1.0f,
+ 		      new float[] { 8.0f, 3.0f, 2.0f, 3.0f },
+ 		      0.0f); 
 
  	final static Stroke normal = new BasicStroke(1.0f);
 
@@ -97,8 +98,8 @@ public class Plotter extends JPanel {
  	{
  		events.clear();
  		//generateTestEventsRoll();
- 		//generateTestEventsSlide();
- 		generateTestEventsCushion();
+ 		generateTestEventsSlide();
+ 		//generateTestEventsCushion();
  	}
  	
  	public void plotEventList(List<Event> events)
@@ -111,11 +112,13 @@ public class Plotter extends JPanel {
 
  	public int scaledX(double x)
  	{
- 		return (int)(x/scale) + w/2;
+ 		System.out.println((x-minx));
+ 		System.out.println((int)((x-minx)/scale) + "  w:"+w);
+ 		return (int)((x-minx)*scale) ;
  	}
  	public int scaledY(double y)
  	{
- 		return (int)(y/scale) + h/2;
+ 		return (int)((y-miny)*scale) ;
  	}
  	
  	public void plotEvent(Event e)
@@ -152,10 +155,10 @@ public class Plotter extends JPanel {
  	
  	public void scaleToFit()
  	{
- 		double  minx = events.get(0).pos.getX()-Ball.R,
- 				maxx = events.get(0).pos.getX()+Ball.R,
- 				miny = events.get(0).pos.getY()-Ball.R,
- 				maxy = events.get(0).pos.getY()+Ball.R;
+ 		minx = events.get(0).pos.getX();
+ 		maxx = events.get(0).pos.getX();
+		miny = events.get(0).pos.getY();
+		maxy = events.get(0).pos.getY();
  		
  		for(Event e : events)
  		{
@@ -173,17 +176,30 @@ public class Plotter extends JPanel {
  				maxy = e.pos.getY();
  		} 		
  		
- 		double scalex = (maxx-minx) / w;
- 		double scaley = (maxy-miny) / h;
+ 		maxx += Ball.R;
+ 		minx -= Ball.R;
+ 		maxy += Ball.R;
+ 		miny -= Ball.R;
+ 		
+ 		double scalex = w/(maxx-minx) ;
+ 		double scaley = h/(maxy-miny) ;
  		
  		System.out.println(scalex + "," + scaley);
  		
- 		scale = (scalex+scaley)*1.3; 		
+ 		//scale = (scalex+scaley)*1.3; 	
+ 		scale = scalex < scaley ? scalex : scaley;
+ 		scale *= 1.0;
  		if (scale==0)
  			scale = 0.05;
  		
-        r = (int) (Ball.R/scale);
+        r = (int) (Ball.R*scale);
 
+        System.out.println("minx:"+minx+" maxx:"+maxx);
+        System.out.println("miny:"+miny+" maxy:"+maxy);
+        System.out.println("scalex:"+scaley);
+        System.out.println("scaley:"+scalex);
+        System.out.println("scale:"+scale);
+        
  	}
  	
 	public void paintComponent(Graphics g) 
