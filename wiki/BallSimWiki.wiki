@@ -1,14 +1,18 @@
-#summary One-sentence summary of this page.
+#summary ballsim library.
 #labels Featured,Top
 
 = Introduction =
 
-Add your content here.
+Library to compute outcomes on a billiard table
 
+[http://ballsim.googlecode.com/files/masse.png]
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * Rolling physics
+  * Sliding physics (e.g. backspin, masse)
+  * Cushion collisions (quadratics)
+  * Ball-Ball collisions (quartics)
+  * Sidespin at cushions
+  * Expand events for multiple balls
+  * Searching for good outcomes
