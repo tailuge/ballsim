@@ -98,8 +98,8 @@ public class Plotter extends JPanel {
  	public void generateTestEvents()
  	{
  		events.clear();
- 		//generateTestEventsRoll();
- 		//generateTestEventsSlide();
+ 		generateTestEventsRoll();
+ 		generateTestEventsSlide();
  		generateTestEventsCushion();
  	}
  	
