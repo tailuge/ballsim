@@ -50,4 +50,6 @@ public class Quadratic
 		}
 		return d-dec;
 	}
+	
+	
 }
