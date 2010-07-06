@@ -40,8 +40,11 @@ public class Collision
 		
 		t0 -= Ball.R*Ball.R;
 		
-		// solve
-		
+		// solve for roots giving zero. pick least +ve
+				
+		double[] coeffs = { t0, t1, t2, t3, t4 };
+	    double[] roots = Quartic.solveQuartic( coeffs );
+	       
 		// optimise
 		
 		return 0;
