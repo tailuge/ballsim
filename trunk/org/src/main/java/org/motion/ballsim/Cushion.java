@@ -2,6 +2,8 @@ package org.motion.ballsim;
 
 import org.apache.commons.math.geometry.Vector3D;
 
+import com.google.common.base.Function;
+
 /**
  * @author luke
  *
@@ -65,23 +67,18 @@ public class Cushion
 	 * @param cushion
 	 * @return
 	 */
-	private static Event latestEventXStillOnTableAtOrBeforeT(Event e, double t, double cushion)
+	private static Event latestEventXStillOnTableAtOrBeforeT(final Event e, double t, final double cushion)
 	{
-		// initially which side of cushion is ball
-		double sign = Math.signum(e.pos.getX() - cushion);
-		
-		double last = t;
-		int count = 0;
-		
-		// reduce time from root until ball on same side as at start
-		while((last>0) && (last<=t) && (Math.signum(e.advanceDelta(last).pos.getX() - cushion) != sign))
-		{
-			last = Quadratic.nextSmallest(last);
-			count++;
-		}
+		Function<Double,Double> func = new Function<Double, Double>() {
+			
+			@Override
+			public Double apply(Double arg) {
+				return e.advanceDelta(arg).pos.getX() - cushion;
+			}
+		};
 
-		System.out.println(count);
-
+		double last = Quadratic.optimise(func, t);
+		
 		if (last>0)
 			return e.advanceDelta(last);
 		
