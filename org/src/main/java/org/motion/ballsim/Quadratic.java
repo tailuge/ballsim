@@ -1,5 +1,7 @@
 package org.motion.ballsim;
 
+import com.google.common.base.Function;
+
 public class Quadratic 
 {
 
@@ -51,5 +53,32 @@ public class Quadratic
 		return d-dec;
 	}
 	
-	
+	/**
+	 * 
+	 * Find input to function that returns a value as close to rootCandidate as possible 
+	 * and have same sign as f(0)
+	 * 
+	 * @param func
+	 * @param rootCandidate
+	 * @return double 
+	 */
+	public static double optimise(Function<Double,Double> func, double rootCandidate)
+	{
+		
+		double sign = Math.signum(func.apply(0.0));
+		
+		assert(sign != 0);
+
+		double last = rootCandidate;
+		
+		while(
+				(last>0) && (last<=rootCandidate) && 
+				(Math.signum(func.apply(last)) != sign)
+			 )
+		{
+			last = Quadratic.nextSmallest(last);
+		}
+
+		return last;
+	}
 }
