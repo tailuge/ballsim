@@ -1,5 +1,7 @@
 package org.motion.ballsim;
 
+import java.util.Arrays;
+
 
 /*
  * Copyright (C) 2006 Nathaniel Troutman
@@ -255,16 +257,18 @@ public class Quartic
                 double[] secondQuadric = solveQuadratic( coeffs );
 
                 s = new double[roots.length + secondQuadric.length];
+                
+                int pos = 0;
+                
                 // Save our roots from the first quadric
-                for ( i = 0; i < roots.length; i++ )
+                for ( double rt : roots)
                 {
-                    s[i] = roots[i];
+                    s[pos++] = rt;
                 }
 
-                // Save our roots from the second quadric
-                for ( i = secondQuadric.length - 1; i < s.length; i++ )
+                for ( double rt : secondQuadric)
                 {
-                    s[i] = roots[i];
+                    s[pos++] = rt;
                 }
             }
         }
@@ -280,4 +284,16 @@ public class Quartic
 
         return s;
     }
+    
+    public static double leastPositive(double[] r)
+    {
+    
+    	Arrays.sort(r);
+    	for(double s : r)
+    		if (s > 0)
+    			return s;
+    	
+    	return 0;
+    }
+    
 }

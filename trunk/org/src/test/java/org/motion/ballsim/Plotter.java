@@ -52,6 +52,25 @@ public class Plotter extends JPanel {
  	final static Stroke normal = new BasicStroke(1.0f);
 
  	
+ 	public void generateTestCollision()
+ 	{
+ 		Event e1 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(130));
+ 		Event e2 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(-130));
+ 		e2.pos = Vector3D.PLUS_I.scalarMultiply(Ball.R*7);
+ 		double t = Collision.collisionTime(e1, e2);
+ 		Event ce1 = e1.advanceDelta(t);
+ 		Event ce2 = e2.advanceDelta(t);
+
+		List<Event> init  = new ArrayList<Event>();
+		init.add(e1);
+		init.add(ce1);
+		init.add(e2);
+		init.add(ce2);
+		//Interpolator i = new Interpolator(init, 21);
+		events.addAll(init);
+
+ 	}
+ 	
  	public void generateTestEventsCushion()
  	{
  		Event e = Utilities.getRolling(new Vector3D(20,20,0));
@@ -98,9 +117,10 @@ public class Plotter extends JPanel {
  	public void generateTestEvents()
  	{
  		events.clear();
- 		generateTestEventsRoll();
- 		generateTestEventsSlide();
- 		generateTestEventsCushion();
+// 		generateTestEventsRoll();
+// 		generateTestEventsSlide();
+// 		generateTestEventsCushion();
+ 		generateTestCollision();
  	}
  	
  	public void plotEventList(List<Event> events)
