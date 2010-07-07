@@ -47,7 +47,7 @@ public class Collision
 	       
 		// optimise
 		
-		return 0;
+		return Quartic.leastPositive(roots);
 	}
 	
 	
