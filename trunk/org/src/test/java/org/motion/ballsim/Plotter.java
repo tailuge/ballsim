@@ -56,6 +56,7 @@ public class Plotter extends JPanel {
  	{
  		Event e1 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(130));
  		Event e2 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(-130));
+ 		e1.pos = new Vector3D(0,Ball.R/2,0);
  		e2.pos = Vector3D.PLUS_I.scalarMultiply(Ball.R*7);
  		double t = Collision.collisionTime(e1, e2);
  		Event ce1 = e1.advanceDelta(t);
@@ -158,7 +159,7 @@ public class Plotter extends JPanel {
         g2d.setStroke(normal);
         //if (e.type != EventType.Interpolated)
         {
-        	g2d.drawOval(x-r/2, y-r/2, r, r); 	
+        	g2d.drawOval(x-r, y-r, 2*r, 2*r); 	
         	g2d.drawChars(e.state.toString().toCharArray(), 0, e.state.toString().length(), x+r, y);
         }
         int xvel = scaledX(e.pos.getX() + e.vel.getX()/velscale);
