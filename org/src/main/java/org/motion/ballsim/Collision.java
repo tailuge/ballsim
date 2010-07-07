@@ -1,5 +1,7 @@
 package org.motion.ballsim;
 
+import org.apache.commons.math.geometry.Vector3D;
+
 public class Collision 
 {
 
@@ -38,7 +40,7 @@ public class Collision
 
 		// subtract r^2
 		
-		t0 -= Ball.R*Ball.R;
+		t0 -= 4*Ball.R*Ball.R;
 		
 		// solve for roots giving zero. pick least +ve
 				
@@ -51,10 +53,16 @@ public class Collision
 	}
 	
 	
-	/*
-	static Pair<Event,Event> collisionEvents(Event a, Event b, double t)
+	
+	static EventPair collisionEvents(Event a, Event b, double t)
 	{
-		
+		// todo set new velocities
+		return new EventPair(a.advanceDelta(t),b.advanceDelta(t));
 	}
-	*/
+	
+	
+	static double startingSeperation(Event e1, Event e2)
+	{
+		return Vector3D.distance(e1.pos, e2.pos) - 2*Ball.R;
+	}
 }
