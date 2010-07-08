@@ -68,9 +68,14 @@ public class Collision
 		Vector3D collisionAxis = ca.pos.subtract(cb.pos).normalize();
 		
 		Vector3D av = ca.vel;
-		Vector3D bv = ca.vel;
+		Vector3D bv = cb.vel;
+	
+		Vector3D relativeVel = av.subtract(bv);
 		
-		ca.vel = ca.vel.add(collisionAxis.scalarMultiply(Vector3D.dotProduct(collisionAxis, bv)));
+		Vector3D dv = collisionAxis.scalarMultiply(Vector3D.dotProduct(collisionAxis, relativeVel));
+		
+		ca.vel = ca.vel.subtract(dv);
+		cb.vel = cb.vel.add(dv);
 		
 		ca.state = ca.infereState();
 		cb.state = cb.infereState();
