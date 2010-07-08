@@ -30,3 +30,9 @@ _bounce off cushion, ball takes time to reach rolling equilibrium after bounce_
 [http://ballsim.googlecode.com/files/masse.png]
 
 _masse shot gives curving path, then ball rolls to halt_
+
+
+
+[http://ballsim.googlecode.com/files/collision.png]
+
+_halfball collision with natural roll straightening out the angle_
