@@ -54,9 +54,9 @@ public class Plotter extends JPanel {
  	
  	public void generateTestCollision()
  	{
- 		Event e1 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(130));
- 		Event e2 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(-130));
- 		e1.pos = new Vector3D(0,Ball.R/2,0);
+ 		Event e1 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(80));
+ 		Event e2 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(0));
+ 		e1.pos = new Vector3D(0,Ball.R*1.0,0);
  		e2.pos = Vector3D.PLUS_I.scalarMultiply(Ball.R*7);
  		double t = Collision.collisionTime(e1, e2);
  		EventPair res = Collision.collisionEvents(e1, e2, t);
@@ -65,9 +65,17 @@ public class Plotter extends JPanel {
 		init.add(e1);
 		init.add(res.getFirst());
 		init.add(res.getFirst().rollingEventFromSliding());		
+		init.add(res.getFirst().rollingEventFromSliding().stationaryEventFromRolling());		
+		Interpolator i = new Interpolator(init, 10);
+		events.addAll(i.getInterpolated());
+		events.addAll(init);
+		init.clear();
 		init.add(e2);
 		init.add(res.getSecond());
-		//Interpolator i = new Interpolator(init, 21);
+		init.add(res.getSecond().rollingEventFromSliding());
+		init.add(res.getSecond().rollingEventFromSliding().stationaryEventFromRolling());
+		i = new Interpolator(init, 10);
+		events.addAll(i.getInterpolated());
 		events.addAll(init);
 
  	}

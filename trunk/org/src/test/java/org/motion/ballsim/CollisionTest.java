@@ -9,7 +9,6 @@ import org.junit.Test;
 public class CollisionTest {
 
 	@Test
-	@Ignore("Needs fixing")
 	public final void testCollisionTime() 
 	{
 		Event e1 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(130));
