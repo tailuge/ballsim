@@ -71,12 +71,19 @@ public class Quadratic
 
 		double last = rootCandidate;
 		
+		System.out.println("zero eval:"+func.apply(0.0));
+		System.out.println("candidate:"+func.apply(last));
+		
+		int count = 0;
+		
 		while(
 				(last>0) && (last<=rootCandidate) && 
 				(Math.signum(func.apply(last)) != sign)
 			 )
 		{
 			last = Quadratic.nextSmallest(last);
+			if (++count%100000 == 0)
+				System.out.println(count+"last:"+last+" eval:"+func.apply(last));
 		}
 
 		return last;
