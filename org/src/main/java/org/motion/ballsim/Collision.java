@@ -2,6 +2,8 @@ package org.motion.ballsim;
 
 import org.apache.commons.math.geometry.Vector3D;
 
+import com.google.common.base.Function;
+
 public class Collision 
 {
 
@@ -49,20 +51,53 @@ public class Collision
 	       
 		// optimise
 		
-		return Quartic.leastPositive(roots);
+		double root = Quartic.leastPositive(roots);
+		
+		return latestInstantBeforeCollision(e1,e2,root);
 	}
 	
 	
 	
 	static EventPair collisionEvents(Event a, Event b, double t)
 	{
-		// todo set new velocities
-		return new EventPair(a.advanceDelta(t),b.advanceDelta(t));
+		EventPair result = new EventPair(a.advanceDelta(t),b.advanceDelta(t));
+
+		Event ca = result.getFirst();
+		Event cb = result.getSecond();
+		
+		Vector3D collisionAxis = ca.pos.subtract(cb.pos).normalize();
+		
+		Vector3D av = ca.vel;
+		Vector3D bv = ca.vel;
+		
+		ca.vel = ca.vel.add(collisionAxis.scalarMultiply(Vector3D.dotProduct(collisionAxis, bv)));
+		
+		ca.state = ca.infereState();
+		cb.state = cb.infereState();
+		return result;
 	}
 	
 	
 	static double startingSeperation(Event e1, Event e2)
 	{
 		return Vector3D.distance(e1.pos, e2.pos) - 2*Ball.R;
+	}
+	
+	private static double latestInstantBeforeCollision(final Event a,final Event b,double tCollision)
+	{
+		Function<Double,Double> func = new Function<Double, Double>() 
+		{	
+			@Override
+			public Double apply(Double arg) {
+				return startingSeperation(a.advanceDelta(arg),b.advanceDelta(arg));
+			}
+		};
+
+		double last = Quadratic.optimise(func, tCollision);
+		
+		if (last>0)
+			return last;
+		
+		return 0;
 	}
 }

@@ -59,14 +59,14 @@ public class Plotter extends JPanel {
  		e1.pos = new Vector3D(0,Ball.R/2,0);
  		e2.pos = Vector3D.PLUS_I.scalarMultiply(Ball.R*7);
  		double t = Collision.collisionTime(e1, e2);
- 		Event ce1 = e1.advanceDelta(t);
- 		Event ce2 = e2.advanceDelta(t);
+ 		EventPair res = Collision.collisionEvents(e1, e2, t);
 
 		List<Event> init  = new ArrayList<Event>();
 		init.add(e1);
-		init.add(ce1);
+		init.add(res.getFirst());
+		init.add(res.getFirst().rollingEventFromSliding());		
 		init.add(e2);
-		init.add(ce2);
+		init.add(res.getSecond());
 		//Interpolator i = new Interpolator(init, 21);
 		events.addAll(init);
 
