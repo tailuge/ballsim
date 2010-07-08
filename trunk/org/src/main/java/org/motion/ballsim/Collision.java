@@ -1,5 +1,7 @@
 package org.motion.ballsim;
 
+import java.util.Arrays;
+
 import org.apache.commons.math.geometry.Vector3D;
 
 import com.google.common.base.Function;
@@ -53,6 +55,10 @@ public class Collision
 		
 		double root = Quartic.leastPositive(roots);
 		
+		System.out.println("quartic coeffs"+Arrays.toString(coeffs));
+		Quartic.print(coeffs);
+		System.out.println("quartic eval at root:"+Quartic.evalAt(coeffs,root));
+		
 		return latestInstantBeforeCollision(e1,e2,root);
 	}
 	
@@ -98,7 +104,9 @@ public class Collision
 			}
 		};
 
+		System.out.print(">");
 		double last = Quadratic.optimise(func, tCollision);
+		System.out.println("<");
 		
 		if (last>0)
 			return last;

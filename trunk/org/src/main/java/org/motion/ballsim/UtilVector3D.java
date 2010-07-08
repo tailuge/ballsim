@@ -10,4 +10,8 @@ public class UtilVector3D
 		return Vector3D.crossProduct(vec, Vector3D.PLUS_K);
 	}
 
+	public static Vector3D rnd()
+	{
+		return (new Vector3D(Math.random()-0.5,Math.random()-0.5,Math.random()-0.5)).normalize();
+	}
 }

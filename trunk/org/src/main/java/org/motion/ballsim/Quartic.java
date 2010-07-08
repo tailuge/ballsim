@@ -296,4 +296,18 @@ public class Quartic
     	return 0;
     }
     
+    public static double evalAt(double[] coeff,double t)
+    {
+    	return t*t*t*t*coeff[4] + t*t*t*coeff[3] + t*t*coeff[2] + t*coeff[1] + coeff[0];
+    }
+
+    public static void print(double[] coeff)
+    {
+    	System.out.print(coeff[4]+"t*t*t*t ");
+    	System.out.print(coeff[3]+"t*t*t ");
+    	System.out.print(coeff[2]+"t*t ");
+    	System.out.print(coeff[1]+"t ");
+    	System.out.println(coeff[0]+" ");
+    }
+    
 }
