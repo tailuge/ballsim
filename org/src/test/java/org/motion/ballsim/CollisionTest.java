@@ -1,9 +1,8 @@
 package org.motion.ballsim;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.math.geometry.Vector3D;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class CollisionTest {
