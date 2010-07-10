@@ -49,12 +49,10 @@ public class Collision
 		// solve for roots giving zero. pick least +ve
 				
 		double[] coeffs = { t0, t1, t2, t3, t4 };
-	    double[] roots = Quartic.solveQuartic( coeffs );
+	    double root = Quartic.smallestRoot( coeffs , 100); // TODO: fix max t
 	       
 		// optimise
-		
-		double root = Quartic.leastPositive(roots);
-		
+				
 		System.out.println("quartic coeffs"+Arrays.toString(coeffs));
 		Quartic.print(coeffs);
 		System.out.println("quartic eval at root:"+Quartic.evalAt(coeffs,root));
