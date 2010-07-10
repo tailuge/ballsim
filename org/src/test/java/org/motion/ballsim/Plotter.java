@@ -54,29 +54,41 @@ public class Plotter extends JPanel {
  	
  	public void generateTestCollision()
  	{
+ 		/*
  		Event e1 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(80));
  		Event e2 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(0));
  		e1.pos = new Vector3D(0,Ball.R*1.0,0);
  		e2.pos = Vector3D.PLUS_I.scalarMultiply(Ball.R*7);
+ 		*/
+ 		
+		Event e1 = Utilities.getRolling(new Vector3D(-13.8, -15.48, -81.34));		
+		Event e2 = Utilities.getStationary();
+		e2.pos = new Vector3D(-5.92, -6.21, -33.19);		
+
+ 		
  		double t = Collision.collisionTime(e1, e2);
  		EventPair res = Collision.collisionEvents(e1, e2, t);
 
 		List<Event> init  = new ArrayList<Event>();
 		init.add(e1);
 		init.add(res.getFirst());
-		init.add(res.getFirst().rollingEventFromSliding());		
-		init.add(res.getFirst().rollingEventFromSliding().stationaryEventFromRolling());		
-		Interpolator i = new Interpolator(init, 10);
-		events.addAll(i.getInterpolated());
+//		init.add(res.getFirst().rollingEventFromSliding());		
+//		init.add(res.getFirst().rollingEventFromSliding().stationaryEventFromRolling());		
+//		Interpolator i = new Interpolator(init, 10);
+		//events.addAll(i.getInterpolated());
 		events.addAll(init);
 		init.clear();
 		init.add(e2);
 		init.add(res.getSecond());
-		init.add(res.getSecond().rollingEventFromSliding());
-		init.add(res.getSecond().rollingEventFromSliding().stationaryEventFromRolling());
-		i = new Interpolator(init, 10);
-		events.addAll(i.getInterpolated());
+//		init.add(res.getSecond().rollingEventFromSliding());
+//		init.add(res.getSecond().rollingEventFromSliding().stationaryEventFromRolling());
+//		i = new Interpolator(init, 10);
+		//events.addAll(i.getInterpolated());
 		events.addAll(init);
+		System.out.println("sep:"+Collision.seperationAt(res.getFirst(), res.getSecond(), t));
+		System.out.println("1st:"+res.getFirst());
+		System.out.println("2nd:"+res.getSecond());
+		
 
  	}
  	
