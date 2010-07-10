@@ -13,6 +13,7 @@ public class QuarticTest {
 	{
         double[] coeffs = { 24, -50, 35, -10, 1 };
         assertEquals("1.0 is 1st root",1.0,Quartic.smallestRoot(coeffs,100),0.000001);
+        Quartic.print(coeffs);
 	}
 
 	@Test

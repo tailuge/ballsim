@@ -32,15 +32,11 @@ public class CollisionTest {
 			Event e1 = Utilities.getRolling(UtilVector3D.rnd().scalarMultiply(Ball.R*100*Math.random()));		
 			Event e2 = Utilities.getStationary();
 			e2.pos = e1.stationaryEventFromRolling().pos.add(UtilVector3D.rnd());
-			
-			System.out.println(".");
-			
+						
 			if (Collision.startingSeperation(e1, e2) <= 0)
 				continue;
 			
 			double t = Collision.collisionTime(e1, e2);
-
-			System.out.println("+");
 
 			if (t<=0 || t>e1.stationaryEventFromRolling().t)
 				continue;
@@ -48,6 +44,7 @@ public class CollisionTest {
 			EventPair cols = Collision.collisionEvents(e1,e2, t);
 			System.out.println(Collision.startingSeperation(cols.getFirst(), cols.getSecond()));
 			assertTrue("Balls seperated",Collision.startingSeperation(cols.getFirst(), cols.getSecond()) > 0);							
+			assertTrue("Balls seperated but close",Collision.startingSeperation(cols.getFirst(), cols.getSecond()) < 1);							
 			i++;
 		}	
 	}

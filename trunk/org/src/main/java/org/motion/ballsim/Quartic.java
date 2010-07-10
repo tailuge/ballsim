@@ -9,21 +9,6 @@ import org.apache.commons.math.analysis.solvers.UnivariateRealSolverFactory;
 public class Quartic
 {
  
-
-    public static double evalAt(double[] coeff,double t)
-    {
-    	return t*t*t*t*coeff[4] + t*t*t*coeff[3] + t*t*coeff[2] + t*coeff[1] + coeff[0];
-    }
-
-    public static void print(double[] coeff)
-    {
-    	System.out.print(coeff[4]+"t*t*t*t ");
-    	System.out.print(coeff[3]+"t*t*t ");
-    	System.out.print(coeff[2]+"t*t ");
-    	System.out.print(coeff[1]+"t ");
-    	System.out.println(coeff[0]+" ");
-    }
-    
 	/**
 	 * Idea is to use Newton solver to find any root, then look for smaller roots
 	 * until none remain.
@@ -40,7 +25,8 @@ public class Quartic
 		UnivariateRealSolverFactory factory = UnivariateRealSolverFactory.newInstance();
 		UnivariateRealSolver solver = factory.newNewtonSolver();
 
-		double c = max + 1;
+		double c = max;
+		max = 0;
 		
 		while (c != max)
 		{
@@ -50,7 +36,6 @@ public class Quartic
 				c = solver.solve(function, 0.0, max);
 				if (c>max)
 					return max;
-				System.out.println("c:"+c+" max:"+max);
 			} 
 			catch (Exception e) 
 			{
@@ -61,5 +46,19 @@ public class Quartic
 		
 		return c;
 	}
+
+	
+    public static double evalAt(double[] coeff,double t)
+    {
+    	PolynomialFunction p = new PolynomialFunction(coeff);
+    	return p.value(t);
+    }
+
+    public static void print(double[] coeff)
+    {
+    	PolynomialFunction p = new PolynomialFunction(coeff);
+    	System.out.println(p.toString());
+    }
+    
 
 }
