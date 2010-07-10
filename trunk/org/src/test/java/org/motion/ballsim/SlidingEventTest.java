@@ -62,16 +62,16 @@ public class SlidingEventTest
 		System.out.println("acc  :"+slide.getAccelerationVector());
 		System.out.println("angac:"+slide.getAngularAccelerationVector());
 
-		Event roll = slide.rollingEventFromSliding();
+		Event roll = slide.next();
 		assertEquals("Expect roll",State.Rolling,roll.state);
 
 		
 		System.out.println("end  :"+roll);
 		System.out.println("expct:"+Utilities.getRolling(roll.vel));
 		
-		assertEquals("Expect conditions match rolling",State.Rolling,roll.infereState());
+		assertEquals("Expect conditions match rolling",State.Rolling,State.deriveStateOf(roll));
 		
-		roll = masse.rollingEventFromSliding();
+		roll = masse.next();
 		System.out.println("MASSE");
 		System.out.println("start:"+masse);
 		System.out.println("delta:"+masse.getChangeToNr());
@@ -82,15 +82,15 @@ public class SlidingEventTest
 		System.out.println("end  :"+roll);
 		System.out.println("expct:"+Utilities.getRolling(roll.vel));
 
-		assertEquals("Expect conditions match rolling",State.Rolling,roll.infereState());
+		assertEquals("Expect conditions match rolling",State.Rolling,State.deriveStateOf(roll));
 
 	}
 
 	@Test
 	public final void testInfereState() 
 	{
-		assertEquals("Expect sliding state infered as sliding",State.Sliding, slide.infereState());
-		assertEquals("Expect masse state infered as sliding",State.Sliding, masse.infereState());
+		assertEquals("Expect sliding state infered as sliding",State.Sliding, State.deriveStateOf(slide));
+		assertEquals("Expect masse state infered as sliding",State.Sliding, State.deriveStateOf(masse));
 	}
 
 	@Test

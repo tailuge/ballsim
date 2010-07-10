@@ -19,7 +19,7 @@ public class CushionTest {
 	public final void testXCollisionsPos() 
 	{
 		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(50));
-		Event stat = e.stationaryEventFromRolling();
+		Event stat = e.next();
 		
 		Event c1 = Cushion.xCollisionsWith(e, stat.pos.getX() / 3.0, stat.t);
 		
@@ -35,9 +35,9 @@ public class CushionTest {
 		
 		System.out.println(e);
 		System.out.println(c1);
-		System.out.println(e.stationaryEventFromRolling());
+		System.out.println(e.next());
 
-		assertTrue("Collision before ball stops",c1.t < e.stationaryEventFromRolling().t);
+		assertTrue("Collision before ball stops",c1.t < e.next().t);
 		assertEquals("Collision should be at cushion position",stat.pos.getX() / 3.0,c1.pos.getX(),0.001);
 		assertTrue("Velocity reflected",c1.vel.getX() < 0);
 		assertTrue("Velocity reflected",c2.vel.getX() < 0);
@@ -105,7 +105,7 @@ public class CushionTest {
 		while(v<1000)
 		{
 			Event e = Utilities.getRolling(new Vector3D(v,10,0));
-			Event s = e.stationaryEventFromRolling();
+			Event s = e.next();
 
 			
 			// choose distance very close to halting point

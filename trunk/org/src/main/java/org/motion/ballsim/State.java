@@ -7,18 +7,22 @@ public enum State {
 	Stationary {
 
 		@Override
-		public Vector3D accelerate(Event event) {
+		public Vector3D acceleration(Event event) {
 			return Vector3D.ZERO;
+		}
+		public Event next(Event event) {
+			return event;
 		}
 
 	},
 	Sliding {
 		/**
-		 * when sliding acceleration provided by angularVel since a moving but
-		 * non spinning ball would also experience acceleration its relative to
-		 * motion. magnitude independent of speed / spin
+		 * Acceleration is constant during sliding phase and works to
+		 * reach rolling equilibrium. Magnitude independent of speed / spin
+		 * 
+		 * @return acceleration vector when sliding
 		 */
-		public Vector3D accelerate(Event e) {
+		public Vector3D acceleration(Event e) {
 			return e.getChangeToNr().normalize()
 					.scalarMultiply(-Ball.accelSlide);
 		}
@@ -30,6 +34,9 @@ public enum State {
 			rolling.type = EventType.RollEquilibrium;
 			return rolling;
 		}
+		public Event next(Event event) {
+			return roll(event);
+		}
 
 	},
 	Rolling {
@@ -39,7 +46,7 @@ public enum State {
 		 * 
 		 * @return acceleration vector when rolling
 		 */
-		public Vector3D accelerate(Event event) {
+		public Vector3D acceleration(Event event) {
 			try {
 				return event.vel.normalize().scalarMultiply(Ball.accelRoll);
 			} catch (ArithmeticException e) {
@@ -53,25 +60,33 @@ public enum State {
 			stationary.type = EventType.Stationary;
 			return stationary;
 		}
+		public Event next(Event event) {
+			return stop(event);
+		}
 
 	},
 	Unknown {
-		public Vector3D accelerate(Event e) {
+		public Vector3D acceleration(Event e) {
 			return Vector3D.ZERO;
+		}
+		public Event next(Event event) {			
+			return deriveStateOf(event).next(event);
 		}
 
 	};
 
-	public abstract Vector3D accelerate(Event e);
+	public abstract Vector3D acceleration(Event e);
+	public abstract Event next(Event e);
 
-	public Event roll(Event e) {
-		return e;
-	}
 
-	public Event stop(Event e) {
-		return e;
-	}
-
+	/**
+	 * Given an event on indeterminate state compare 
+	 * velocity and angular velocity to determine if 
+	 * its sliding, rolling or stationary.
+	 * 
+	 * @param event
+	 * @return
+	 */
 	public static State deriveStateOf(Event event) {
 
 		if ((event.vel.getNorm() < Ball.stationaryTolerance)
