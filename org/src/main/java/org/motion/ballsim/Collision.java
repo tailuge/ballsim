@@ -53,11 +53,12 @@ public class Collision
 	       
 		// optimise
 				
-		System.out.println("quartic coeffs"+Arrays.toString(coeffs));
+		System.out.println("quartic coeffs      :"+Arrays.toString(coeffs));
 		Quartic.print(coeffs);
 		System.out.println("quartic eval at root:"+Quartic.evalAt(coeffs,root));
+		System.out.println("seperation at root  :"+startingSeperation(e1.advanceDelta(root),e2.advanceDelta(root)));
 		
-		return latestInstantBeforeCollision(e1,e2,root);
+		return root;//latestInstantBeforeCollision(e1,e2,root);
 	}
 	
 	
