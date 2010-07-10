@@ -115,9 +115,7 @@ public class Collision
 			}
 		};
 
-		System.out.print(">");
 		double last = Quadratic.optimise(func, tCollision);
-		System.out.println("<");
 		
 		if (last>0)
 			return last;
