@@ -1,5 +1,10 @@
 package org.motion.ballsim;
 
+import java.awt.geom.CubicCurve2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.commons.math.analysis.UnivariateRealFunction;
 import org.apache.commons.math.analysis.polynomials.PolynomialFunction;
 import org.apache.commons.math.analysis.solvers.UnivariateRealSolver;
@@ -10,7 +15,9 @@ public class Quartic
 {
  
 	/**
-	 * Idea is to use Newton solver to find any root, then look for smaller roots
+	 * Differentiate once to find min/max points using cubic equation.
+	 * Use Newton solver to inspect each of these spans to see which
+	 * contain roots. Return the least positive one.
 	 * until none remain.
 	 * 
 	 * @param coeffs
@@ -22,29 +29,61 @@ public class Quartic
 		PolynomialFunction p = new PolynomialFunction(coeffs);
 		
 		UnivariateRealFunction function = p;
+		
 		UnivariateRealSolverFactory factory = UnivariateRealSolverFactory.newInstance();
 		UnivariateRealSolver solver = factory.newNewtonSolver();
-
-		double c = max;
-		max = 0;
 		
-		while (c != max)
+		// solve derivative cubic to get min/max points
+		
+		double res[] = new double[3];
+		int cubicRoots = CubicCurve2D.solveCubic(p.polynomialDerivative().getCoefficients(), res);
+
+		// create set of spans that root must be between if present
+
+		List<Double> spans = new ArrayList<Double>();
+		List<Double> roots = new ArrayList<Double>();
+		spans.add(0.0);
+		spans.add(max);
+		for(int i=0;i<cubicRoots;i++)
+			spans.add(res[i]);
+		
+		Collections.sort(spans);
+		
+		System.out.println("spans:"+spans);
+
+		// look for root in each span.
+		
+		double last = 0.0;
+		for(double s : spans)
 		{
-			max = c;
-			try 
+			if (last != s)
 			{
-				c = solver.solve(function, 0.0, max);
-				if (c>max)
-					return max;
-			} 
-			catch (Exception e) 
-			{
-				// no root in region
-				return 0;
-			} 
+				System.out.println("try["+last+","+s+"]");	
+				double bi=0;
+				try 
+				{
+					bi = solver.solve(function, last, s, (last+s)/2);
+				} 
+				catch (Exception e) 
+				{
+					// no root
+				}
+				
+				System.out.println("bi:"+bi);
+				roots.add(bi);
+			}
+			last = s;
 		}
 		
-		return c;
+		// use least +ve root.
+		Collections.sort(spans);
+		
+		for(double root:roots)
+			if (root>0)
+				return root;			
+
+		return 0;
+		
 	}
 
 	
