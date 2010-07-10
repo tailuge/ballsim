@@ -101,18 +101,18 @@ public class CushionTest {
 		// generate large number of cushion hits and assert
 		// ball always still on table
 		
+		int far=0,close=0;
 		double v=0;
 		while(v<1000)
 		{
 			Event e = Utilities.getRolling(new Vector3D(v,10,0));
 			Event s = e.next();
 
-			
 			// choose distance very close to halting point
 			double farx = s.pos.getX()-MathUtils.SAFE_MIN;
 
 			// choose distance very close to start
-			double closex = e.pos.getX()+MathUtils.SAFE_MIN;
+			double closex = e.pos.getX()+0.00001;
 			
 			Event c1 = Cushion.xCollisionsWith(e, farx, s.t);
 			Event c2 = Cushion.xCollisionsWith(e, closex, s.t);
@@ -120,16 +120,18 @@ public class CushionTest {
 			{
 				String state="v:"+v+" c1.x:"+c1.pos.getX()+" farx:"+farx;
 				assertTrue("At collision, must be on table:"+state,farx-c1.pos.getX() > 0);
+				far++;
 			}
 			if(c2 != null)
 			{
 				String state="v:"+v+" c2.x:"+c2.pos.getX()+" closex:"+closex;
 				assertTrue("At collision, must be on table:"+state,closex-c2.pos.getX() > 0);
+				close++;
 			}
 			
 			v++;
 		}
-		
+		System.out.println("far:"+far+"close:"+close);
 	}
 	
 }
