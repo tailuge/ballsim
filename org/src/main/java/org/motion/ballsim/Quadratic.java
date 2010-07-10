@@ -52,7 +52,17 @@ public class Quadratic
 		}
 		return d-dec;
 	}
-	
+
+	public static double nextSmallestDelta(double d)
+	{
+		double dec = Double.MIN_VALUE;
+		while((d - dec) >= d)
+		{
+			dec *= 2;
+		}
+		return dec;
+	}
+
 	/**
 	 * 
 	 * Find input to function that returns a value as close to rootCandidate as possible 
@@ -74,6 +84,8 @@ public class Quadratic
 		System.out.println("zero eval:"+func.apply(0.0));
 		System.out.println("candidate:"+func.apply(last));
 		
+		double delta = Quadratic.nextSmallestDelta(last);
+		
 		int count = 0;
 		
 		while(
@@ -81,7 +93,8 @@ public class Quadratic
 				(Math.signum(func.apply(last)) != sign)
 			 )
 		{
-			last = Quadratic.nextSmallest(last);
+			last -=delta;
+			delta *= 2;
 			if (++count%100000 == 0)
 				System.out.println(count+"last:"+last+" eval:"+func.apply(last));
 		}
