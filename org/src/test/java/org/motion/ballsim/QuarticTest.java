@@ -2,7 +2,6 @@ package org.motion.ballsim;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class QuarticTest {
@@ -39,10 +38,16 @@ public class QuarticTest {
 	
 	
 	@Test
-	@Ignore
 	public final void testFindRootWithNegMaxima()  
 	{
         double[] coeffs = { 12.407390198237287, -247.5287260222008, 1356.6017708251973, -3092.5777341883927, 2500.0 };
         assertEquals("0.077 is 1st root",0.077,Quartic.smallestRoot(coeffs,100),0.1);
+	}
+
+	@Test
+	public final void testGradientPosAtZero()  
+	{
+        double[] coeffs = { 0.6, 4.9, -10.4, 5.9, -1 };
+        assertEquals("1 is 1st root",1.0,Quartic.smallestRoot(coeffs,100),0.01);
 	}
 }

@@ -3,7 +3,6 @@ package org.motion.ballsim;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.math.geometry.Vector3D;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class CollisionTest {
@@ -23,11 +22,10 @@ public class CollisionTest {
 
 
 	@Test
-	@Ignore
 	public final void testManyRolling() 
 	{
 		int i = 0;
-		while(i < 100)
+		while(i < 1000)
 		{
 			Event e1 = Utilities.getRolling(UtilVector3D.rnd().scalarMultiply(Ball.R*100*Math.random()));		
 			Event e2 = Utilities.getStationary();
@@ -42,9 +40,9 @@ public class CollisionTest {
 				continue;
 			
 			EventPair cols = Collision.collisionEvents(e1,e2, t);
-			System.out.println(Collision.startingSeperation(cols.getFirst(), cols.getSecond()));
-			System.out.println(e1);
-			System.out.println(e2);
+			//System.out.println(Collision.startingSeperation(cols.getFirst(), cols.getSecond()));
+			//System.out.println(e1);
+			//System.out.println(e2);
 			assertTrue("Balls seperated",Collision.startingSeperation(cols.getFirst(), cols.getSecond()) > 0);							
 			assertTrue("Balls seperated but close",Collision.startingSeperation(cols.getFirst(), cols.getSecond()) < 1);							
 			i++;
