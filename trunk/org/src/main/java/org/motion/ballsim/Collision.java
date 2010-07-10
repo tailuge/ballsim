@@ -9,9 +9,8 @@ import com.google.common.base.Function;
 public class Collision 
 {
 
-	static double collisionTime(Event e1, Event e2)
+	public static double[] quarticCoefficients(Event e1, Event e2)
 	{
-		
 		// distance between two balls at collision is dx^2 + dy^2 = r^2
 		// dx = e1.x - e2.x
 		// coefficients of quadratic of dx in time
@@ -49,16 +48,24 @@ public class Collision
 		// solve for roots giving zero. pick least +ve
 				
 		double[] coeffs = { t0, t1, t2, t3, t4 };
+		return coeffs;
+	}
+	
+	static double collisionTime(Event e1, Event e2)
+	{
+
+		double coeffs[] = quarticCoefficients(e1, e2);
 	    double root = Quartic.smallestRoot( coeffs , 100); // TODO: fix max t
 	       
 		// optimise
 				
 		System.out.println("quartic coeffs      :"+Arrays.toString(coeffs));
 		Quartic.print(coeffs);
+		System.out.println("1st root            :"+root);
 		System.out.println("quartic eval at root:"+Quartic.evalAt(coeffs,root));
 		System.out.println("seperation at root  :"+startingSeperation(e1.advanceDelta(root),e2.advanceDelta(root)));
 		
-		return root;//latestInstantBeforeCollision(e1,e2,root);
+		return latestInstantBeforeCollision(e1,e2,root);
 	}
 	
 	
@@ -92,7 +99,12 @@ public class Collision
 	{
 		return Vector3D.distance(e1.pos, e2.pos) - 2*Ball.R;
 	}
-	
+
+	static double seperationAt(Event e1, Event e2,double t)
+	{
+		return Vector3D.distance(e1.advanceDelta(t).pos, e2.advanceDelta(t).pos) - 2*Ball.R;
+	}
+
 	private static double latestInstantBeforeCollision(final Event a,final Event b,double tCollision)
 	{
 		Function<Double,Double> func = new Function<Double, Double>() 

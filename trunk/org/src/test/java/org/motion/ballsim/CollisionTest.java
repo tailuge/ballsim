@@ -43,10 +43,13 @@ public class CollisionTest {
 			
 			EventPair cols = Collision.collisionEvents(e1,e2, t);
 			System.out.println(Collision.startingSeperation(cols.getFirst(), cols.getSecond()));
+			System.out.println(e1);
+			System.out.println(e2);
 			assertTrue("Balls seperated",Collision.startingSeperation(cols.getFirst(), cols.getSecond()) > 0);							
 			assertTrue("Balls seperated but close",Collision.startingSeperation(cols.getFirst(), cols.getSecond()) < 1);							
 			i++;
 		}	
 	}
+
 
 }

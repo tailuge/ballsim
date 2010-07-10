@@ -12,6 +12,6 @@ public class UtilVector3D
 
 	public static Vector3D rnd()
 	{
-		return (new Vector3D(Math.random()-0.5,Math.random()-0.5,Math.random()-0.5)).normalize();
+		return (new Vector3D(Math.random()-0.5,Math.random()-0.5,0.0)).normalize();
 	}
 }
