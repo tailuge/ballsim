@@ -95,10 +95,10 @@ public class Plotter extends JPanel {
  	public void generateTestEventsCushion()
  	{
  		Event e = Utilities.getRolling(new Vector3D(20,20,0));
- 		Event nr = e.stationaryEventFromRolling();
+ 		Event nr = e.next();
  		Event c1 = Cushion.xCollisionsWith(e, nr.pos.getX()/2.0, nr.t);
- 		Event nr2 = c1.rollingEventFromSliding();
- 		Event s = nr2.stationaryEventFromRolling();
+ 		Event nr2 = c1.next();
+ 		Event s = nr2.next();
  		
  		System.out.println("c1:"+c1);
 		List<Event> init  = new ArrayList<Event>();
@@ -113,8 +113,8 @@ public class Plotter extends JPanel {
  	public void generateTestEventsSlide()
  	{
 		Event slide = Utilities.getSliding(new Vector3D(20,-40,0),Vector3D.PLUS_I.scalarMultiply(190));
-		Event roll = slide.rollingEventFromSliding();
-		Event stationary = roll.stationaryEventFromRolling();
+		Event roll = slide.next();
+		Event stationary = roll.next();
 		
 		List<Event> init  = new ArrayList<Event>();
 		init.add(slide);
@@ -127,7 +127,7 @@ public class Plotter extends JPanel {
  	public void generateTestEventsRoll()
  	{
 		Event roll = Utilities.getRolling(new Vector3D(30,10,0));
-		Event stationary = roll.stationaryEventFromRolling();
+		Event stationary = roll.next();
 		for(double dt = 0; dt < stationary.t*0.9; dt += stationary.t/5.0)
 		{
 			events.add(roll.advanceDelta(dt));

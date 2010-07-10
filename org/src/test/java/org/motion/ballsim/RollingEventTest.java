@@ -20,7 +20,7 @@ public class RollingEventTest {
 	@Before
 	public void setUp()
 	{
-		e = Event.getSimpleEvent();
+		e = Utilities.getSimpleEvent();
 		stationary = Utilities.getStationary();
 	}
 
@@ -91,7 +91,7 @@ public class RollingEventTest {
 	public final void testStationaryEventFromRolling() 
 	{
 		roll = Utilities.getRolling(Vector3D.PLUS_I);		
-		Event next = roll.stationaryEventFromRolling();
+		Event next = roll.next();
 		assertEquals("Is stationary state",State.Stationary,next.state);
 		assertEquals("Is not moving",0.0,next.vel.getNorm(),0.0);
 		assertEquals("Is not spinning",0.0,next.angularVel.getNorm(),0.0);
@@ -111,8 +111,8 @@ public class RollingEventTest {
 				Vector3D.distance(roll.pos, i1.pos) > Vector3D.distance(i1.pos, i2.pos)); 
 		assertTrue("Velocity reduces", i1.vel.getNorm() > i2.vel.getNorm());
 		assertTrue("Angular velocity reduces", i1.angularVel.getNorm() > i2.angularVel.getNorm());
-		assertEquals("Expect still rolling state half way",State.Rolling,i1.infereState());
-		assertEquals("Expect stationary at end",State.Stationary,i2.infereState());
+		assertEquals("Expect still rolling state half way",State.Rolling,State.deriveStateOf(i1));
+		assertEquals("Expect stationary at end",State.Stationary,State.deriveStateOf(i2));
 	}
 	
 	@Test

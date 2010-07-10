@@ -7,9 +7,16 @@ import org.motion.ballsim.State;
 
 public class Utilities {
 
+	public static Event getSimpleEvent() 
+	{
+		return new Event(Vector3D.ZERO, Vector3D.ZERO, Vector3D.ZERO,
+				Vector3D.ZERO, Vector3D.ZERO, State.Unknown, 0,
+				EventType.InitialHit);
+	}
+	
 	public static Event getRolling(Vector3D vel)
 	{
-		Event e = Event.getSimpleEvent();
+		Event e = getSimpleEvent();
 		e.state = State.Rolling;
 		e.vel = vel;
 		e.angularVel = UtilVector3D.crossUp(vel.scalarMultiply(1.0/Ball.R));
@@ -18,7 +25,7 @@ public class Utilities {
 
 	public static Event getSliding(Vector3D vel, Vector3D angularVel)
 	{
-		Event e = Event.getSimpleEvent();
+		Event e = getSimpleEvent();
 		e.state = State.Sliding;
 		e.vel = vel;
 		e.angularVel = angularVel;
@@ -27,7 +34,7 @@ public class Utilities {
 
 	public static Event getStationary()
 	{
-		Event e = Event.getSimpleEvent();
+		Event e = getSimpleEvent();
 		e.state = State.Stationary;
 		return e;
 	}

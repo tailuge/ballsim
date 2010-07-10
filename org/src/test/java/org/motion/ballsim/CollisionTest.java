@@ -29,14 +29,14 @@ public class CollisionTest {
 		{
 			Event e1 = Utilities.getRolling(UtilVector3D.rnd().scalarMultiply(Ball.R*100*Math.random()));		
 			Event e2 = Utilities.getStationary();
-			e2.pos = e1.stationaryEventFromRolling().pos.add(UtilVector3D.rnd());
+			e2.pos = e1.next().pos.add(UtilVector3D.rnd());
 						
 			if (Collision.startingSeperation(e1, e2) <= 0)
 				continue;
 			
 			double t = Collision.collisionTime(e1, e2);
 
-			if (t<=0 || t>e1.stationaryEventFromRolling().t)
+			if (t<=0 || t>e1.next().t)
 				continue;
 			
 			EventPair cols = Collision.collisionEvents(e1,e2, t);

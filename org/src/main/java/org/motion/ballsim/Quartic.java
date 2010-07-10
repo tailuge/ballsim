@@ -18,7 +18,6 @@ public class Quartic
 	 * Differentiate once to find min/max points using cubic equation.
 	 * Use Newton solver to inspect each of these spans to see which
 	 * contain roots. Return the least positive one.
-	 * until none remain.
 	 * 
 	 * @param coeffs
 	 * @param max

@@ -21,8 +21,11 @@ import org.apache.commons.math.geometry.Vector3D;
  */
 public class Event {
 
-	private static final DecimalFormat TWO_DP_FORMAT = new DecimalFormat("0.00");
 
+	/*
+	 * Main characteristics of an event
+	 */
+	
 	public Vector3D pos;
 	public Vector3D vel;
 	public Vector3D angularPos;
@@ -33,7 +36,7 @@ public class Event {
 	public double t;
 	public EventType type;
 
-	private Event(Vector3D pos, Vector3D vel, Vector3D angularPos,
+	public Event(Vector3D pos, Vector3D vel, Vector3D angularPos,
 			Vector3D angularVel, Vector3D sidespin, State state, double t,
 			EventType type) {
 		this.pos = pos;
@@ -58,23 +61,20 @@ public class Event {
 		type = e.type;
 	}
 
-	public static Event getSimpleEvent() {
-		return new Event(Vector3D.ZERO, Vector3D.ZERO, Vector3D.ZERO,
-				Vector3D.ZERO, Vector3D.ZERO, State.Unknown, 0,
-				EventType.InitialHit);
-	}
+
 
 	/**
-	 * Acceleration magnitude is always independent speed / spin.
+	 * Acceleration magnitude is always independent speed / spin
+	 * but depends on state so we delegate.
 	 * 
 	 * @return acceleration vector depending on state
 	 */
 	public Vector3D getAccelerationVector() {
-		return state.accelerate(this);
+		return state.acceleration(this);
 	}
 
 	public Vector3D getAngularAccelerationVector() {
-		// todo
+
 		double scale = state == State.Sliding ? -5.0 / 2.0 : 1.0;
 
 		return UtilVector3D.crossUp(getAccelerationVector()).scalarMultiply(
@@ -128,21 +128,20 @@ public class Event {
 		return -vel.getNorm() / Ball.accelRoll;
 	}
 
+
 	public double timeToNaturalRollEquilibrium() {
-
-		// notes:
-		// Vnr = V0*5/7 +Rw0*2/7
-		// acc = diff in v / t
-		// t = diff in v / acc
-		// |acc| for sliding ball is always same. fslide
-
-		double timeToNr = getChangeToNr().getNorm() / -Ball.accelSlide;
-
-		return timeToNr;
+		return getChangeToNr().getNorm() / -Ball.accelSlide;
 	}
 
-	// private but for unit test
+	
+	/**
+	 * Velocity at natural roll given a starting state that is sliding
+	 * is well analysed (see Amateur Physics by Sheperd - Vnr = V0*5/7 +Rw0*2/7) 
+	 * This returns the change from current to that equilibrium point
+	 * @return
+	 */
 	public Vector3D getChangeToNr() {
+		
 		Vector3D nr = vel.scalarMultiply(5.0 / 7.0).add(
 				UtilVector3D.crossUp(angularVel).scalarMultiply(
 						-Ball.R * 2.0 / 7.0));
@@ -150,20 +149,20 @@ public class Event {
 		return changeInV;
 	}
 
-	public Event stationaryEventFromRolling() {
-		return state.stop(this);
+	/**
+	 * Will determine the next 'natural' event from this event
+	 * i.e sliding->rolling->stationary.
+	 * @return 
+	 */
+	public Event next()
+	{
+		return state.next(this);
 	}
 
-	public Event rollingEventFromSliding() {
-		return state.roll(this);
-	}
-
-	public State infereState() {
-		return State.deriveStateOf(this);
-	}
+	private static final DecimalFormat SECONDS_FORMAT = new DecimalFormat("0.00");
 
 	public String toString() {
-		return "t:" + TWO_DP_FORMAT.format(t) + " p:" + pos + " v:" + vel
+		return "t:" + SECONDS_FORMAT.format(t) + " p:" + pos + " v:" + vel
 				+ " ap:" + angularPos + " av:" + angularVel + " s:" + state;
 	}
 }

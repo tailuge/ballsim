@@ -89,8 +89,8 @@ public class Collision
 		ca.vel = ca.vel.subtract(dv);
 		cb.vel = cb.vel.add(dv);
 		
-		ca.state = ca.infereState();
-		cb.state = cb.infereState();
+		ca.state = State.deriveStateOf(ca);
+		cb.state = State.deriveStateOf(cb);
 		return result;
 	}
 	

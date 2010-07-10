@@ -47,7 +47,7 @@ public class Cushion
 		if (collision != null)
 		{
 			collision.vel = new Vector3D(-collision.vel.getX(),collision.vel.getY(),0);
-			collision.state = collision.infereState();
+			collision.state = State.deriveStateOf(collision);
 			collision.type = EventType.Cushion;
 		}
 		
