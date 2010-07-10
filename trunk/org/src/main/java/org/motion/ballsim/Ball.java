@@ -22,5 +22,17 @@ public class Ball
 		return events;
 	}
 
+	public Ball(Event init)
+	{
+		getEvents().add(init);
+	}
+
+	public Event lastEvent() 
+	{
+		if (events.size()>0)
+			return events.get(events.size()-1);
+		
+		return null;
+	}
 	
 }
