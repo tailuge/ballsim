@@ -24,6 +24,7 @@ public class Ball
 
 	public Ball(Event init)
 	{
+		init.ball = this;
 		getEvents().add(init);
 	}
 
@@ -35,4 +36,8 @@ public class Ball
 		return null;
 	}
 	
+	public String toString()
+	{
+		return getEvents().toString();
+	}
 }

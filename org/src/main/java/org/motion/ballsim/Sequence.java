@@ -1,6 +1,5 @@
 package org.motion.ballsim;
 
-import java.util.Map.Entry;
 
 /**
  * @author luke
@@ -38,25 +37,23 @@ public class Sequence
 	{
 		// next natural event
 		
-		EventBallMap nextNatural = table.nextNatural();
-		EventBallMap next = nextNatural;
+		Event next = table.nextNatural();
+		if (next == null)
+			return false;
 		
 		// use bounds of this to look for next cushion collision
 		
-//		EventBallMap nextCushion;
-		
+		Event nextCushion = table.nextCushionBefore(next.t);		
+		if ((nextCushion != null) && (nextCushion.t < next.t))
+			next = nextCushion;
+			
 		// use bounds of these to look for next ball/ball collision
 
 //		EventBallMap nextCollision;
 
+		next.ball.getEvents().add(next);
 		
-		if (next.isEmpty())
-			return false;
-		
-		for(Entry<Event,Ball> entry:next.entrySet())
-		{
-			entry.getValue().getEvents().add(entry.getKey());
-		}
+		System.out.println(table);
 		return true;
 	}
 

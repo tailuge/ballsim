@@ -3,6 +3,7 @@ package org.motion.ballsim;
 import static org.junit.Assert.*;
 
 import org.apache.commons.math.geometry.Vector3D;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SequenceTest {
@@ -19,7 +20,8 @@ public class SequenceTest {
 	}
 
 	@Test
-	public final void testGenerateSequnce() 
+	@Ignore
+	public final void testGenerateSequence() 
 	{
 		Table t = new Table();
 		Ball b1 = new Ball(Utilities.getSliding(UtilVector3D.rnd().scalarMultiply(100),Vector3D.MINUS_I ));
