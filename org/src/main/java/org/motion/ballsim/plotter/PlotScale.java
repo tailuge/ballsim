@@ -6,6 +6,7 @@ import java.awt.Stroke;
 import java.util.Collection;
 
 import org.motion.ballsim.Ball;
+import org.motion.ballsim.Cushion;
 import org.motion.ballsim.Event;
 
 public class PlotScale {
@@ -88,9 +89,17 @@ public class PlotScale {
 		g2d = g2d_;
 		w = w_;
 		h = h_;
+		scaleToTable();
 		rescale();
 	}
 
+	public void scaleToTable()
+	{
+		minx = Cushion.xn-Ball.R*2;
+		maxx = Cushion.xp+Ball.R*2;
+		miny = Cushion.yn-Ball.R*2;
+		maxy = Cushion.yp+Ball.R*2;
+	}
 	public int scaledX(double x)
  	{
  		return (int)((x-minx)*scale) ;

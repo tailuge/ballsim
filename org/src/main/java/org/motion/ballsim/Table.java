@@ -54,7 +54,7 @@ public class Table
 
 			if ((next == null) || (eCushion.t < next.t))
 			{
-				next = e;
+				next = eCushion;
 			}
 			
 			

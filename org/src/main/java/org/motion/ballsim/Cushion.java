@@ -12,9 +12,9 @@ import com.google.common.base.Function;
 public class Cushion 
 {
 
-	public final static double yp = 20;
+	public final static double yp = 20*Ball.R;
 	public final static double yn = -yp;
-	public final static double xp = 10;
+	public final static double xp = 10*Ball.R;
 	public final static double xn = -xp;
 
 	/**
@@ -158,7 +158,10 @@ public class Cushion
 	}
 	
 
-
+	public static boolean onTable(Event e)
+	{
+		return (e.pos.getX()<xp) && (e.pos.getX()>xn) && (e.pos.getY()<yp) && (e.pos.getY()>yn);
+	}
 
 
 }
