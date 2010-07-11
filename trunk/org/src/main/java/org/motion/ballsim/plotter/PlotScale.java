@@ -89,7 +89,7 @@ public class PlotScale {
 		g2d = g2d_;
 		w = w_;
 		h = h_;
-		scaleToTable();
+		//scaleToTable();
 		rescale();
 	}
 

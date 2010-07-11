@@ -32,4 +32,21 @@ public class UtilVector3D
 			return arg.getY();
 		}
 	};
+	
+	public static Function<Vector3D,Vector3D> reflectX = new Function<Vector3D, Vector3D>() {	
+
+		@Override
+		public Vector3D apply(Vector3D arg) {
+			return new Vector3D(-arg.getX(),arg.getY(),0);
+		}
+	};
+
+	public static Function<Vector3D,Vector3D> reflectY = new Function<Vector3D, Vector3D>() {	
+
+		@Override
+		public Vector3D apply(Vector3D arg) {
+			return new Vector3D(arg.getX(),-arg.getY(),0);
+		}
+	};
+
 }

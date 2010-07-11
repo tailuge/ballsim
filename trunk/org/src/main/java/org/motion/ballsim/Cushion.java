@@ -33,7 +33,7 @@ public class Cushion
 	public static Event collisionsWith(
 			final Event e, 
 			Function<Vector3D,Double> getAxis, 
-			Function<Event,Event> reflect, 
+			Function<Vector3D,Vector3D> reflect, 
 			double cush, 
 			double maxt)
 	{	
@@ -51,185 +51,51 @@ public class Cushion
 			@Override
 			public Boolean apply(Double arg0) 
 			{	
-				return Cushion.onTable(e.advanceDelta(arg0));
+				return onTable(e.advanceDelta(arg0));
 			}			
 		};
 		
 		tCollision = Quadratic.latestTrueTime(onTable,tCollision);
 
-		assert(cush - getAxis.apply(e.pos) < 0.1);		
-		assert(-0.1 < cush - getAxis.apply(e.pos));		
-		return reflect.apply(e.advanceDelta(tCollision));
+		assert( tCollision > 0);
+		assert( tCollision < maxt);
+		
+		Event reflected = e.advanceDelta(tCollision);
+		reflected.vel = reflect.apply(reflected.vel);
+		reflected.state = State.deriveStateOf(reflected);
+		reflected.type = EventType.Cushion;
+
+		assert(cush - getAxis.apply(reflected.pos) < 0.1);		
+		assert(-0.1 < cush - getAxis.apply(reflected.pos));		
+
+		return reflected;
 	}
 	
-	/**
-	 * 
-	 * Returns event if ball described by event e hits cushion at x
-	 * within period maxt.
-	 * 
-	 * @param e
-	 * @param cushx
-	 * @param maxt
-	 * @return
-	 */
-	public static Event xCollisionsWith(Event e, double cushx, double maxt)
-	{
-		// need to get the coefficients of quadratic whos solution is 
-		// ball pos-x = 0
-		
-		// quadratic is of form    cushx = pos0 + vel0*t + 1/2 acc * t^2
-		// A = 1/2 * acc
-		// B = vel0
-		// C = pos0 - cushx
-		
-		double A = e.getAccelerationVector().getX()*0.5;
-		double B = e.vel.getX();
-		double C = e.pos.getX() - cushx;
-
-		Event collision = getCollisionEvent(e,A,B,C,maxt);
-		
-		if (collision == null)
-			return null;
-		
-		collision = latestEventXStillOnTableAtOrBeforeT(e,collision.t,cushx);
-
-		// reflect in cushion
-		if (collision != null)
-		{
-			collision.vel = new Vector3D(-collision.vel.getX(),collision.vel.getY(),0);
-			collision.state = State.deriveStateOf(collision);
-			collision.type = EventType.Cushion;
-			assert((cushx - collision.pos.getX() ) < 0.1);
-		}
-		
-		return collision;
-	}
-	
-	public static Event yCollisionsWith(Event e, double cushy, double maxt)
-	{
-		double A = e.getAccelerationVector().getY();
-		double B = e.vel.getY();
-		double C = e.pos.getY() - cushy;
-
-		Event collision = getCollisionEvent(e,A,B,C,maxt);
-
-		if (collision == null)
-			return null;
-		
-		collision = latestEventYStillOnTableAtOrBeforeT(e,collision.t,cushy);
-
-		// reflect in cushion
-		if (collision != null)
-		{
-			collision.vel = new Vector3D(collision.vel.getX(),-collision.vel.getY(),0);
-			collision.state = State.deriveStateOf(collision);
-			collision.type = EventType.Cushion;
-			assert((cushy - collision.pos.getY()) < 0.1);
-		}
-
-		return collision;
-	}
-
-	/**
-	 * Given a starting event and a candidate solution time t where
-	 * ball will hit cushion, search linearly backwards from t
-	 * until ball is on same side of cushion as when it started.
-	 * 
-	 * todo: fix it to work for x or y
-	 * 
-	 * @param e
-	 * @param t
-	 * @param cushion
-	 * @return
-	 */
-	private static Event latestEventXStillOnTableAtOrBeforeT(final Event e, double t, final double cushion)
-	{
-		Function<Double,Double> func = new Function<Double, Double>() {
-			
-			@Override
-			public Double apply(Double arg) {
-				return e.advanceDelta(arg).pos.getX() - cushion;
-			}
-		};
-
-		double last = Quadratic.optimise(func, t);
-		
-		if (last>0)
-			return e.advanceDelta(last);
-		
-		return null;
-	}
-
-	private static Event latestEventYStillOnTableAtOrBeforeT(final Event e, double t, final double cushion)
-	{
-		Function<Double,Double> func = new Function<Double, Double>() {
-			
-			@Override
-			public Double apply(Double arg) {
-				return e.advanceDelta(arg).pos.getY() - cushion;
-			}
-		};
-
-		double last = Quadratic.optimise(func, t);
-		
-		if (last>0)
-			return e.advanceDelta(last);
-		
-		return null;
-	}
-
-
-
-	private static Event getCollisionEvent(Event e, double A, double B, double C, double maxt)
-	{
-		double tCollision = Quadratic.getLeastPositiveRoot(A, B, C);
-
-		if ((tCollision > 0) && (tCollision<maxt))
-		{
-			Event collision = e.advanceDelta(tCollision);
-			collision.state = State.Sliding;
-			collision.type = EventType.Cushion;
-
-			return collision;
-		}
-		
-		return null;
-		
-	}
-
-
 	public static Event getNext(Event e, double maxt) 
-	{
-		
-		Event eCush = null;
+	{		
 		Event next = null;
-		eCush = xCollisionsWith(e, xp, maxt);
-		if ( (next==null)  || 
-			((next !=null) && (eCush != null) && (eCush.t < next.t)))
-				next = eCush;
-
-		eCush = xCollisionsWith(e, xn, maxt);
-		if ( (next==null)  || 
-				((next !=null) && (eCush != null) && (eCush.t < next.t)))
-					next = eCush;
-
-		eCush = yCollisionsWith(e, yp, maxt);
-		if ( (next==null)  || 
-				((next !=null) && (eCush != null) && (eCush.t < next.t)))
-					next = eCush;
-
-		eCush = yCollisionsWith(e, yn, maxt);
-		if ( (next==null)  || 
-				((next !=null) && (eCush != null) && (eCush.t < next.t)))
-					next = eCush;
-
+		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getX, UtilVector3D.reflectX, xp, maxt));
+		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getX, UtilVector3D.reflectX, xn, maxt));
+		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getY, UtilVector3D.reflectY, yp, maxt));
+		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getY, UtilVector3D.reflectY, yn, maxt));	
 		return next;
 	}
 	
+	private static Event updateIfSooner(Event current, Event proposed)
+	{
+		if ((proposed==null) || (proposed.t < 0))
+			return current;		
+		if (current==null)
+			return proposed;		
+		if (proposed.t < current.t)
+			return proposed;
+		
+		return current;
+	}
 
 	public static boolean onTable(Event e)
 	{
-		return (e.pos.getX()<xp) && (e.pos.getX()>xn) && (e.pos.getY()<yp) && (e.pos.getY()>yn);
+		return (e.pos.getX()<xp) && (e.pos.getX()>xn) && (e.pos.getY()<yp) && (e.pos.getY()>yn); 
 	}
 
 

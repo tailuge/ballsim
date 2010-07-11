@@ -19,6 +19,16 @@ public class Ball
 	
 	public void add(Event e)
 	{
+		if (!events.isEmpty())
+		{
+			double last = lastEvent().t;
+			double et = e.t;
+			if (last > et)
+			{
+				System.out.println("last:"+last +" et:"+ et);
+				System.exit(1); // broken
+			}
+		}
 		events.addLast(e);
 	}
 	
@@ -30,11 +40,22 @@ public class Ball
 
 	public Event lastEvent() 
 	{
-		return events.getLast();
+		Event result = null;
+		for(Event e: events)
+		{
+			if ((result==null) || (e.t > result.t))
+				result = e;
+		}
+		return result;
 	}
 	
 	public String toString()
 	{
+		String result = "Ball:";
+		for(Event e: events)
+		{
+			result += e.t + "\n";
+		}
 		return events.toString();
 	}
 
