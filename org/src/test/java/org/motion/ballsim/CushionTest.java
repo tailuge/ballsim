@@ -150,4 +150,23 @@ public class CushionTest {
 	}
 	
 	
+	@Test
+	public final void testManyTableCollisions() 
+	{
+		// generate large number of cushion hits and assert
+		// ball always still on table
+		
+		double v=0;
+		while(v<1000)
+		{
+			Event e = Utilities.getSliding(UtilVector3D.rnd().scalarMultiply(500),Vector3D.PLUS_I);
+			Event s = e.next();
+			if (Cushion.onTable(s.next()))
+				continue;
+			
+			Event c = Cushion.getNext(e, s.t);
+			assertNotNull("Collision before leaving table",c);
+			v++;
+		}
+	}
 }
