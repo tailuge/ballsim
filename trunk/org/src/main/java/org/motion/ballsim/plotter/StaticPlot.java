@@ -49,6 +49,7 @@ public class StaticPlot  extends JPanel
         Dimension size = getSize();
         Insets insets = getInsets();
         scale.setWindowInfo(g2d,size.width - insets.left - insets.right,size.height - insets.top - insets.bottom);           
+        PlotCushion.plot(scale);
         plotTable();    		
     }
 	

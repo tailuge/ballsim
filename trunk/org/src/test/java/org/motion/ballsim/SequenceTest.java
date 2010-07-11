@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.math.geometry.Vector3D;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SequenceTest {
@@ -66,4 +67,19 @@ public class SequenceTest {
 		assertEquals("Generate 2 events slide->(roll,stationary)",2,s.generateSequence());
 	}
 
+
+	@Test
+	@Ignore
+	public final void testStaysOnTable() 
+	{
+		Table t = new Table();
+		Ball b1 = new Ball(Utilities.getSliding(new Vector3D(2,1,0).scalarMultiply(-100) ,Vector3D.PLUS_I));
+		t.balls.add(b1);
+		Sequence s = new Sequence(t);
+		s.generateSequence();
+		for(Event e:t.getAllEvents())
+		{
+			assertTrue("On table",Cushion.onTable(e));
+		}
+	}
 }

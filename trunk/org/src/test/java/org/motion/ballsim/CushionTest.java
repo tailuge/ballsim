@@ -134,4 +134,20 @@ public class CushionTest {
 		System.out.println("far:"+far+"close:"+close);
 	}
 	
+	@Test
+	public final void testHitsCushion() 
+	{
+		Event e = Utilities.getRolling(new Vector3D(2,1,0).scalarMultiply(30));		
+		Event s = e.next();
+		Event c1 = Cushion.getNext(e, s.t);
+		
+		System.out.println(e);
+		System.out.println(s);
+		System.out.println(c1);
+		
+		assertNotNull("No collision parallel to cushion",c1);	
+		assertTrue("Collision befor stop",c1.t<s.t);	
+	}
+	
+	
 }
