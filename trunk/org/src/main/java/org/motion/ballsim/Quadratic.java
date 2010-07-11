@@ -101,4 +101,33 @@ public class Quadratic
 
 		return last;
 	}
+	
+	
+	
+	public static double latestTrueTime(Function<Double,Boolean> onTable, double rootCandidate)
+	{
+
+		// Condition must be good at t = 0
+		assert(onTable.apply(0.0) == true);
+
+		double last = rootCandidate;
+		
+		double delta = Quadratic.nextSmallestDelta(last);
+		
+		int count = 0;
+		
+		while(
+				(last>0) && (last<=rootCandidate) && 
+				(onTable.apply(last) != true)
+			 )
+		{
+			last -=delta;
+			delta *= 2;
+			if (++count%100000 == 0)
+				System.out.println(count+"last:"+last+" eval:"+onTable.apply(last));
+		}
+
+		return last;
+	}
+
 }

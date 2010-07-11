@@ -18,6 +18,51 @@ public class Cushion
 	public final static double xn = -xp;
 
 	/**
+	 * Collides with cushion of equation of motion intersects cushion
+	 * 
+	 * need to get the coefficients of quadratic who's solution is:
+	 *  cush = pos0 + vel0*t + 1/2 acc * t^2
+	 * 
+	 * @param e - input event
+	 * @param getAxis - returns either X or Y component of a vector
+	 * @param reflect - reflect event in either X or Y axis
+	 * @param cush - position of cushion
+	 * @param maxt - time beyond which equation of motion invalid
+	 * @return reflected cushion collision event if it occurs within maxt
+	 */
+	public static Event collisionsWith(
+			final Event e, 
+			Function<Vector3D,Double> getAxis, 
+			Function<Event,Event> reflect, 
+			double cush, 
+			double maxt)
+	{	
+		double A = getAxis.apply(e.getAccelerationVector())*0.5;
+		double B = getAxis.apply(e.vel);
+		double C = getAxis.apply(e.pos) - cush;
+
+		double tCollision = Quadratic.getLeastPositiveRoot(A, B, C);
+		
+		if ((tCollision <= 0) || (tCollision>maxt))			
+			return null;
+		
+		Function<Double,Boolean> onTable = new Function<Double,Boolean>()
+		{
+			@Override
+			public Boolean apply(Double arg0) 
+			{	
+				return Cushion.onTable(e.advanceDelta(arg0));
+			}			
+		};
+		
+		tCollision = Quadratic.latestTrueTime(onTable,tCollision);
+
+		assert(cush - getAxis.apply(e.pos) < 0.1);		
+		assert(-0.1 < cush - getAxis.apply(e.pos));		
+		return reflect.apply(e.advanceDelta(tCollision));
+	}
+	
+	/**
 	 * 
 	 * Returns event if ball described by event e hits cushion at x
 	 * within period maxt.
@@ -54,11 +99,36 @@ public class Cushion
 			collision.vel = new Vector3D(-collision.vel.getX(),collision.vel.getY(),0);
 			collision.state = State.deriveStateOf(collision);
 			collision.type = EventType.Cushion;
+			assert((cushx - collision.pos.getX() ) < 0.1);
 		}
 		
 		return collision;
 	}
 	
+	public static Event yCollisionsWith(Event e, double cushy, double maxt)
+	{
+		double A = e.getAccelerationVector().getY();
+		double B = e.vel.getY();
+		double C = e.pos.getY() - cushy;
+
+		Event collision = getCollisionEvent(e,A,B,C,maxt);
+
+		if (collision == null)
+			return null;
+		
+		collision = latestEventYStillOnTableAtOrBeforeT(e,collision.t,cushy);
+
+		// reflect in cushion
+		if (collision != null)
+		{
+			collision.vel = new Vector3D(collision.vel.getX(),-collision.vel.getY(),0);
+			collision.state = State.deriveStateOf(collision);
+			collision.type = EventType.Cushion;
+			assert((cushy - collision.pos.getY()) < 0.1);
+		}
+
+		return collision;
+	}
 
 	/**
 	 * Given a starting event and a candidate solution time t where
@@ -90,21 +160,25 @@ public class Cushion
 		return null;
 	}
 
-	
-	public static Event yCollisionsWith(Event e, double cushy, double maxt)
+	private static Event latestEventYStillOnTableAtOrBeforeT(final Event e, double t, final double cushion)
 	{
-		double A = e.getAccelerationVector().getY();
-		double B = e.vel.getY();
-		double C = e.pos.getY() - cushy;
+		Function<Double,Double> func = new Function<Double, Double>() {
+			
+			@Override
+			public Double apply(Double arg) {
+				return e.advanceDelta(arg).pos.getY() - cushion;
+			}
+		};
 
-		Event collision = getCollisionEvent(e,A,B,C,maxt);
-
-		// reflect in cushion
-		if (collision != null)
-			collision.vel = new Vector3D(collision.vel.getX(),-collision.vel.getY(),0);
-
-		return collision;
+		double last = Quadratic.optimise(func, t);
+		
+		if (last>0)
+			return e.advanceDelta(last);
+		
+		return null;
 	}
+
+
 
 	private static Event getCollisionEvent(Event e, double A, double B, double C, double maxt)
 	{
@@ -115,12 +189,7 @@ public class Cushion
 			Event collision = e.advanceDelta(tCollision);
 			collision.state = State.Sliding;
 			collision.type = EventType.Cushion;
-						
-			// todo reduce spin
-			// todo add rotation from sidespin.
-			// todo increase sidespin from friction with cushion
-			
-			e.t += tCollision;
+
 			return collision;
 		}
 		

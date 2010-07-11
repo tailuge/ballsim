@@ -178,7 +178,8 @@ public class Event {
 	private static final DecimalFormat SECONDS_FORMAT = new DecimalFormat("0.00");
 
 	public String toString() {
-		return state+" t:" + SECONDS_FORMAT.format(t) + " "+type + " p:" + pos + " v:" + vel
-				+ " ap:" + angularPos + " av:" + angularVel;
+		return state+" t:" + SECONDS_FORMAT.format(t) + " "+type ;
+		//+ " p:" + pos + " v:" + vel
+			//	+ " ap:" + angularPos + " av:" + angularVel;
 	}
 }
