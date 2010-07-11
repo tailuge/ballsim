@@ -1,7 +1,9 @@
 package org.motion.ballsim.plotter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.BasicStroke;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
+import java.util.Collection;
 
 import org.motion.ballsim.Ball;
 import org.motion.ballsim.Event;
@@ -11,24 +13,31 @@ public class PlotScale {
  	int w,h,r;
  	double scale;
  	double minx,maxx,miny,maxy;
+ 	Graphics2D g2d;
  	
- 	final static double velscale = 50;
- 	final static double angscale = 50;
+ 	public final static double velscale = 50;
+ 	public final static double angscale = 50;
 
- 	List<Event> events = new ArrayList<Event>();
+ 	public final static Stroke thindashed = new BasicStroke(1.0f,
+		      BasicStroke.CAP_BUTT,
+		      BasicStroke.JOIN_BEVEL, 1.0f,
+		      new float[] { 8.0f, 3.0f, 2.0f, 3.0f },
+		      0.0f); 
+
+	public final static Stroke normal = new BasicStroke(1.0f);
+
  	
- 	public PlotScale(List<Event> events_)
+ 	public PlotScale(Collection<Event> events)
  	{
- 		events.clear();
- 		events.addAll(events_);
+ 		extractMinMax(events);
  	}
  	
- 	public void scaleToFit()
+ 	private void extractMinMax(Collection<Event> events)
  	{
- 		minx = events.get(0).pos.getX();
- 		maxx = events.get(0).pos.getX();
-		miny = events.get(0).pos.getY();
-		maxy = events.get(0).pos.getY();
+ 		minx = 0;
+ 		maxx = 0;
+		miny = 0;
+		maxy = 0;
  		
  		for(Event e : events)
  		{
@@ -50,26 +59,44 @@ public class PlotScale {
  		minx -= Ball.R;
  		maxy += Ball.R;
  		miny -= Ball.R;
- 		
+ 	}
+ 	
+ 	private void rescale()
+ 	{ 		
  		double scalex = w/(maxx-minx) ;
  		double scaley = h/(maxy-miny) ;
  		
  		System.out.println(scalex + "," + scaley);
  		
- 		//scale = (scalex+scaley)*1.3; 	
  		scale = scalex < scaley ? scalex : scaley;
  		scale *= 1.0;
  		if (scale==0)
  			scale = 0.05;
  		
         r = (int) (Ball.R*scale);
-
+/*
         System.out.println("minx:"+minx+" maxx:"+maxx);
         System.out.println("miny:"+miny+" maxy:"+maxy);
         System.out.println("scalex:"+scaley);
         System.out.println("scaley:"+scalex);
         System.out.println("scale:"+scale);
-        
+*/        
  	}
 
+	public void setWindowInfo(Graphics2D g2d_, int w_, int h_) 
+	{
+		g2d = g2d_;
+		w = w_;
+		h = h_;
+		rescale();
+	}
+
+	public int scaledX(double x)
+ 	{
+ 		return (int)((x-minx)*scale) ;
+ 	}
+ 	public int scaledY(double y)
+ 	{
+ 		return (int)((y-miny)*scale) ;
+ 	}
 }

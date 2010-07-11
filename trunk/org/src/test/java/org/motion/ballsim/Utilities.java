@@ -39,4 +39,12 @@ public class Utilities {
 		return e;
 	}
 
+	public static Event getStationary(Vector3D pos)
+	{
+		Event e = getSimpleEvent();
+		e.state = State.Stationary;
+		e.pos = pos;
+		return e;
+	}
+
 }

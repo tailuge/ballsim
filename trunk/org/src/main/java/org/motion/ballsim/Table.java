@@ -1,6 +1,7 @@
 package org.motion.ballsim;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Table 
@@ -67,5 +68,17 @@ public class Table
 	public String toString()
 	{	
 		return balls.toString();
+	}
+
+	public Collection<Event> getAllEvents() 
+	{
+		Collection<Event> all = new ArrayList<Event>();
+
+		for(Ball ball : balls)
+		{
+			all.addAll(ball.getAllEvents());
+		}
+		
+		return all;
 	}
 }

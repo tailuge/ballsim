@@ -51,7 +51,7 @@ public class Sequence
 
 //		EventBallMap nextCollision;
 
-		next.ball.getEvents().add(next);
+		next.ball.add(next);
 		
 		System.out.println(table);
 		return true;
