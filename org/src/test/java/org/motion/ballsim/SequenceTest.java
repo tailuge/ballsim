@@ -1,9 +1,9 @@
 package org.motion.ballsim;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.math.geometry.Vector3D;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class SequenceTest {
@@ -20,15 +20,50 @@ public class SequenceTest {
 	}
 
 	@Test
-	@Ignore
-	public final void testGenerateSequence() 
+	public final void testEmptyTable() 
 	{
 		Table t = new Table();
-		Ball b1 = new Ball(Utilities.getSliding(UtilVector3D.rnd().scalarMultiply(100),Vector3D.MINUS_I ));
+		Sequence s = new Sequence(t);
+		
+		assertEquals("Generate 0 events",0,s.generateSequence());
+	}
+
+	@Test
+	public final void tesTwoStationary() 
+	{
+		Table t = new Table();
+		Ball b1 = new Ball(Utilities.getStationary());
+		Ball b2 = new Ball(Utilities.getStationary(Vector3D.PLUS_I.scalarMultiply(Ball.R*3)));
+		t.balls.add(b1);
+		t.balls.add(b2);		
+		Sequence s = new Sequence(t);
+		assertEquals("Generate 0 events",0,s.generateSequence());
+	}
+
+	@Test
+	public final void testSingleRoll() 
+	{
+		Table t = new Table();
+		Ball b1 = new Ball(Utilities.getRolling(Vector3D.MINUS_I ));
 		t.balls.add(b1);
 		Sequence s = new Sequence(t);
 		
-		assertEquals("Generate 2 events",2,s.generateSequence());
+		assertEquals("Generate 1 events",1,s.generateSequence());
+	}
+
+//	StaticPlot plot;
+	
+	@Test
+	public final void testGenerateSequence() 
+	{
+		Table t = new Table();
+		Ball b1 = new Ball(Utilities.getSliding(UtilVector3D.rnd().scalarMultiply(10),Vector3D.MINUS_I ));
+		t.balls.add(b1);
+		Sequence s = new Sequence(t);
+		
+//		plot = new StaticPlot(t);
+//    	plot.draw();   	
+		assertEquals("Generate 2 events slide->(roll,stationary)",2,s.generateSequence());
 	}
 
 }

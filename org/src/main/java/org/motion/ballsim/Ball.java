@@ -1,7 +1,7 @@
 package org.motion.ballsim;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.LinkedList;
 
 
 public class Ball 
@@ -15,29 +15,31 @@ public class Ball
 	public static final double stationaryAngularTolerance = 0.0001;
 	public static final double stationaryTolerance = 0.0001;
 		
-	private List<Event> events = new ArrayList<Event>();
+	private LinkedList<Event> events = new LinkedList<Event>();
 	
-	public List<Event> getEvents() 
+	public void add(Event e)
 	{
-		return events;
+		events.addLast(e);
 	}
-
+	
 	public Ball(Event init)
 	{
 		init.ball = this;
-		getEvents().add(init);
+		add(init);
 	}
 
 	public Event lastEvent() 
 	{
-		if (events.size()>0)
-			return events.get(events.size()-1);
-		
-		return null;
+		return events.getLast();
 	}
 	
 	public String toString()
 	{
-		return getEvents().toString();
+		return events.toString();
+	}
+
+	public Collection<Event> getAllEvents() 
+	{
+		return events;
 	}
 }

@@ -120,6 +120,7 @@ public class Cushion
 			// todo add rotation from sidespin.
 			// todo increase sidespin from friction with cushion
 			
+			e.t += tCollision;
 			return collision;
 		}
 		
