@@ -12,6 +12,11 @@ import com.google.common.base.Function;
 public class Cushion 
 {
 
+	public final static double yp = 20;
+	public final static double yn = -yp;
+	public final static double xp = 10;
+	public final static double xn = -xp;
+
 	/**
 	 * 
 	 * Returns event if ball described by event e hits cushion at x
@@ -120,6 +125,35 @@ public class Cushion
 		
 		return null;
 		
+	}
+
+
+	public static Event getNext(Event e, double maxt) 
+	{
+		
+		Event eCush = null;
+		Event next = null;
+		eCush = xCollisionsWith(e, xp, maxt);
+		if ( (next==null)  || 
+			((next !=null) && (eCush != null) && (eCush.t < next.t)))
+				next = eCush;
+
+		eCush = xCollisionsWith(e, xn, maxt);
+		if ( (next==null)  || 
+				((next !=null) && (eCush != null) && (eCush.t < next.t)))
+					next = eCush;
+
+		eCush = yCollisionsWith(e, yp, maxt);
+		if ( (next==null)  || 
+				((next !=null) && (eCush != null) && (eCush.t < next.t)))
+					next = eCush;
+
+		eCush = yCollisionsWith(e, yn, maxt);
+		if ( (next==null)  || 
+				((next !=null) && (eCush != null) && (eCush.t < next.t)))
+					next = eCush;
+
+		return next;
 	}
 	
 

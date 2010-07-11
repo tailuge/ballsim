@@ -35,7 +35,8 @@ public class Event {
 	public State state;
 	public double t;
 	public EventType type;
-
+	public Ball ball;
+	
 	public Event(Vector3D pos, Vector3D vel, Vector3D angularPos,
 			Vector3D angularVel, Vector3D sidespin, State state, double t,
 			EventType type) {
@@ -49,6 +50,20 @@ public class Event {
 		this.type = type;
 	}
 
+	public Event(Vector3D pos, Vector3D vel, Vector3D angularPos,
+			Vector3D angularVel, Vector3D sidespin, State state, double t,
+			EventType type, Ball ball) {
+		this.pos = pos;
+		this.vel = vel;
+		this.angularPos = angularPos;
+		this.angularVel = angularVel;
+		this.sidespin = sidespin;
+		this.state = state;
+		this.t = t;
+		this.type = type;
+		this.ball = ball;
+	}
+
 	public Event(Event e) {
 		pos = e.pos;
 		vel = e.vel;
@@ -59,6 +74,7 @@ public class Event {
 		state = e.state;
 		t = e.t;
 		type = e.type;
+		ball = e.ball;		
 	}
 
 

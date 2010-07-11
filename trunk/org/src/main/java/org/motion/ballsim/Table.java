@@ -6,10 +6,6 @@ import java.util.List;
 public class Table 
 {
 
-	public final static double yp = 20;
-	public final static double yn = -yp;
-	public final static double xp = 10;
-	public final static double xn = -xp;
 	
 	public final static double froll = 10;
 	public final static double fslide = 40;
@@ -23,10 +19,9 @@ public class Table
 	 * 
 	 * @return
 	 */
-	public EventBallMap nextNatural() 
+	public Event nextNatural() 
 	{
 		Event next = null;
-		Ball nextBall = null;
 		for(Ball ball : balls)
 		{
 			Event e = ball.lastEvent();
@@ -37,14 +32,40 @@ public class Table
 			if ((next == null) || (e.t < next.t))
 			{
 				next = e;
-				nextBall = ball;
 			}
 		}
 
-		EventBallMap result = new EventBallMap();
-		if (next != null)
-			result.put(next,nextBall);
+		return next;
+	}
 
-		return result;
+	public Event nextCushionBefore(double maxt) 
+	{
+		Event next = null;
+		for(Ball ball : balls)
+		{
+			Event e = ball.lastEvent();
+			if (e.state == State.Stationary)
+				continue;
+			
+			Event eCushion = Cushion.getNext(e, maxt);
+			if (eCushion == null)
+				continue;
+
+			if ((next == null) || (eCushion.t < next.t))
+			{
+				next = e;
+			}
+			
+			
+		}		
+
+		if ((next != null) && (next.t < maxt))
+			return next;
+		return null;
+	}
+	
+	public String toString()
+	{	
+		return balls.toString();
 	}
 }
