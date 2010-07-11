@@ -29,10 +29,11 @@ public class Table
 			if (e.state == State.Stationary)
 				continue;
 			
-			e = e.next();
-			if ((next == null) || (e.t < next.t))
+			Event eNext = e.next();
+			if ((next == null) || (eNext.t < next.t))
 			{
-				next = e;
+				next = eNext;
+				assert( next.t > e.t);
 			}
 		}
 
@@ -55,9 +56,8 @@ public class Table
 			if ((next == null) || (eCushion.t < next.t))
 			{
 				next = eCushion;
-			}
-			
-			
+				assert(next.t > e.t);
+			}		
 		}		
 
 		if ((next != null) && (next.t < maxt))
