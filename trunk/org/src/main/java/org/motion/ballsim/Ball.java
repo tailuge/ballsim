@@ -23,11 +23,7 @@ public class Ball
 		{
 			double last = lastEvent().t;
 			double et = e.t;
-			if (last > et)
-			{
-				System.out.println("last:"+last +" et:"+ et);
-				System.exit(1); // broken
-			}
+			assert(last<et);
 		}
 		events.addLast(e);
 	}

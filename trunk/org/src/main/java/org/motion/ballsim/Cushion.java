@@ -18,7 +18,7 @@ public class Cushion
 	public final static double xn = -xp;
 
 	/**
-	 * Collides with cushion of equation of motion intersects cushion
+	 * Collides with cushion when equation of motion intersects cushion
 	 * 
 	 * need to get the coefficients of quadratic who's solution is:
 	 *  cush = pos0 + vel0*t + 1/2 acc * t^2
@@ -34,6 +34,7 @@ public class Cushion
 			final Event e, 
 			Function<Vector3D,Double> getAxis, 
 			Function<Vector3D,Vector3D> reflect, 
+			Function<Double,Boolean> onTable, 
 			double cush, 
 			double maxt)
 	{	
@@ -45,15 +46,8 @@ public class Cushion
 		
 		if ((tCollision <= 0) || (tCollision>maxt))			
 			return null;
-		
-		Function<Double,Boolean> onTable = new Function<Double,Boolean>()
-		{
-			@Override
-			public Boolean apply(Double arg0) 
-			{	
-				return onTable(e.advanceDelta(arg0));
-			}			
-		};
+				
+		assert( tCollision > 0);
 		
 		tCollision = Quadratic.latestTrueTime(onTable,tCollision);
 
@@ -65,19 +59,20 @@ public class Cushion
 		reflected.state = State.deriveStateOf(reflected);
 		reflected.type = EventType.Cushion;
 
-		assert(cush - getAxis.apply(reflected.pos) < 0.1);		
-		assert(-0.1 < cush - getAxis.apply(reflected.pos));		
+//		assert(cush - getAxis.apply(reflected.pos) < 0.1);		
+//		assert(-0.1 < cush - getAxis.apply(reflected.pos));		
 
 		return reflected;
 	}
 	
 	public static Event getNext(Event e, double maxt) 
 	{		
+		System.out.println(e);
 		Event next = null;
-		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getX, UtilVector3D.reflectX, xp, maxt));
-		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getX, UtilVector3D.reflectX, xn, maxt));
-		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getY, UtilVector3D.reflectY, yp, maxt));
-		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getY, UtilVector3D.reflectY, yn, maxt));	
+		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getX, UtilVector3D.reflectX, getOnTableX(e), xp, maxt));
+		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getX, UtilVector3D.reflectX, getOnTableX(e), xn, maxt));
+		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getY, UtilVector3D.reflectY, getOnTableY(e), yp, maxt));
+		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getY, UtilVector3D.reflectY, getOnTableY(e), yn, maxt));	
 		return next;
 	}
 	
@@ -95,8 +90,37 @@ public class Cushion
 
 	public static boolean onTable(Event e)
 	{
-		return (e.pos.getX()<xp) && (e.pos.getX()>xn) && (e.pos.getY()<yp) && (e.pos.getY()>yn); 
+		return onTableX(e) && onTableY(e); 
 	}
 
+	public static boolean onTableX(Event e)
+	{
+		return (e.pos.getX()<xp) && (e.pos.getX()>xn); 
+	}
+
+	public static boolean onTableY(Event e)
+	{
+		return (e.pos.getY()<yp) && (e.pos.getY()>yn); 
+	}
+
+	public static Function<Double,Boolean> getOnTableY(final Event e)
+	{
+		return new Function<Double,Boolean>() {
+		@Override
+		public Boolean apply(Double arg) {
+			return onTableY(e.advanceDelta(arg));
+			}
+		};
+	}
+
+	public static Function<Double,Boolean> getOnTableX(final Event e)
+	{
+		return new Function<Double,Boolean>() {
+		@Override
+		public Boolean apply(Double arg) {
+			return onTableX(e.advanceDelta(arg));
+			}
+		};
+	}
 
 }

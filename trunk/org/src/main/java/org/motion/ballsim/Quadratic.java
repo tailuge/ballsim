@@ -12,7 +12,7 @@ public class Quadratic
 	
 	static double getLeastPositiveRoot(double a, double b, double c)
 	{
-		
+		System.out.println(a+"t^2 "+b+"t "+c);
 		double discr = Math.sqrt((b * b) - (4 * a * c));
 
 		// if discriminant > 0 equation has 2 real roots ignore all other cases
@@ -111,7 +111,8 @@ public class Quadratic
 		assert(onTable.apply(0.0) == true);
 
 		double last = rootCandidate;
-		
+		System.out.println("--");
+		System.out.println("candidate:"+last+" onTable:"+onTable.apply(last));
 		double delta = Quadratic.nextSmallestDelta(last);
 		
 		int count = 0;
@@ -123,6 +124,7 @@ public class Quadratic
 		{
 			last -=delta;
 			delta *= 2;
+			System.out.println("candidate:"+last+" onTable:"+onTable.apply(last));
 			if (++count%100000 == 0)
 				System.out.println(count+"last:"+last+" eval:"+onTable.apply(last));
 		}
