@@ -30,7 +30,7 @@ public class Cushion
 	 * @param maxt - time beyond which equation of motion invalid
 	 * @return reflected cushion collision event if it occurs within maxt
 	 */
-	public static Event collisionsWith(
+	private static Event hits(
 			final Event e, 
 			Function<Vector3D,Double> getAxis, 
 			Function<Vector3D,Vector3D> reflect, 
@@ -42,7 +42,7 @@ public class Cushion
 		double B = getAxis.apply(e.vel);
 		double C = getAxis.apply(e.pos) - cush;
 
-		double tCollision = Quadratic.getLeastPositiveRoot(A, B, C);
+		double tCollision = Quadratic.leastPositiveRoot(A, B, C);
 		
 		if ((tCollision <= 0) || (tCollision>maxt))			
 			return null;
@@ -59,24 +59,24 @@ public class Cushion
 		reflected.state = State.deriveStateOf(reflected);
 		reflected.type = EventType.Cushion;
 
-//		assert(cush - getAxis.apply(reflected.pos) < 0.1);		
-//		assert(-0.1 < cush - getAxis.apply(reflected.pos));		
-
 		return reflected;
 	}
 	
-	public static Event getNext(Event e, double maxt) 
+	public static Event hit(Event e, double maxt) 
 	{		
 		System.out.println(e);
 		Event next = null;
-		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getX, UtilVector3D.reflectX, getOnTableX(e), xp, maxt));
-		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getX, UtilVector3D.reflectX, getOnTableX(e), xn, maxt));
-		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getY, UtilVector3D.reflectY, getOnTableY(e), yp, maxt));
-		next = updateIfSooner(next,collisionsWith(e, UtilVector3D.getY, UtilVector3D.reflectY, getOnTableY(e), yn, maxt));	
+		next = sooner(next,hits(e, UtilVector3D.getX, UtilVector3D.reflectX, onX(e), xp, maxt));
+		next = sooner(next,hits(e, UtilVector3D.getX, UtilVector3D.reflectX, onX(e), xn, maxt));
+		next = sooner(next,hits(e, UtilVector3D.getY, UtilVector3D.reflectY, onY(e), yp, maxt));
+		next = sooner(next,hits(e, UtilVector3D.getY, UtilVector3D.reflectY, onY(e), yn, maxt));	
+		if(next!=null)
+			System.out.println("t:"+next.t+" t-e:"+(next.t-e.t));
+		assert((next==null) || Cushion.onTable(next));
 		return next;
 	}
 	
-	private static Event updateIfSooner(Event current, Event proposed)
+	private static Event sooner(Event current, Event proposed)
 	{
 		if ((proposed==null) || (proposed.t < 0))
 			return current;		
@@ -93,17 +93,17 @@ public class Cushion
 		return onTableX(e) && onTableY(e); 
 	}
 
-	public static boolean onTableX(Event e)
+	private static boolean onTableX(Event e)
 	{
 		return (e.pos.getX()<xp) && (e.pos.getX()>xn); 
 	}
 
-	public static boolean onTableY(Event e)
+	private static boolean onTableY(Event e)
 	{
 		return (e.pos.getY()<yp) && (e.pos.getY()>yn); 
 	}
 
-	public static Function<Double,Boolean> getOnTableY(final Event e)
+	private static Function<Double,Boolean> onY(final Event e)
 	{
 		return new Function<Double,Boolean>() {
 		@Override
@@ -113,7 +113,7 @@ public class Cushion
 		};
 	}
 
-	public static Function<Double,Boolean> getOnTableX(final Event e)
+	private static Function<Double,Boolean> onX(final Event e)
 	{
 		return new Function<Double,Boolean>() {
 		@Override
