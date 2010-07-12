@@ -49,7 +49,7 @@ public class Table
 			if (e.state == State.Stationary)
 				continue;
 			
-			Event eCushion = Cushion.getNext(e, maxt);
+			Event eCushion = Cushion.hit(e, maxt);
 			if (eCushion == null)
 				continue;
 
@@ -57,9 +57,11 @@ public class Table
 			{
 				next = eCushion;
 				assert(next.t > e.t);
+				assert(Cushion.onTable(next));
 			}		
 		}		
 
+		
 		if ((next != null) && (next.t < maxt))
 			return next;
 		return null;

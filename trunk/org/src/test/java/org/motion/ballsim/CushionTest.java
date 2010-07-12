@@ -17,7 +17,7 @@ public class CushionTest {
 		// place near cushion
 		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(50));
 		e.pos = Vector3D.PLUS_I.scalarMultiply(Cushion.xp-Ball.R);
-		Event c1 = Cushion.getNext(e, e.next().t);
+		Event c1 = Cushion.hit(e, e.next().t);
 		assertNotNull("Collides",c1);
 		
 		System.out.println(e);
@@ -35,7 +35,7 @@ public class CushionTest {
 		// place near cushion
 		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(-50));
 		e.pos = Vector3D.PLUS_I.scalarMultiply(Cushion.xn+Ball.R);
-		Event c1 = Cushion.getNext(e, e.next().t);
+		Event c1 = Cushion.hit(e, e.next().t);
 		assertNotNull("Collides",c1);
 		assertTrue("Collision before ball stops",c1.t < e.next().t);
 		assertEquals("Collision should be at cushion position",Cushion.xn,c1.pos.getX(),0.001);
@@ -48,7 +48,7 @@ public class CushionTest {
 		// place near cushion
 		Event e = Utilities.getRolling(Vector3D.PLUS_J.scalarMultiply(50));
 		e.pos = Vector3D.PLUS_J.scalarMultiply(Cushion.yp-Ball.R);
-		Event c1 = Cushion.getNext(e, e.next().t);
+		Event c1 = Cushion.hit(e, e.next().t);
 		assertNotNull("Collides",c1);
 		assertTrue("Collision before ball stops",c1.t < e.next().t);
 		assertEquals("Collision should be at cushion position",Cushion.yp,c1.pos.getY(),0.001);
@@ -61,7 +61,7 @@ public class CushionTest {
 		// place near cushion
 		Event e = Utilities.getRolling(Vector3D.PLUS_J.scalarMultiply(-50));
 		e.pos = Vector3D.PLUS_J.scalarMultiply(Cushion.yn+Ball.R);
-		Event c1 = Cushion.getNext(e, e.next().t);
+		Event c1 = Cushion.hit(e, e.next().t);
 		assertNotNull("Collides",c1);
 		assertTrue("Collision before ball stops",c1.t < e.next().t);
 		assertEquals("Collision should be at cushion position",Cushion.yn,c1.pos.getY(),0.001);
@@ -73,7 +73,7 @@ public class CushionTest {
 	public final void testCollisionsNone() 
 	{
 		Event e = Utilities.getStationary();	
-		Event c1 = Cushion.getNext(e, Double.MAX_VALUE);	
+		Event c1 = Cushion.hit(e, Double.MAX_VALUE);	
 		assertNull("No collision parallel to cushion",c1);	
 	}
 
@@ -83,7 +83,7 @@ public class CushionTest {
 	{
 		Event e = Utilities.getRolling(new Vector3D(2,1,0).scalarMultiply(30));		
 		Event s = e.next();
-		Event c1 = Cushion.getNext(e, s.t);
+		Event c1 = Cushion.hit(e, s.t);
 		assertNotNull("Hits cushion",c1);	
 		assertTrue("Collision befor stop",c1.t<s.t);	
 	}
@@ -103,7 +103,7 @@ public class CushionTest {
 			if (Cushion.onTable(s.next()))
 				continue;
 			
-			Event c = Cushion.getNext(e, s.t);
+			Event c = Cushion.hit(e, s.t);
 			assertNotNull("Collision before leaving table",c);
 			v++;
 		}

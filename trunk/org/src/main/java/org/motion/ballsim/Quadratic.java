@@ -10,7 +10,7 @@ public class Quadratic
 		return a*t*t + b*t + c;
 	}
 	
-	static double getLeastPositiveRoot(double a, double b, double c)
+	static double leastPositiveRoot(double a, double b, double c)
 	{
 		System.out.println(a+"t^2 "+b+"t "+c);
 		double discr = Math.sqrt((b * b) - (4 * a * c));
