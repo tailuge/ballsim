@@ -49,7 +49,7 @@ public class Sequence
 			
 		// use bounds of these to look for next ball/ball collision
 
-//		EventBallMap nextCollision;
+
 
 		next.ball.add(next);
 		

@@ -108,4 +108,15 @@ public class CushionTest {
 			v++;
 		}
 	}
+	
+	@Test
+	public final void testOnTable() 
+	{
+		assertTrue(Cushion.onTable(Utilities.getStationary()));
+		assertTrue(!Cushion.onTable(Utilities.getStationary(new Vector3D(Cushion.xp,0,0))));
+		assertTrue(!Cushion.onTable(Utilities.getStationary(new Vector3D(Cushion.xn,0,0))));
+		assertTrue(!Cushion.onTable(Utilities.getStationary(new Vector3D(0,Cushion.yp,0))));
+		assertTrue(!Cushion.onTable(Utilities.getStationary(new Vector3D(0,Cushion.yn,0))));
+		assertTrue(Cushion.onTable(Utilities.getStationary(new Vector3D(Cushion.xp-Ball.R,0,0))));
+	}	
 }
