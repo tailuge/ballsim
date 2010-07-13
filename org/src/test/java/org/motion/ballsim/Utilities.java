@@ -23,6 +23,13 @@ public class Utilities {
 		return e;
 	}
 
+	public static Event getRolling(Vector3D vel,Vector3D pos)
+	{
+		Event e = getRolling(vel);
+		e.pos = pos;
+		return e;
+	}
+
 	public static Event getSliding(Vector3D vel, Vector3D angularVel)
 	{
 		Event e = getSimpleEvent();

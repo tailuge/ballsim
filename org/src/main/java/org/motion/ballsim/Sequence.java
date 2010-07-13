@@ -43,7 +43,7 @@ public class Sequence
 		
 		// use bounds of this to look for next cushion collision
 		
-		Event nextCushion = table.nextCushionBefore(next.t);		
+		Event nextCushion = table.nextCushionHit(next.t);		
 		if ((nextCushion != null) && (nextCushion.t < next.t))
 			next = nextCushion;
 			

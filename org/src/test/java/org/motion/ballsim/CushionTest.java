@@ -87,7 +87,80 @@ public class CushionTest {
 		assertNotNull("Hits cushion",c1);	
 		assertTrue("Collision befor stop",c1.t<s.t);	
 	}
+
+	@Test
+	public final void testHitsCushionKnownIssue() 
+	{
+		//full format:Sliding t:0.503344196955985 Cushion p:{9.99999999999999800; 19.96879135072729000; 0.00000000000000000} v:{-34.87801312348303000; 69.74504537775142000; 0.00000000000000000} av:{69.74504537775140000; -34.87801312348303000; 0.00000000000000000}
+		Event e = Utilities.getStationary();
+		e.pos = new Vector3D(9.99999999999999800, 19.96879135072729000, 0);
+		e.vel = new Vector3D(-34.87801312348303000, 69.74504537775142000,0);
+		e.angularVel = new Vector3D(69.74504537775140000, -34.87801312348303000,0);
+		e.state = State.Sliding;
+		Event s = e.next();
+		Event c1 = Cushion.hit(e, s.t);
+		assertNotNull("Hits cushion",c1);	
+		assertTrue("Collision befor stop",c1.t<s.t);	
+	}
+
+	@Test
+	public final void testInCorner() 
+	{
+		Event e = Utilities.getRolling(
+				new Vector3D(1,1,0).scalarMultiply(30),
+				new Vector3D(Quadratic.nextSmallest(Cushion.xp),Quadratic.nextSmallest(Cushion.yp),0));		
+		Event s = e.next();
+		Event c1 = Cushion.hit(e, s.t);
+		assertNotNull("Hits cushion",c1);	
+		assertTrue("On table",Cushion.onTable(c1));	
+		c1 = Cushion.hit(c1, Double.MAX_VALUE);
+		assertNotNull("Hits cushion",c1);	
+		assertTrue("On table",Cushion.onTable(c1));	
+		assertTrue("Collision befor stop",c1.t<s.t);	
+	}
+
+	@Test
+	public final void testAwayFromCorner() 
+	{
+		Event e = Utilities.getRolling(
+				new Vector3D(1,1,0).scalarMultiply(30),
+				new Vector3D(Quadratic.nextSmallest(Cushion.xp),Quadratic.nextSmallest(Cushion.yp),0));		
+		//e.vel = new Vector3D(-1,1,0).scalarMultiply(30);
+		//e.t = 1;
+		Event s = e.next();
+		Event c1 = Cushion.hit(e, s.t);
+		assertNotNull("Hits cushion",c1);	
+		assertTrue("On table",Cushion.onTable(c1));	
+		System.out.println("------------------------------------");
+		c1 = Cushion.hit(c1, Double.MAX_VALUE);
+		assertNotNull("Hits cushion",c1);	
+		assertTrue("On table",Cushion.onTable(c1));	
+		assertTrue("Collision befor stop",c1.t<s.t);	
+	}
+
+	@Test
+	public final void testMoveAwayEdgeX() 
+	{
+		Event e = Utilities.getRolling(
+				new Vector3D(-1,0,0).scalarMultiply(130),
+				new Vector3D(Quadratic.nextSmallest(Cushion.xp),0,0));		
 	
+		Event c1 = Cushion.hit(e, Double.MAX_VALUE);
+		assertNotNull("Hits cushion",c1);	
+		assertTrue("On table",Cushion.onTable(c1));	
+	}
+
+	@Test
+	public final void testMoveAwayEdgeY() 
+	{
+		Event e = Utilities.getRolling(
+				new Vector3D(0,-1,0).scalarMultiply(130),
+				new Vector3D(0,Quadratic.nextSmallest(Cushion.yp),0));		
+	
+		Event c1 = Cushion.hit(e, Double.MAX_VALUE);
+		assertNotNull("Hits cushion",c1);	
+		assertTrue("On table",Cushion.onTable(c1));	
+	}
 	
 	@Test
 	public final void testManyTableCollisions() 

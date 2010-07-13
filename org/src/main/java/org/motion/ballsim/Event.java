@@ -1,8 +1,11 @@
 package org.motion.ballsim;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import org.apache.commons.math.geometry.Vector3D;
+import org.apache.commons.math.geometry.Vector3DFormat;
 
 /**
  * @author luke
@@ -178,8 +181,19 @@ public class Event {
 	private static final DecimalFormat SECONDS_FORMAT = new DecimalFormat("0.00");
 
 	public String toString() {
-		return state+" t:" + SECONDS_FORMAT.format(t) + " "+type ;
-		//+ " p:" + pos + " v:" + vel
-			//	+ " ap:" + angularPos + " av:" + angularVel;
+		return state+" t:" + SECONDS_FORMAT.format(t) + " "+type 
+		+ " p:" + pos + " v:" + vel
+				+ " ap:" + angularPos + " av:" + angularVel;
+	}
+	
+	public String format()
+	{
+		NumberFormat nf = NumberFormat.getInstance();
+		nf.setRoundingMode(RoundingMode.UNNECESSARY);
+		nf.setMinimumFractionDigits(17);
+		Vector3DFormat f = new Vector3DFormat(nf);
+		return state+" t:" + t + " "+type 
+		+ " p:" + f.format(pos) + " v:" + f.format(vel)+ " av:" + f.format(angularVel);
+		
 	}
 }

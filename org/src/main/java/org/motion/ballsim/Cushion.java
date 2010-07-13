@@ -64,14 +64,12 @@ public class Cushion
 	
 	public static Event hit(Event e, double maxt) 
 	{		
-		System.out.println(e);
+		assert(Cushion.onTable(e));
 		Event next = null;
 		next = sooner(next,hits(e, UtilVector3D.getX, UtilVector3D.reflectX, onX(e), xp, maxt));
 		next = sooner(next,hits(e, UtilVector3D.getX, UtilVector3D.reflectX, onX(e), xn, maxt));
 		next = sooner(next,hits(e, UtilVector3D.getY, UtilVector3D.reflectY, onY(e), yp, maxt));
 		next = sooner(next,hits(e, UtilVector3D.getY, UtilVector3D.reflectY, onY(e), yn, maxt));	
-		if(next!=null)
-			System.out.println("t:"+next.t+" t-e:"+(next.t-e.t));
 		assert((next==null) || Cushion.onTable(next));
 		return next;
 	}
