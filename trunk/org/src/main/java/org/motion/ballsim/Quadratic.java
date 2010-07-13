@@ -1,5 +1,8 @@
 package org.motion.ballsim;
 
+import java.awt.geom.CubicCurve2D;
+import java.util.Arrays;
+
 import com.google.common.base.Function;
 
 public class Quadratic 
@@ -13,31 +16,19 @@ public class Quadratic
 	static double leastPositiveRoot(double a, double b, double c)
 	{
 		System.out.println(a+"t^2 "+b+"t "+c);
-		double discr = Math.sqrt((b * b) - (4 * a * c));
 
-		// if discriminant > 0 equation has 2 real roots ignore all other cases
-
-		if (discr > 0)
+		double res[] = new double[3];
+		int roots = CubicCurve2D.solveCubic(new double[]{c,b,a,0}, res);
+		Arrays.sort(res);
+		
+		System.out.println(roots+" roots -> " +Arrays.toString(res));
+		
+		for(double r:res)
 		{
-			double r1 = (-b + discr)/(2 * a);
-			double r2 = (-b - discr)/(2 * a);
-	                  
-			if (r1 > r2)
-			{
-				double temp = r1;
-				r1 = r2;
-				r2 = temp;
-	        }
-	         
-			// lesser root is in r1, return if its +ve
-	         
-			if (r1>0)
-				return r1;
-	         
-			if (r2>0)
-				return r2;
-	    }
-	     
+			if (r>0)
+				return r;
+		}
+		
 	    // zero implies no roots
 	     
 	    return 0;

@@ -40,7 +40,7 @@ public class Table
 		return next;
 	}
 
-	public Event nextCushionBefore(double maxt) 
+	public Event nextCushionHit(double maxt) 
 	{
 		Event next = null;
 		for(Ball ball : balls)

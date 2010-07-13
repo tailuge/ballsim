@@ -65,13 +65,15 @@ public class SequenceTest {
 	public final void testStaysOnTable() 
 	{
 		Table t = new Table();
-		Ball b1 = new Ball(Utilities.getSliding(new Vector3D(2,2,0).scalarMultiply(-100) ,Vector3D.PLUS_I));
-//		Ball b1 = new Ball(Utilities.getSliding(new Vector3D(1,2,0).scalarMultiply(-100) ,Vector3D.PLUS_I));
+//		Ball b1 = new Ball(Utilities.getSliding(new Vector3D(2,2,0).scalarMultiply(-100) ,Vector3D.PLUS_I));
+		Ball b1 = new Ball(Utilities.getSliding(new Vector3D(1,2,0).scalarMultiply(-100) ,Vector3D.PLUS_I));
 		t.balls.add(b1);
 		Sequence s = new Sequence(t);
+		
 		s.generateSequence();
 		for(Event e:t.getAllEvents())
 		{
+			//System.out.println("format:"+e.format());
 			assertTrue("All times positive",e.t>=0);
 			assertTrue("On table",Cushion.onTable(e));
 		}

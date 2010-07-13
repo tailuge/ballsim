@@ -36,22 +36,11 @@ public class Ball
 
 	public Event lastEvent() 
 	{
-		Event result = null;
-		for(Event e: events)
-		{
-			if ((result==null) || (e.t > result.t))
-				result = e;
-		}
-		return result;
+		return events.getLast();		
 	}
 	
 	public String toString()
 	{
-		String result = "Ball:";
-		for(Event e: events)
-		{
-			result += e.t + "\n";
-		}
 		return events.toString();
 	}
 
