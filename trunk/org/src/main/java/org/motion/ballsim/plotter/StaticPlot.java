@@ -16,13 +16,14 @@ public class StaticPlot  extends JPanel
 {	 
 	private static final long serialVersionUID = 1224879637869008694L;
 
-	private Table table;
+	private Collection<Event> events;
 	private PlotScale scale;
 	
-	public StaticPlot(Table table_)
+	public StaticPlot(Table table_, int interpolatedCount)
 	{
-		table = table_;
-		scale = new PlotScale(table.getAllEvents());
+		Interpolator i = new Interpolator(table_.getAllEvents(), interpolatedCount);
+		events = i.getInterpolated();
+		scale = new PlotScale(events);
 	}
 	
 	public void draw() 
@@ -55,7 +56,6 @@ public class StaticPlot  extends JPanel
 	
 	private void plotTable()
 	{
-		Collection<Event> events = table.getAllEvents();
  		for(Event e : events)
  		{
  			PlotEvent.plotEvent(e, scale);

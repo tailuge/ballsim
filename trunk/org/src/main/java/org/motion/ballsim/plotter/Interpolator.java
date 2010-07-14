@@ -1,7 +1,10 @@
-package org.motion.ballsim;
+package org.motion.ballsim.plotter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import org.motion.ballsim.Event;
 
 /**
  * @author luke
@@ -14,12 +17,12 @@ public class Interpolator
 
 	List<Event> interpolated = new ArrayList<Event>();
 		
-	public Interpolator(List<Event> events, double delta)
-	{
-		interpolate(events,delta);		
-	}
+//	public Interpolator(Collection<Event> collection, double delta)
+//	{
+//		interpolate(collection,delta);		
+//	}
 
-	public Interpolator(List<Event> events, int steps)
+	public Interpolator(Collection<Event> events, int steps)
 	{
 		// find max time of event and divide
 		
@@ -30,20 +33,20 @@ public class Interpolator
 				maxt = e.t;
 		}
 		
-		interpolate(events,maxt/steps);
+		interpolate(events,maxt/(double)steps);
 	}
 
 	/**
 	 * Currently assumes events in order and single ball, will need to fix that eventually.
      *
-	 * @param events
+	 * @param collection
 	 * @param delta
 	 */
-	public void interpolate(List<Event> events, double delta)
+	private void interpolate(Collection<Event> collection, double delta)
 	{
 		double time = 0;
 		Event previous = null;
-		for(Event e : events)
+		for(Event e : collection)
 		{
 			if(previous != null)
 			{
@@ -55,8 +58,9 @@ public class Interpolator
 			}
 			
 			previous = e;
+			interpolated.add(previous);
 		}
-		interpolated.add(events.get(events.size()-1));
+		
 	}
 	
 	public List<Event> getInterpolated()
