@@ -2,6 +2,7 @@
 #labels testimages
 
 [http://ballsim.googlecode.com/files/firstlight.png]
+
 first table plot with 8 computed events from initial hit and interpolated lines showing axis of rotation as dashed lines. (friction constants all wrong)
 
  
