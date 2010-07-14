@@ -3,6 +3,7 @@ package org.motion.ballsim.plotter;
 import java.awt.Color;
 
 import org.motion.ballsim.Event;
+import org.motion.ballsim.EventType;
 import org.motion.ballsim.State;
 
 public class PlotEvent 
@@ -24,7 +25,7 @@ public class PlotEvent
         	scale.g2d.setColor(Color.black);
 
         scale.g2d.setStroke(PlotScale.normal);
-        //if (e.type != EventType.Interpolated)
+        if (e.type != EventType.Interpolated)
         {
         	scale.g2d.drawOval(x-scale.r, y-scale.r, 2*scale.r, 2*scale.r); 	
         	scale.g2d.drawChars(e.state.toString().toCharArray(), 0, e.state.toString().length(), x+scale.r, y);
