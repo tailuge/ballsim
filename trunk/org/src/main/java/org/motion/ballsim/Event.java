@@ -138,13 +138,14 @@ public class Event {
 		return result;
 	}
 
+	// this needs to go through state dispatch
 	public double timeToStopRolling() {
 
 		// solve v = v0 + a * t when v = 0
 		// where acceleration is rolling friction
 		// gives t = -v0/a
 
-		return -vel.getNorm() / Ball.accelRoll;
+		return RollingPhysics.timeToNext(this);
 	}
 
 
