@@ -40,40 +40,20 @@ public enum State {
 
 	},
 	Rolling {
-		/**
-		 * When rolling acceleration opposes roll, magnitude independent of
-		 * speed / spin
-		 * 
-		 * @return acceleration vector when rolling
-		 */
-		public Vector3D acceleration(Event event) {
-			try {
-				return event.vel.normalize().scalarMultiply(Ball.accelRoll);
-			} catch (ArithmeticException e) {
-				return Vector3D.ZERO;
-			}
+		public Vector3D acceleration(Event event) 
+		{
+			return RollingPhysics.acceleration(event);
 		}
 
-		public Event stop(Event event) {
-			Event stationary = event.advanceDelta(event.timeToStopRolling());
-			stationary.state = State.Stationary;
-			stationary.type = EventType.Stationary;
-			return stationary;
-		}
-		public Event next(Event event) {
-			return stop(event);
-		}
-
-	},
-	Unknown {
-		public Vector3D acceleration(Event e) {
-			return Vector3D.ZERO;
-		}
-		public Event next(Event event) {			
-			return deriveStateOf(event).next(event);
+		public Event next(Event event) 
+		{
+			return RollingPhysics.next(event);
 		}
 
 	};
+
+
+	
 
 	public abstract Vector3D acceleration(Event e);
 	public abstract Event next(Event e);
@@ -93,7 +73,7 @@ public enum State {
 				&& (event.angularVel.getNorm() < Ball.stationaryAngularTolerance))
 			return State.Stationary;
 
-		if (event.vel.add(UtilVector3D.crossUp(event.angularVel)).getNorm() < Ball.equilibriumTolerance)
+		if (RollingPhysics.isState(event))
 			return State.Rolling;
 
 		return State.Sliding;
