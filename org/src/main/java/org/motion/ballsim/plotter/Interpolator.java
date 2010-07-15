@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.motion.ballsim.Ball;
 import org.motion.ballsim.Event;
+import org.motion.ballsim.Table;
 
 /**
  * @author luke
@@ -22,18 +24,24 @@ public class Interpolator
 //		interpolate(collection,delta);		
 //	}
 
-	public Interpolator(Collection<Event> events, int steps)
+	public Interpolator(Table table, int steps)
 	{
 		// find max time of event and divide
 		
 		double maxt = 0;
-		for(Event e : events)
+		for(Event e : table.getAllEvents())
 		{
 			if (e.t > maxt)
 				maxt = e.t;
 		}
 		
-		interpolate(events,maxt/(double)steps);
+		// for each ball interpolate
+		
+		for (Ball ball:table.balls)
+		{
+			interpolate(ball.getAllEvents(),maxt/(double)steps);
+		}
+		
 	}
 
 	/**
