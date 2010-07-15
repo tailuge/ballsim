@@ -80,7 +80,7 @@ public class Table
 			for(Ball b : balls)
 			{
 				if (tested.contains(b)) continue;
-				EventPair collision = Collision.collisionEvents(a.lastEvent(), b.lastEvent(), maxt);
+				EventPair collision = Collision.get(a.lastEvent(), b.lastEvent(), maxt);
 
 				if (collision == null)
 					continue;
@@ -109,5 +109,61 @@ public class Table
 		}
 		
 		return all;
+	}
+	
+	public int generateSequence()
+	{
+		int count=0;
+		
+		while (generateNext())
+			count++;
+		return count;
+	}
+	
+	/**
+	 * Compare times of all possible next events and
+	 * add only the first to occur in the time line.
+	 * 
+	 * @return true if there was a new event added
+	 */
+	public boolean generateNext()
+	{
+		// next natural event
+		
+		Event next = nextNatural();
+		if (next == null)
+			return false;
+		
+		// use bounds of this to look for next cushion collision
+		
+		Event nextCushion = nextCushionHit(next.t);		
+		if ((nextCushion != null) && (nextCushion.t < next.t))
+			next = nextCushion;
+			
+		// use bounds of these to look for next ball/ball collision
+
+		EventPair nextCollision = nextBallCollision(next.t);
+
+		// add the soonest of these outcomes
+		
+		if ((nextCollision == null) || (next.t < nextCollision.getFirst().t))
+		{
+			System.out.println("Single event");
+			assert(Cushion.onTable(next));
+			next.ball.add(next);
+		}
+		else
+		{
+			System.out.println("Collision event:"+nextCollision);
+			assert(Cushion.onTable(nextCollision.getFirst()));
+			assert(Cushion.onTable(nextCollision.getSecond()));
+			nextCollision.getFirst().ball.add(nextCollision.getFirst());
+			nextCollision.getSecond().ball.add(nextCollision.getSecond());
+		}
+		
+		System.out.println(">");
+		System.out.println(this);
+		System.out.println("<");
+		return true;
 	}
 }

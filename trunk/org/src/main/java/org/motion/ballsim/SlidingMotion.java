@@ -26,7 +26,7 @@ public class SlidingMotion
 	 * This returns the change from current velocity to that equilibrium point
 	 * @return
 	 */
-	public static Vector3D getChangeToNr(Event e) 
+	private static Vector3D getChangeToNr(Event e) 
 	{	
 		return e.vel
 				.scalarMultiply(5.0 / 7.0)
@@ -34,7 +34,7 @@ public class SlidingMotion
 				.scalarMultiply(-Ball.R * 2.0 / 7.0)).subtract(e.vel);		
 	}
 	
-	public static double timeToNaturalRollEquilibrium(Event e) 
+	private static double timeToNaturalRollEquilibrium(Event e) 
 	{
 		return getChangeToNr(e).getNorm() / -Ball.accelSlide;
 	}

@@ -51,11 +51,11 @@ public class Collision
 		return coeffs;
 	}
 	
-	static double collisionTime(Event e1, Event e2)
+	static double collisionTime(Event e1, Event e2, double maxt)
 	{
 
 		double coeffs[] = quarticCoefficients(e1, e2);
-	    double root = Quartic.smallestRoot( coeffs , 100); // TODO: fix max t
+	    double root = Quartic.smallestRoot( coeffs , maxt); 
 	       
 		// optimise
 				
@@ -121,5 +121,15 @@ public class Collision
 			return last;
 		
 		return 0;
+	}
+
+	public static EventPair get(Event e1, Event e2, double maxt) 
+	{
+		double tCol = collisionTime(e1, e2, maxt);
+		
+		if (tCol > 0)
+			return collisionEvents(e1,e2,maxt);
+		
+		return null;
 	}
 }
