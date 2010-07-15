@@ -145,7 +145,7 @@ public class Event {
 		// where acceleration is rolling friction
 		// gives t = -v0/a
 
-		return RollingPhysics.timeToNext(this);
+		return RollingMotion.timeToNext(this);
 	}
 
 
