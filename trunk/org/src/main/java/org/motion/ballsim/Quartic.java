@@ -2,6 +2,7 @@ package org.motion.ballsim;
 
 import java.awt.geom.CubicCurve2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,9 +40,14 @@ public class Quartic
 		
 		double res[] = new double[3];
 		
-		System.out.println(p.polynomialDerivative());
-		int cubicRoots = CubicCurve2D.solveCubic(p.polynomialDerivative().getCoefficients(), res);
-
+		double cubicCoeffs[] = p.polynomialDerivative().getCoefficients(); 
+		System.out.println(Arrays.toString(cubicCoeffs));
+		int cubicRoots = 0;
+		if (cubicCoeffs.length > 1)
+		{
+			// swap a and d
+			cubicRoots = CubicCurve2D.solveCubic(cubicCoeffs, res);
+		}
 		// create set of spans that root must be between if present
 
 		List<Double> spans = new ArrayList<Double>();

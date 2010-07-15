@@ -91,6 +91,10 @@ public class Collision
 		
 		ca.state = State.deriveStateOf(ca);
 		cb.state = State.deriveStateOf(cb);
+		
+		ca.type = EventType.Collision;
+		cb.type = EventType.Collision;
+		
 		return result;
 	}
 	
@@ -128,7 +132,7 @@ public class Collision
 		double tCol = collisionTime(e1, e2, maxt);
 		
 		if (tCol > 0)
-			return collisionEvents(e1,e2,maxt);
+			return collisionEvents(e1,e2,tCol);
 		
 		return null;
 	}

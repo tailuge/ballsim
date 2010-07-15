@@ -21,7 +21,7 @@ public class StaticPlot  extends JPanel
 	
 	public StaticPlot(Table table_, int interpolatedCount)
 	{
-		Interpolator i = new Interpolator(table_.getAllEvents(), interpolatedCount);
+		Interpolator i = new Interpolator(table_, interpolatedCount);
 		events = i.getInterpolated();
 		scale = new PlotScale(events);
 	}
