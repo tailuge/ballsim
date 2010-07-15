@@ -38,7 +38,7 @@ public class Cushion
 			double cush, 
 			double maxt)
 	{	
-		double A = getAxis.apply(e.getAccelerationVector())*0.5;
+		double A = getAxis.apply(e.acceleration())*0.5;
 		double B = getAxis.apply(e.vel);
 		double C = getAxis.apply(e.pos) - cush;
 

@@ -16,6 +16,9 @@ public class SlidingMotion
 				.scalarMultiply(-Ball.accelSlide);
 	}
 	
+	public static Vector3D angularAcceleration(Event e) {
+		return UtilVector3D.crossUp(acceleration(e)).scalarMultiply((-5.0 / 2.0) * Ball.R);
+	}
 	
 	/**
 	 * Velocity at natural roll given a starting state that is sliding

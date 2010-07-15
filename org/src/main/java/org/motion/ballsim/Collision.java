@@ -15,7 +15,7 @@ public class Collision
 		// dx = e1.x - e2.x
 		// coefficients of quadratic of dx in time
 		
-		double a = e1.getAccelerationVector().getX()*0.5 - e2.getAccelerationVector().getX()*0.5;
+		double a = e1.acceleration().getX()*0.5 - e2.acceleration().getX()*0.5;
 		double b = e1.vel.getX() - e2.vel.getX();
 		double c = e1.pos.getX() - e2.pos.getX();
 
@@ -29,7 +29,7 @@ public class Collision
 		
 		// dy^2
 		
-		a = e1.getAccelerationVector().getY()*0.5 - e2.getAccelerationVector().getY()*0.5;
+		a = e1.acceleration().getY()*0.5 - e2.acceleration().getY()*0.5;
 		b = e1.vel.getY() - e2.vel.getY();
 		c = e1.pos.getY() - e2.pos.getY();
 

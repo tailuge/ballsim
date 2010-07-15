@@ -50,39 +50,39 @@ public class RollingEventTest {
 	public final void testAccRolling() 
 	{
 		roll = Utilities.getRolling(Vector3D.PLUS_I);		
-		assertEquals("Acceleration should oppose velocity when rolling",roll.getAccelerationVector().normalize(),roll.vel.negate());
+		assertEquals("Acceleration should oppose velocity when rolling",roll.acceleration().normalize(),roll.vel.negate());
 
 		roll = Utilities.getRolling(new Vector3D(Double.MIN_NORMAL,0,0));
-		assertFalse("At halting point acceleration should behave",Double.isNaN(roll.getAccelerationVector().getNorm()));
+		assertFalse("At halting point acceleration should behave",Double.isNaN(roll.acceleration().getNorm()));
 
 		roll = Utilities.getRolling(Vector3D.ZERO);
-		assertFalse("At halting point acceleration should behave",Double.isNaN(roll.getAccelerationVector().getNorm()));		
+		assertFalse("At halting point acceleration should behave",Double.isNaN(roll.acceleration().getNorm()));		
 		
 		roll = Utilities.getRolling(Vector3D.PLUS_I);		
 		assertEquals("Acceleration magnitude independent of velocity",
-				roll.getAccelerationVector(),
-				Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(2.0)).getAccelerationVector());
+				roll.acceleration(),
+				Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(2.0)).acceleration());
 
 		assertEquals("Acceleration magnitude independent of velocity",
-				roll.getAccelerationVector().getNorm(),
-				Utilities.getRolling(Vector3D.PLUS_J).getAccelerationVector().getNorm(),
+				roll.acceleration().getNorm(),
+				Utilities.getRolling(Vector3D.PLUS_J).acceleration().getNorm(),
 				0.0);
 
-		assertEquals("Acceleration of stationary expected 0",Vector3D.ZERO,Utilities.getStationary().getAccelerationVector());
+		assertEquals("Acceleration of stationary expected 0",Vector3D.ZERO,Utilities.getStationary().acceleration());
 	}
 
 	@Test
 	public final void testTimeToStopRolling() 
 	{
 		roll = Utilities.getRolling(Vector3D.PLUS_I);		
-		double t = roll.timeToStopRolling();
+		double t = roll.timeToNext();
 		assertTrue("Rolling ball will stop", t > 0);
 
 		roll = Utilities.getRolling(Vector3D.ZERO);		
-		t = roll.timeToStopRolling();
+		t = roll.timeToNext();
 		assertTrue("Stationary ball stays stopped", t == 0);
 
-		t = stationary.timeToStopRolling();
+		t = stationary.timeToNext();
 		assertTrue("Stationary ball stays stopped", t == 0);
 		
 	}
@@ -103,7 +103,7 @@ public class RollingEventTest {
 	public final void testAdvanceDelta() 
 	{
 		roll = Utilities.getRolling(Vector3D.PLUS_I);
-		double troll = roll.timeToStopRolling();		
+		double troll = roll.timeToNext();		
 		Event i1 = roll.advanceDelta(troll/2.0);
 		Event i2 = roll.advanceDelta(troll);
 		
@@ -119,7 +119,7 @@ public class RollingEventTest {
 	public final void testInspector() 
 	{
 		roll = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(100));
-		double troll = roll.timeToStopRolling();
+		double troll = roll.timeToNext();
 		
 		double dt = 0;
 		while(dt < troll)

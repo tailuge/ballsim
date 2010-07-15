@@ -28,6 +28,10 @@ public class RollingMotion
 		}
 	}
 	
+	
+	public static Vector3D angularAcceleration(Event e) {
+		return UtilVector3D.crossUp(acceleration(e)).scalarMultiply(1.0 * Ball.R);
+	}
 	/**
 	 * When a ball is rolling the next state it will achieve is stationary
 	 * 
@@ -35,7 +39,7 @@ public class RollingMotion
 	 */
 	public static Event next(Event e) 
 	{
-		Event stationary = e.advanceDelta(e.timeToStopRolling());
+		Event stationary = e.advanceDelta(timeToNext(e));
 		stationary.state = State.Stationary;
 		stationary.type = EventType.Stationary;
 		return stationary;
