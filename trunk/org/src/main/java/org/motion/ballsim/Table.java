@@ -2,6 +2,7 @@ package org.motion.ballsim;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 public class Table 
@@ -65,6 +66,26 @@ public class Table
 		if ((next != null) && (next.t < maxt))
 			return next;
 		return null;
+	}
+
+	public EventPair nextBallCollision(double maxt) 
+	{
+		EventPair next = null;
+
+		Collection<Ball> tested = new HashSet<Ball>();
+		
+		for(Ball a : balls)
+		{
+			tested.add(a);
+			for(Ball b : balls)
+			{
+				if (tested.contains(b)) continue;
+				EventPair collision = Collision.collisionEvents(a.lastEvent(), b.lastEvent(), maxt);
+				if (collision == null)
+					continue;
+			}
+		}
+		return next;
 	}
 	
 	public String toString()

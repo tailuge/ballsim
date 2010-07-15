@@ -88,16 +88,27 @@ public class Event {
 	 * 
 	 * @return acceleration vector depending on state
 	 */
-	public Vector3D getAccelerationVector() {
+	public Vector3D acceleration() {
 		return state.acceleration(this);
 	}
 
-	public Vector3D getAngularAccelerationVector() {
+	public Vector3D angularAcceleration() {
+		return state.angularAcceleration(this);
+	}
 
-		double scale = state == State.Sliding ? -5.0 / 2.0 : 1.0;
+	/**
+	 * Will determine the next 'natural' event from this event
+	 * i.e sliding->rolling->stationary.
+	 * @return 
+	 */
+	public Event next()
+	{
+		return state.next(this);
+	}
 
-		return UtilVector3D.crossUp(getAccelerationVector()).scalarMultiply(
-				scale * Ball.R);
+	public double timeToNext()
+	{
+		return state.next(this).t - t;
 	}
 
 	/**
@@ -112,22 +123,22 @@ public class Event {
 
 		// v = v0 + a * t
 
-		result.vel = vel.add(getAccelerationVector().scalarMultiply(delta));
+		result.vel = vel.add(acceleration().scalarMultiply(delta));
 
 		// p = p0 + v0*t + a*t*t/2
 
 		result.pos = pos.add(vel.scalarMultiply(delta)).add(
-				getAccelerationVector().scalarMultiply(delta * delta / 2.0));
+				acceleration().scalarMultiply(delta * delta / 2.0));
 
 		// av = av0 + aa * t
 
-		result.angularVel = angularVel.add(getAngularAccelerationVector()
+		result.angularVel = angularVel.add(angularAcceleration()
 				.scalarMultiply(delta));
 
 		// ap = ap0 + av0*t + aa*t*t/2
 
 		result.angularPos = angularPos.add(angularVel.scalarMultiply(delta))
-				.add(getAngularAccelerationVector().scalarMultiply(
+				.add(angularAcceleration().scalarMultiply(
 						delta * delta / 2.0));
 
 		// advance time
@@ -138,47 +149,12 @@ public class Event {
 		return result;
 	}
 
-	// this needs to go through state dispatch
-	public double timeToStopRolling() {
 
-		// solve v = v0 + a * t when v = 0
-		// where acceleration is rolling friction
-		// gives t = -v0/a
-
-		return RollingMotion.timeToNext(this);
-	}
-
-
-	public double timeToNaturalRollEquilibrium() {
-		return getChangeToNr().getNorm() / -Ball.accelSlide;
-	}
 
 	
-	/**
-	 * Velocity at natural roll given a starting state that is sliding
-	 * is well analysed (see Amateur Physics by Sheperd - Vnr = V0*5/7 +Rw0*2/7) 
-	 * This returns the change from current to that equilibrium point
-	 * @return
-	 */
-	public Vector3D getChangeToNr() {
-		
-		Vector3D nr = vel.scalarMultiply(5.0 / 7.0).add(
-				UtilVector3D.crossUp(angularVel).scalarMultiply(
-						-Ball.R * 2.0 / 7.0));
-		Vector3D changeInV = nr.subtract(vel);
-		return changeInV;
-	}
 
-	/**
-	 * Will determine the next 'natural' event from this event
-	 * i.e sliding->rolling->stationary.
-	 * @return 
-	 */
-	public Event next()
-	{
-		return state.next(this);
-	}
 
+	
 	private static final DecimalFormat SECONDS_FORMAT = new DecimalFormat("0.00");
 
 	public String toString() {

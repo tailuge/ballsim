@@ -25,18 +25,18 @@ public class SlidingEventTest
 	@Test
 	public final void testGetAccelerationVector() 
 	{
-		assertTrue("Sliding ball has acceleration",slide.getAccelerationVector().getNorm() > 0);
-		assertTrue("Sliding masse ball has acceleration",masse.getAccelerationVector().getNorm() > 0);
-		assertEquals("Sliding,masse have same magnitude of acceleration",slide.getAccelerationVector().getNorm() , masse.getAccelerationVector().getNorm(), 0.0);
-		assertEquals("Sliding acceleratoin opposes vel",slide.vel.normalize().negate(),slide.getAccelerationVector().normalize());
+		assertTrue("Sliding ball has acceleration",slide.acceleration().getNorm() > 0);
+		assertTrue("Sliding masse ball has acceleration",masse.acceleration().getNorm() > 0);
+		assertEquals("Sliding,masse have same magnitude of acceleration",slide.acceleration().getNorm() , masse.acceleration().getNorm(), 0.0);
+		assertEquals("Sliding acceleratoin opposes vel",slide.vel.normalize().negate(),slide.acceleration().normalize());
 	}
 
 	@Test
 	public final void testGetAngularAccelerationVector() 
 	{
-		assertTrue("Sliding ball has angular acceleration",slide.getAngularAccelerationVector().getNorm() > 0);
-		assertTrue("Sliding masse ball has angular acceleration",masse.getAngularAccelerationVector().getNorm() > 0);
-		assertEquals("Sliding,masse have same magnitude of angular acceleration",slide.getAngularAccelerationVector().getNorm() , masse.getAngularAccelerationVector().getNorm(), 0.0);
+		assertTrue("Sliding ball has angular acceleration",slide.angularAcceleration().getNorm() > 0);
+		assertTrue("Sliding masse ball has angular acceleration",masse.angularAcceleration().getNorm() > 0);
+		assertEquals("Sliding,masse have same magnitude of angular acceleration",slide.angularAcceleration().getNorm() , masse.angularAcceleration().getNorm(), 0.0);
 	}
 
 	@Test
@@ -48,8 +48,8 @@ public class SlidingEventTest
 	@Test
 	public final void testTimeToNaturalRollEquilibrium() 
 	{
-		assertTrue("Sliding will reach equilibrium",slide.timeToNaturalRollEquilibrium() > 0);
-		assertTrue("Sliding masse will reach equilibrium",masse.timeToNaturalRollEquilibrium() > 0);
+		assertTrue("Sliding will reach equilibrium",slide.timeToNext() > 0);
+		assertTrue("Sliding masse will reach equilibrium",masse.timeToNext() > 0);
 	}
 
 	@Test
@@ -58,9 +58,9 @@ public class SlidingEventTest
 
 		System.out.println("SLIDE");
 		System.out.println("start:"+slide);
-		System.out.println("delta:"+slide.getChangeToNr());
-		System.out.println("acc  :"+slide.getAccelerationVector());
-		System.out.println("angac:"+slide.getAngularAccelerationVector());
+		
+		System.out.println("acc  :"+slide.acceleration());
+		System.out.println("angac:"+slide.angularAcceleration());
 
 		Event roll = slide.next();
 		assertEquals("Expect roll",State.Rolling,roll.state);
@@ -74,9 +74,9 @@ public class SlidingEventTest
 		roll = masse.next();
 		System.out.println("MASSE");
 		System.out.println("start:"+masse);
-		System.out.println("delta:"+masse.getChangeToNr());
-		System.out.println("acc  :"+masse.getAccelerationVector());
-		System.out.println("angac:"+masse.getAngularAccelerationVector());
+		
+		System.out.println("acc  :"+masse.acceleration());
+		System.out.println("angac:"+masse.angularAcceleration());
 		assertEquals("Expect roll",State.Rolling,roll.state);
 
 		System.out.println("end  :"+roll);
@@ -104,7 +104,7 @@ public class SlidingEventTest
 	public final void testInspector() 
 	{
 		slide = Utilities.getSliding(Vector3D.PLUS_I.scalarMultiply(1000),Vector3D.ZERO);
-		double tslide = slide.timeToNaturalRollEquilibrium();
+		double tslide = slide.timeToNext();
 		
 		double dt = 0;
 		while(dt < tslide)
@@ -112,7 +112,7 @@ public class SlidingEventTest
 			dt += tslide/5.0;
 			Event interpolated = slide.advanceDelta(dt);
 			assertNotNull(interpolated);
-			System.out.println(interpolated.getChangeToNr());
+			
 			System.out.println(interpolated);
 		}		
 	}
