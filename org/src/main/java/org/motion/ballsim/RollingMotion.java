@@ -41,7 +41,7 @@ public class RollingMotion
 	{
 		Event stationary = e.advanceDelta(timeToNext(e));
 		stationary.state = State.Stationary;
-		stationary.type = EventType.Stationary;
+		stationary.type = EventType.FinishedRoll;
 		return stationary;
 	}
 	
@@ -56,7 +56,7 @@ public class RollingMotion
 	 * 
 	 * @return
 	 */
-	public static double timeToNext(Event e) 
+	private static double timeToNext(Event e) 
 	{
 		return -e.vel.getNorm() / Ball.accelRoll;
 	}

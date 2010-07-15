@@ -20,4 +20,9 @@ public class EventPair
 	{
 		return b;
 	}
+	
+	public String toString()
+	{
+		return "("+a+","+b+")";
+	}
 }

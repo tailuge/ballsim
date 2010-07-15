@@ -25,7 +25,13 @@ public class StaticPlot  extends JPanel
 		events = i.getInterpolated();
 		scale = new PlotScale(events);
 	}
-	
+
+	public StaticPlot(Table table_)
+	{
+		events = table_.getAllEvents();
+		scale = new PlotScale(events);
+	}
+
 	public void draw() 
     {
 		JFrame frame = new JFrame("Table plot");

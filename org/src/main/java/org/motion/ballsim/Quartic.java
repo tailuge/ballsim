@@ -38,6 +38,8 @@ public class Quartic
 		// solve derivative cubic to get min/max points
 		
 		double res[] = new double[3];
+		
+		System.out.println(p.polynomialDerivative());
 		int cubicRoots = CubicCurve2D.solveCubic(p.polynomialDerivative().getCoefficients(), res);
 
 		// create set of spans that root must be between if present

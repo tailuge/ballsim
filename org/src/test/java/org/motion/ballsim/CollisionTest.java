@@ -15,7 +15,7 @@ public class CollisionTest {
 		Event e1 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(130));
 		Event e2 = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(-130));
 		e2.pos = Vector3D.PLUS_I.scalarMultiply(Ball.R*4);
-		double t = Collision.collisionTime(e1, e2);
+		double t = Collision.collisionTime(e1, e2,Double.MAX_VALUE);
 		EventPair cols = Collision.collisionEvents(e1,e2, t);
 		assertTrue("Rolling towards each other collide",t>0);
 		System.out.println(Collision.startingSeperation(cols.getFirst(), cols.getSecond()));
@@ -92,7 +92,7 @@ public class CollisionTest {
 			if (Collision.startingSeperation(e1, e2) <= 0)
 				continue;
 			
-			double t = Collision.collisionTime(e1, e2);
+			double t = Collision.collisionTime(e1, e2,Double.MAX_VALUE);
 
 			if (t<=0 || t>e1.next().t)
 				continue;
