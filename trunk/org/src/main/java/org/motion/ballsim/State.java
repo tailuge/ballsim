@@ -4,50 +4,41 @@ import org.apache.commons.math.geometry.Vector3D;
 
 public enum State {
 
-	Stationary {
-
+	Stationary 
+	{
 		@Override
-		public Vector3D acceleration(Event event) {
+		public Vector3D acceleration(Event event) 
+		{
 			return Vector3D.ZERO;
 		}
-		public Event next(Event event) {
+		public Event next(Event event) 
+		{
 			return event;
 		}
 
 	},
-	Sliding {
-		/**
-		 * Acceleration is constant during sliding phase and works to
-		 * reach rolling equilibrium. Magnitude independent of speed / spin
-		 * 
-		 * @return acceleration vector when sliding
-		 */
-		public Vector3D acceleration(Event e) {
-			return e.getChangeToNr().normalize()
-					.scalarMultiply(-Ball.accelSlide);
+	Sliding 
+	{
+		public Vector3D acceleration(Event e) 
+		{
+			return SlidingMotion.acceleration(e);
 		}
 
-		public Event roll(Event event) {
-			Event rolling = event.advanceDelta(event
-					.timeToNaturalRollEquilibrium());
-			rolling.state = State.Rolling;
-			rolling.type = EventType.RollEquilibrium;
-			return rolling;
-		}
-		public Event next(Event event) {
-			return roll(event);
+		public Event next(Event event) 
+		{
+			return SlidingMotion.next(event);
 		}
 
 	},
 	Rolling {
 		public Vector3D acceleration(Event event) 
 		{
-			return RollingPhysics.acceleration(event);
+			return RollingMotion.acceleration(event);
 		}
 
 		public Event next(Event event) 
 		{
-			return RollingPhysics.next(event);
+			return RollingMotion.next(event);
 		}
 
 	};
@@ -67,13 +58,13 @@ public enum State {
 	 * @param event
 	 * @return
 	 */
-	public static State deriveStateOf(Event event) {
-
+	public static State deriveStateOf(Event event) 
+	{
 		if ((event.vel.getNorm() < Ball.stationaryTolerance)
 				&& (event.angularVel.getNorm() < Ball.stationaryAngularTolerance))
 			return State.Stationary;
 
-		if (RollingPhysics.isState(event))
+		if (RollingMotion.isState(event))
 			return State.Rolling;
 
 		return State.Sliding;

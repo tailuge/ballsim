@@ -2,7 +2,7 @@ package org.motion.ballsim;
 
 import org.apache.commons.math.geometry.Vector3D;
 
-public class RollingPhysics implements IEventPhysics 
+public class RollingMotion 
 {
 
 	public static boolean isState(Event e)
