@@ -81,8 +81,14 @@ public class Table
 			{
 				if (tested.contains(b)) continue;
 				EventPair collision = Collision.collisionEvents(a.lastEvent(), b.lastEvent(), maxt);
+
 				if (collision == null)
 					continue;
+				if (next == null)
+					next = collision;
+				if (collision.getFirst().t < next.getFirst().t)
+					next = collision;
+
 			}
 		}
 		return next;

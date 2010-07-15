@@ -49,10 +49,22 @@ public class Sequence
 			
 		// use bounds of these to look for next ball/ball collision
 
+		EventPair nextCollision = table.nextBallCollision(next.t);
 
-		assert(Cushion.onTable(next));
-
-		next.ball.add(next);
+		// add the soonest of these outcomes
+		
+		if ((nextCollision == null) || (next.t < nextCollision.getFirst().t))
+		{
+			assert(Cushion.onTable(next));
+			next.ball.add(next);
+		}
+		else
+		{
+			assert(Cushion.onTable(nextCollision.getFirst()));
+			assert(Cushion.onTable(nextCollision.getSecond()));
+			nextCollision.getFirst().ball.add(nextCollision.getFirst());
+			nextCollision.getSecond().ball.add(nextCollision.getSecond());
+		}
 		
 		System.out.println(table);
 		return true;
