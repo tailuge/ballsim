@@ -94,4 +94,28 @@ public class SequenceTest {
 			assertTrue("On table",Cushion.onTable(e));
 		}
 	}
+	
+	@Test
+	@Ignore
+	public final void testStaysThree() 
+	{
+		Table t = new Table();
+		Ball b1 = new Ball(Utilities.getStationary());
+		Ball b2 = new Ball(Utilities.getRolling(
+				Vector3D.MINUS_J.scalarMultiply(150), new Vector3D(Ball.R * 2
+						* (2.0 / 7.0), Ball.R * 4, 0)));
+		Ball b3 = new Ball(Utilities.getStationary(new Vector3D(Ball.R * 0,
+				-Ball.R * 4, 0)));
+
+		t.balls.add(b1);
+		t.balls.add(b2);
+		t.balls.add(b3);
+		t.generateSequence();
+		for(Event e:t.getAllEvents())
+		{
+			//System.out.println("format:"+e.format());
+			assertTrue("All times positive",e.t>=0);
+			assertTrue("On table",Cushion.onTable(e));
+		}
+	}
 }
