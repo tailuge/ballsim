@@ -46,6 +46,9 @@ public class Quartic
 		if (cubicCoeffs.length > 2)
 		{
 			// swap a and d
+			double d=cubicCoeffs[0];
+			cubicCoeffs[0] = cubicCoeffs[3];
+			cubicCoeffs[3] = d;
 			cubicRoots = CubicCurve2D.solveCubic(cubicCoeffs, res);
 		}
 		// create set of spans that root must be between if present
