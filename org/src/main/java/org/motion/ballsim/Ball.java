@@ -1,5 +1,6 @@
 package org.motion.ballsim;
 
+import java.awt.Color;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -16,6 +17,8 @@ public class Ball
 	public static final double stationaryTolerance = 0.0001;
 		
 	private LinkedList<Event> events = new LinkedList<Event>();
+
+	public final Color colour;
 	
 	public void add(Event e)
 	{
@@ -32,6 +35,7 @@ public class Ball
 	{
 		init.ball = this;
 		add(init);
+		colour = getColour();
 	}
 
 	public Event lastEvent() 
@@ -47,5 +51,13 @@ public class Ball
 	public Collection<Event> getAllEvents() 
 	{
 		return events;
+	}
+
+	private static Color[] colours = new Color[] {Color.white,Color.red,Color.yellow};
+	private static int nextColour = 0;
+
+	private static Color getColour()
+	{
+		return colours[nextColour++ % colours.length];
 	}
 }

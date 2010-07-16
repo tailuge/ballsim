@@ -43,7 +43,7 @@ public class Quartic
 		double cubicCoeffs[] = p.polynomialDerivative().getCoefficients(); 
 		System.out.println(Arrays.toString(cubicCoeffs));
 		int cubicRoots = 0;
-		if (cubicCoeffs.length > 1)
+		if (cubicCoeffs.length > 2)
 		{
 			// swap a and d
 			cubicRoots = CubicCurve2D.solveCubic(cubicCoeffs, res);
