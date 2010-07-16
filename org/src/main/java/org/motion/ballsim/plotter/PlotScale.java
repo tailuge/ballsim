@@ -17,7 +17,7 @@ public class PlotScale {
  	Graphics2D g2d;
  	
  	public final static double velscale = 50;
- 	public final static double angscale = 1000;
+ 	public final static double angscale = 9200;
 
  	public final static Stroke thindashed = new BasicStroke(1.0f,
 		      BasicStroke.CAP_BUTT,
