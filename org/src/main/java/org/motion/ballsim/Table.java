@@ -5,9 +5,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Table 
 {
-
+	private final static Logger logger = LoggerFactory.getLogger(Table.class);
 	
 	public final static double froll = 10;
 	public final static double fslide = 40;
@@ -148,13 +151,16 @@ public class Table
 		
 		if ((nextCollision == null) || (next.t < nextCollision.getFirst().t))
 		{
-			System.out.println("Single event");
+			logger.info("Single event");
 			assert(Cushion.onTable(next));
 			next.ball.add(next);
 		}
 		else
 		{
-			System.out.println("Collision event:"+nextCollision);
+			logger.info("Collision event: {}",nextCollision);
+			logger.info("Collision event time: {}",nextCollision.getFirst().t);
+			logger.info("Discarded single event: {}",next);
+			logger.info("Discarded single event time: {}",next.t);
 			assert(Cushion.onTable(nextCollision.getFirst()));
 			assert(Cushion.onTable(nextCollision.getSecond()));
 			nextCollision.getFirst().ball.add(nextCollision.getFirst());

@@ -12,12 +12,15 @@ import org.apache.commons.math.analysis.UnivariateRealFunction;
 import org.apache.commons.math.analysis.polynomials.PolynomialFunction;
 import org.apache.commons.math.analysis.solvers.UnivariateRealSolver;
 import org.apache.commons.math.analysis.solvers.UnivariateRealSolverFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class Quartic
 {
+	private final static Logger logger = LoggerFactory.getLogger(Quartic.class);
 
-	static private UnivariateRealSolverFactory factory = UnivariateRealSolverFactory.newInstance();
+	private final static UnivariateRealSolverFactory factory = UnivariateRealSolverFactory.newInstance();
 
 	/**
 	 * Differentiate once to find min/max points using cubic equation.
@@ -41,7 +44,7 @@ public class Quartic
 		double res[] = new double[3];
 		
 		double cubicCoeffs[] = p.polynomialDerivative().getCoefficients(); 
-		System.out.println(Arrays.toString(cubicCoeffs));
+		logger.info(Arrays.toString(cubicCoeffs));
 		int cubicRoots = 0;
 		if (cubicCoeffs.length > 2)
 		{
@@ -71,7 +74,7 @@ public class Quartic
 		{
 			if (last != s)
 			{
-				//System.out.println("try["+last+","+s+"]");	
+				logger.info("try["+last+","+s+"]");	
 				double bi=0;
 				try 
 				{
@@ -79,10 +82,11 @@ public class Quartic
 				} 
 				catch (Exception e) 
 				{
+					logger.info("no root");
 					// no root
 				}
 				
-				//System.out.println("bi:"+bi);
+				logger.info("bi:"+bi);
 				roots.add(bi);
 			}
 			last = s;
@@ -90,7 +94,8 @@ public class Quartic
 		
 		// use least +ve root.
 		Collections.sort(roots);
-		
+
+		logger.info("roots:{}",roots);
 		for(double root:roots)
 			if (root>0)
 				return confirmNoSmallerRoot(coeffs,root);			
