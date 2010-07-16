@@ -3,11 +3,15 @@ package org.motion.ballsim;
 import java.util.Arrays;
 
 import org.apache.commons.math.geometry.Vector3D;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Function;
 
 public class Collision 
 {
+
+	private final static Logger logger = LoggerFactory.getLogger(Collision.class);
 
 	public static double[] quarticCoefficients(Event e1, Event e2)
 	{
@@ -131,6 +135,8 @@ public class Collision
 	{
 		double tCol = collisionTime(e1, e2, maxt);
 		
+		logger.info("Collision time: {}",tCol);
+
 		if (tCol > 0)
 			return collisionEvents(e1,e2,tCol);
 		
