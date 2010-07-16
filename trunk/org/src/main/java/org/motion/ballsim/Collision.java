@@ -133,8 +133,16 @@ public class Collision
 
 	public static EventPair get(Event e1, Event e2, double maxt) 
 	{
+		if (e1.t < e2.t)
+			e1 = e1.advanceDelta(e2.t-e1.t);
+	//	else if (e2.t < e1.t)
+		//	e2 = e2.advanceDelta(e1.t-e2.t);
+		
 		double tCol = collisionTime(e1, e2, maxt);
 		
+		logger.info("Collision 1: {}",e1.format());
+		logger.info("Collision 2: {}",e2.format());
+
 		logger.info("Collision time: {}",tCol);
 
 		if (tCol > 0)

@@ -161,6 +161,8 @@ public class Table
 			logger.info("Collision event time: {}",nextCollision.getFirst().t);
 			logger.info("Discarded single event: {}",next);
 			logger.info("Discarded single event time: {}",next.t);
+			logger.info("Collision 1: {}",nextCollision.getFirst().format());
+			logger.info("Collision 2: {}",nextCollision.getSecond().format());
 			assert(Cushion.onTable(nextCollision.getFirst()));
 			assert(Cushion.onTable(nextCollision.getSecond()));
 			nextCollision.getFirst().ball.add(nextCollision.getFirst());

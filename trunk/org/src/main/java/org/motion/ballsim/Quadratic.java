@@ -3,10 +3,16 @@ package org.motion.ballsim;
 import java.awt.geom.CubicCurve2D;
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Function;
 
 public class Quadratic 
 {
+	
+	private final static Logger logger = LoggerFactory.getLogger(Quadratic.class);
+
 
 	static double evaluateAt(double a, double b, double c,double t)
 	{
@@ -15,13 +21,13 @@ public class Quadratic
 	
 	static double leastPositiveRoot(double a, double b, double c)
 	{
-		System.out.println(a+"t^2 "+b+"t "+c);
+		logger.info(a+"t^2 "+b+"t "+c);
 
 		double res[] = new double[3];
 		int roots = CubicCurve2D.solveCubic(new double[]{c,b,a,0}, res);
 		Arrays.sort(res);
 		
-		System.out.println(roots+" roots -> " +Arrays.toString(res));
+		logger.info(roots+" roots -> " +Arrays.toString(res));
 		
 		for(double r:res)
 		{
@@ -72,8 +78,9 @@ public class Quadratic
 
 		double last = rootCandidate;
 		
-		System.out.println("zero eval:"+func.apply(0.0));
-		System.out.println("candidate:"+func.apply(last));
+		logger.info("zero eval:"+func.apply(0.0));
+		logger.info("zero eval:"+func.apply(0.0));
+		logger.info("candidate f({}) = {}",last,func.apply(last));
 		
 		double delta = Quadratic.nextSmallestDelta(last);
 		
@@ -86,8 +93,8 @@ public class Quadratic
 		{
 			last -=delta;
 			delta *= 2;
-			if (++count%100000 == 0)
-				System.out.println(count+"last:"+last+" eval:"+func.apply(last));
+			if (++count%1 == 0)
+				logger.info("f({}) = {}",last,func.apply(last));
 		}
 
 		return last;
@@ -102,11 +109,8 @@ public class Quadratic
 		assert(onTable.apply(0.0) == true);
 
 		double last = rootCandidate;
-		System.out.println("--");
-		System.out.println("candidate:"+last+" onTable:"+onTable.apply(last));
+		logger.info("onTable({}) = {}",last,onTable.apply(last));
 		double delta = Quadratic.nextSmallestDelta(last);
-		
-		int count = 0;
 		
 		while(
 				(last>0) && (last<=rootCandidate) && 
@@ -115,9 +119,7 @@ public class Quadratic
 		{
 			last -=delta;
 			delta *= 2;
-			System.out.println("candidate:"+last+" onTable:"+onTable.apply(last));
-			if (++count%100000 == 0)
-				System.out.println(count+"last:"+last+" eval:"+onTable.apply(last));
+			logger.info("onTable({}) = {}",last,onTable.apply(last));
 		}
 
 		return last;

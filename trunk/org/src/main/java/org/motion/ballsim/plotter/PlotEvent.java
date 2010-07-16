@@ -33,7 +33,7 @@ public class PlotEvent
         if (e.type != EventType.Interpolated && e.type != EventType.RollEquilibrium)
         {
         	scale.g2d.drawOval(x-scale.r, y-scale.r, 2*scale.r, 2*scale.r); 	
-        	scale.g2d.drawChars(e.state.toString().toCharArray(), 0, e.state.toString().length(), x+scale.r, y);
+        	//scale.g2d.drawChars(e.state.toString().toCharArray(), 0, e.state.toString().length(), x+scale.r, y);
         }
         int xvel = scale.scaledX(e.pos.getX() + e.vel.getX()/PlotScale.velscale);
         int yvel = scale.scaledY(e.pos.getY() + e.vel.getY()/PlotScale.velscale);
