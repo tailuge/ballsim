@@ -2,6 +2,7 @@ package org.motion.ballsim.plotter;
 
 import java.awt.Color;
 
+import org.motion.ballsim.Ball;
 import org.motion.ballsim.Event;
 import org.motion.ballsim.EventType;
 import org.motion.ballsim.State;
@@ -9,14 +10,14 @@ import org.motion.ballsim.State;
 public class PlotEvent 
 {
 
-	public static void plotEvent(Event e, PlotScale scale)
+	public static void plotEvent(Ball b, Event e, PlotScale scale)
  	{
         int x = scale.scaledX(e.pos.getX());
         int y = scale.scaledY(e.pos.getY());
         
         if (e.type != EventType.Interpolated && e.type != EventType.RollEquilibrium)
         {
-        	scale.g2d.setColor(e.ball.colour);
+        	scale.g2d.setColor(b.colour);
         	scale.g2d.fillOval(x-scale.r, y-scale.r, 2*scale.r, 2*scale.r); 	
         }
         

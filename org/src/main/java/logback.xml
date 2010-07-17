@@ -13,7 +13,7 @@
 		</layout>
 	</appender>
 	<logger name="org.motion.ballsim.Quadratic" level="WARN" />
-    <logger name="org.motion.ballsim.Quartic" level="WARN" />
+    <logger name="org.motion.ballsim.Quartic" level="FATAL" />
     <root level="INFO">
 		<!-- appender-ref ref="FILE" / -->
 		<appender-ref ref="STDOUT" />

@@ -1,78 +1,31 @@
 package org.motion.ballsim.plotter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.motion.ballsim.Ball;
 import org.motion.ballsim.Event;
-import org.motion.ballsim.Table;
 
 /**
  * @author luke
  *
  * Given a list of events construct interpolated events useful for
- * plotting. 
+ * plotting. Interface will be to return the event at arbitrary time
  */
 public class Interpolator 
 {
 
-	List<Event> interpolated = new ArrayList<Event>();
-		
-//	public Interpolator(Collection<Event> collection, double delta)
-//	{
-//		interpolate(collection,delta);		
-//	}
-
-	public Interpolator(Table table, int steps)
-	{
-		// find max time of event and divide
-		
-		double maxt = 0;
-		for(Event e : table.getAllEvents())
-		{
-			if (e.t > maxt)
-				maxt = e.t;
-		}
-		
-		// for each ball interpolate
-		
-		for (Ball ball:table.balls)
-		{
-			interpolate(ball.getAllEvents(),maxt/(double)steps);
-		}
-		
-	}
 
 	/**
-	 * Currently assumes events in order and single ball, will need to fix that eventually.
+	 * Given a ball construct event at t interpolated between precomputed events.
      *
-	 * @param collection
-	 * @param delta
 	 */
-	private void interpolate(Collection<Event> collection, double delta)
+	public static Event interpolate(Ball ball, double t)
 	{
-		double time = 0;
 		Event previous = null;
-		for(Event e : collection)
+		for(Event e : ball.getAllEvents())
 		{
-			if(previous != null)
-			{
-				while(time < e.t)
-				{
-					interpolated.add(previous.advanceDelta(time-previous.t));
-					time += delta;
-				}
-			}
-			
+			if(previous != null && t > previous.t && t<e.t)
+				return previous.advanceDelta(t-previous.t);
 			previous = e;
-			interpolated.add(previous);
 		}
-		
-	}
-	
-	public List<Event> getInterpolated()
-	{
-		return interpolated;
+		return previous;
 	}
 }

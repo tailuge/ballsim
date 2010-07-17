@@ -14,6 +14,7 @@ public class PlotScale {
  	int w,h,r;
  	double scale;
  	double minx,maxx,miny,maxy;
+ 	double maxt;
  	Graphics2D g2d;
  	
  	public final static double velscale = 50;
@@ -39,7 +40,8 @@ public class PlotScale {
  		maxx = 0;
 		miny = 0;
 		maxy = 0;
- 		
+		maxt = 0;
+		
  		for(Event e : events)
  		{
  			System.out.println(e);
@@ -54,6 +56,9 @@ public class PlotScale {
 
  			if (maxy < e.pos.getY())
  				maxy = e.pos.getY();
+ 			
+ 			if (e.t > maxt)
+ 				maxt = e.t;
  		} 		
  		
  		maxx += Ball.R;
