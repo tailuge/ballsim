@@ -78,8 +78,8 @@ public class Collision
 	{
 		EventPair result = new EventPair(a.advanceDelta(t),b.advanceDelta(t));
 
-		Event ca = result.getFirst();
-		Event cb = result.getSecond();
+		Event ca = result.first;
+		Event cb = result.second;
 		
 		Vector3D collisionAxis = ca.pos.subtract(cb.pos).normalize();
 		

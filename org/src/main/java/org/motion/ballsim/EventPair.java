@@ -3,26 +3,16 @@ package org.motion.ballsim;
 public class EventPair 
 {
 
-	private final Event a,b;
+	public final Event first,second;
 	
-	public EventPair(Event a_,Event b_)
+	public EventPair(Event first_,Event second_)
 	{
-		a=a_;
-		b=b_;
+		first=first_;
+		second=second_;
 	}
 
-	public Event getFirst() 
-	{
-		return a;
-	}
-
-	public Event getSecond() 
-	{
-		return b;
-	}
-	
 	public String toString()
 	{
-		return "("+a+","+b+")";
+		return "("+first+","+second+")";
 	}
 }

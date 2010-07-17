@@ -33,7 +33,6 @@ public class Ball
 	
 	public Ball(Event init)
 	{
-		init.ball = this;
 		add(init);
 		colour = getColour();
 	}
