@@ -174,4 +174,27 @@ public class Table
 		System.out.println("<");
 		return true;
 	}
+
+	public boolean validStartingPosition() 
+	{
+		Collection<Ball> tested = new HashSet<Ball>();
+		
+		for(Ball a : balls)
+		{
+			tested.add(a);
+
+			if (!Cushion.onTable(a.lastEvent()))
+				return false;
+			
+			for(Ball b : balls)
+			{
+				if (tested.contains(b)) continue;
+				
+				if (Collision.startingSeperation(a.lastEvent(),b.lastEvent())<2*Ball.R)
+					return false;
+					
+			}
+		}
+		return true;
+	}
 }

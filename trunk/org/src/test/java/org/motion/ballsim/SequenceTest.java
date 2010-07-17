@@ -3,6 +3,9 @@ package org.motion.ballsim;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.apache.commons.math.geometry.Vector3D;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -100,7 +103,6 @@ public class SequenceTest {
 	@Test
 	public final void testStaysThree() 
 	{
-		logger.info("Test");
 		
 		Table t = new Table();
 		Ball b1 = new Ball(Utilities.getStationary());
@@ -120,5 +122,43 @@ public class SequenceTest {
 			assertTrue("All times positive",e.t>=0);
 			assertTrue("On table",Cushion.onTable(e));
 		}
+	}
+	
+	@Test
+	public final void testManyRandom() {
+
+		Collection<Integer> result = new ArrayList<Integer>();
+
+		int v = 0;
+		while (v < 20) {
+			Table t = new Table();
+			Ball b1 = new Ball(Utilities.getStationary(UtilVector3D.rnd()
+					.scalarMultiply(20)));
+			Ball b2 = new Ball(Utilities.getRolling(UtilVector3D.rnd()
+					.scalarMultiply(250), UtilVector3D.rnd().scalarMultiply(20)));
+			Ball b3 = new Ball(Utilities.getSliding(UtilVector3D.rnd()
+					.scalarMultiply(150), UtilVector3D.rnd().scalarMultiply(20)));
+
+			t.balls.add(b1);
+			t.balls.add(b2);
+			t.balls.add(b3);
+			
+			
+			logger.info("test starting pos >>>>> {}",v);
+
+			if (!t.validStartingPosition())
+				continue;
+
+			logger.info("valid starting pos");
+			
+			result.add(t.generateSequence());
+			
+			for (Event e : t.getAllEvents()) {
+				assertTrue("All times positive", e.t >= 0);
+				assertTrue("On table", Cushion.onTable(e));
+			}
+			v++;
+		}
+		logger.info("event list {}",result);
 	}
 }

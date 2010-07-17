@@ -37,7 +37,7 @@ public class StaticPlot  extends JPanel
 		JFrame frame = new JFrame("Table plot");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(this);
-		frame.setSize(300, 500);
+		frame.setSize(412, 824);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		try 
