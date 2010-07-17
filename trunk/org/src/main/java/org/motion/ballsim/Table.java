@@ -24,9 +24,9 @@ public class Table
 	 * 
 	 * @return
 	 */
-	public Event nextNatural() 
+	public BallEvent nextNatural() 
 	{
-		Event next = null;
+		BallEvent next = null;
 		for(Ball ball : balls)
 		{
 			Event e = ball.lastEvent();
@@ -34,19 +34,19 @@ public class Table
 				continue;
 			
 			Event eNext = e.next();
-			if ((next == null) || (eNext.t < next.t))
+			if ((next == null) || (eNext.t < next.event.t))
 			{
-				next = eNext;
-				assert( next.t > e.t);
+				next = new BallEvent(ball, eNext);
+				assert( next.event.t > e.t);
 			}
 		}
 
 		return next;
 	}
 
-	public Event nextCushionHit(double maxt) 
+	public BallEvent nextCushionHit(double maxt) 
 	{
-		Event next = null;
+		BallEvent next = null;
 		for(Ball ball : balls)
 		{
 			Event e = ball.lastEvent();
@@ -57,23 +57,23 @@ public class Table
 			if (eCushion == null)
 				continue;
 
-			if ((next == null) || (eCushion.t < next.t))
+			if ((next == null) || (eCushion.t < next.event.t))
 			{
-				next = eCushion;
-				assert(next.t > e.t);
-				assert(Cushion.onTable(next));
+				next = new BallEvent(ball,eCushion);
+				assert(next.event.t > e.t);
+				assert(Cushion.onTable(next.event));
 			}		
 		}		
 
 		
-		if ((next != null) && (next.t < maxt))
+		if ((next != null) && (next.event.t < maxt))
 			return next;
 		return null;
 	}
 
-	public EventPair nextBallCollision(double maxt) 
+	public BallEventPair nextBallCollision(double maxt) 
 	{
-		EventPair next = null;
+		BallEventPair next = null;
 
 		Collection<Ball> tested = new HashSet<Ball>();
 		
@@ -83,14 +83,13 @@ public class Table
 			for(Ball b : balls)
 			{
 				if (tested.contains(b)) continue;
+				
 				EventPair collision = Collision.get(a.lastEvent(), b.lastEvent(), maxt);
 
 				if (collision == null)
 					continue;
-				if (next == null)
-					next = collision;
-				if (collision.getFirst().t < next.getFirst().t)
-					next = collision;
+				if ((next == null) || (collision.first.t < next.first.event.t))
+					next = new BallEventPair(a,collision.first,b,collision.second);
 
 			}
 		}
@@ -113,7 +112,22 @@ public class Table
 		
 		return all;
 	}
-	
+
+	public Collection<BallEvent> getAllBallEvents() 
+	{
+		Collection<BallEvent> all = new ArrayList<BallEvent>();
+
+		for(Ball ball : balls)
+		{
+			for(Event e : ball.getAllEvents())
+			{
+				all.add(new BallEvent(ball,e));
+			}
+		}
+		
+		return all;
+	}
+
 	public int generateSequence()
 	{
 		int count=0;
@@ -133,40 +147,40 @@ public class Table
 	{
 		// next natural event
 		
-		Event next = nextNatural();
+		BallEvent next = nextNatural();
 		if (next == null)
 			return false;
 		
 		// use bounds of this to look for next cushion collision
 		
-		Event nextCushion = nextCushionHit(next.t);		
-		if ((nextCushion != null) && (nextCushion.t < next.t))
+		BallEvent nextCushion = nextCushionHit(next.event.t);		
+		if ((nextCushion != null) && (nextCushion.event.t < next.event.t))
 			next = nextCushion;
 			
 		// use bounds of these to look for next ball/ball collision
 
-		EventPair nextCollision = nextBallCollision(next.t);
+		BallEventPair nextCollision = nextBallCollision(next.event.t);
 
 		// add the soonest of these outcomes
 		
-		if ((nextCollision == null) || (next.t < nextCollision.getFirst().t))
+		if ((nextCollision == null) || (next.event.t < nextCollision.first.event.t))
 		{
 			logger.info("Single event");
-			assert(Cushion.onTable(next));
-			next.ball.add(next);
+			assert(Cushion.onTable(next.event));
+			next.ball.add(next.event);
 		}
 		else
 		{
 			logger.info("Collision event: {}",nextCollision);
-			logger.info("Collision event time: {}",nextCollision.getFirst().t);
+			logger.info("Collision event time: {}",nextCollision.first.event.t);
 			logger.info("Discarded single event: {}",next);
-			logger.info("Discarded single event time: {}",next.t);
-			logger.info("Collision 1: {}",nextCollision.getFirst().format());
-			logger.info("Collision 2: {}",nextCollision.getSecond().format());
-			assert(Cushion.onTable(nextCollision.getFirst()));
-			assert(Cushion.onTable(nextCollision.getSecond()));
-			nextCollision.getFirst().ball.add(nextCollision.getFirst());
-			nextCollision.getSecond().ball.add(nextCollision.getSecond());
+			logger.info("Discarded single event time: {}",next.event.t);
+			logger.info("Collision 1: {}",nextCollision.first.event.format());
+			logger.info("Collision 2: {}",nextCollision.second.event.format());
+			assert(Cushion.onTable(nextCollision.first.event));
+			assert(Cushion.onTable(nextCollision.second.event));
+			nextCollision.first.ball.add(nextCollision.first.event);
+			nextCollision.second.ball.add(nextCollision.second.event);
 		}
 		
 		System.out.println(">");

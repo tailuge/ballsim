@@ -11,14 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.motion.ballsim.Ball;
-import org.motion.ballsim.Event;
+import org.motion.ballsim.BallEvent;
 import org.motion.ballsim.Table;
 
 public class StaticPlot  extends JPanel 
 {	 
 	private static final long serialVersionUID = 1224879637869008694L;
 
-	private Collection<Event> events = new ArrayList<Event>();
+	private Collection<BallEvent> events = new ArrayList<BallEvent>();
 	private PlotScale scale;
 	private double delta;
 	
@@ -26,13 +26,13 @@ public class StaticPlot  extends JPanel
 	{
 		scale = new PlotScale(table_.getAllEvents());
 		delta = scale.maxt / (double)interpolatedCount;		
-		events.addAll(table_.getAllEvents());
+		events.addAll(table_.getAllBallEvents());
 		double t = 0;
 		while(t<=scale.maxt+0.1)
 		{
 			for(Ball b: table_.balls)
 			{
-				events.add(Interpolator.interpolate(b, t));
+				events.add(new BallEvent(b,Interpolator.interpolate(b, t)));
 			}
 			t += delta;
 		}
@@ -41,8 +41,8 @@ public class StaticPlot  extends JPanel
 
 	public StaticPlot(Table table_)
 	{
-		events = table_.getAllEvents();
-		scale = new PlotScale(events);
+		events = table_.getAllBallEvents();
+		scale = new PlotScale(table_.getAllEvents());
 	}
 
 	public void draw() 
@@ -75,9 +75,9 @@ public class StaticPlot  extends JPanel
 	
 	private void plotTable()
 	{	
- 		for(Event e : events)
+ 		for(BallEvent be : events)
  		{
- 			PlotEvent.plotEvent(e.ball, e, scale);
+ 			PlotEvent.plotEvent(be.ball, be.event, scale);
  		}
 	}
 }

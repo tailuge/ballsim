@@ -18,8 +18,8 @@ public class CollisionTest {
 		double t = Collision.collisionTime(e1, e2,Double.MAX_VALUE);
 		EventPair cols = Collision.collisionEvents(e1,e2, t);
 		assertTrue("Rolling towards each other collide",t>0);
-		System.out.println(Collision.startingSeperation(cols.getFirst(), cols.getSecond()));
-		assertTrue("Balls seperated",Collision.startingSeperation(cols.getFirst(), cols.getSecond()) > 0);
+		System.out.println(Collision.startingSeperation(cols.first, cols.second));
+		assertTrue("Balls seperated",Collision.startingSeperation(cols.first, cols.second) > 0);
 	}
 
 
@@ -101,8 +101,8 @@ public class CollisionTest {
 			//System.out.println(Collision.startingSeperation(cols.getFirst(), cols.getSecond()));
 			//System.out.println(e1);
 			//System.out.println(e2);
-			assertTrue("Balls seperated",Collision.startingSeperation(cols.getFirst(), cols.getSecond()) > 0);							
-			assertTrue("Balls seperated but close",Collision.startingSeperation(cols.getFirst(), cols.getSecond()) < 0.1);							
+			assertTrue("Balls seperated",Collision.startingSeperation(cols.first, cols.second) > 0);							
+			assertTrue("Balls seperated but close",Collision.startingSeperation(cols.first, cols.second) < 0.1);							
 			i++;
 		}	
 	}
