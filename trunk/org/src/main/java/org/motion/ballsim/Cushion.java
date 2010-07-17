@@ -121,4 +121,42 @@ public class Cushion
 		};
 	}
 
+	
+	public static BallEvent nextCushionHit(Table table, double maxt) 
+	{
+		BallEvent next = null;
+		for(Ball ball : table.balls)
+		{
+			Event e = ball.lastEvent();
+			if (e.state == State.Stationary)
+				continue;
+			
+			Event eCushion = Cushion.hit(e, maxt);
+			if (eCushion == null)
+				continue;
+
+			if ((next == null) || (eCushion.t < next.event.t))
+			{
+				next = new BallEvent(ball,eCushion);
+				assert(next.event.t > e.t);
+				assert(Cushion.onTable(next.event));
+			}		
+		}		
+
+		
+		if ((next != null) && (next.event.t < maxt))
+			return next;
+		return null;
+	}
+	
+	public static boolean validPosition(Table table) 
+	{
+		for(Ball a : table.balls)
+		{
+			if (!Cushion.onTable(a.lastEvent()))
+				return false;
+		}
+		return true;
+	}
+	
 }

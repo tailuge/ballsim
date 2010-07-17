@@ -1,6 +1,8 @@
 package org.motion.ballsim;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 
 import org.apache.commons.math.geometry.Vector3D;
 import org.slf4j.Logger;
@@ -149,5 +151,50 @@ public class Collision
 			return collisionEvents(e1,e2,tCol);
 		
 		return null;
+	}
+	
+	public static BallEventPair nextBallCollision(Table table, double maxt) 
+	{
+		BallEventPair next = null;
+
+		Collection<Ball> tested = new HashSet<Ball>();
+		
+		for(Ball a : table.balls)
+		{
+			tested.add(a);
+			for(Ball b : table.balls)
+			{
+				if (tested.contains(b)) continue;
+				
+				EventPair collision = Collision.get(a.lastEvent(), b.lastEvent(), maxt);
+
+				if (collision == null)
+					continue;
+				if ((next == null) || (collision.first.t < next.first.event.t))
+					next = new BallEventPair(a,collision.first,b,collision.second);
+
+			}
+		}
+		return next;
+	}
+	
+	public static boolean validPosition(Table table) 
+	{
+		Collection<Ball> tested = new HashSet<Ball>();
+		
+		for(Ball a : table.balls)
+		{
+			tested.add(a);
+			
+			for(Ball b : table.balls)
+			{
+				if (tested.contains(b)) continue;
+				
+				if (Collision.startingSeperation(a.lastEvent(),b.lastEvent())<2*Ball.R)
+					return false;
+					
+			}
+		}
+		return true;
 	}
 }
