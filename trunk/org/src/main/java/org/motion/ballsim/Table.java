@@ -141,4 +141,11 @@ public class Table
 	}
 
 
+	public void reset()
+	{
+		for(Ball ball : balls)
+		{
+			ball.resetToFirst();
+		}
+	}
 }

@@ -22,18 +22,13 @@ public class Ball
 	
 	public void add(Event e)
 	{
-		if (!events.isEmpty())
-		{
-			double last = lastEvent().t;
-			double et = e.t;
-			assert(last<et);
-		}
+		assert(lastEvent().t<e.t);		
 		events.addLast(e);
 	}
 	
 	public Ball(Event init)
 	{
-		add(init);
+		events.addLast(init);
 		colour = getColour();
 	}
 
@@ -52,6 +47,13 @@ public class Ball
 		return events;
 	}
 
+	public void resetToFirst()
+	{
+		Event e = events.getFirst();
+		events.clear();
+		events.add(e);
+	}
+	
 	private static Color[] colours = new Color[] {Color.white,Color.red,Color.yellow};
 	private static int nextColour = 0;
 
