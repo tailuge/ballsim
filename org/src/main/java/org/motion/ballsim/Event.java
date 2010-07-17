@@ -33,9 +33,9 @@ public class Event {
 	public Vector3D angularPos;
 	public Vector3D angularVel;
 	public Vector3D spin;
-	public Vector3D sidespin;
+	public final Vector3D sidespin;
 	public State state;
-	public double t;
+	public final double t;
 	public EventType type;
 	
 	
@@ -105,35 +105,30 @@ public class Event {
 	 *            to advance event
 	 * @return Event t seconds into the future
 	 */
-	public Event advanceDelta(double delta) {
-		Event result = new Event(this);
+	public Event advanceDelta(double delta) 
+	{
 
 		// v = v0 + a * t
 
-		result.vel = vel.add(acceleration().scalarMultiply(delta));
+		Vector3D vel_ = vel.add(acceleration().scalarMultiply(delta));
 
 		// p = p0 + v0*t + a*t*t/2
 
-		result.pos = pos.add(vel.scalarMultiply(delta)).add(
+		Vector3D pos_ = pos.add(vel.scalarMultiply(delta)).add(
 				acceleration().scalarMultiply(delta * delta / 2.0));
 
 		// av = av0 + aa * t
 
-		result.angularVel = angularVel.add(angularAcceleration()
+		Vector3D angularVel_ = angularVel.add(angularAcceleration()
 				.scalarMultiply(delta));
 
 		// ap = ap0 + av0*t + aa*t*t/2
 
-		result.angularPos = angularPos.add(angularVel.scalarMultiply(delta))
+		Vector3D angularPos_ = angularPos.add(angularVel.scalarMultiply(delta))
 				.add(angularAcceleration().scalarMultiply(
 						delta * delta / 2.0));
 
-		// advance time
-
-		result.t = t + delta;
-		result.type = EventType.Interpolated;
-
-		return result;
+		return new Event(pos_,vel_,angularPos_,angularVel_,sidespin,state,t+delta,EventType.Interpolated);
 	}
 
 

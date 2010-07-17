@@ -2,7 +2,6 @@ package org.motion.ballsim;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -44,57 +43,9 @@ public class Table
 		return next;
 	}
 
-	public BallEvent nextCushionHit(double maxt) 
-	{
-		BallEvent next = null;
-		for(Ball ball : balls)
-		{
-			Event e = ball.lastEvent();
-			if (e.state == State.Stationary)
-				continue;
-			
-			Event eCushion = Cushion.hit(e, maxt);
-			if (eCushion == null)
-				continue;
 
-			if ((next == null) || (eCushion.t < next.event.t))
-			{
-				next = new BallEvent(ball,eCushion);
-				assert(next.event.t > e.t);
-				assert(Cushion.onTable(next.event));
-			}		
-		}		
 
-		
-		if ((next != null) && (next.event.t < maxt))
-			return next;
-		return null;
-	}
 
-	public BallEventPair nextBallCollision(double maxt) 
-	{
-		BallEventPair next = null;
-
-		Collection<Ball> tested = new HashSet<Ball>();
-		
-		for(Ball a : balls)
-		{
-			tested.add(a);
-			for(Ball b : balls)
-			{
-				if (tested.contains(b)) continue;
-				
-				EventPair collision = Collision.get(a.lastEvent(), b.lastEvent(), maxt);
-
-				if (collision == null)
-					continue;
-				if ((next == null) || (collision.first.t < next.first.event.t))
-					next = new BallEventPair(a,collision.first,b,collision.second);
-
-			}
-		}
-		return next;
-	}
 	
 	public String toString()
 	{	
@@ -153,13 +104,13 @@ public class Table
 		
 		// use bounds of this to look for next cushion collision
 		
-		BallEvent nextCushion = nextCushionHit(next.event.t);		
+		BallEvent nextCushion = Cushion.nextCushionHit(this, next.event.t);		
 		if ((nextCushion != null) && (nextCushion.event.t < next.event.t))
 			next = nextCushion;
 			
 		// use bounds of these to look for next ball/ball collision
 
-		BallEventPair nextCollision = nextBallCollision(next.event.t);
+		BallEventPair nextCollision = Collision.nextBallCollision(this, next.event.t);
 
 		// add the soonest of these outcomes
 		
@@ -189,26 +140,5 @@ public class Table
 		return true;
 	}
 
-	public boolean validStartingPosition() 
-	{
-		Collection<Ball> tested = new HashSet<Ball>();
-		
-		for(Ball a : balls)
-		{
-			tested.add(a);
 
-			if (!Cushion.onTable(a.lastEvent()))
-				return false;
-			
-			for(Ball b : balls)
-			{
-				if (tested.contains(b)) continue;
-				
-				if (Collision.startingSeperation(a.lastEvent(),b.lastEvent())<2*Ball.R)
-					return false;
-					
-			}
-		}
-		return true;
-	}
 }

@@ -146,7 +146,10 @@ public class SequenceTest {
 			
 			logger.info("test starting pos >>>>> {}",v);
 
-			if (!t.validStartingPosition())
+			if (!Cushion.validPosition(t))
+				continue;
+
+			if (!Collision.validPosition(t))
 				continue;
 
 			logger.info("valid starting pos");
