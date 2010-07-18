@@ -1,13 +1,18 @@
-#summary Some initial screen shots
+#summary Screenshots
 #labels testimages
 
-<wiki:toc max_depth="1" />
+<wiki:toc max_depth="2" />
+
+= Screens =
+
+== 1 ==
 
 [http://ballsim.googlecode.com/files/firstlight.png]
 
 first table plot with 8 computed events from initial hit and interpolated lines showing axis of rotation as dashed lines. (friction constants all wrong)
 
  
+== 2 ==
 
 [http://ballsim.googlecode.com/files/3c1.png]
 
@@ -15,6 +20,7 @@ a valid 3 cushion shot in a broken friction constant land
 
 
 
+== 3 ==
 
 [http://ballsim.googlecode.com/files/machine3c.png]
 
