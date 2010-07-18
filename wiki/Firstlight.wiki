@@ -1,6 +1,8 @@
 #summary Some initial screen shots
 #labels testimages
 
+<wiki:toc max_depth="1" />
+
 [http://ballsim.googlecode.com/files/firstlight.png]
 
 first table plot with 8 computed events from initial hit and interpolated lines showing axis of rotation as dashed lines. (friction constants all wrong)
