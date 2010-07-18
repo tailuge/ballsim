@@ -136,10 +136,10 @@ public class Quartic
     	return p.value(t);
     }
 
-    public static void print(double[] coeff)
+    public static String print(double[] coeff)
     {
     	PolynomialFunction p = new PolynomialFunction(coeff);
-    	System.out.println(p.toString());
+    	return p.toString();
     }
     
 

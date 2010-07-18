@@ -134,9 +134,7 @@ public class Table
 			nextCollision.second.ball.add(nextCollision.second.event);
 		}
 		
-		System.out.println(">");
-		System.out.println(this);
-		System.out.println("<");
+		logger.info("Table:{}",this);
 		return true;
 	}
 
