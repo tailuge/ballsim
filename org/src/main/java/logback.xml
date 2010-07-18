@@ -12,8 +12,8 @@
 			</Pattern>
 		</layout>
 	</appender>
-	<logger name="org.motion.ballsim.Quadratic" level="WARN" />
-    <logger name="org.motion.ballsim.Quartic" level="FATAL" />
+	<logger name="org.motion.ballsim.Quadratic" level="OFF" />
+    <logger name="org.motion.ballsim.Quartic" level="OFF" />
     <root level="INFO">
 		<!-- appender-ref ref="FILE" / -->
 		<appender-ref ref="STDOUT" />

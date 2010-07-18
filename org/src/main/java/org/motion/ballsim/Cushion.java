@@ -104,7 +104,6 @@ public class Cushion
 	private static Function<Double,Boolean> onY(final Event e)
 	{
 		return new Function<Double,Boolean>() {
-		@Override
 		public Boolean apply(Double arg) {
 			return onTableY(e.advanceDelta(arg));
 			}
@@ -114,7 +113,6 @@ public class Cushion
 	private static Function<Double,Boolean> onX(final Event e)
 	{
 		return new Function<Double,Boolean>() {
-		@Override
 		public Boolean apply(Double arg) {
 			return onTableX(e.advanceDelta(arg));
 			}
