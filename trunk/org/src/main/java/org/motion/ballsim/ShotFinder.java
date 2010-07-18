@@ -26,7 +26,7 @@ public class ShotFinder {
 		{
 			table.reset();
 			
-			Vector3D dir = new Vector3D(Math.PI/2.0+2*Math.PI*(double)i/(double)maxIter,0);
+			Vector3D dir = new Vector3D(0.5+Math.PI/2.0+2*Math.PI*(double)i/(double)maxIter,0);
 			Event e = ball.lastEvent(); 
 			ball.lastEvent().vel = dir.scalarMultiply(280);
 			ball.lastEvent().angularVel = dir.scalarMultiply(1);
