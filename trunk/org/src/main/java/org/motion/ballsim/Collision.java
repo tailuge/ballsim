@@ -119,7 +119,6 @@ public class Collision
 	{
 		Function<Double,Double> func = new Function<Double, Double>() 
 		{	
-			@Override
 			public Double apply(Double arg) {
 				return startingSeperation(a.advanceDelta(arg),b.advanceDelta(arg));
 			}

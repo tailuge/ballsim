@@ -19,7 +19,6 @@ public class UtilVector3D
 	
 	public static Function<Vector3D,Double> getX = new Function<Vector3D, Double>() {
 		
-		@Override
 		public Double apply(Vector3D arg) {
 			return arg.getX();
 		}
@@ -27,7 +26,6 @@ public class UtilVector3D
 
 	public static Function<Vector3D,Double> getY = new Function<Vector3D, Double>() {
 		
-		@Override
 		public Double apply(Vector3D arg) {
 			return arg.getY();
 		}
@@ -35,7 +33,6 @@ public class UtilVector3D
 	
 	public static Function<Vector3D,Vector3D> reflectX = new Function<Vector3D, Vector3D>() {	
 
-		@Override
 		public Vector3D apply(Vector3D arg) {
 			return new Vector3D(-arg.getX(),arg.getY(),0);
 		}
@@ -43,7 +40,6 @@ public class UtilVector3D
 
 	public static Function<Vector3D,Vector3D> reflectY = new Function<Vector3D, Vector3D>() {	
 
-		@Override
 		public Vector3D apply(Vector3D arg) {
 			return new Vector3D(arg.getX(),-arg.getY(),0);
 		}

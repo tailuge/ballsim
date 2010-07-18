@@ -14,14 +14,12 @@ import java.io.OutputStream;
  */
 public class JavaBeansMarshaller<T> implements Marshaller<T> {
 
-	@Override
 	public void marshal(T t, OutputStream out) {
 		XMLEncoder e = new XMLEncoder(out);
 		e.writeObject(t);
 		e.close();
 	}
 
-	@Override
 	public T unmarshal(InputStream in) {
 		XMLDecoder d = new XMLDecoder(in);
 		@SuppressWarnings("unchecked")

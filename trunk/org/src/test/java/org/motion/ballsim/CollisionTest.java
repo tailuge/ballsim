@@ -26,7 +26,6 @@ public class CollisionTest {
 
 	Function<Double,Event> rolling = new Function<Double, Event>() 
 	{	
-		@Override
 		public Event apply(Double arg) {
 			return Utilities.getRolling(UtilVector3D.rnd().scalarMultiply(Ball.R*arg*Math.random()));
 		}
@@ -34,7 +33,6 @@ public class CollisionTest {
 
 	Function<Double,Event> sliding = new Function<Double, Event>() 
 	{	
-		@Override
 		public Event apply(Double arg) {
 			return Utilities.getSliding(
 					UtilVector3D.rnd().scalarMultiply(Ball.R*arg*Math.random()),
@@ -44,7 +42,6 @@ public class CollisionTest {
 
 	Function<Double,Event> stationary = new Function<Double, Event>() 
 	{	
-		@Override
 		public Event apply(Double arg) {
 			return Utilities.getStationary();
 		}
