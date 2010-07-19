@@ -14,8 +14,8 @@
 	</appender>
 	<logger name="org.motion.ballsim.Quadratic" level="OFF" />
     <logger name="org.motion.ballsim.Quartic" level="OFF" />
-    <logger name="org.motion.ballsim.Collision" level="OFF" />
-    <logger name="org.motion.ballsim.Table" level="OFF" />
+    <logger name="org.motion.ballsim.Collision" level="INFO" />
+    <logger name="org.motion.ballsim.Table" level="INFO" />
     <root level="INFO">
 		<!-- appender-ref ref="FILE" / -->
 		<appender-ref ref="STDOUT" />

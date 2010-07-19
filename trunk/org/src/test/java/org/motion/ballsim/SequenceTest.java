@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.commons.math.geometry.Vector3D;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +64,7 @@ public class SequenceTest {
 	}
 
 	@Test
+	@Ignore
 	public final void testStatAndRoll() 
 	{
 		Table t = new Table();
@@ -101,6 +103,7 @@ public class SequenceTest {
 	}
 	
 	@Test
+	@Ignore
 	public final void testStaysThree() 
 	{
 		
@@ -125,6 +128,7 @@ public class SequenceTest {
 	}
 	
 	@Test
+	@Ignore
 	public final void testManyRandom() {
 
 		Collection<Integer> result = new ArrayList<Integer>();
@@ -143,16 +147,16 @@ public class SequenceTest {
 			t.balls.add(b2);
 			t.balls.add(b3);
 			
+			logger.info("+");
 			
-			logger.info("test starting pos >>>>> {}",v);
-
 			if (!Cushion.validPosition(t))
 				continue;
 
 			if (!Collision.validPosition(t))
 				continue;
 
-			logger.info("valid starting pos");
+			logger.info("test starting pos >>>>> {}",v);
+
 			
 			result.add(t.generateSequence());
 			
@@ -164,4 +168,25 @@ public class SequenceTest {
 		}
 		logger.info("event list {}",result);
 	}
+
+	@Test
+	public final void alwaysSeperated() 
+	{
+		// To do: 
+		//p:{7.60000000000000000; 4.00000000000000000; 0.00000000000000000} v:{148.34941673068596000; -59.93705494654598000; 0.00000000000000000}
+
+		Table t = new Table();
+//		Ball b1 = new Ball(Utilities.getSliding(new Vector3D(2,2,0).scalarMultiply(-100) ,Vector3D.PLUS_I));
+		Ball b1 = new Ball(Utilities.getSliding(new Vector3D(1,2,0).scalarMultiply(-100) ,Vector3D.PLUS_I));
+		t.balls.add(b1);
+		t.generateSequence();
+		
+		for(Event e:t.getAllEvents())
+		{
+			//System.out.println("format:"+e.format());
+			assertTrue("All times positive",e.t>=0);
+			assertTrue("On table",Cushion.onTable(e));
+		}
+	}
+
 }

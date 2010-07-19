@@ -44,7 +44,6 @@ public class PlotScale {
 		
  		for(Event e : events)
  		{
- 			System.out.println(e);
  			if (minx > e.pos.getX())
  				minx = e.pos.getX();
 

@@ -49,9 +49,13 @@ public class Ball
 
 	public void resetToFirst()
 	{
-		Event e = events.getFirst();
+		setFirstEvent(events.getFirst());
+	}
+	
+	public void setFirstEvent(Event e)
+	{
 		events.clear();
-		events.add(e);
+		events.add(e);	
 	}
 	
 	private static Color[] colours = new Color[] {Color.white,Color.red,Color.yellow};

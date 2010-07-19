@@ -135,6 +135,10 @@ public class Table
 		}
 		
 		logger.info("Table:{}",this);
+		
+		assert(Cushion.validPosition(this));
+		assert(Collision.validPosition(this));
+		
 		return true;
 	}
 
