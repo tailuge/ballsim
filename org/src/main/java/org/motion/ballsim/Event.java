@@ -149,7 +149,7 @@ public class Event {
 	{
 		NumberFormat nf = NumberFormat.getInstance();
 		//nf.setRoundingMode(RoundingMode.UNNECESSARY);
-		//nf.setMinimumFractionDigits(17);
+		nf.setMinimumFractionDigits(17);
 		Vector3DFormat f = new Vector3DFormat(nf);
 		return state+" t:" + t + " "+type 
 		+ " p:" + f.format(pos) + " v:" + f.format(vel)+ " av:" + f.format(angularVel);

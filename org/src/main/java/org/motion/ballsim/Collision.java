@@ -134,10 +134,12 @@ public class Collision
 
 	public static EventPair get(Event e1, Event e2, double maxt) 
 	{
+		assert(Collision.startingSeperation(e1,e2) > 0);
+
 		if (e1.t < e2.t)
 			e1 = e1.advanceDelta(e2.t-e1.t);
-	//	else if (e2.t < e1.t)
-		//	e2 = e2.advanceDelta(e1.t-e2.t);
+		else if (e2.t < e1.t)
+			e2 = e2.advanceDelta(e1.t-e2.t);
 		
 		double tCol = collisionTime(e1, e2, maxt);
 		
@@ -146,9 +148,14 @@ public class Collision
 
 		logger.info("Collision time: {}",tCol);
 
-		if (tCol > 0)
-			return collisionEvents(e1,e2,tCol);
+		assert(Collision.startingSeperation(e1,e2) > 0);
 		
+		if (tCol > 0)
+		{
+			EventPair col = collisionEvents(e1,e2,tCol);
+			assert(Collision.startingSeperation(col.first,col.second) > 0);			
+			return col;
+		}
 		return null;
 	}
 	

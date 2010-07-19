@@ -33,6 +33,9 @@ public class StaticPlotApp
 		
 		Table tResult = finder.FindBest(b2, 360);
 		
+		b2.resetToFirst();
+		System.out.println(b2.lastEvent().format());
+		
 		//t.generateSequence();
 		//t.generateNext();
 
