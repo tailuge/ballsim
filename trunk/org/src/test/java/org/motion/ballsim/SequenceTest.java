@@ -64,7 +64,7 @@ public class SequenceTest {
 	}
 
 	@Test
-	@Ignore
+	//@Ignore
 	public final void testStatAndRoll() 
 	{
 		Table t = new Table();
@@ -103,7 +103,7 @@ public class SequenceTest {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public final void testStaysThree() 
 	{
 		
