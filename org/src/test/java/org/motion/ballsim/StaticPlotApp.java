@@ -9,6 +9,8 @@ public class StaticPlotApp
 	
     public static void main(String[] args) 
     {
+    	testCase1();
+    	/*
 		Table t = new Table();
 //		Ball b1 = new Ball(Utilities.getRolling(new Vector3D(2,1,0).scalarMultiply(-100) ));
 	//	Ball b1 = new Ball(Utilities.getSliding(new Vector3D(-2,2.5,0).scalarMultiply(-10) ,Vector3D.PLUS_I));
@@ -41,6 +43,44 @@ public class StaticPlotApp
 
 		plot = new StaticPlot(tResult,50);
     	plot.draw();
+    	*/
     }	
 
+    public static void testCase1() 
+    {
+
+	
+	Event e2 = new Event(
+			new Vector3D(-7.46186466568119040, 13.58212010728338400,0),
+			new Vector3D(-0.17115815906368680, -6.18992731042295200,0),
+			new Vector3D(0,0,0),
+			new Vector3D(59.38269619059247600, 6.96035116039190900,0),
+			new Vector3D(0,0,0),
+			State.Sliding,
+			0.567154439135523,
+			EventType.Interpolated);
+	Event e3 = new Event(
+			new Vector3D(-6.07824220980257750, 15.02632144823587300,0),
+			new Vector3D(42.04694426339171000, 79.12242811508793000,0),
+			new Vector3D(0,0,0),
+			new Vector3D(13.54980461407249400, 20.77515110112390700,0),
+			new Vector3D(0,0,0),
+			State.Sliding,
+			0.567154439135523,
+			EventType.Interpolated);
+
+	
+	Ball b2 = new Ball(e2);
+	Ball b3 = new Ball(e3);
+	
+	Table t= new Table();
+//	t.balls.add(b1);
+	t.balls.add(b2);
+	t.balls.add(b3);
+
+	t.generateNext();
+	
+	plot = new StaticPlot(t,50);
+	plot.draw();
+    }
 }

@@ -3,6 +3,7 @@ package org.motion.ballsim;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.math.geometry.Vector3D;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.base.Function;
@@ -104,5 +105,43 @@ public class CollisionTest {
 		}	
 	}
 
+//	2010-07-20 09:30:28,162 INFO [main] o.m.b.Table [Table.java:103] Ball java.awt.Color[r=255,g=255,b=255] : Stationary t:0.0 InitialHit p:{-13.48296365031531800; -14.77192239365871500; 0.00000000000000000} v:{0.00000000000000000; 0.00000000000000000; 0.00000000000000000} av:{0.00000000000000000; 0.00000000000000000; 0.00000000000000000}
+//	2010-07-20 09:30:28,162 INFO [main] o.m.b.Table [Table.java:103] Ball java.awt.Color[r=255,g=0,b=0] : Sliding t:0.567154439135523 Collision p:{-7.46186466568119040; 13.58212010728338400; 0.00000000000000000} v:{-0.17115815906368680; -6.18992731042295200; 0.00000000000000000} av:{59.38269619059247600; 6.96035116039190900; 0.00000000000000000}
+//	2010-07-20 09:30:28,166 INFO [main] o.m.b.Table [Table.java:103] Ball java.awt.Color[r=255,g=255,b=0] : Sliding t:0.567154439135523 Collision p:{-6.07824220980257750; 15.02632144823587300; 0.00000000000000000} v:{42.04694426339171000; 79.12242811508793000; 0.00000000000000000} av:{13.54980461407249400; 20.77515110112390700; 0.00000000000000000}
 
+	@Test
+	@Ignore
+	public final void testCaseKnownIssue() 
+	{
+		Event e2 = new Event(
+				new Vector3D(-7.46186466568119040, 13.58212010728338400,0),
+				new Vector3D(-0.17115815906368680, -6.18992731042295200,0),
+				new Vector3D(0,0,0),
+				new Vector3D(59.38269619059247600, 6.96035116039190900,0),
+				new Vector3D(0,0,0),
+				State.Sliding,
+				0.567154439135523,
+				EventType.Interpolated);
+		Event e3 = new Event(
+				new Vector3D(-6.07824220980257750, 15.02632144823587300,0),
+				new Vector3D(42.04694426339171000, 79.12242811508793000,0),
+				new Vector3D(0,0,0),
+				new Vector3D(13.54980461407249400, 20.77515110112390700,0),
+				new Vector3D(0,0,0),
+				State.Sliding,
+				0.567154439135523,
+				EventType.Interpolated);
+
+		Ball b2 = new Ball(e2);
+		Ball b3 = new Ball(e3);
+		
+		Table t= new Table();
+		t.balls.add(b2);
+		t.balls.add(b3);
+		
+		assertTrue(Collision.validPosition(t));
+		t.generateNext();
+		assertTrue(Collision.validPosition(t));
+	}
+	
 }

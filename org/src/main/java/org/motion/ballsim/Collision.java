@@ -196,7 +196,7 @@ public class Collision
 			{
 				if (tested.contains(b)) continue;
 				
-				if (Collision.startingSeperation(a.lastEvent(),b.lastEvent())<2*Ball.R)
+				if (Collision.startingSeperation(a.lastEvent(),b.lastEvent())<0)
 					return false;
 					
 			}
