@@ -1,7 +1,11 @@
 package org.motion.ballsimapp.server;
 
+import javax.jdo.Extent;
+import javax.jdo.PersistenceManager;
+
 import org.motion.ballsimapp.client.GreetingService;
 import org.motion.ballsimapp.shared.FieldVerifier;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -23,11 +27,32 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		String serverInfo = getServletContext().getServerInfo();
 		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
 
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Player p = new Player(input, "test");
+
+		String listOfPlayers = "Players:";
+
+		try {
+			pm.makePersistent(p);
+			Extent<Player> extent = pm.getExtent(Player.class, false);
+
+			for (Player op : extent) {
+				listOfPlayers += op.getId() + ",";
+			}
+			extent.closeAll();
+		} finally {
+			pm.close();
+		}
+        
+      
+       
+        
+    
 		// Escape data from the client to avoid cross-site script vulnerabilities.
 		input = escapeHtml(input);
 		userAgent = escapeHtml(userAgent);
 
-		return "Hello, " + input + "!<br><br>I am running " + serverInfo
+		return "Hello, " + input + "!<br>All players:" + escapeHtml(listOfPlayers) + "<br><br>I am running " + serverInfo
 				+ ".<br><br>It looks like you are using:<br>" + userAgent
 				+ "<br> put proceesingjs canvas tag here ";
 	}
