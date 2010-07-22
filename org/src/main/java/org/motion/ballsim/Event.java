@@ -37,11 +37,12 @@ public class Event {
 	public State state;
 	public final double t;
 	public EventType type;
-	
+	public int ballId;
+	public int otherBallId;
 	
 	public Event(Vector3D pos, Vector3D vel, Vector3D angularPos,
 			Vector3D angularVel, Vector3D sidespin, State state, double t,
-			EventType type) {
+			EventType type, int ballId, int otherBallId) {
 		this.pos = pos;
 		this.vel = vel;
 		this.angularPos = angularPos;
@@ -50,6 +51,8 @@ public class Event {
 		this.state = state;
 		this.t = t;
 		this.type = type;
+		this.ballId = ballId;
+		this.otherBallId = otherBallId;
 	}
 
 
@@ -64,7 +67,8 @@ public class Event {
 		state = e.state;
 		t = e.t;
 		type = e.type;
-				
+		ballId = e.ballId;
+		otherBallId = e.otherBallId;
 	}
 
 
@@ -128,7 +132,7 @@ public class Event {
 				.add(angularAcceleration().scalarMultiply(
 						delta * delta / 2.0));
 
-		return new Event(pos_,vel_,angularPos_,angularVel_,sidespin,state,t+delta,EventType.Interpolated);
+		return new Event(pos_,vel_,angularPos_,angularVel_,sidespin,state,t+delta,EventType.Interpolated,ballId,otherBallId);
 	}
 
 

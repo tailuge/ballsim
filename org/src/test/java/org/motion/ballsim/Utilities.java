@@ -11,7 +11,7 @@ public class Utilities {
 	{
 		return new Event(Vector3D.ZERO, Vector3D.ZERO, Vector3D.ZERO,
 				Vector3D.ZERO, Vector3D.ZERO, State.Stationary, 0,
-				EventType.InitialHit);
+				EventType.InitialHit,0,0);
 	}
 	
 	public static Event getRolling(Vector3D vel)

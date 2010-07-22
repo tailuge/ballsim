@@ -3,7 +3,6 @@ package org.motion.ballsim;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.math.geometry.Vector3D;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.base.Function;
@@ -110,7 +109,6 @@ public class CollisionTest {
 //	2010-07-20 09:30:28,166 INFO [main] o.m.b.Table [Table.java:103] Ball java.awt.Color[r=255,g=255,b=0] : Sliding t:0.567154439135523 Collision p:{-6.07824220980257750; 15.02632144823587300; 0.00000000000000000} v:{42.04694426339171000; 79.12242811508793000; 0.00000000000000000} av:{13.54980461407249400; 20.77515110112390700; 0.00000000000000000}
 
 	@Test
-	@Ignore
 	public final void testCaseKnownIssue() 
 	{
 		Event e2 = new Event(
@@ -121,7 +119,7 @@ public class CollisionTest {
 				new Vector3D(0,0,0),
 				State.Sliding,
 				0.567154439135523,
-				EventType.Interpolated);
+				EventType.Interpolated,0,0);
 		Event e3 = new Event(
 				new Vector3D(-6.07824220980257750, 15.02632144823587300,0),
 				new Vector3D(42.04694426339171000, 79.12242811508793000,0),
@@ -130,7 +128,7 @@ public class CollisionTest {
 				new Vector3D(0,0,0),
 				State.Sliding,
 				0.567154439135523,
-				EventType.Interpolated);
+				EventType.Interpolated,0,0);
 
 		Ball b2 = new Ball(e2);
 		Ball b3 = new Ball(e3);

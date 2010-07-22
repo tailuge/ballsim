@@ -112,7 +112,7 @@ public class Collision
 
 	static double seperationAt(Event e1, Event e2,double t)
 	{
-		return Vector3D.distance(e1.advanceDelta(t).pos, e2.advanceDelta(t).pos) - 2*Ball.R;
+		return Vector3D.distance(e1.advanceDelta(t-e1.t).pos, e2.advanceDelta(t-e2.t).pos) - 2*Ball.R;
 	}
 
 	private static double latestInstantBeforeCollision(final Event a,final Event b,double tCollision)
@@ -134,7 +134,6 @@ public class Collision
 
 	public static EventPair get(Event e1, Event e2, double maxt) 
 	{
-		assert(Collision.startingSeperation(e1,e2) > 0);
 
 		if (e1.t < e2.t)
 			e1 = e1.advanceDelta(e2.t-e1.t);
@@ -177,15 +176,35 @@ public class Collision
 				if (collision == null)
 					continue;
 				if ((next == null) || (collision.first.t < next.first.event.t))
+				{
+					collision.first.otherBallId = collision.second.ballId;
+					collision.second.otherBallId = collision.first.ballId;					
 					next = new BallEventPair(a,collision.first,b,collision.second);
-
+					assert(collision.first.otherBallId != 0);
+					assert(collision.second.otherBallId != 0);
+				}
 			}
 		}
+		
+		
 		return next;
+	}
+
+	public static double getMaxTime(Table table) 
+	{
+		double latest = 0;
+		for(Ball a : table.balls)
+		{
+			if (a.lastEvent().t > latest)
+				latest = a.lastEvent().t; 
+		}		
+		return latest;
 	}
 	
 	public static boolean validPosition(Table table) 
 	{
+		double maxTime = getMaxTime(table);
+		
 		Collection<Ball> tested = new HashSet<Ball>();
 		
 		for(Ball a : table.balls)
@@ -196,7 +215,7 @@ public class Collision
 			{
 				if (tested.contains(b)) continue;
 				
-				if (Collision.startingSeperation(a.lastEvent(),b.lastEvent())<0)
+				if (Collision.seperationAt(a.lastEvent(),b.lastEvent(),maxTime) < 0)
 					return false;
 					
 			}

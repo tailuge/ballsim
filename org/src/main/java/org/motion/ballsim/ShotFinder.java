@@ -6,10 +6,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.math.geometry.Vector3D;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 
 public class ShotFinder {
+
+	private final static Logger logger = LoggerFactory.getLogger(ShotFinder.class);
 
 	private IRuleSet rule;
 
@@ -44,7 +48,9 @@ public class ShotFinder {
 		for(int i=0; i<segments; i++)
 		{
 			Vector3D dir = new Vector3D(2.0 * Math.PI * (double)i/(double)segments,0);
-			radialEvents.add(UtilEvent.hit(pos, dir,160, 0)); 			
+			Event e = UtilEvent.hit(pos, dir,250, 0);
+			e.ballId = ball.id;
+			radialEvents.add(e); 			
 		}
 		
 		return radialEvents;
@@ -65,6 +71,11 @@ public class ShotFinder {
 		table.reset();
 		ball.setFirstEvent(best.getKey());
 		table.generateSequence();
+		
+		Collection<Double> d = ranks.values();
+		
+		logger.info("ranks:{}",d);
+		
 		return table;
 		
 	}
