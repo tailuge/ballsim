@@ -1,6 +1,9 @@
 package org.motion.ballsimapp.client;
 
+import java.util.ArrayList;
+
 import org.motion.ballsimapp.shared.FieldVerifier;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -14,6 +17,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -36,6 +40,13 @@ public class Ballsimapp implements EntryPoint {
 	private final GreetingServiceAsync greetingService = GWT
 			.create(GreetingService.class);
 
+	
+	/**
+	 * Create a remote service proxy to talk to the server-side Greeting service.
+	 */
+	private final TableServiceAsync tableService = GWT
+			.create(TableService.class);
+	
 	/**
 	 * This is the entry point method.
 	 */
@@ -44,6 +55,10 @@ public class Ballsimapp implements EntryPoint {
 		final TextBox nameField = new TextBox();
 		nameField.setText("player"+(int)(Math.random()*100));
 		final Label errorLabel = new Label();
+
+		final ListBox lb = new ListBox();
+		
+		final Button freetableButton = new Button("Free Tables");
 
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
@@ -54,6 +69,10 @@ public class Ballsimapp implements EntryPoint {
 		RootPanel.get("sendButtonContainer").add(sendButton);
 		RootPanel.get("errorLabelContainer").add(errorLabel);
 
+		RootPanel.get("freetableButtonContainer").add(freetableButton);
+		freetableButton.setEnabled(false);
+		RootPanel.get("freetableList").add(lb);
+		
 		// Focus the cursor on the name field when the app loads
 		nameField.setFocus(true);
 		nameField.selectAll();
@@ -163,13 +182,14 @@ public class Ballsimapp implements EntryPoint {
 							}
 
 							public void onSuccess(String result) {
-								dialogBox.setText("Remote Procedure Call");
-								serverResponseLabel
-										.removeStyleName("serverResponseLabelError");
-								serverResponseLabel.setHTML(result);
-								dialogBox.center();
-								closeButton.setFocus(true);
-								
+//								dialogBox.setText("Remote Procedure Call");
+//								serverResponseLabel
+//										.removeStyleName("serverResponseLabelError");
+//								serverResponseLabel.setHTML(result);
+//								dialogBox.center();
+//								closeButton.setFocus(true);
+								freetableButton.setEnabled(true);
+
 							}
 						});
 			}
@@ -179,5 +199,42 @@ public class Ballsimapp implements EntryPoint {
 		MyHandler handler = new MyHandler();
 		sendButton.addClickHandler(handler);
 		nameField.addKeyUpHandler(handler);
+		
+		class TableHandler implements ClickHandler {
+			/**
+			 * Fired when the user clicks on the sendButton.
+			 */
+			public void onClick(ClickEvent event) {
+				freetableButton.setEnabled(false);
+				tableService.getTables(
+						new AsyncCallback<ArrayList<String>>() {
+							public void onFailure(Throwable caught) {
+								// Show the RPC error message to the user
+								dialogBox
+										.setText("Remote Procedure Call - Failure");
+								serverResponseLabel
+										.addStyleName("serverResponseLabelError");
+								serverResponseLabel.setHTML(SERVER_ERROR);
+								dialogBox.center();
+								closeButton.setFocus(true);
+							}
+
+							public void onSuccess(ArrayList<String> tables) {
+
+								lb.clear();
+								for (String t : tables)
+									lb.addItem(t);
+								freetableButton.setEnabled(true);
+
+							}
+						});
+
+			}
+		}	
+
+		TableHandler handlerT = new TableHandler();
+		freetableButton.addClickHandler(handlerT);
 	}
+	
+	
 }
