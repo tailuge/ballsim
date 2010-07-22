@@ -15,6 +15,16 @@
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/ballsimapp/greet</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>tablesServlet</servlet-name>
+    <servlet-class>org.motion.ballsimapp.server.TableServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>tablesServlet</servlet-name>
+    <url-pattern>/ballsimapp/tables</url-pattern>
+  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
