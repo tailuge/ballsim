@@ -12,8 +12,15 @@ public class SlidingMotion
 	 * @return acceleration vector when sliding
 	 */
 	public static Vector3D acceleration(Event e) {
-		return getChangeToNr(e).normalize()
-				.scalarMultiply(-Ball.accelSlide);
+		try 
+		{
+			return getChangeToNr(e).normalize().scalarMultiply(-Ball.accelSlide);
+		} 
+		catch (ArithmeticException ae) 
+		{
+			return Vector3D.ZERO;
+		}
+
 	}
 	
 	public static Vector3D angularAcceleration(Event e) {

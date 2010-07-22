@@ -1,6 +1,5 @@
 package org.motion.ballsim;
 
-import java.awt.Color;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -18,18 +17,18 @@ public class Ball
 		
 	private LinkedList<Event> events = new LinkedList<Event>();
 
-	public final Color colour;
+	public final int id;
 	
 	public void add(Event e)
 	{
-		assert(lastEvent().t<e.t);		
+		e.ballId = id;
 		events.addLast(e);
 	}
 	
 	public Ball(Event init)
 	{
-		events.addLast(init);
-		colour = getColour();
+		id = getNextId();
+		add(init);
 	}
 
 	public Event lastEvent() 
@@ -55,14 +54,13 @@ public class Ball
 	public void setFirstEvent(Event e)
 	{
 		events.clear();
-		events.add(e);	
+		add(e);	
 	}
 	
-	private static Color[] colours = new Color[] {Color.white,Color.red,Color.yellow};
-	private static int nextColour = 0;
+	private static int idFountain = 1;
 
-	private static Color getColour()
+	private static int getNextId()
 	{
-		return colours[nextColour++ % colours.length];
+		return idFountain++;
 	}
 }

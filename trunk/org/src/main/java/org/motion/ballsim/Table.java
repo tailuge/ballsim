@@ -100,7 +100,7 @@ public class Table
 		logger.info("Initial conditions for iteration:");
 		for(Ball ball : balls)
 		{
-			logger.info("Ball {} : {}", ball.colour,ball.lastEvent().format());
+			logger.info("Ball {} : {}", ball.id,ball.lastEvent().format());
 		}		
 				
 		BallEvent next = nextNatural();
@@ -122,7 +122,7 @@ public class Table
 		if ((nextCollision == null) || (next.event.t < nextCollision.first.event.t))
 		{
 			logger.info("Single event");
-			logger.info("Ball {} : {}", next.ball.colour, next.event.format());
+			logger.info("Ball {} : {}", next.ball.id, next.event.format());
 			logger.info("nextCollision {}",nextCollision);
 			assert(Cushion.onTable(next.event));
 			next.ball.add(next.event);

@@ -10,6 +10,12 @@ import org.motion.ballsim.State;
 public class PlotEvent 
 {
 
+	private static Color[] colours = new Color[] {Color.white,Color.red,Color.yellow};
+
+	private static Color getColour(Event e)
+	{
+		return colours[e.ballId-1];
+	}
 	public static void plotEvent(Ball b, Event e, PlotScale scale)
  	{
         int x = scale.scaledX(e.pos.getX());
@@ -17,7 +23,7 @@ public class PlotEvent
         
         if (e.type != EventType.Interpolated && e.type != EventType.RollEquilibrium)
         {
-        	scale.g2d.setColor(b.colour);
+        	scale.g2d.setColor(getColour(e));
         	scale.g2d.fillOval(x-scale.r, y-scale.r, 2*scale.r, 2*scale.r); 	
         }
         

@@ -17,7 +17,9 @@ public class UtilEvent
 				zero,
 				State.Sliding,
 				0,
-				EventType.InitialHit
+				EventType.InitialHit,
+				0,
+				0
 				);
 	}
 }
