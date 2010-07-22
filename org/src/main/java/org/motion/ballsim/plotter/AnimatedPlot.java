@@ -4,42 +4,43 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import org.motion.ballsim.Ball;
 import org.motion.ballsim.BallEvent;
 import org.motion.ballsim.Table;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class StaticPlot  extends JPanel 
+public class AnimatedPlot  extends JPanel implements ActionListener
 {	 
+	private final static Logger logger = LoggerFactory.getLogger(AnimatedPlot.class);
+
 	private static final long serialVersionUID = 1224879637869008694L;
 
 	private Collection<BallEvent> events = new ArrayList<BallEvent>();
 	private PlotScale scale;
-	private double delta;
 	
-	public StaticPlot(Table table_, int interpolatedCount)
+	private Timer timer;
+	private Table table;
+	
+	public AnimatedPlot(Table table_, int interpolatedCount)
 	{
 		scale = new PlotScale(table_.getAllEvents());
-		delta = scale.maxt / (double)interpolatedCount;		
+		//delta = scale.maxt / (double)interpolatedCount;		
 		events.addAll(table_.getAllBallEvents());
-		double t = 0;
-		while(t<=scale.maxt+0.1)
-		{
-			for(Ball b: table_.balls)
-			{
-				events.add(new BallEvent(b,Interpolator.interpolate(b, t)));
-			}
-			t += delta;
-		}
-		
+		table = table_;
+		timer = new Timer(20, this);
 	}
 
-	public StaticPlot(Table table_)
+	public AnimatedPlot(Table table_)
 	{
 		events = table_.getAllBallEvents();
 		scale = new PlotScale(table_.getAllEvents());
@@ -50,16 +51,10 @@ public class StaticPlot  extends JPanel
 		JFrame frame = new JFrame("Table plot");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(this);
-		frame.setSize(412, 824);
+		frame.setSize(412/2, 824/2);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		try 
-		{
-			Thread.sleep(10000);
-		} 
-		catch (InterruptedException e) 
-		{
-		}
+	
 	 }
 	
 	public void paintComponent(Graphics g) 
@@ -75,9 +70,23 @@ public class StaticPlot  extends JPanel
 	
 	private void plotTable()
 	{	
- 		for(BallEvent be : events)
- 		{
- 			PlotEvent.plotEvent(be.ball, be.event, scale,false);
- 		}
+		for(Ball b: table.balls)
+		{
+			PlotEvent.plotEvent(b,Interpolator.interpolate(b, t),scale,true);
+		}
+		timer.start();
+	}
+
+	double t = 0;
+	
+	public void actionPerformed(ActionEvent arg0) 
+	{
+		logger.info("t:{}",t);
+		for(Ball b: table.balls)
+		{
+			PlotEvent.plotEvent(b,Interpolator.interpolate(b, t),scale,true);
+		}
+		t=t+0.001;
+		repaint();
 	}
 }

@@ -1,6 +1,14 @@
-package org.motion.ballsim;
+package org.motion.ballsim.plotter;
 
 import org.apache.commons.math.geometry.Vector3D;
+import org.motion.ballsim.Ball;
+import org.motion.ballsim.Event;
+import org.motion.ballsim.EventType;
+import org.motion.ballsim.OneCushionRuleSet;
+import org.motion.ballsim.ShotFinder;
+import org.motion.ballsim.State;
+import org.motion.ballsim.Table;
+import org.motion.ballsim.Utilities;
 import org.motion.ballsim.plotter.StaticPlot;
 
 public class StaticPlotApp 

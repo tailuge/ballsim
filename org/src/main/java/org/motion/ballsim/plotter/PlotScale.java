@@ -71,7 +71,7 @@ public class PlotScale {
  		double scalex = w/(maxx-minx) ;
  		double scaley = h/(maxy-miny) ;
  		
- 		System.out.println(scalex + "," + scaley);
+// 		System.out.println(scalex + "," + scaley);
  		
  		scale = scalex < scaley ? scalex : scaley;
  		scale *= 1.0;
