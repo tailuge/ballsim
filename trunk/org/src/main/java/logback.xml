@@ -16,6 +16,7 @@
     <logger name="org.motion.ballsim.Quartic" level="OFF" />
     <logger name="org.motion.ballsim.Collision" level="OFF" />
     <logger name="org.motion.ballsim.Table" level="OFF" />
+    <logger name="org.motion.ballsim.plotter.AnimatedPlot" level="OFF" />
     <root level="INFO">
 		<!-- appender-ref ref="FILE" / -->
 		<appender-ref ref="STDOUT" />
