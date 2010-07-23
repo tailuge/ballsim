@@ -93,7 +93,7 @@ public class StaticPlot  extends JPanel
 	{	
  		for(BallEvent be : events)
  		{
- 			PlotEvent.plotEvent(be.ball, be.event, scale,false);
+ 			PlotEvent.plotEvent(be.ball, be.event, scale,false,true);
  		}
 	}
 }

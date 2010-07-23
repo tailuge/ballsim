@@ -76,7 +76,7 @@ public class AnimatedPlot  extends JPanel implements ActionListener
 	{	
 		for(Ball b: table.balls())
 		{
-			PlotEvent.plotEvent(b,Interpolator.interpolate(b, t),scale,true);
+			PlotEvent.plotEvent(b,Interpolator.interpolate(b, t),scale,true,true);
 		}
 		
 	}
