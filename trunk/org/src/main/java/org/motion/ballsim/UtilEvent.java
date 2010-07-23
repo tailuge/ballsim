@@ -42,4 +42,22 @@ public class UtilEvent
 		
 		return radialEvents;
 	}
+	
+	public static Collection<Event> generateImpactingEvents(Vector3D  pos, Vector3D target, int segments, double speed, double height)
+	{
+		Collection<Event> radialEvents = Lists.newArrayList();
+
+		Vector3D lineOfCenters = target.subtract(pos);
+		Vector3D perpendicular = UtilVector3D.crossUp(lineOfCenters).normalize();
+		double arcLength = 1.2;
+		for(double skew = -arcLength; skew <= arcLength; skew += 2.0*arcLength/(double)segments)
+		{
+			Vector3D dir = lineOfCenters.add(perpendicular.scalarMultiply(skew * 2 * Ball.R)).normalize();
+			Event e = UtilEvent.hit(pos, dir, speed, height);
+			radialEvents.add(e);
+		}
+		
+		return radialEvents;
+	}	
+
 }

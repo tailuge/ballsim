@@ -7,6 +7,7 @@ import org.apache.commons.math.geometry.Vector3D;
 import org.motion.ballsim.Ball;
 import org.motion.ballsim.Event;
 import org.motion.ballsim.Table;
+import org.motion.ballsim.ThreeCushionRuleSet;
 import org.motion.ballsim.UtilEvent;
 import org.motion.ballsim.Utilities;
 import org.slf4j.Logger;
@@ -21,6 +22,37 @@ public class MultiPlotApp {
 	private final static Logger logger = LoggerFactory.getLogger(MultiPlotApp.class);
 
     public static void main(String[] args) 
+    {
+		Collection<Table> tables = new ArrayList<Table>();
+
+		Collection<Event> events = Lists.newArrayList();
+
+		Event target2 = Utilities.getStationary(new Vector3D(Ball.R * 8.5,-Ball.R * 16, 0));
+		Event target3 = Utilities.getStationary(new Vector3D(Ball.R * 3.9,+Ball.R * 9, 0));
+		
+		events.addAll(UtilEvent.generateImpactingEvents(Vector3D.ZERO, target3.pos, 1000, 270, 0.5));
+		//events.addAll(UtilEvent.generateImpactingEvents(Vector3D.ZERO, target3.pos, 90, 270, 0.8));
+		//events.addAll(UtilEvent.generateImpactingEvents(Vector3D.ZERO, target2.pos, 90, 270, 0.0));
+ 
+		ThreeCushionRuleSet rule = new ThreeCushionRuleSet();
+		
+    	for(Event e : events)
+    	{
+			Table t = new Table();
+			t.ball(1).setFirstEvent(e);			
+			t.ball(2).setFirstEvent(target2);
+			t.ball(3).setFirstEvent(target3);
+			t.generateSequence();
+			if (rule.scores(t, t.ball(1)))
+				tables.add(t);		
+    	}
+		
+		plot = new StaticPlot(tables,90);
+    	plot.draw();
+    	
+    }	
+
+    public static void radialInvestigation()
     {
 		Collection<Table> tables = new ArrayList<Table>();
 
@@ -45,10 +77,8 @@ public class MultiPlotApp {
 		
 		plot = new StaticPlot(tables,20);
     	plot.draw();
-    	
-    }	
-
-
+    }
+    
     public static void hitInvestigation()
     {
 		Collection<Table> tables = new ArrayList<Table>();

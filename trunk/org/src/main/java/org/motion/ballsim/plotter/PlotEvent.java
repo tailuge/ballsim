@@ -11,16 +11,19 @@ public class PlotEvent
 {
 
 	private static Color[] colours = new Color[] {Color.white,Color.red,Color.yellow};
-
+	
 	private static Color getColour(int id)
 	{
 		return colours[id-1];
 	}
 	
-	public static void plotEvent(Ball b, Event e, PlotScale scale, boolean alwaysShow)
+	public static void plotEvent(Ball b, Event e, PlotScale scale, boolean alwaysShow, boolean showCushionEvent)
  	{
         int x = scale.scaledX(e.pos.getX());
         int y = scale.scaledY(e.pos.getY());
+
+        if (!showCushionEvent && e.type == EventType.Cushion)
+        	return;
         
         if (alwaysShow || e.type != EventType.Interpolated && e.type != EventType.RollEquilibrium)
         {
