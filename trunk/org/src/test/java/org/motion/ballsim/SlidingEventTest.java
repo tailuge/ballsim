@@ -116,4 +116,13 @@ public class SlidingEventTest
 			System.out.println(interpolated);
 		}		
 	}
+	
+	
+	@Test
+	public final void testAlreadyRolling() 
+	{
+		Event e = UtilEvent.hit(Vector3D.ZERO, Vector3D.MINUS_J, 100,0.9999999999999999);
+		double t = e.timeToNext();
+		assertTrue("should roll instantly : t is "+t,t>0);
+	}
 }

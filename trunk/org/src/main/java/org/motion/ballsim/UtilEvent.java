@@ -9,11 +9,11 @@ public class UtilEvent
 
 	public static Event hit(Vector3D pos, Vector3D dir, double speed, double cueHeight)
 	{
-		return new Event(
+		Event e = new Event(
 				pos,
 				dir.scalarMultiply(speed),
 				zero,
-				zero,
+				UtilVector3D.crossUp(dir.scalarMultiply(speed/Ball.R)).scalarMultiply(cueHeight),
 				zero,
 				State.Sliding,
 				0,
@@ -21,5 +21,7 @@ public class UtilEvent
 				0,
 				0
 				);
+		e.state = State.deriveStateOf(e);
+		return e;
 	}
 }
