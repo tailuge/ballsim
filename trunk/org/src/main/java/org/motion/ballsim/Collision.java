@@ -164,10 +164,10 @@ public class Collision
 
 		Collection<Ball> tested = new HashSet<Ball>();
 		
-		for(Ball a : table.balls)
+		for(Ball a : table.balls())
 		{
 			tested.add(a);
-			for(Ball b : table.balls)
+			for(Ball b : table.balls())
 			{
 				if (tested.contains(b)) continue;
 				
@@ -190,28 +190,19 @@ public class Collision
 		return next;
 	}
 
-	public static double getMaxTime(Table table) 
-	{
-		double latest = 0;
-		for(Ball a : table.balls)
-		{
-			if (a.lastEvent().t > latest)
-				latest = a.lastEvent().t; 
-		}		
-		return latest;
-	}
+
 	
 	public static boolean validPosition(Table table) 
 	{
-		double maxTime = getMaxTime(table);
+		double maxTime = table.getMaxTime();
 		
 		Collection<Ball> tested = new HashSet<Ball>();
 		
-		for(Ball a : table.balls)
+		for(Ball a : table.balls())
 		{
 			tested.add(a);
 			
-			for(Ball b : table.balls)
+			for(Ball b : table.balls())
 			{
 				if (tested.contains(b)) continue;
 				

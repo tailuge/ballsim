@@ -25,10 +25,9 @@ public class Ball
 		events.addLast(e);
 	}
 	
-	public Ball(Event init)
+	public Ball(int id_)
 	{
-		id = getNextId();
-		add(init);
+		id = id_;
 	}
 
 	public Event lastEvent() 
@@ -57,10 +56,4 @@ public class Ball
 		add(e);	
 	}
 	
-	private static int idFountain = 1;
-
-	private static int getNextId()
-	{
-		return idFountain++;
-	}
 }

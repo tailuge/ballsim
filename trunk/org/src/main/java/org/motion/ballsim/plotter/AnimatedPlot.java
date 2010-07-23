@@ -6,15 +6,12 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import org.motion.ballsim.Ball;
-import org.motion.ballsim.BallEvent;
 import org.motion.ballsim.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +22,7 @@ public class AnimatedPlot  extends JPanel implements ActionListener
 
 	private static final long serialVersionUID = 1224879637869008694L;
 
-	private Collection<BallEvent> events = new ArrayList<BallEvent>();
+//	private Collection<BallEvent> events = new ArrayList<BallEvent>();
 	private PlotScale scale;
 	private boolean scaleSet = false;
 	private Timer timer;
@@ -35,14 +32,14 @@ public class AnimatedPlot  extends JPanel implements ActionListener
 	{
 		scale = new PlotScale(table_.getAllEvents());
 		//delta = scale.maxt / (double)interpolatedCount;		
-		events.addAll(table_.getAllBallEvents());
+		//events.addAll(table_.getAllBallEvents());
 		table = table_;
 		timer = new Timer(1, this);
 	}
 
 	public AnimatedPlot(Table table_)
 	{
-		events = table_.getAllBallEvents();
+//		events = table_.getAllBallEvents();
 		scale = new PlotScale(table_.getAllEvents());
 	}
 
@@ -77,7 +74,7 @@ public class AnimatedPlot  extends JPanel implements ActionListener
 	
 	private void plotTable()
 	{	
-		for(Ball b: table.balls)
+		for(Ball b: table.balls())
 		{
 			PlotEvent.plotEvent(b,Interpolator.interpolate(b, t),scale,true);
 		}

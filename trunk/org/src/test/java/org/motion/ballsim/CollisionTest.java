@@ -130,13 +130,11 @@ public class CollisionTest {
 				0.567154439135523,
 				EventType.Interpolated,0,0);
 
-		Ball b2 = new Ball(e2);
-		Ball b3 = new Ball(e3);
-		
 		Table t= new Table();
-		t.balls.add(b2);
-		t.balls.add(b3);
-		
+
+		t.ball(1).setFirstEvent(e2);
+		t.ball(2).setFirstEvent(e3);
+				
 		assertTrue(Collision.validPosition(t));
 		t.generateNext();
 		assertTrue(Collision.validPosition(t));

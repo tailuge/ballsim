@@ -123,7 +123,7 @@ public class Cushion
 	public static BallEvent nextCushionHit(Table table, double maxt) 
 	{
 		BallEvent next = null;
-		for(Ball ball : table.balls)
+		for(Ball ball : table.balls())
 		{
 			Event e = ball.lastEvent();
 			if (e.state == State.Stationary)
@@ -149,7 +149,7 @@ public class Cushion
 	
 	public static boolean validPosition(Table table) 
 	{
-		for(Ball a : table.balls)
+		for(Ball a : table.balls())
 		{
 			if (!Cushion.onTable(a.lastEvent()))
 				return false;

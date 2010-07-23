@@ -28,6 +28,10 @@ public class PlotScale {
 
 	public final static Stroke normal = new BasicStroke(1.0f);
 
+	public PlotScale()
+ 	{
+ 		scaleToTable();
+ 	}
  	
  	public PlotScale(Collection<Event> events)
  	{
@@ -95,6 +99,7 @@ public class PlotScale {
 		miny = Cushion.yn-Ball.R*2;
 		maxy = Cushion.yp+Ball.R*2;
 	}
+	
 	public int scaledX(double x)
  	{
  		return (int)((x-minx)*scale) ;
