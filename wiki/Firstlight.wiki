@@ -50,3 +50,13 @@ simplest shot finder is radial search.
 [http://ballsim.googlecode.com/files/impactsearch.png]
 
 search ball first shots
+
+
+
+
+== 7 ==
+
+[http://ballsim.googlecode.com/files/best.png]
+
+in this plot only scoring shots are shown. the slightly thicker hit (off 4 cushions) has more outcomes that succeed, hence is the best shot to play.
+
