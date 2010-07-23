@@ -20,17 +20,40 @@ public class StaticPlot  extends JPanel
 
 	private Collection<BallEvent> events = new ArrayList<BallEvent>();
 	private PlotScale scale;
-	private double delta;
+	
+	public StaticPlot(Collection<Table> tables_, int interpolatedCount)
+	{
+
+		scale = new PlotScale();
+		for(Table table : tables_)
+		{
+			double t = 0;
+			double maxt = table.getMaxTime();
+			double delta = maxt / (double)interpolatedCount;		
+
+			events.addAll(table.getAllBallEvents());
+			
+			while(t<=maxt+0.1)
+			{
+				for(Ball b: table.balls())
+				{
+					events.add(new BallEvent(b,Interpolator.interpolate(b, t)));
+				}
+				t += delta;
+			}
+			
+		}
+	}
 	
 	public StaticPlot(Table table_, int interpolatedCount)
 	{
 		scale = new PlotScale(table_.getAllEvents());
-		delta = scale.maxt / (double)interpolatedCount;		
+		double delta = scale.maxt / (double)interpolatedCount;		
 		events.addAll(table_.getAllBallEvents());
 		double t = 0;
 		while(t<=scale.maxt+0.1)
 		{
-			for(Ball b: table_.balls)
+			for(Ball b: table_.balls())
 			{
 				events.add(new BallEvent(b,Interpolator.interpolate(b, t)));
 			}
@@ -53,13 +76,6 @@ public class StaticPlot  extends JPanel
 		frame.setSize(412, 824);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		try 
-		{
-			Thread.sleep(10000);
-		} 
-		catch (InterruptedException e) 
-		{
-		}
 	 }
 	
 	public void paintComponent(Graphics g) 

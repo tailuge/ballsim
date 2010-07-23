@@ -2,10 +2,12 @@ package org.motion.ballsim;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Maps;
 
 public class Table 
 {
@@ -14,7 +16,7 @@ public class Table
 	public final static double froll = 10;
 	public final static double fslide = 40;
 	
-	public List<Ball> balls = new ArrayList<Ball>();
+	private Map<Integer,Ball> ballMap = Maps.newHashMap();
 
 	/**
 	 * Given all balls that are on the table
@@ -26,7 +28,7 @@ public class Table
 	public BallEvent nextNatural() 
 	{
 		BallEvent next = null;
-		for(Ball ball : balls)
+		for(Ball ball : balls())
 		{
 			Event e = ball.lastEvent();
 			if (e.state == State.Stationary)
@@ -49,14 +51,14 @@ public class Table
 	
 	public String toString()
 	{	
-		return balls.toString();
+		return balls().toString();
 	}
 
 	public Collection<Event> getAllEvents() 
 	{
 		Collection<Event> all = new ArrayList<Event>();
 
-		for(Ball ball : balls)
+		for(Ball ball : balls())
 		{
 			all.addAll(ball.getAllEvents());
 		}
@@ -68,7 +70,7 @@ public class Table
 	{
 		Collection<BallEvent> all = new ArrayList<BallEvent>();
 
-		for(Ball ball : balls)
+		for(Ball ball : balls())
 		{
 			for(Event e : ball.getAllEvents())
 			{
@@ -98,7 +100,7 @@ public class Table
 	{
 		// next natural event
 		logger.info("Initial conditions for iteration:");
-		for(Ball ball : balls)
+		for(Ball ball : balls())
 		{
 			logger.info("Ball {} : {}", ball.id,ball.lastEvent().format());
 		}		
@@ -152,9 +154,40 @@ public class Table
 
 	public void reset()
 	{
-		for(Ball ball : balls)
+		for(Ball ball : balls())
 		{
 			ball.resetToFirst();
 		}
+	}
+	
+	public double getMaxTime() 
+	{
+		double latest = 0;
+		for(Ball a : balls())
+		{
+			if (a.lastEvent().t > latest)
+				latest = a.lastEvent().t; 
+		}		
+		return latest;
+	}
+	
+	public Table getClone()
+	{
+		Table t = new Table();
+		
+		return t;
+	}
+
+	public Collection<Ball> balls()
+	{
+		return ballMap.values();
+	}
+	
+	public Ball ball(int id)
+	{
+		if (!ballMap.containsKey(id))
+			ballMap.put(id, new Ball(id));
+			
+		return ballMap.get(id);
 	}
 }
