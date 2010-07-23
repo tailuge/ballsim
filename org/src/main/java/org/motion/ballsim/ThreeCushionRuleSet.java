@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-public class OneCushionRuleSet implements IRuleSet {
+public class ThreeCushionRuleSet implements IRuleSet {
 
 	public boolean valid(Table table) {
 		return Cushion.validPosition(table)  && (Collision.validPosition(table));
@@ -25,7 +25,7 @@ public class OneCushionRuleSet implements IRuleSet {
 				cannons.put(e.otherBallId, 1);
 				
 				if (cannons.keySet().size() == 2)
-					return (cushions >= 3); // for a minute 3 cushion !
+					return (cushions >= 3); 
 			}			
 		}
 		return false;
