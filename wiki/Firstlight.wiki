@@ -33,3 +33,12 @@ the first 3C scoring shot discovered by radial search algorithm
 [http://ballsim.googlecode.com/files/spin.png]
 
 constant velocity varying spin
+
+
+
+== 5 ==
+
+[http://ballsim.googlecode.com/files/outcomeart.png]
+
+simplest shot finder is radial search.
+
