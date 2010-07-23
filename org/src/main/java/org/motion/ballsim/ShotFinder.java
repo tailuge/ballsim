@@ -48,7 +48,7 @@ public class ShotFinder {
 		for(int i=0; i<segments; i++)
 		{
 			Vector3D dir = new Vector3D(2.0 * Math.PI * (double)i/(double)segments,0);
-			Event e = UtilEvent.hit(pos, dir,250, 0);
+			Event e = UtilEvent.hit(pos, dir,350, 0);
 			e.ballId = ball.id;
 			radialEvents.add(e); 			
 		}

@@ -70,22 +70,13 @@ public class PlotScale {
  	{ 		
  		double scalex = w/(maxx-minx) ;
  		double scaley = h/(maxy-miny) ;
- 		
-// 		System.out.println(scalex + "," + scaley);
- 		
+ 		 		
  		scale = scalex < scaley ? scalex : scaley;
  		scale *= 1.0;
  		if (scale==0)
  			scale = 0.05;
  		
         r = (int) (Ball.R*scale);
-/*
-        System.out.println("minx:"+minx+" maxx:"+maxx);
-        System.out.println("miny:"+miny+" maxy:"+maxy);
-        System.out.println("scalex:"+scaley);
-        System.out.println("scaley:"+scalex);
-        System.out.println("scale:"+scale);
-*/        
  	}
 
 	public void setWindowInfo(Graphics2D g2d_, int w_, int h_) 
