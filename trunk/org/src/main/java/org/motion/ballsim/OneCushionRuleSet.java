@@ -33,11 +33,9 @@ public class OneCushionRuleSet implements IRuleSet {
 
 	public double rank(Table table, Ball ball) {
 
-		if (scores(table,ball))
-			return 1;
-
 		int cushions = 0;
-
+		boolean firstCannon = false;
+		
 		Map<Integer,Integer> cannons = Maps.newHashMap();
 
 		for(Event e : ball.getAllEvents())
@@ -47,10 +45,23 @@ public class OneCushionRuleSet implements IRuleSet {
 			
 			if (e.type == EventType.Collision)
 			{	
-				cannons.put(e.otherBallId, 1);				
+				cannons.put(e.otherBallId, 1);		
+				if (cannons.size() == 2) 
+				{
+					if (firstCannon == false)
+					{
+						if (cushions >= 3)
+							return 1.0 - 0.01*(double)cushions;
+					}
+					else 
+						firstCannon = true;
+				}
 			}			
 		}
-		return 0.1 * (double)cannons.keySet().size() - 0.01 * (double)cushions;
+		if (cannons.size() == 1)
+			return 0.5 - 0.01 * (double)cushions;
+		return 0.01 * (double)cushions;
+		
 	}
 
 }

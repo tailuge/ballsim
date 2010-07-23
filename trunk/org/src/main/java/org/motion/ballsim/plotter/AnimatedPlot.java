@@ -27,7 +27,7 @@ public class AnimatedPlot  extends JPanel implements ActionListener
 
 	private Collection<BallEvent> events = new ArrayList<BallEvent>();
 	private PlotScale scale;
-	
+	private boolean scaleSet = false;
 	private Timer timer;
 	private Table table;
 	
@@ -37,7 +37,7 @@ public class AnimatedPlot  extends JPanel implements ActionListener
 		//delta = scale.maxt / (double)interpolatedCount;		
 		events.addAll(table_.getAllBallEvents());
 		table = table_;
-		timer = new Timer(20, this);
+		timer = new Timer(1, this);
 	}
 
 	public AnimatedPlot(Table table_)
@@ -51,19 +51,26 @@ public class AnimatedPlot  extends JPanel implements ActionListener
 		JFrame frame = new JFrame("Table plot");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(this);
-		frame.setSize(412/2, 824/2);
+		frame.setSize(300, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-	
+		timer.start();
 	 }
 	
 	public void paintComponent(Graphics g) 
 	{
         super.paintComponent(g);             
         Graphics2D g2d = (Graphics2D) g;
-        Dimension size = getSize();
-        Insets insets = getInsets();
-        scale.setWindowInfo(g2d,size.width - insets.left - insets.right,size.height - insets.top - insets.bottom);           
+        scale.g2d = g2d;
+        if (!scaleSet)
+        {
+            
+            Dimension size = getSize();
+            Insets insets = getInsets();
+        	logger.info("w:{}",size.width);
+        	scale.setWindowInfo(g2d,size.width - insets.left - insets.right,size.height - insets.top - insets.bottom);           
+        	scaleSet = true;
+        }
         PlotCushion.plot(scale);
         plotTable();    		
     }
@@ -74,7 +81,7 @@ public class AnimatedPlot  extends JPanel implements ActionListener
 		{
 			PlotEvent.plotEvent(b,Interpolator.interpolate(b, t),scale,true);
 		}
-		timer.start();
+		
 	}
 
 	double t = 0;
@@ -82,11 +89,7 @@ public class AnimatedPlot  extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent arg0) 
 	{
 		logger.info("t:{}",t);
-		for(Ball b: table.balls)
-		{
-			PlotEvent.plotEvent(b,Interpolator.interpolate(b, t),scale,true);
-		}
-		t=t+0.001;
+		t=t+0.0001;
 		repaint();
 	}
 }

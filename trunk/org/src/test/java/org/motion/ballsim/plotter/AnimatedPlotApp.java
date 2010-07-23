@@ -16,7 +16,7 @@ public class AnimatedPlotApp {
     	//testCase1();
     	
 		Table t = new Table();
-		Ball b1 = new Ball(Utilities.getStationary(new Vector3D(Ball.R*6,-Ball.R*6,0)));
+		Ball b1 = new Ball(Utilities.getStationary(new Vector3D(Ball.R*7,-Ball.R*12,0)));
 		Ball b2 = new Ball(Utilities.getStationary(new Vector3D(-Ball.R*6,-Ball.R*6,0)));
 		Ball b3 = new Ball(Utilities.getStationary(new Vector3D(Ball.R*5,-Ball.R*3,0)));
 				
@@ -26,7 +26,7 @@ public class AnimatedPlotApp {
 		
 		ShotFinder finder = new ShotFinder(new OneCushionRuleSet(),t);
 		
-		Table tResult = finder.FindBest(b1,360);
+		Table tResult = finder.FindBest(b1,300);
 		plot = new AnimatedPlot(tResult,50);
     	plot.draw();
     	
