@@ -25,3 +25,11 @@ a valid 3 cushion shot in a broken friction constant land
 [http://ballsim.googlecode.com/files/machine3c.png]
 
 the first 3C scoring shot discovered by radial search algorithm
+
+
+
+== 4 ==
+
+[http://ballsim.googlecode.com/files/spin.png]
+
+constant velocity varying spin
