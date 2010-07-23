@@ -42,3 +42,11 @@ constant velocity varying spin
 
 simplest shot finder is radial search.
 
+
+
+
+== 6 ==
+
+[http://ballsim.googlecode.com/files/impactsearch.png]
+
+search ball first shots
