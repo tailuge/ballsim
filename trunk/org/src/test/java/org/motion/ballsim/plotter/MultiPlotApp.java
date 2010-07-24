@@ -30,9 +30,9 @@ public class MultiPlotApp {
 		Event target2 = Utilities.getStationary(new Vector3D(Ball.R * 8.5,-Ball.R * 16, 0));
 		Event target3 = Utilities.getStationary(new Vector3D(Ball.R * 3.9,+Ball.R * 9, 0));
 		
-		events.addAll(UtilEvent.generateImpactingEvents(Vector3D.ZERO, target3.pos, 1000, 270, 0.5));
+		//events.addAll(UtilEvent.generateImpactingEvents(Vector3D.ZERO, target3.pos, 1000, 270, -0.8));
 		//events.addAll(UtilEvent.generateImpactingEvents(Vector3D.ZERO, target3.pos, 90, 270, 0.8));
-		//events.addAll(UtilEvent.generateImpactingEvents(Vector3D.ZERO, target2.pos, 90, 270, 0.0));
+		events.addAll(UtilEvent.generateImpactingEvents(Vector3D.ZERO, target2.pos, 1090, 270, -0.9));
  
 		ThreeCushionRuleSet rule = new ThreeCushionRuleSet();
 		
