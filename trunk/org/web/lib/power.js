@@ -12,9 +12,9 @@ function PowerSelector()
 	{
         canvas = document.getElementById('power');	
         ctx = canvas.getContext('2d');
-               ctx.shadowOffsetX = 2;
-		ctx.shadowOffsetY = 2;
-		ctx.shadowBlur = 5;
+               ctx.shadowOffsetX = 1;
+		ctx.shadowOffsetY = 1;
+		ctx.shadowBlur = 3;
 		ctx.shadowColor = "blue";
         
     	scale = canvas.width * 0.95;
