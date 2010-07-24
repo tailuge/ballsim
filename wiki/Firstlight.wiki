@@ -60,3 +60,11 @@ search ball first shots
 
 in this plot only scoring shots are shown. the slightly thicker hit (off 4 cushions) has more outcomes that succeed, hence is the best shot to play.
 
+
+
+
+== 8 ==
+
+[http://ballsim.googlecode.com/files/canvas.png]
+
+start of a simple viewer using javascript and canvas tag in html5
