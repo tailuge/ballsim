@@ -18,11 +18,7 @@ function PowerSelector()
 		ctx.shadowColor = "blue";
         
     	scale = canvas.width * 0.95;
-	    canvas.onmousedown = function(event)
-    	{
-    		power = (event.offsetX / canvas.width);
-    		draw();
-		}
+	    canvas.onmousedown = click;
 		draw();
 	}
 	
@@ -42,4 +38,20 @@ function PowerSelector()
     	ctx.fill();
     	ctx.stroke();    
 	}
+	
+	function click(event)
+	{
+   		power = (event.offsetX / canvas.width);
+   		
+   		document.onmousemove = click;
+   		document.onmouseup = clearAll;
+   		
+   		draw();
+	}
+
+	function clearAll(event)
+	{
+   		document.onmousemove = null;
+   		document.onmouseup = null;
+	}	
 }

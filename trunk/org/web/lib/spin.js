@@ -22,11 +22,7 @@ function SpinSelector()
 
    		center = canvas.width/2;
     	scale = center * 0.8;
-	    canvas.onmousedown = function(event)
-    	{
-    		spinY = (event.offsetY - canvas.height/2) / (canvas.height/2);
-    		draw();
-		}
+	    canvas.onmousedown = click;
 		draw();
 	}
 	
@@ -46,11 +42,26 @@ function SpinSelector()
 	    /*tip*/
     
     	ctx.beginPath();
-    	ctx.moveTo(center+spinX*scale+scale/5, center+spinY*scale);
+    	ctx.moveTo(center+spinX*scale+scale/5, center-spinY*scale);
     	ctx.fillStyle = 'blue';
-    	ctx.arc(center+spinX*scale, center+spinY*scale, scale/5, 0, Math.PI*2, true);
+    	ctx.arc(center+spinX*scale, center-spinY*scale, scale/5, 0, Math.PI*2, true);
     	ctx.fill();
     	ctx.stroke();    
 	}
+	
+	function click(event)
+	{
+   		spinY = -(event.offsetY - canvas.height/2) / (canvas.height/2);
+   		
+   		document.onmousemove = click;
+   		document.onmouseup = clearAll;
+   		
+   		draw();
+	}
 
+	function clearAll(event)
+	{
+   		document.onmousemove = null;
+   		document.onmouseup = null;
+	}	
 }
