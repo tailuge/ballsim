@@ -4,6 +4,8 @@
   <link rel="stylesheet" href="lib/style.css"/>
   <script src="lib/spin.js"></script>
   <script src="lib/power.js"></script>
+  <script src="lib/ball.js"></script>
+  <script src="lib/cue.js"></script>
   <script src="lib/billiardtable.js"></script>
   <script src="lib/script.js"></script>
 </head>
@@ -14,12 +16,18 @@
    <table align="left">
       <tr>
         <td><canvas id="spin" width="60" height="60"></canvas></td>
-        <td><canvas id="power" width="200" height="25"></canvas></td>
+        <td colspan="2"><canvas id="power" width="200" height="25"></canvas></td>
       </tr>
       <tr>
-        <td colspan="2"><canvas id="billiardtable" width="260" height="520"></canvas> </td>
+        <td colspan="3"><canvas id="billiardtable" width="260" height="520"></canvas> </td>
+      </tr>
+      <tr>
+        <td><button type="button">Hit</button></td>
+        <td><button type="button">Suggest</button></td>
+        <td><button type="button">Evaluate</button></td>
       </tr>
     </table>
+
 
 
 
