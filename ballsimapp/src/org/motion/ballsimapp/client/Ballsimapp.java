@@ -47,10 +47,17 @@ public class Ballsimapp implements EntryPoint {
 	private final TableServiceAsync tableService = GWT
 			.create(TableService.class);
 	
+    private native void startJs()/*-{
+    
+    $wnd.initAll();
+    
+    }-*/;
+	
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		
 		final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();
 		nameField.setText("player"+(int)(Math.random()*100));
@@ -60,6 +67,8 @@ public class Ballsimapp implements EntryPoint {
 		
 		final Button freetableButton = new Button("Free Tables");
 
+		startJs();
+		
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
 
@@ -99,7 +108,7 @@ public class Ballsimapp implements EntryPoint {
 
 		dialogBox2.setWidget(dialogVPanel2);
 		dialogBox2.setText("table");
-		dialogBox2.show();
+		//dialogBox2.show();
 		// Add a handler to close the DialogBox
 		closeButton2.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
