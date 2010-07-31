@@ -25,6 +25,8 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.widgetideas.graphics.client.Color;
+import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -94,6 +96,23 @@ public class Ballsimapp implements EntryPoint {
 		nameField.setFocus(true);
 		nameField.selectAll();
 
+		
+	    // Make a new canvas 400x400 pixels
+	    GWTCanvas canvas = new GWTCanvas(400,400);
+	    
+	    canvas.setLineWidth(1);
+	    canvas.setStrokeStyle(Color.GREEN);
+	    
+	    canvas.beginPath();
+	      canvas.moveTo(1,1);
+	      canvas.lineTo(1,50);
+	      canvas.lineTo(50,50);
+	      canvas.lineTo(50, 1);
+	      canvas.closePath();
+	    canvas.stroke();
+	    
+	    RootPanel.get().add(canvas);
+		
 		// Create the popup dialog box
 		final DialogBox dialogBox2 = new DialogBox();
 		dialogBox2.setText("Test");

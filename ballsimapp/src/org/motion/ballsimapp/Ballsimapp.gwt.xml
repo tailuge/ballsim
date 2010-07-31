@@ -12,7 +12,7 @@
 
   <!-- Other module inherits                                      -->
 
- 
+  <inherits name='com.google.gwt.widgetideas.GWTCanvas'/>
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.motion.ballsimapp.client.Ballsimapp'/>
