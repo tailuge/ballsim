@@ -4,11 +4,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.apache.commons.math.geometry.Vector3D;
+
+import org.motion.ballsim.gwtsafe.Function;
+import org.motion.ballsim.gwtsafe.Vector3D;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Function;
 
 public class Collision 
 {
@@ -61,14 +62,14 @@ public class Collision
 	{
 
 		double coeffs[] = quarticCoefficients(e1, e2);
-	    double root = Quartic.smallestRoot( coeffs , maxt); 
+	    double root = org.motion.ballsim.gwtsafe.Quartic.smallestRoot( coeffs , maxt); 
 	       
 		// optimise
 				
 	    logger.info("quartic coeffs      :{}",Arrays.toString(coeffs));
-	    logger.info("quartic             :{}",Quartic.print(coeffs));
+	    logger.info("quartic             :{}",org.motion.ballsim.gwtsafe.Quartic.print(coeffs));
 		logger.info("1st root            :{}",root);
-		logger.info("quartic eval at root:{}",Quartic.evalAt(coeffs,root));
+		logger.info("quartic eval at root:{}",org.motion.ballsim.gwtsafe.Quartic.evalAt(coeffs,root));
 		logger.info("seperation at root  :{}",startingSeperation(e1.advanceDelta(root),e2.advanceDelta(root)));
 		
 		return latestInstantBeforeCollision(e1,e2,root);
@@ -124,7 +125,7 @@ public class Collision
 			}
 		};
 
-		double last = Quadratic.optimise(func, tCollision);
+		double last = org.motion.ballsim.gwtsafe.Quadratic.optimise(func, tCollision);
 		
 		if (last>0)
 			return last;

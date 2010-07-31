@@ -1,8 +1,9 @@
 package org.motion.ballsim;
 
-import org.apache.commons.math.geometry.Vector3D;
 
-import com.google.common.base.Function;
+import org.motion.ballsim.gwtsafe.Function;
+import org.motion.ballsim.gwtsafe.Vector3D;
+
 
 /**
  * @author luke
@@ -42,14 +43,17 @@ public class Cushion
 		double B = getAxis.apply(e.vel);
 		double C = getAxis.apply(e.pos) - cush;
 
-		double tCollision = Quadratic.leastPositiveRoot(A, B, C);
+		double tCollision = org.motion.ballsim.gwtsafe.Quadratic.leastPositiveRoot(A, B, C);
 		
 		if ((tCollision <= 0) || (tCollision>maxt))			
 			return null;
 				
 		assert( tCollision > 0);
 		
-		tCollision = Quadratic.latestTrueTime(onTable,tCollision);
+		tCollision = org.motion.ballsim.gwtsafe.Quadratic.latestTrueTime(onTable, tCollision);
+		
+		
+		//.latestTrueTime(onTable,tCollision);
 
 		assert( tCollision > 0);
 		assert( tCollision < maxt);

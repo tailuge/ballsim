@@ -3,13 +3,14 @@ package org.motion.ballsim.plotter;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.commons.math.geometry.Vector3D;
+
 import org.motion.ballsim.Ball;
 import org.motion.ballsim.Event;
 import org.motion.ballsim.Table;
 import org.motion.ballsim.ThreeCushionRuleSet;
 import org.motion.ballsim.UtilEvent;
 import org.motion.ballsim.Utilities;
+import org.motion.ballsim.gwtsafe.Vector3D;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

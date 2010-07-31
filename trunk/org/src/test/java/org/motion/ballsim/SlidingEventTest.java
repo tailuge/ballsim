@@ -2,11 +2,12 @@ package org.motion.ballsim;
 
 import static org.junit.Assert.*;
 
-import org.apache.commons.math.geometry.Vector3D;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.motion.ballsim.Event;
 import org.motion.ballsim.State;
+import org.motion.ballsim.gwtsafe.Vector3D;
 
 public class SlidingEventTest 
 {

@@ -1,6 +1,8 @@
 package org.motion.ballsim;
 
-import org.apache.commons.math.geometry.Vector3D;
+import org.motion.ballsim.gwtsafe.Vector3D;
+
+
 
 public class RollingMotion 
 {
