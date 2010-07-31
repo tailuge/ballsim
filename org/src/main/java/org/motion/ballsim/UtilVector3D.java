@@ -1,8 +1,10 @@
 package org.motion.ballsim;
 
-import org.apache.commons.math.geometry.Vector3D;
 
-import com.google.common.base.Function;
+import org.motion.ballsim.gwtsafe.Function;
+import org.motion.ballsim.gwtsafe.MathRuntimeException;
+import org.motion.ballsim.gwtsafe.Vector3D;
+
 
 public class UtilVector3D 
 {
@@ -14,7 +16,12 @@ public class UtilVector3D
 
 	public static Vector3D rnd()
 	{
-		return (new Vector3D(Math.random()-0.5,Math.random()-0.5,0.0)).normalize();
+		try {
+			return (new Vector3D(Math.random()-0.5,Math.random()-0.5,0.0)).normalize();
+		} catch (MathRuntimeException e) {
+			// try again
+			return rnd();
+		}
 	}
 	
 	public static Function<Vector3D,Double> getX = new Function<Vector3D, Double>() {

@@ -1,9 +1,10 @@
 package org.motion.ballsim;
 
-import org.apache.commons.math.geometry.Vector3D;
+
 import org.motion.ballsim.Ball;
 import org.motion.ballsim.Event;
 import org.motion.ballsim.State;
+import org.motion.ballsim.gwtsafe.Vector3D;
 
 public class Utilities {
 

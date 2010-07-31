@@ -6,8 +6,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.commons.math.geometry.Vector3D;
+
 import org.junit.Test;
+import org.motion.ballsim.gwtsafe.Vector3D;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,11 +1,12 @@
 package org.motion.ballsim.plotter;
 
-import org.apache.commons.math.geometry.Vector3D;
+
 import org.motion.ballsim.Ball;
 import org.motion.ballsim.ThreeCushionRuleSet;
 import org.motion.ballsim.ShotFinder;
 import org.motion.ballsim.Table;
 import org.motion.ballsim.Utilities;
+import org.motion.ballsim.gwtsafe.Vector3D;
 
 public class StaticPlotApp 
 {

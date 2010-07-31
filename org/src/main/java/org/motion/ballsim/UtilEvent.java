@@ -2,7 +2,8 @@ package org.motion.ballsim;
 
 import java.util.Collection;
 
-import org.apache.commons.math.geometry.Vector3D;
+import org.motion.ballsim.gwtsafe.Vector3D;
+
 
 import com.google.common.collect.Lists;
 

@@ -3,8 +3,8 @@ package org.motion.ballsim;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.apache.commons.math.geometry.Vector3D;
-import org.apache.commons.math.geometry.Vector3DFormat;
+import org.motion.ballsim.gwtsafe.Vector3D;
+
 
 /**
  * @author luke
@@ -154,9 +154,9 @@ public class Event {
 		NumberFormat nf = NumberFormat.getInstance();
 		//nf.setRoundingMode(RoundingMode.UNNECESSARY);
 		nf.setMinimumFractionDigits(17);
-		Vector3DFormat f = new Vector3DFormat(nf);
+		//Vector3DFormat f = new Vector3DFormat(nf);
 		return state+" t:" + t + " "+type 
-		+ " p:" + f.format(pos) + " v:" + f.format(vel)+ " av:" + f.format(angularVel);
+		+ " p:" + pos + " v:" +vel+ " av:" + angularVel;
 		
 	}
 }

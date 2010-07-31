@@ -2,8 +2,9 @@ package org.motion.ballsim;
 
 import static org.junit.Assert.assertTrue;
 
-import org.apache.commons.math.geometry.Vector3D;
+
 import org.junit.Test;
+import org.motion.ballsim.gwtsafe.Vector3D;
 
 import com.google.common.base.Function;
 
