@@ -1,7 +1,11 @@
 package org.motion.ballsimapp.client;
 
+
+
 import java.util.ArrayList;
 
+
+import org.motion.ballsimapp.gwtsafe.Quartic;
 import org.motion.ballsimapp.shared.FieldVerifier;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -60,7 +64,10 @@ public class Ballsimapp implements EntryPoint {
 		
 		final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();
-		nameField.setText("player"+(int)(Math.random()*100));
+	       
+		double[] coeffs = { 24, -50, 35, -10, 1 };
+	        
+		nameField.setText("quartic:"+Quartic.smallestRoot(coeffs,100));
 		final Label errorLabel = new Label();
 
 		final ListBox lb = new ListBox();
@@ -69,6 +76,7 @@ public class Ballsimapp implements EntryPoint {
 
 		startJs();
 		
+ 
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
 
