@@ -18,7 +18,6 @@ package org.motion.ballsim.gwtsafe;
 
 import java.util.Arrays;
 
-import org.apache.commons.math.analysis.UnivariateRealFunction;
 
 /*
  * GWT safe version imported from external library apache-commons-math
@@ -102,7 +101,9 @@ public class PolynomialFunction {
      * @return  a fresh copy of the coefficients array
      */
     public double[] getCoefficients() {
-        return Arrays.copyOf(coefficients,coefficients.length);
+        double copy[] = new double[this.coefficients.length];
+        System.arraycopy(this.coefficients, 0, copy, 0, coefficients.length);
+        return copy;
     }
 
     /**
