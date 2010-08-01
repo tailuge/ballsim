@@ -2,6 +2,17 @@ package org.motion.ballsimapp.client;
 
 
 
+
+import org.motion.ballsimapp.canvas.CanvasTable;
+import org.motion.ballsimapp.canvas.Interpolator;
+import org.motion.ballsimapp.canvas.PlotEvent;
+import org.motion.ballsimapp.canvas.PlotScale;
+import org.motion.ballsimapp.gwtsafe.Vector3D;
+import org.motion.ballsimapp.logic.Ball;
+import org.motion.ballsimapp.logic.ShotFinder;
+import org.motion.ballsimapp.logic.Table;
+import org.motion.ballsimapp.logic.ThreeCushionRuleSet;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
@@ -17,7 +28,7 @@ public class Ballsimapp implements EntryPoint {
 
 
 	Timer timer;
-	
+	double time;
 	/**
 	 * This is the entry point method.
 	 */
@@ -46,19 +57,43 @@ public class Ballsimapp implements EntryPoint {
 
 		
 	    // Make a new canvas 
-		GWTCanvas canvas = new GWTCanvas(300, 600);
+		final GWTCanvas canvas = new GWTCanvas(300, 600);
 		
 	    final CanvasTable canvasTable = new CanvasTable(canvas);
 
 	    RootPanel.get().add(canvas);
 		
+	    
+    	
+		Table t = new Table();
+		t.ball(1).setFirstEvent(Utilities.getStationary(new Vector3D(Ball.R*7,-Ball.R*18,0)));
+		t.ball(2).setFirstEvent(Utilities.getStationary(new Vector3D(-Ball.R*6,-Ball.R*6,0)));
+		t.ball(3).setFirstEvent(Utilities.getStationary(new Vector3D(Ball.R*8,-Ball.R*3,0)));
+					
+		ShotFinder finder = new ShotFinder(new ThreeCushionRuleSet(),t);
+		
+		final Table tResult = finder.FindBest(t.ball(1),5);
+		
+		final PlotScale ps = new PlotScale(tResult.getAllEvents());
+		ps.setWindowInfo(300, 600);
+		
+		nameField.setText("tmax:"+tResult.getMaxTime());
+
+		time = 0;
+		
 	    timer = new Timer() {
 	    	public void run() {
 	    	    canvasTable.renderLoop();
+	    	    
+	    		for(Ball b: tResult.balls())
+	    		{
+	    			PlotEvent.plotEvent(b, Interpolator.interpolate(b, time), canvas, ps, true, true);
+	    		}
+	    		time = time + 0.001;
 	    	}
 	    };
-	    
-	    timer.scheduleRepeating(25);
+
+		timer.scheduleRepeating(25);
 	    	    
 	}
 	
