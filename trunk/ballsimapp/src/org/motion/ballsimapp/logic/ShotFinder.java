@@ -39,7 +39,7 @@ public class ShotFinder {
 
 	public Table FindBest(Ball ball, int segments)
 	{
-		Map<Event,Double> ranks = RankEvents(ball,UtilEvent.generateRadialEvents(ball.lastEvent().pos, segments, 200, 0.5));
+		Map<Event,Double> ranks = RankEvents(ball,UtilEvent.generateRadialEvents(ball.lastEvent().pos, segments, 350, 0.5));
 
 		Entry<Event,Double> best = null;
 		

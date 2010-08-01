@@ -72,7 +72,7 @@ public class Ballsimapp implements EntryPoint {
 					
 		ShotFinder finder = new ShotFinder(new ThreeCushionRuleSet(),t);
 		
-		final Table tResult = finder.FindBest(t.ball(1),5);
+		final Table tResult = finder.FindBest(t.ball(1),27);
 		
 		final PlotScale ps = new PlotScale(tResult.getAllEvents());
 		ps.setWindowInfo(300, 600);
@@ -89,11 +89,11 @@ public class Ballsimapp implements EntryPoint {
 	    		{
 	    			PlotEvent.plotEvent(b, Interpolator.interpolate(b, time), canvas, ps, true, true);
 	    		}
-	    		time = time + 0.001;
+	    		time = time + 0.0015;
 	    	}
 	    };
 
-		timer.scheduleRepeating(25);
+		timer.scheduleRepeating(20);
 	    	    
 	}
 	
