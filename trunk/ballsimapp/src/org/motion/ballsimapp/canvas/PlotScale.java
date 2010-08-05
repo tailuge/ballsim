@@ -14,7 +14,7 @@ public class PlotScale {
  	double minx,maxx,miny,maxy;
  	double maxt;
  	
- 	public final static double velscale = 50;
+ 	public final static double velscale = 150;
  	public final static double angscale = 9200;
 
 

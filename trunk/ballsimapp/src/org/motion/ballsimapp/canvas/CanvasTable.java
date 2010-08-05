@@ -26,19 +26,21 @@ public class CanvasTable {
 	    });	
 	}
 	
-	public void renderLoop()
+	public void renderLoop(PlotScale scale)
 	{
 		if (width>600)
 			return;
 		canvas.clear();
 
+		PlotCushion.plot(scale, canvas);
+		
 		if(bg!=null)
 		{
-			canvas.saveContext();
-			canvas.scale(1.4, 1.4);
-			canvas.drawImage(bg, 0, 0);			
-			canvas.scale(1, 1);
-			canvas.restoreContext();
+//			canvas.saveContext();
+//			canvas.scale(1.4, 1.4);
+//			canvas.drawImage(bg, 0, 0);			
+//			canvas.scale(1, 1);
+//			canvas.restoreContext();
 		}
 		
 		canvas.stroke();

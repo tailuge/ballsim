@@ -6,6 +6,7 @@ package org.motion.ballsimapp.client;
 import org.motion.ballsimapp.canvas.CanvasTable;
 import org.motion.ballsimapp.canvas.Interpolator;
 import org.motion.ballsimapp.canvas.PlotEvent;
+import org.motion.ballsimapp.canvas.PlotPaths;
 import org.motion.ballsimapp.canvas.PlotScale;
 import org.motion.ballsimapp.gwtsafe.Vector3D;
 import org.motion.ballsimapp.logic.Ball;
@@ -72,7 +73,7 @@ public class Ballsimapp implements EntryPoint {
 					
 		ShotFinder finder = new ShotFinder(new ThreeCushionRuleSet(),t);
 		
-		final Table tResult = finder.FindBest(t.ball(1),27);
+		final Table tResult = finder.FindBest(t.ball(1),65);
 		
 		final PlotScale ps = new PlotScale(tResult.getAllEvents());
 		ps.setWindowInfo(300, 600);
@@ -83,13 +84,15 @@ public class Ballsimapp implements EntryPoint {
 		
 	    timer = new Timer() {
 	    	public void run() {
-	    	    canvasTable.renderLoop();
-	    	    
+	    	    canvasTable.renderLoop(ps);
+	    	    PlotPaths.plot(ps, canvas, tResult);
 	    		for(Ball b: tResult.balls())
 	    		{
 	    			PlotEvent.plotEvent(b, Interpolator.interpolate(b, time), canvas, ps, true, true);
 	    		}
 	    		time = time + 0.0015;
+	    		if (time > tResult.getMaxTime())
+	    			timer.cancel();
 	    	}
 	    };
 
