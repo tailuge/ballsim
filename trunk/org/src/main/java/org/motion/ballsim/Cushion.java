@@ -25,23 +25,21 @@ public class Cushion
 	 *  cush = pos0 + vel0*t + 1/2 acc * t^2
 	 * 
 	 * @param e - input event
-	 * @param getAxis - returns either X or Y component of a vector
-	 * @param reflect - reflect event in either X or Y axis
+	 * @param axis - unit vector of X or Y indicating perpendicular to cushion
 	 * @param cush - position of cushion
 	 * @param maxt - time beyond which equation of motion invalid
 	 * @return reflected cushion collision event if it occurs within maxt
 	 */
 	private static Event hits(
 			final Event e, 
-			Function<Vector3D,Double> getAxis, 
-			Function<Vector3D,Vector3D> reflect, 
+			Vector3D axis, 
 			Function<Double,Boolean> onTable, 
 			double cush, 
 			double maxt)
 	{	
-		double A = getAxis.apply(e.acceleration())*0.5;
-		double B = getAxis.apply(e.vel);
-		double C = getAxis.apply(e.pos) - cush;
+		double A = UtilVector3D.projectionOnAxis(e.acceleration(),axis)*0.5;
+		double B = UtilVector3D.projectionOnAxis(e.vel,axis);
+		double C = UtilVector3D.projectionOnAxis(e.pos,axis) - cush;
 
 		double tCollision = org.motion.ballsim.gwtsafe.Quadratic.leastPositiveRoot(A, B, C);
 		
@@ -52,28 +50,48 @@ public class Cushion
 		
 		tCollision = org.motion.ballsim.gwtsafe.Quadratic.latestTrueTime(onTable, tCollision);
 		
-		
-		//.latestTrueTime(onTable,tCollision);
-
 		assert( tCollision > 0);
 		assert( tCollision < maxt);
 		
-		Event reflected = e.advanceDelta(tCollision);
-		reflected.vel = reflect.apply(reflected.vel);
+		return reflect( e.advanceDelta(tCollision) , axis);
+	}
+
+	/**
+	 * Given a ball at collision point determine its new state
+	 * after reflection in the cushion
+	 * 
+	 * @param e
+	 * @param axis
+	 * @return
+	 */
+	private static Event reflect(Event e, Vector3D axis)
+	{
+		Event reflected = new Event(e);
+		reflected.vel = UtilVector3D.reflectAlongAxis(e.vel, axis);
 		reflected.state = State.deriveStateOf(reflected);
 		reflected.type = EventType.Cushion;
-
+		
+		//Vector3D sideSpinAffectOnVel = Vector3D.crossProduct(axis,e.sidespin);
+		
 		return reflected;
 	}
-	
+
+	/**
+	 * Given an event determines if a cushion is hit before maxt
+	 * and returns the new event representing the reflection in the cushion
+     *
+	 * @param e
+	 * @param maxt
+	 * @return
+	 */
 	public static Event hit(Event e, double maxt) 
 	{		
 		assert(Cushion.onTable(e));
 		Event next = null;
-		next = sooner(next,hits(e, UtilVector3D.getX, UtilVector3D.reflectX, onX(e), xp, maxt));
-		next = sooner(next,hits(e, UtilVector3D.getX, UtilVector3D.reflectX, onX(e), xn, maxt));
-		next = sooner(next,hits(e, UtilVector3D.getY, UtilVector3D.reflectY, onY(e), yp, maxt));
-		next = sooner(next,hits(e, UtilVector3D.getY, UtilVector3D.reflectY, onY(e), yn, maxt));	
+		next = sooner(next,hits(e, Vector3D.PLUS_I, onX(e), xp, maxt));
+		next = sooner(next,hits(e, Vector3D.PLUS_I, onX(e), xn, maxt));
+		next = sooner(next,hits(e, Vector3D.PLUS_J, onY(e), yp, maxt));
+		next = sooner(next,hits(e, Vector3D.PLUS_J, onY(e), yn, maxt));	
 		assert((next==null) || Cushion.onTable(next));
 		return next;
 	}

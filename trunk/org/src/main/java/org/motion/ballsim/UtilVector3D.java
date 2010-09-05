@@ -1,7 +1,6 @@
 package org.motion.ballsim;
 
 
-import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.MathRuntimeException;
 import org.motion.ballsim.gwtsafe.Vector3D;
 
@@ -23,33 +22,18 @@ public class UtilVector3D
 			return rnd();
 		}
 	}
-	
-	public static Function<Vector3D,Double> getX = new Function<Vector3D, Double>() {
-		
-		public Double apply(Vector3D arg) {
-			return arg.getX();
-		}
-	};
 
-	public static Function<Vector3D,Double> getY = new Function<Vector3D, Double>() {
-		
-		public Double apply(Vector3D arg) {
-			return arg.getY();
-		}
-	};
-	
-	public static Function<Vector3D,Vector3D> reflectX = new Function<Vector3D, Vector3D>() {	
-
-		public Vector3D apply(Vector3D arg) {
+	public static Vector3D reflectAlongAxis(Vector3D arg, Vector3D axis)
+	{
+		if (axis.getY() == 0)
 			return new Vector3D(-arg.getX(),arg.getY(),0);
-		}
-	};
 
-	public static Function<Vector3D,Vector3D> reflectY = new Function<Vector3D, Vector3D>() {	
-
-		public Vector3D apply(Vector3D arg) {
-			return new Vector3D(arg.getX(),-arg.getY(),0);
-		}
-	};
+		return new Vector3D(arg.getX(),-arg.getY(),0);
+	}
+	
+	public static double projectionOnAxis(Vector3D arg, Vector3D axis)
+	{
+		return Vector3D.dotProduct(arg,axis);
+	}
 
 }

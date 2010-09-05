@@ -84,15 +84,6 @@ public class PolynomialFunction {
 
 
     /**
-     *  Returns the degree of the polynomial
-     *
-     * @return the degree of the polynomial
-     */
-    public int degree() {
-        return coefficients.length - 1;
-    }
-
-    /**
      * Returns a copy of the coefficients array.
      * <p>
      * Changes made to the returned copy will not affect the coefficients of

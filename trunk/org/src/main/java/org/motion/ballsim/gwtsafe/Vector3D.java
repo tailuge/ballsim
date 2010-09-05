@@ -92,69 +92,7 @@ public class Vector3D
     this.y = Math.sin(alpha) * cosDelta;
     this.z = Math.sin(delta);
   }
-
-  /** Multiplicative constructor
-   * Build a vector from another one and a scale factor.
-   * The vector built will be a * u
-   * @param a scale factor
-   * @param u base (unscaled) vector
-   */
-  public Vector3D(double a, Vector3D u) {
-    this.x = a * u.x;
-    this.y = a * u.y;
-    this.z = a * u.z;
-  }
-
-  /** Linear constructor
-   * Build a vector from two other ones and corresponding scale factors.
-   * The vector built will be a1 * u1 + a2 * u2
-   * @param a1 first scale factor
-   * @param u1 first base (unscaled) vector
-   * @param a2 second scale factor
-   * @param u2 second base (unscaled) vector
-   */
-  public Vector3D(double a1, Vector3D u1, double a2, Vector3D u2) {
-    this.x = a1 * u1.x + a2 * u2.x;
-    this.y = a1 * u1.y + a2 * u2.y;
-    this.z = a1 * u1.z + a2 * u2.z;
-  }
-
-  /** Linear constructor
-   * Build a vector from three other ones and corresponding scale factors.
-   * The vector built will be a1 * u1 + a2 * u2 + a3 * u3
-   * @param a1 first scale factor
-   * @param u1 first base (unscaled) vector
-   * @param a2 second scale factor
-   * @param u2 second base (unscaled) vector
-   * @param a3 third scale factor
-   * @param u3 third base (unscaled) vector
-   */
-  public Vector3D(double a1, Vector3D u1, double a2, Vector3D u2,
-                  double a3, Vector3D u3) {
-    this.x = a1 * u1.x + a2 * u2.x + a3 * u3.x;
-    this.y = a1 * u1.y + a2 * u2.y + a3 * u3.y;
-    this.z = a1 * u1.z + a2 * u2.z + a3 * u3.z;
-  }
-
-  /** Linear constructor
-   * Build a vector from four other ones and corresponding scale factors.
-   * The vector built will be a1 * u1 + a2 * u2 + a3 * u3 + a4 * u4
-   * @param a1 first scale factor
-   * @param u1 first base (unscaled) vector
-   * @param a2 second scale factor
-   * @param u2 second base (unscaled) vector
-   * @param a3 third scale factor
-   * @param u3 third base (unscaled) vector
-   * @param a4 fourth scale factor
-   * @param u4 fourth base (unscaled) vector
-   */
-  public Vector3D(double a1, Vector3D u1, double a2, Vector3D u2,
-                  double a3, Vector3D u3, double a4, Vector3D u4) {
-    this.x = a1 * u1.x + a2 * u2.x + a3 * u3.x + a4 * u4.x;
-    this.y = a1 * u1.y + a2 * u2.y + a3 * u3.y + a4 * u4.y;
-    this.z = a1 * u1.z + a2 * u2.z + a3 * u3.z + a4 * u4.z;
-  }
-
+  
   /** Get the abscissa of the vector.
    * @return abscissa of the vector
    * @see #Vector3D(double, double, double)
