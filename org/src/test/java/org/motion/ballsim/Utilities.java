@@ -24,6 +24,16 @@ public class Utilities {
 		return e;
 	}
 
+	public static Event getRollingWithSideSpin(Vector3D vel, double spin)
+	{
+		Event e = getSimpleEvent();
+		e.state = State.Rolling;
+		e.vel = vel;
+		e.angularVel = UtilVector3D.crossUp(vel.scalarMultiply(1.0/Ball.R));
+		e.sidespin = Vector3D.PLUS_K.scalarMultiply(spin);
+		return e;
+	}
+
 	public static Event getRolling(Vector3D vel,Vector3D pos)
 	{
 		Event e = getRolling(vel);
@@ -37,6 +47,16 @@ public class Utilities {
 		e.state = State.Sliding;
 		e.vel = vel;
 		e.angularVel = angularVel;
+		return e;
+	}
+
+	public static Event getSlidingWithSideSpin(Vector3D vel, Vector3D angularVel, double spin)
+	{
+		Event e = getSimpleEvent();
+		e.state = State.Sliding;
+		e.vel = vel;
+		e.angularVel = angularVel;
+		e.sidespin = Vector3D.PLUS_K.scalarMultiply(spin);
 		return e;
 	}
 

@@ -62,4 +62,14 @@ public class RollingMotion
 	{
 		return -e.vel.getNorm() / Ball.accelRoll;
 	}
+
+	/**
+	 * When ball is rolling, side spin decays to zero at stationary point(simplest model)
+	 * 
+	 * @return vector of acceleration
+	 */
+	public static Vector3D sidespinAcceleration(Event e) 
+	{
+		return e.sidespin.scalarMultiply(-1.0/timeToNext(e));		
+	}
 }
