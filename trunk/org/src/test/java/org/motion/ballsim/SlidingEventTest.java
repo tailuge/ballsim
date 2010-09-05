@@ -14,12 +14,14 @@ public class SlidingEventTest
 
 	private Event masse;
 	private Event slide;
+	private Event slideSpinning;
 	
 	@Before
 	public void setUp()
 	{
 		slide = Utilities.getSliding(Vector3D.PLUS_I, Vector3D.ZERO);
 		masse = Utilities.getSliding(Vector3D.ZERO, Vector3D.PLUS_I);
+		slideSpinning = Utilities.getSlidingWithSideSpin(Vector3D.PLUS_I, Vector3D.ZERO,1);
 	}
 
 
@@ -40,17 +42,20 @@ public class SlidingEventTest
 		assertEquals("Sliding,masse have same magnitude of angular acceleration",slide.angularAcceleration().getNorm() , masse.angularAcceleration().getNorm(), 0.0);
 	}
 
-	@Test
-	public final void testAdvanceDelta() 
-	{
-		
-	}
 
 	@Test
 	public final void testTimeToNaturalRollEquilibrium() 
 	{
 		assertTrue("Sliding will reach equilibrium",slide.timeToNext() > 0);
 		assertTrue("Sliding masse will reach equilibrium",masse.timeToNext() > 0);
+	}
+
+	@Test
+	public final void testSideSpinUnchanged() 
+	{
+		Event next = slideSpinning.next();
+		assertEquals("Sidespin unchanged",slideSpinning.sidespin , next.sidespin);
+		
 	}
 
 	@Test

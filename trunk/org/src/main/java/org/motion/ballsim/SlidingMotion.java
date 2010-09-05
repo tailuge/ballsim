@@ -28,7 +28,16 @@ public class SlidingMotion
 	public static Vector3D angularAcceleration(Event e) {
 		return UtilVector3D.crossUp(acceleration(e)).scalarMultiply((-5.0 / 2.0) * Ball.R);
 	}
-	
+
+	/**
+	 * When ball is sliding side spin remains constant (simplest model)
+	 * 
+	 * @return vector of acceleration
+	 */
+	public static Vector3D sidespinAcceleration(Event e) {
+		return Vector3D.ZERO;
+	}
+
 	/**
 	 * Velocity at natural roll given a starting state that is sliding
 	 * is well analysed (see Amateur Physics by Sheperd - Vnr = V0*5/7 +Rw0*2/7) 
@@ -61,4 +70,5 @@ public class SlidingMotion
 		rolling.type = EventType.RollEquilibrium;
 		return rolling;
 	}
+
 }

@@ -33,7 +33,7 @@ public class Event {
 	public Vector3D angularPos;
 	public Vector3D angularVel;
 	public Vector3D spin;
-	public final Vector3D sidespin;
+	public Vector3D sidespin;
 	public State state;
 	public final double t;
 	public EventType type;
@@ -87,6 +87,10 @@ public class Event {
 		return state.angularAcceleration(this);
 	}
 
+	public Vector3D sidespinAcceleration() {
+		return state.sidespinAcceleration(this);
+	}
+
 	/**
 	 * Will determine the next 'natural' event from this event
 	 * i.e sliding->rolling->stationary.
@@ -132,7 +136,11 @@ public class Event {
 				.add(angularAcceleration().scalarMultiply(
 						delta * delta / 2.0));
 
-		return new Event(pos_,vel_,angularPos_,angularVel_,sidespin,state,t+delta,EventType.Interpolated,ballId,otherBallId);
+		// ss = ss0 + sa * t
+		
+		Vector3D sidespin_ = sidespin.add(sidespinAcceleration().scalarMultiply(delta));
+		
+		return new Event(pos_,vel_,angularPos_,angularVel_,sidespin_,state,t+delta,EventType.Interpolated,ballId,otherBallId);
 	}
 
 

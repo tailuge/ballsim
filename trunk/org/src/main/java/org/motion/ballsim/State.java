@@ -6,6 +6,7 @@ import org.motion.ballsim.gwtsafe.Vector3D;
 
 public enum State {
 
+
 	Stationary 
 	{
 		@Override
@@ -19,7 +20,13 @@ public enum State {
 		{
 			return Vector3D.ZERO;
 		}
-		
+
+		@Override
+		public Vector3D sidespinAcceleration(Event e) 
+		{
+			return Vector3D.ZERO;
+		}
+
 		@Override
 		public Event next(Event e) 
 		{
@@ -40,7 +47,13 @@ public enum State {
 		{
 			return SlidingMotion.angularAcceleration(e);
 		}
-		
+
+		@Override
+		public Vector3D sidespinAcceleration(Event e) 
+		{
+			return SlidingMotion.sidespinAcceleration(e);
+		}
+
 		@Override
 		public Event next(Event e) 
 		{
@@ -62,6 +75,12 @@ public enum State {
 		}
 
 		@Override
+		public Vector3D sidespinAcceleration(Event e) 
+		{
+			return RollingMotion.sidespinAcceleration(e);
+		}
+
+		@Override
 		public Event next(Event e) 
 		{
 			return RollingMotion.next(e);
@@ -71,10 +90,11 @@ public enum State {
 
 
 	
-
 	public abstract Vector3D acceleration(Event e);
 	public abstract Vector3D angularAcceleration(Event e);
+	public abstract Vector3D sidespinAcceleration(Event e);
 	public abstract Event next(Event e);
+
 
 
 	/**

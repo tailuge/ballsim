@@ -131,4 +131,16 @@ public class RollingEventTest {
 			System.out.println(interpolated);
 		}		
 	}
+	
+	@Test
+	public final void testStationaryStopsSpinning() 
+	{
+		roll = Utilities.getRollingWithSideSpin(Vector3D.PLUS_I,1);		
+		Event next = roll.next();
+		assertEquals("Is stationary state",State.Stationary,next.state);
+		assertEquals("Is not moving",0.0,next.vel.getNorm(),0.0);
+		assertEquals("Is not spinning",0.0,next.angularVel.getNorm(),0.0);
+		assertEquals("Is not side spinning",0.0,next.sidespin.getNorm(),0.0);
+	}
+
 }
