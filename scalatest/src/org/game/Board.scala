@@ -8,8 +8,8 @@ package org.game
  * To change this template use File | Settings | File Templates.
  */
 class Board(xc: Int, yc: Int) {
-  var x: Int = xc
-  var y: Int = yc
+  val x: Int = xc
+  val y: Int = yc
 
   var position : Array[Array[Piece]] = new Array[Array[Piece]](x, y)
 
