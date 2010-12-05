@@ -20,4 +20,10 @@ class Board(xc: Int, yc: Int) {
 	  position(x)(y);
   }
   
+  def move(piece : Piece) = {
+	  require(piece.x < this.x, "piece is out of x range of board")
+	  require(piece.y < this.y, "piece is out of y range of board")
+	  position(piece.x)(piece.y) = piece
+  }
+  
 }
