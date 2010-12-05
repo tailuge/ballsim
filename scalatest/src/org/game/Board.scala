@@ -15,4 +15,9 @@ class Board(xc: Int, yc: Int) {
 
   
   override def toString(): String = "(" +position+ ")";
+  
+  def pieceAt(x : Int, y : Int) : Piece = {
+	  position(x)(y);
+  }
+  
 }
