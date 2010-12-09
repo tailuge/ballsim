@@ -2,7 +2,9 @@ package org.java.game.tictactoe;
 
 import junit.framework.Assert;
 
+import org.java.game.BestGameListener;
 import org.java.game.Game;
+import org.java.game.GameEvaluationResult;
 import org.java.minmax.MinMaxEvaluator;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +18,13 @@ public class TestMinMaxEvaluator  {
 	
 	@Before
 	public void setUp() {
-		minMaxEvaluator = new MinMaxEvaluator(new TicTacToePositionEvaluator(), new TicTacToePositionGenerator());
+		minMaxEvaluator = new MinMaxEvaluator(new TicTacToePositionEvaluator(), new TicTacToePositionGenerator(), new BestGameListener() {
+			
+			@Override
+			public void notifyBestGame(GameEvaluationResult result) {
+				System.out.println(result);
+			}
+		});
 	}
 
 	String drawInOneBoard = 
@@ -51,9 +59,9 @@ public class TestMinMaxEvaluator  {
 	
 	@Test
 	public void testPlayerOneWins() {
+//		assertPlayerOneWins(forceWinInThreeBoard);
+//		assertPlayerOneWins(winInOneBoard);
 		assertPlayerOneWins(forceWinInFiveBoard);
-		assertPlayerOneWins(forceWinInThreeBoard);
-		assertPlayerOneWins(winInOneBoard);
 	}
 }
 

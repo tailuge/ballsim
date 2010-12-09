@@ -8,4 +8,14 @@ package org.game
  * To change this template use File | Settings | File Templates.
  */
 
-class Game
+class Game {
+	
+	var score : Score = null
+	 
+	var status : GameStatus = null
+	
+	def isOver : Boolean = status.isOver 
+	
+	
+	
+}

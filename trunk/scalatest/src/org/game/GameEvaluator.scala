@@ -10,7 +10,7 @@ package org.game
 
 trait GameEvaluator {
 
-  def evaluate(game : Game, context : GameEvaluationContext) : Score
+  def evaluate(game : Game, context : GameEvaluationContext) : Game
 
 }
 

@@ -43,7 +43,15 @@ public class Game {
 		else
 			inPlay = player1;
 	}
+	
 
+	public Game move(Piece piece, Position position) {
+	    Game game = copy();
+		game.board.move(piece, position);
+		game.nextTurn();
+		return game;
+	}
+	
 	public Game copy() {
 		return new Game(this);
 	}

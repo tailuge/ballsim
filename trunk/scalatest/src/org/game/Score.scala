@@ -1,5 +1,7 @@
 package org.game
 
+import GameStatus._
+
 /**
  * Created by IntelliJ IDEA.
  * User: knoxl
@@ -11,5 +13,4 @@ package org.game
 class Score(private val v : Double) {
 
    def value : Double = return v
-
 }
