@@ -6,6 +6,7 @@ import org.game.GameEvaluationContext
 import org.game.Game
 import org.game.Score
 
+import org.game.InPlay
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,13 +16,25 @@ import org.game.Score
  * To change this template use File | Settings | File Templates.
  */
 
-class MinMaxGameEvaluator(private val positionGenerator : GamePositionGenerator) extends GameEvaluator {
+class MinMaxGameEvaluator(private val positionGenerator : GamePositionGenerator, private val evaluator : GameEvaluator) extends GameEvaluator {
 
-   def evaluate(game : Game, context : GameEvaluationContext) =  {
-      if (context.depth > 0) {
-           
+	def evaluate(game : Game, context : GameEvaluationContext) =  {
+      if (game.isOver) {
+    	  // if we have finished stop
+    	  game 
       }
-      new Score(0);
+      var bestGame : Game = null
+      // evaluate the children and pick the best
+      for (newGame <- positionGenerator.generate(game)) {
+    	  if (bestGame == null) {
+    	 	  bestGame = evaluate(newGame, context.dec)
+    	  }
+    	  else {
+    	      	  
+    	  }
+      }
+      game
    }
-
+   
+   
 }

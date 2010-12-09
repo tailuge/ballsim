@@ -1,9 +1,11 @@
 package org.java.game.tictactoe;
 
 import org.java.game.Position;
+import org.java.util.Assert;
 
 public enum TicTacToePositions implements Position {
 
+	// DO NOT CHANGE ENUM ORDER AS WE ARE LAZILY USING .ordinal() :-)
 	TOP_LEFT(0,0),
 	TOP_MIDDLE(1,0),
 	TOP_RIGHT(2,0),
@@ -19,9 +21,11 @@ public enum TicTacToePositions implements Position {
 	private int x;
 	private int y;
 	
+	
 	private TicTacToePositions(int x, int y) {
 		this.x = x;
 		this.y = y;
+		Positions.POSITIONS[this.ordinal()] = this;
 	}
 
 	@Override
@@ -34,6 +38,11 @@ public enum TicTacToePositions implements Position {
 		return y;
 	}
 
+	public static TicTacToePositions getPosition(int i) {
+		Assert.assertBetweenRangeInclusive(0, 9, i);
+		return Positions.POSITIONS[i];
+	}
+	
 	public static Position[] LeftColumn() {
 		return new Position[] { TOP_LEFT, MIDDLE_LEFT, BOTTOM_LEFT };
 	}
@@ -66,5 +75,8 @@ public enum TicTacToePositions implements Position {
 		return new Position[] { BOTTOM_RIGHT, MIDDLE_MIDDLE, TOP_LEFT };
 	}
 	
+	private static final class Positions {
+		private static final TicTacToePositions[] POSITIONS = new TicTacToePositions[9];
+	}
 	
 }

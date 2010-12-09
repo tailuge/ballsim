@@ -26,4 +26,5 @@ class Board(xc: Int, yc: Int) {
 	  position(piece.x)(piece.y) = piece
   }
   
+  
 }

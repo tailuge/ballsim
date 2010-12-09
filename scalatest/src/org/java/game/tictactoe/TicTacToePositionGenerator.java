@@ -24,10 +24,7 @@ public class TicTacToePositionGenerator implements GamePositionGenerator {
 			for (int j = 0; j < game.getBoard().getY(); j++) {
 				Position position = PositionBean.newPosition(i, j);
 				if (!board.hasPieceAt(position)) {
-					Game copy = game.copy();
-					copy.getBoard().move(piece, position);
-					copy.nextTurn();
-					games.add(copy);
+					games.add(game.move(piece, position));
 				}
 			}
 		}
