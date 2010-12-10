@@ -8,9 +8,9 @@ public class Game {
 
 	private Player inPlay;
 
-	private Board board;
+	private IBoard board;
 
-	private Game(Player player1, Player player2, Board board) {
+	private Game(Player player1, Player player2, IBoard board) {
 		this.player1 = player1;
 		this.player2 = player2;
 		this.inPlay = player1;
@@ -24,7 +24,7 @@ public class Game {
 		this.board = game.board.copy();
 	}
 
-	public static Game newGame(Player player1, Player player2, Board board) {
+	public static Game newGame(Player player1, Player player2, IBoard board) {
 		player1.setPlayerOne();
 		return new Game(player1, player2, board);
 	}
@@ -33,7 +33,7 @@ public class Game {
 		return inPlay.isPlayerOne();
 	}
 
-	public Board getBoard() {
+	public IBoard getBoard() {
 		return board;
 	}
 

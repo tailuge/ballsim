@@ -25,7 +25,7 @@ public abstract class ChessPiece extends Piece implements PositionAwarePiece {
 	protected Board board;
 	
 	protected ChessPiece(String name) {
-		super(name);
+		super(name,0);
 	}
 	
 	public abstract Iterable<Position> getPossibleMoves();

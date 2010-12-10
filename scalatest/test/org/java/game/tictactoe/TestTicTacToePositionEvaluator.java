@@ -2,11 +2,11 @@ package org.java.game.tictactoe;
 
 import junit.framework.Assert;
 
-import org.java.game.Board;
 import org.java.game.Game;
 import org.java.game.GamePositionEvaluator;
 import org.java.game.GameScore;
 import org.java.game.GameStatus;
+import org.java.game.IBoard;
 import org.java.game.Piece;
 import org.java.game.Player;
 import org.junit.Before;
@@ -16,7 +16,7 @@ public class TestTicTacToePositionEvaluator {
 
 	private Game game = TicTacToe.newGame(new Player(), new Player());
 
-	private Board board = game.getBoard();
+	private IBoard board = game.getBoard();
 
 	private Piece piece = TicTacToe.NOUGHT;
 
@@ -27,6 +27,12 @@ public class TestTicTacToePositionEvaluator {
 
 	}
 
+	private String noWin = 
+	
+	"00."+
+	"0X."+
+	"X..";
+	
 	@Test
 	public void testEvaluateWinBottomRow() {
 		board.move(piece, TicTacToePositions.BOTTOM_LEFT);
@@ -41,6 +47,13 @@ public class TestTicTacToePositionEvaluator {
 	public void testEvaluateInCompleteBottomRow() {
 		board.move(piece, TicTacToePositions.BOTTOM_LEFT);
 		board.move(piece, TicTacToePositions.BOTTOM_MIDDLE);
+		GameScore gameScore = evaluator.evaluate(game);
+		Assert.assertEquals(GameStatus.Inplay, gameScore.getStatus());
+	}
+
+	@Test
+	public void testNoWin() {
+		Game game = TicTacToe.newGame(noWin);
 		GameScore gameScore = evaluator.evaluate(game);
 		Assert.assertEquals(GameStatus.Inplay, gameScore.getStatus());
 	}
