@@ -1,43 +1,25 @@
 package org.java.game;
 
-import static org.java.util.Assert.*;
+import static org.java.util.Assert.assertGreaterThanOrEqualToZero;
 
-/**
- * Generic Board based
- * 
- * <pre>
- * 0,0..n,0
- * 0,m..n,m
- * </pre>
- */
-public class Board implements IBoard {
+public final class FastBoard implements IBoard {
 
+	private static PieceFactory pieceFactory;
+	
 	private final int x;
 	private final int y;
 
-	private final Piece[][] board;
+	private final short[][] board;
 
-	private Board(int x, int y) {
+	private FastBoard(int x, int y) {
 		assertValidBoardDimenstions(x, y);
 		this.x = x;
 		this.y = y;
-		this.board = new Piece[y][x];
-		clearBoard();
+		this.board = new short[y][x];
 	}
-
-	private void clearBoard() {
-		for (int i = 0; i < y; ++i) {
-			for (int j = 0; j < x; ++j) {
-				board[i][j] = Piece.NONE;
-			}
-		}
-	}
-
-	private Board(Board copyFrom) {
-		assertValidBoardDimenstions(copyFrom.x, copyFrom.y);
-		this.x = copyFrom.x;
-		this.y = copyFrom.y;
-		this.board = new Piece[y][x];
+	
+	private FastBoard(FastBoard copyFrom) {
+		this(copyFrom.x,copyFrom.y);
 		for (int i = 0; i < y; ++i) {
 			for (int j = 0; j < x; ++j) {
 				this.board[i][j] = copyFrom.board[i][j];
@@ -45,22 +27,22 @@ public class Board implements IBoard {
 		}
 	}
 
-	public static Board newSquareBoard(int size) {
-		return new Board(size, size);
+	public static IBoard newSquareBoard(int size) {
+		return new FastBoard(size, size);
 	}
 
-	public static Board newBoard(int x, int y) {
-		return new Board(x, y);
+	public static IBoard newBoard(int x, int y) {
+		return new FastBoard(x, y);
 	}
 
 	private void assertValidX(int i) {
 		assertGreaterThanOrEqualToZero(i, "invalid x position");
 	}
-
+	
 	private void assertValidY(int i) {
 		assertGreaterThanOrEqualToZero(i, "invalid y position");
 	}
-
+	
 	private void assertValidBoardDimenstions(int x, int y) {
 		assertValidX(x);
 		assertValidY(y);
@@ -77,34 +59,30 @@ public class Board implements IBoard {
 		assertOnBoard(position.getY(), y, position);
 	}
 
-	@Override
 	public void move(Piece piece, Position position) {
 		assertOnBoard(position);
-		board[position.getY()][position.getX()] = piece;
+		board[position.getY()][position.getX()] = piece.getId();
 	}
 
-	@Override
 	public boolean hasPieceAt(Position position) {
-		return getPieceAt(position) != Piece.NONE;
+		return board[position.getY()][position.getX()] != 0;
 	}
 
-	@Override
 	public Piece getPieceAt(Position position) {
 		assertOnBoard(position);
-		return board[position.getY()][position.getX()];
+		return pieceFactory.getPiece(board[position.getY()][position.getX()]);
 	}
 
-	@Override
 	public Piece getPieceAt(int x, int y) {
-		assertValidBoardDimenstions(x, y);
-		return board[x][y];
+		assertValidBoardDimenstions(x,y);			
+		return pieceFactory.getPiece(board[x][y]);
 	}
-
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (Piece[] row : board) {
-			for (Piece p : row) {
-				sb.append(p.getName());
+		for (short[] row : board) {
+			for (short p : row) {
+				sb.append(pieceFactory.getPiece(p));
 
 			}
 			sb.append("\n");
@@ -112,22 +90,18 @@ public class Board implements IBoard {
 		return sb.toString();
 	}
 
-	@Override
 	public IBoard copy() {
-		return new Board(this);
+		return new FastBoard(this);
 	}
 
-	@Override
 	public int getX() {
 		return x;
 	}
 
-	@Override
 	public int getY() {
 		return y;
 	}
 
-	@Override
 	public boolean piecesAreAll(Piece piece, Position... positions) {
 		for (Position p : positions) {
 			Piece boardPiece = getPieceAt(p);
@@ -138,11 +112,10 @@ public class Board implements IBoard {
 		return true;
 	}
 
-	@Override
 	public boolean isFull() {
 		for (int i = 0; i < x; ++i) {
 			for (int j = 0; j < y; ++j) {
-				if (board[i][j] == Piece.NONE) {
+				if (board[i][j] == 0) {
 					return false;
 				}
 			}
@@ -153,14 +126,18 @@ public class Board implements IBoard {
 	/**
 	 * Useful in stack based Games like InARow
 	 */
-	@Override
 	public int getFirstEmptyVerticalPosition(int xindex) {
-		for (int i = y - 1; i >= 0; --i) {
-			if (board[i][xindex] == Piece.NONE) {
+		for (int i=y-1;i>=0;--i) {
+			if (board[i][xindex] == 0) {
 				return i;
 			}
 		}
 		return -1;
 	}
 
+	public static void setPieceFactory(PieceFactory p) {
+		pieceFactory = p;
+	}
+	
+	
 }

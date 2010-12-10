@@ -6,13 +6,8 @@ import org.java.game.GameEvaluationResult;
 import org.java.game.GamePositionEvaluator;
 import org.java.game.GamePositionGenerator;
 import org.java.game.GameScore;
-import org.java.game.GameStatus;
 
-/**
- * Basic minmax evaluation
- * 
- */
-public final class MinMaxEvaluator implements IMinMaxEvaluator {
+public class AlphaBetaEvaluator {
 
 	private final GamePositionEvaluator positionEvaluator;
 
@@ -20,12 +15,12 @@ public final class MinMaxEvaluator implements IMinMaxEvaluator {
 
 	private final BestGameListener gameListener;
 
-	public MinMaxEvaluator(GamePositionEvaluator positionEvaluator,
+	public AlphaBetaEvaluator(GamePositionEvaluator positionEvaluator,
 			GamePositionGenerator positionGenerator) {
 		this(positionEvaluator, positionGenerator, BestGameListener.NOP);
 	}
 
-	public MinMaxEvaluator(GamePositionEvaluator positionEvaluator,
+	public AlphaBetaEvaluator(GamePositionEvaluator positionEvaluator,
 			GamePositionGenerator positionGenerator,
 			BestGameListener gameListener) {
 		this.positionEvaluator = positionEvaluator;
@@ -33,37 +28,51 @@ public final class MinMaxEvaluator implements IMinMaxEvaluator {
 		this.gameListener = gameListener;
 	}
 
-	public double minimax(Game game, int depth) {
+	public double alphaBeta(Game game, int depth, double alpha, double beta,
+			boolean isPlayerOne) {
 		GameScore gameScore = positionEvaluator.evaluate(game);
 		if (gameScore.isGameComplete() || depth <= 0) {
+			gameListener.notifyBestGame(new GameEvaluationResult(game,
+					gameScore, depth));
 			return gameScore.getScore();
 		}
 		Game bestGame = null;
-		double bestScore = Double.NEGATIVE_INFINITY;
 
-		if (game.isPlayerOneInPlayer()) {
+		if (isPlayerOne) {
+			double bestScore = alpha;
 			for (Game g : positionGenerator.nextValidPositions(game)) {
-				double score = minimax(g, depth - 1);
+				double score = alphaBeta(g, depth - 1, bestScore, beta,
+						!isPlayerOne);
 				if (score > bestScore) {
-					bestGame = g;
 					bestScore = score;
+					bestGame = g;
+				}
+				if (bestScore > beta) {
+					bestScore = beta;
+					break;
 				}
 			}
 			gameListener.notifyBestGame(new GameEvaluationResult(bestGame,
-					new GameScore(bestScore, GameStatus.Inplay), depth));
+					gameScore, depth));
+			return bestScore;
 		} else {
-			bestScore = Double.POSITIVE_INFINITY;
+			double bestScore = beta;
 			for (Game g : positionGenerator.nextValidPositions(game)) {
-				double score = minimax(g, depth - 1);
+				double score = alphaBeta(g, depth - 1, alpha, bestScore,
+						!isPlayerOne);
 				if (score < bestScore) {
-					bestGame = g;
 					bestScore = score;
+					bestGame = g;
+				}
+				if (bestScore < alpha) {
+					bestScore = alpha;
+					break;
 				}
 			}
 			gameListener.notifyBestGame(new GameEvaluationResult(bestGame,
-					new GameScore(bestScore, GameStatus.Inplay), depth));
+					gameScore, depth));
+			return bestScore;
 		}
-		return bestScore;
 	}
 
 }

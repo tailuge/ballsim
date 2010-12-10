@@ -24,8 +24,8 @@ import org.java.minmax.MinMaxEvaluator;
 
 public class TicTacToe {
 
-	static final Piece NOUGHT = new Piece("0");
-	static final Piece CROSS = new Piece("X");
+	static final Piece NOUGHT = new Piece("0",1);
+	static final Piece CROSS = new Piece("X",2);
 
 	public static Game newGame() {
 		return newGame(new Player(), new Player());
@@ -62,9 +62,12 @@ public class TicTacToe {
 	public static void main(String[] args) throws Exception {
 		Game game = TicTacToe.newGame();
 		GameListener gameListener = new GameListener();
+//		AlphaBetaEvaluator evaluator = new AlphaBetaEvaluator(
+//				new TicTacToePositionEvaluator(),
+//				new TicTacToePositionGenerator(), gameListener);
 		MinMaxEvaluator evaluator = new MinMaxEvaluator(
-				new TicTacToePositionEvaluator(),
-				new TicTacToePositionGenerator(), gameListener);
+		new TicTacToePositionEvaluator(),
+		new TicTacToePositionGenerator(), gameListener);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				System.in));
 		int depth = 8;
@@ -89,7 +92,9 @@ public class TicTacToe {
 
 		@Override
 		public void notifyBestGame(GameEvaluationResult result) {
-			game = result.getGame();
+			if (result.getGame() != null) {
+				game = result.getGame();
+			}
 		}
 
 		public Game getGame() {
