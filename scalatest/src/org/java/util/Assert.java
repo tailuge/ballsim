@@ -1,5 +1,11 @@
 package org.java.util;
 
+
+/**
+ * Assertion Utilities
+ * @author kinko
+ *
+ */
 public class Assert {
 
 	public static final void assertGreaterThanZero(int i, String message) {
