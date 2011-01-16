@@ -5,7 +5,6 @@
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/org"/>
-	<classpathentry kind="lib" path="/home/august/workspace36/gwt-incubator-20100204-r1747.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/august/downloads/gwt-incubator-20101117-r1766.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
