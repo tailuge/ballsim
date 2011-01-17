@@ -55,8 +55,20 @@ public class PlotEvent
         scale.g2d.setStroke(PlotScale.normal);
         scale.g2d.drawLine(x, y, xvel, yvel);
 
+        // spot on ball
+        
+        if (BallSpot.isVisible(e.angularPos.getX(), e.angularPos.getY()))
+        {
+            int spotx=scale.scaledX(e.pos.getX()+Ball.R*BallSpot.getOffsetX(e.angularPos.getX(), e.angularPos.getY()));
+            int spoty=scale.scaledY(e.pos.getY()+Ball.R*BallSpot.getOffsetY(e.angularPos.getX(), e.angularPos.getY()));
+            scale.g2d.setColor(Color.black);
+            scale.g2d.drawLine(spotx, spoty, spotx, spoty);        	
+        }
+
         scale.g2d.setStroke(PlotScale.thindashed);
         scale.g2d.drawLine(x, y, xavel, yavel);
+        
+        
  	}
  	
 }

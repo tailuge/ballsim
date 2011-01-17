@@ -13,4 +13,8 @@ public class BallSpot
 		return Math.sin(thetaY)*Math.cos(thetaX);
 	}
 
+	static public boolean isVisible(double thetaX, double thetaY)
+	{
+		return Math.sin(thetaY)*Math.sin(thetaX) >= 0.0;
+	}
 }
