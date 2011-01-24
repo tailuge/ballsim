@@ -18,6 +18,7 @@ public class UtilEvent
 				pos,
 				dir.scalarMultiply(speed),
 				Vector3D.PLUS_K,
+				Vector3D.PLUS_J,
 				UtilVector3D.crossUp(dir.scalarMultiply(speed/Ball.R)).scalarMultiply(cueHeight),
 				zero,
 				State.Sliding,

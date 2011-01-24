@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 import org.motion.ballsim.Ball;
+import org.motion.ballsim.BallSpot;
 import org.motion.ballsim.Event;
 import org.motion.ballsim.EventType;
 import org.motion.ballsim.State;

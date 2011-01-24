@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.gwtsafe.Rotation;
+
 
 
 /**
@@ -32,6 +32,7 @@ public class Event {
 	public Vector3D pos;
 	public Vector3D vel;
 	public Vector3D angularPos;
+	public Vector3D angularPosPerp;
 	public Vector3D angularVel;
 	public Vector3D spin;
 	public Vector3D sidespin;
@@ -41,12 +42,14 @@ public class Event {
 	public int ballId;
 	public int otherBallId;
 	
-	public Event(Vector3D pos, Vector3D vel, Vector3D angularPos,
+	public Event(Vector3D pos, Vector3D vel, 
+			Vector3D angularPos, Vector3D angularPosPerp,
 			Vector3D angularVel, Vector3D sidespin, State state, double t,
 			EventType type, int ballId, int otherBallId) {
 		this.pos = pos;
 		this.vel = vel;
 		this.angularPos = angularPos;
+		this.angularPosPerp = angularPosPerp;
 		this.angularVel = angularVel;
 		this.sidespin = sidespin;
 		this.state = state;
@@ -62,6 +65,7 @@ public class Event {
 		pos = e.pos;
 		vel = e.vel;
 		angularPos = e.angularPos;
+		angularPosPerp = e.angularPosPerp;
 		angularVel = e.angularVel;
 		spin = e.spin;
 		sidespin = e.sidespin;
@@ -137,29 +141,18 @@ public class Event {
 //				.add(angularAcceleration().scalarMultiply(
 //						delta * delta / 2.0));
 
-		Vector3D angularPos_ = progressTo(angularPos,angularVel,angularAcceleration(),delta);
+		Vector3D angularPos_ = BallSpot.progressTo(angularPos,angularVel,angularAcceleration(),delta);
+		Vector3D angularPosPerp_ = BallSpot.progressTo(angularPosPerp,angularVel,angularAcceleration(),delta);
+
 		// ss = ss0 + sa * t
 		
 		Vector3D sidespin_ = sidespin.add(sidespinAcceleration().scalarMultiply(delta));
 		
-		return new Event(pos_,vel_,angularPos_,angularVel_,sidespin_,state,t+delta,EventType.Interpolated,ballId,otherBallId);
+		return new Event(pos_,vel_,angularPos_,angularPosPerp_,angularVel_,sidespin_,state,t+delta,EventType.Interpolated,ballId,otherBallId);
 	}
 
 
-	static Vector3D progressTo(Vector3D position, Vector3D velocity,
-			Vector3D acceleration, double t) {
-		try {
-			Rotation rot = new Rotation(velocity, -velocity.getNorm() * t);
-			Rotation acc = new Rotation(acceleration, -acceleration.getNorm()
-					* t * t / 2.0);
-			Rotation net = acc.applyTo(rot);
-			Vector3D result = net.applyTo(position);
-			return result.normalize();
-		} catch (Exception e) {
-			return position;
-		}
-	}
-	
+
 
 
 	

@@ -10,7 +10,7 @@ public class Utilities {
 
 	public static Event getSimpleEvent() 
 	{
-		return new Event(Vector3D.ZERO, Vector3D.ZERO, Vector3D.PLUS_K,
+		return new Event(Vector3D.ZERO, Vector3D.ZERO, Vector3D.PLUS_K,Vector3D.PLUS_J,
 				Vector3D.ZERO, Vector3D.ZERO, State.Stationary, 0,
 				EventType.InitialHit,0,0);
 	}
