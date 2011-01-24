@@ -43,7 +43,7 @@ public final class BallSpot
 		{
 		}
 				
-		return acc.applyTo(rot);		
+		return rot.applyTo(acc);		
 	}
 	
 	static private boolean isVisible(Vector3D angularPos)
