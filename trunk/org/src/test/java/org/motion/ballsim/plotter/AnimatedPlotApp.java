@@ -24,7 +24,7 @@ public class AnimatedPlotApp {
 					
 		ShotFinder finder = new ShotFinder(new ThreeCushionRuleSet(),t);
 		
-		Table tResult = finder.FindBest(t.ball(1),300);
+		Table tResult = finder.FindBest(t.ball(1),301);
 		plot = new AnimatedPlot(tResult,50);
     	plot.draw();
     	

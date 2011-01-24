@@ -115,7 +115,8 @@ public class CollisionTest {
 		Event e2 = new Event(
 				new Vector3D(-7.46186466568119040, 13.58212010728338400,0),
 				new Vector3D(-0.17115815906368680, -6.18992731042295200,0),
-				new Vector3D(0,0,0),
+				Vector3D.PLUS_J,
+				Vector3D.PLUS_K,
 				new Vector3D(59.38269619059247600, 6.96035116039190900,0),
 				new Vector3D(0,0,0),
 				State.Sliding,
@@ -124,7 +125,8 @@ public class CollisionTest {
 		Event e3 = new Event(
 				new Vector3D(-6.07824220980257750, 15.02632144823587300,0),
 				new Vector3D(42.04694426339171000, 79.12242811508793000,0),
-				new Vector3D(0,0,0),
+				Vector3D.PLUS_J,
+				Vector3D.PLUS_K,
 				new Vector3D(13.54980461407249400, 20.77515110112390700,0),
 				new Vector3D(0,0,0),
 				State.Sliding,
