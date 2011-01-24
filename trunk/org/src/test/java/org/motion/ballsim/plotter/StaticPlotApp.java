@@ -22,7 +22,7 @@ public class StaticPlotApp
 						
 		ShotFinder finder = new ShotFinder(new ThreeCushionRuleSet(),t);
 		
-		Table tResult = finder.FindBest(t.ball(1),360);
+		Table tResult = finder.findBest(t.ball(1),360);
 		plot = new StaticPlot(tResult,50);
     	plot.draw();
     	
