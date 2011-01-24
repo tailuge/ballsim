@@ -1,11 +1,13 @@
 package org.motion.ballsim.plotter;
 
 import java.awt.Color;
+import java.util.List;
 
 import org.motion.ballsim.Ball;
 import org.motion.ballsim.Event;
 import org.motion.ballsim.EventType;
 import org.motion.ballsim.State;
+import org.motion.ballsim.gwtsafe.Vector3D;
 
 public class PlotEvent 
 {
@@ -46,27 +48,28 @@ public class PlotEvent
         	scale.g2d.drawOval(x-scale.r, y-scale.r, 2*scale.r, 2*scale.r); 	
         	//scale.g2d.drawChars(e.state.toString().toCharArray(), 0, e.state.toString().length(), x+scale.r, y);
         }
-        int xvel = scale.scaledX(e.pos.getX() + e.vel.getX()/PlotScale.velscale);
-        int yvel = scale.scaledY(e.pos.getY() + e.vel.getY()/PlotScale.velscale);
+ //       int xvel = scale.scaledX(e.pos.getX() + e.vel.getX()/PlotScale.velscale);
+ //       int yvel = scale.scaledY(e.pos.getY() + e.vel.getY()/PlotScale.velscale);
 
-        int xavel = scale.scaledX(e.pos.getX() + e.angularVel.getX()/PlotScale.angscale);
-        int yavel = scale.scaledY(e.pos.getY() + e.angularVel.getY()/PlotScale.angscale);
+ //       int xavel = scale.scaledX(e.pos.getX() + e.angularVel.getX()/PlotScale.angscale);
+ //       int yavel = scale.scaledY(e.pos.getY() + e.angularVel.getY()/PlotScale.angscale);
 
         scale.g2d.setStroke(PlotScale.normal);
-        scale.g2d.drawLine(x, y, xvel, yvel);
+        //scale.g2d.drawLine(x, y, xvel, yvel);
 
         // spot on ball
         
-        if (BallSpot.isVisible(e.angularPos.getX(), e.angularPos.getY()))
+        List<Vector3D> spots = BallSpot.getVisibleSpots(e);
+        scale.g2d.setColor(Color.black);
+        for(Vector3D spot : spots)
         {
-            int spotx=scale.scaledX(e.pos.getX()+Ball.R*BallSpot.getOffsetX(e.angularPos.getX(), e.angularPos.getY()));
-            int spoty=scale.scaledY(e.pos.getY()+Ball.R*BallSpot.getOffsetY(e.angularPos.getX(), e.angularPos.getY()));
-            scale.g2d.setColor(Color.black);
-            scale.g2d.drawLine(spotx, spoty, spotx, spoty);        	
+            int spotx=scale.scaledX(spot.getX());
+            int spoty=scale.scaledY(spot.getY());
+            scale.g2d.drawLine(spotx, spoty, spotx, spoty);
         }
 
-        scale.g2d.setStroke(PlotScale.thindashed);
-        scale.g2d.drawLine(x, y, xavel, yavel);
+        //scale.g2d.setStroke(PlotScale.thindashed);
+        //scale.g2d.drawLine(x, y, xavel, yavel);
         
         
  	}

@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.gwtsafe.Rotation;
 
 
 /**
@@ -132,10 +133,11 @@ public class Event {
 
 		// ap = ap0 + av0*t + aa*t*t/2
 
-		Vector3D angularPos_ = angularPos.add(angularVel.scalarMultiply(delta))
-				.add(angularAcceleration().scalarMultiply(
-						delta * delta / 2.0));
+//		Vector3D angularPos_ = angularPos.add(angularVel.scalarMultiply(delta))
+//				.add(angularAcceleration().scalarMultiply(
+//						delta * delta / 2.0));
 
+		Vector3D angularPos_ = progressTo(angularPos,angularVel,angularAcceleration(),delta);
 		// ss = ss0 + sa * t
 		
 		Vector3D sidespin_ = sidespin.add(sidespinAcceleration().scalarMultiply(delta));
@@ -144,7 +146,19 @@ public class Event {
 	}
 
 
-
+	static Vector3D progressTo(Vector3D position, Vector3D velocity,
+			Vector3D acceleration, double t) {
+		try {
+			Rotation rot = new Rotation(velocity, -velocity.getNorm() * t);
+			Rotation acc = new Rotation(acceleration, -acceleration.getNorm()
+					* t * t / 2.0);
+			Rotation net = acc.applyTo(rot);
+			Vector3D result = net.applyTo(position);
+			return result.normalize();
+		} catch (Exception e) {
+			return position;
+		}
+	}
 	
 
 

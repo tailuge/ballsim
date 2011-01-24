@@ -1,20 +1,33 @@
 package org.motion.ballsim.plotter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.motion.ballsim.Ball;
+import org.motion.ballsim.Event;
+import org.motion.ballsim.gwtsafe.Vector3D;
+
 public class BallSpot 
 {
+
+	static private boolean isVisible(Vector3D angularPos)
+	{
+		return angularPos.getZ() > 0.0;
+	}
 	
-	static public double getOffsetX(double thetaX, double thetaY)
+	static public List<Vector3D> getVisibleSpots(Event e)
 	{
-		return Math.sin(thetaX)*Math.cos(thetaY);
-	}
-
-	static public double getOffsetY(double thetaX, double thetaY)
-	{
-		return Math.sin(thetaY)*Math.cos(thetaX);
-	}
-
-	static public boolean isVisible(double thetaX, double thetaY)
-	{
-		return Math.sin(thetaY)*Math.sin(thetaX) >= 0.0;
+		List<Vector3D> result = new ArrayList<Vector3D>();
+		
+		if (isVisible(e.angularPos))
+		{
+			result.add(e.pos.add(e.angularPos.scalarMultiply(Ball.R)));
+		}
+		else
+		{
+			result.add(e.pos.subtract(e.angularPos.scalarMultiply(Ball.R)));			
+		}
+				
+		return result;
 	}
 }
