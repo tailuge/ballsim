@@ -22,7 +22,7 @@ public class ShotFinder {
 		this.rule = rule;
 	}
 
-	public Map<Event,Double> RankEvents(Ball ball, Collection<Event> events)
+	public Map<Event,Double> rankEvents(Ball ball, Collection<Event> events)
 	{
 		Map<Event,Double> ranks = new HashMap<Event,Double>();
 		
@@ -39,9 +39,9 @@ public class ShotFinder {
 
 
 
-	public Table FindBest(Ball ball, int segments)
+	public Table findBest(Ball ball, int segments)
 	{
-		Map<Event,Double> ranks = RankEvents(ball,UtilEvent.generateRadialEvents(ball.lastEvent().pos, segments, 200, 0.5));
+		Map<Event,Double> ranks = rankEvents(ball,UtilEvent.generateRadialEvents(ball.lastEvent().pos, segments, 200, 0.5));
 
 		Entry<Event,Double> best = null;
 		

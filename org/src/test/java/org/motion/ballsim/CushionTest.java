@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 
 import org.junit.Test;
+import org.motion.ballsim.gwtsafe.Quadratic;
 import org.motion.ballsim.gwtsafe.Vector3D;
 
 public class CushionTest {
