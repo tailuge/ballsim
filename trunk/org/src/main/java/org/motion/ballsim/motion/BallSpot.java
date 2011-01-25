@@ -10,7 +10,7 @@ import org.motion.ballsim.gwtsafe.Vector3D;
  * 
  *         As a ball rolls we need to keep track of 2 points on its surface to correctly draw it.
  *         This class holds the methods to update positions under rotation and also generate
- *         the six points that are visible as the ball rolls.
+ *         the three points that are visible from above as the ball rolls.
  * 
  */
 public final class BallSpot 
@@ -51,28 +51,19 @@ public final class BallSpot
 		return angularPos.getZ() < 0.0;
 	}
 	
+	/**
+	 * Scale to ball radius, plus factor so that pixels render inside perimeter
+	 */
 	private static final double scale = Ball.R * 0.9;
 	
 	static public List<Vector3D> getVisibleSpots(Event e)
 	{
 		List<Vector3D> result = new ArrayList<Vector3D>();
-		
-		if (isVisible(e.angularPos))
-			result.add(e.pos.add(e.angularPos.scalarMultiply(scale)));
-		else
-			result.add(e.pos.subtract(e.angularPos.scalarMultiply(scale)));			
-
-		if (isVisible(e.angularPosPerp))
-			result.add(e.pos.add(e.angularPosPerp.scalarMultiply(scale)));
-		else
-			result.add(e.pos.subtract(e.angularPosPerp.scalarMultiply(scale)));			
-
 		Vector3D cross = Vector3D.crossProduct(e.angularPos, e.angularPosPerp);
-
-		if (isVisible(cross))
-			result.add(e.pos.add(cross.scalarMultiply(scale)));
-		else
-			result.add(e.pos.subtract(cross.scalarMultiply(scale)));			
+		
+		result.add(e.pos.add(scale * (isVisible(e.angularPos)?1:-1),e.angularPos));
+		result.add(e.pos.add(scale * (isVisible(e.angularPosPerp)?1:-1),e.angularPosPerp));
+		result.add(e.pos.add(scale * (isVisible(cross)?1:-1),cross));
 
 		return result;
 	}
