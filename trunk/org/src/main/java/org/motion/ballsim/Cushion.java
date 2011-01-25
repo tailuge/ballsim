@@ -3,6 +3,9 @@ package org.motion.ballsim;
 
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.motion.EventType;
+import org.motion.ballsim.motion.State;
 
 
 /**

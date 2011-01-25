@@ -3,6 +3,8 @@ package org.motion.ballsim;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.motion.ballsim.motion.Event;
+
 
 public class Ball 
 {
