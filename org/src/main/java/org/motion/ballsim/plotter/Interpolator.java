@@ -1,7 +1,7 @@
 package org.motion.ballsim.plotter;
 
 import org.motion.ballsim.Ball;
-import org.motion.ballsim.Event;
+import org.motion.ballsim.motion.Event;
 
 /**
  * @author luke

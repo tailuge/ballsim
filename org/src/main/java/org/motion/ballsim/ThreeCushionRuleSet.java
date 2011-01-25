@@ -2,6 +2,9 @@ package org.motion.ballsim;
 
 import java.util.Map;
 
+import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.motion.EventType;
+
 import com.google.common.collect.Maps;
 
 public class ThreeCushionRuleSet implements IRuleSet {

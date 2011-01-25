@@ -1,5 +1,7 @@
 package org.motion.ballsim;
 
+import org.motion.ballsim.motion.Event;
+
 public class BallEvent 
 {
 	public final Ball ball;

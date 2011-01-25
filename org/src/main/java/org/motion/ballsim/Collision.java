@@ -7,6 +7,10 @@ import java.util.HashSet;
 
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.motion.EventPair;
+import org.motion.ballsim.motion.EventType;
+import org.motion.ballsim.motion.State;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

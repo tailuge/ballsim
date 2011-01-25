@@ -6,9 +6,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-import org.motion.ballsim.Event;
-import org.motion.ballsim.State;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.motion.State;
 
 
 

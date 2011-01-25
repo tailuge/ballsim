@@ -2,9 +2,10 @@ package org.motion.ballsim;
 
 
 import org.motion.ballsim.Ball;
-import org.motion.ballsim.Event;
-import org.motion.ballsim.State;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.motion.EventType;
+import org.motion.ballsim.motion.State;
 
 public class Utilities {
 

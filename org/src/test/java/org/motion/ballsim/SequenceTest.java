@@ -9,6 +9,7 @@ import java.util.Collection;
 
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.motion.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

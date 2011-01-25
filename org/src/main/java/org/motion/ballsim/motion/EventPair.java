@@ -1,4 +1,4 @@
-package org.motion.ballsim;
+package org.motion.ballsim.motion;
 
 public class EventPair 
 {

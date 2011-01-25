@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.motion.State;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

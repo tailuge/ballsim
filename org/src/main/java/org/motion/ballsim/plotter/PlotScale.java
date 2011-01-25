@@ -7,7 +7,7 @@ import java.util.Collection;
 
 import org.motion.ballsim.Ball;
 import org.motion.ballsim.Cushion;
-import org.motion.ballsim.Event;
+import org.motion.ballsim.motion.Event;
 
 public class PlotScale {
 
