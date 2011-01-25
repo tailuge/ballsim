@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.motion.Ball;
 import org.motion.ballsim.motion.Collision;
 import org.motion.ballsim.motion.Cushion;
 import org.motion.ballsim.motion.Event;
 import org.motion.ballsim.motion.State;
+import org.motion.ballsim.plotter.Interpolator;
 import org.motion.ballsim.util.BallEvent;
 import org.motion.ballsim.util.BallEventPair;
 import org.slf4j.Logger;
@@ -179,7 +181,22 @@ public class Table
 			ball.resetToFirst();
 		}
 	}
-	
+
+	public void resetToCurrent(double t)
+	{
+		for(Ball ball : balls())
+		{
+			Event e = Interpolator.interpolate(ball, t);
+			
+			e.t=0;
+			e.vel=Vector3D.ZERO;
+			e.angularVel=Vector3D.ZERO;
+			e.state = State.Stationary;
+			
+			ball.setFirstEvent(e);
+		}
+	}
+
 	public double getMaxTime() 
 	{
 		double latest = 0;
