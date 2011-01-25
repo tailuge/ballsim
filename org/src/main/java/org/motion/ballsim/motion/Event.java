@@ -3,7 +3,6 @@ package org.motion.ballsim.motion;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.motion.ballsim.BallSpot;
 import org.motion.ballsim.gwtsafe.Vector3D;
 
 

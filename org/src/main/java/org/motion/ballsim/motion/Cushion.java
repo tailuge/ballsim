@@ -1,11 +1,11 @@
-package org.motion.ballsim;
+package org.motion.ballsim.motion;
 
 
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.motion.Event;
-import org.motion.ballsim.motion.EventType;
-import org.motion.ballsim.motion.State;
+import org.motion.ballsim.search.Table;
+import org.motion.ballsim.util.BallEvent;
+import org.motion.ballsim.util.UtilVector3D;
 
 
 /**

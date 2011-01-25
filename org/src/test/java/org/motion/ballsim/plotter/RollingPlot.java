@@ -1,9 +1,9 @@
 package org.motion.ballsim.plotter;
 
-import org.motion.ballsim.Ball;
-import org.motion.ballsim.Table;
 import org.motion.ballsim.Utilities;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.motion.Ball;
+import org.motion.ballsim.search.Table;
 
 public class RollingPlot {
 

@@ -10,9 +10,9 @@ import java.util.Collection;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.motion.ballsim.Ball;
-import org.motion.ballsim.BallEvent;
-import org.motion.ballsim.Table;
+import org.motion.ballsim.motion.Ball;
+import org.motion.ballsim.search.Table;
+import org.motion.ballsim.util.BallEvent;
 
 public class StaticPlot  extends JPanel 
 {	 

@@ -1,4 +1,4 @@
-package org.motion.ballsim;
+package org.motion.ballsim.motion;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -7,10 +7,8 @@ import java.util.HashSet;
 
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.motion.Event;
-import org.motion.ballsim.motion.EventPair;
-import org.motion.ballsim.motion.EventType;
-import org.motion.ballsim.motion.State;
+import org.motion.ballsim.search.Table;
+import org.motion.ballsim.util.BallEventPair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +60,7 @@ public class Collision
 		return coeffs;
 	}
 	
-	static double collisionTime(Event e1, Event e2, double maxt)
+	public static double collisionTime(Event e1, Event e2, double maxt)
 	{
 
 		double coeffs[] = quarticCoefficients(e1, e2);
@@ -81,7 +79,7 @@ public class Collision
 	
 	
 	
-	static EventPair collisionEvents(Event a, Event b, double t)
+	public static EventPair collisionEvents(Event a, Event b, double t)
 	{
 		EventPair result = new EventPair(a.advanceDelta(t),b.advanceDelta(t));
 
@@ -110,7 +108,7 @@ public class Collision
 	}
 	
 	
-	static double startingSeperation(Event e1, Event e2)
+	public static double startingSeperation(Event e1, Event e2)
 	{
 		return Vector3D.distance(e1.pos, e2.pos) - 2*Ball.R;
 	}

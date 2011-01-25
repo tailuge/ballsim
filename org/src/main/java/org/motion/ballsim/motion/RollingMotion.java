@@ -1,8 +1,7 @@
 package org.motion.ballsim.motion;
 
-import org.motion.ballsim.Ball;
-import org.motion.ballsim.UtilVector3D;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.util.UtilVector3D;
 
 
 

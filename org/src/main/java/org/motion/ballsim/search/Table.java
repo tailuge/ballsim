@@ -1,11 +1,16 @@
-package org.motion.ballsim;
+package org.motion.ballsim.search;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+import org.motion.ballsim.motion.Ball;
+import org.motion.ballsim.motion.Collision;
+import org.motion.ballsim.motion.Cushion;
 import org.motion.ballsim.motion.Event;
 import org.motion.ballsim.motion.State;
+import org.motion.ballsim.util.BallEvent;
+import org.motion.ballsim.util.BallEventPair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

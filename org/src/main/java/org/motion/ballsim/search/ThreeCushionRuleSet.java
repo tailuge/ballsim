@@ -1,7 +1,10 @@
-package org.motion.ballsim;
+package org.motion.ballsim.search;
 
 import java.util.Map;
 
+import org.motion.ballsim.motion.Ball;
+import org.motion.ballsim.motion.Collision;
+import org.motion.ballsim.motion.Cushion;
 import org.motion.ballsim.motion.Event;
 import org.motion.ballsim.motion.EventType;
 

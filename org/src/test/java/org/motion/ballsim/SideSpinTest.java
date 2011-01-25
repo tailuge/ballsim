@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.motion.Ball;
+import org.motion.ballsim.motion.Cushion;
 import org.motion.ballsim.motion.Event;
 
 

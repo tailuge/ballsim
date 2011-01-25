@@ -1,9 +1,9 @@
-package org.motion.ballsim;
+package org.motion.ballsim.motion;
 
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.search.Table;
 
 
 public class Ball 

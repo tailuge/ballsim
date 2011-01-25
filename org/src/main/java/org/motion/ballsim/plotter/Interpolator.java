@@ -1,6 +1,6 @@
 package org.motion.ballsim.plotter;
 
-import org.motion.ballsim.Ball;
+import org.motion.ballsim.motion.Ball;
 import org.motion.ballsim.motion.Event;
 
 /**

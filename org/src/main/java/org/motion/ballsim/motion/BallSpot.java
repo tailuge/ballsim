@@ -1,11 +1,10 @@
-package org.motion.ballsim;
+package org.motion.ballsim.motion;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.motion.ballsim.gwtsafe.Rotation;
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.motion.Event;
 /**
  * @author luke
  * 

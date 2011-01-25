@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.Collection;
 
-import org.motion.ballsim.Ball;
-import org.motion.ballsim.Cushion;
+import org.motion.ballsim.motion.Ball;
+import org.motion.ballsim.motion.Cushion;
 import org.motion.ballsim.motion.Event;
 
 public class PlotScale {

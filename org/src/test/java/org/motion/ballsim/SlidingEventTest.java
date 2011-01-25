@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.motion.Event;
 import org.motion.ballsim.motion.State;
+import org.motion.ballsim.util.UtilEvent;
 
 public class SlidingEventTest 
 {
