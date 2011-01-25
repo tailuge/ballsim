@@ -11,8 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import org.motion.ballsim.Ball;
-import org.motion.ballsim.Table;
+import org.motion.ballsim.motion.Ball;
+import org.motion.ballsim.search.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

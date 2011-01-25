@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 
 import org.junit.Test;
-import org.motion.ballsim.BallSpot;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.motion.BallSpot;
 
 public class BallSpotTest {
 

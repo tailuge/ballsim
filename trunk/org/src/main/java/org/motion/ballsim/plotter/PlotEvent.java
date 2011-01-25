@@ -3,9 +3,9 @@ package org.motion.ballsim.plotter;
 import java.awt.Color;
 import java.util.List;
 
-import org.motion.ballsim.Ball;
-import org.motion.ballsim.BallSpot;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.motion.Ball;
+import org.motion.ballsim.motion.BallSpot;
 import org.motion.ballsim.motion.Event;
 import org.motion.ballsim.motion.EventType;
 import org.motion.ballsim.motion.State;

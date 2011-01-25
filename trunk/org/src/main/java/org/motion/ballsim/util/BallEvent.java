@@ -1,5 +1,6 @@
-package org.motion.ballsim;
+package org.motion.ballsim.util;
 
+import org.motion.ballsim.motion.Ball;
 import org.motion.ballsim.motion.Event;
 
 public class BallEvent 

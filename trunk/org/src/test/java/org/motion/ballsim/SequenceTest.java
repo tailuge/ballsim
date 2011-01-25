@@ -9,7 +9,13 @@ import java.util.Collection;
 
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.motion.Ball;
+import org.motion.ballsim.motion.Collision;
+import org.motion.ballsim.motion.Cushion;
 import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.search.Table;
+import org.motion.ballsim.util.UtilEvent;
+import org.motion.ballsim.util.UtilVector3D;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

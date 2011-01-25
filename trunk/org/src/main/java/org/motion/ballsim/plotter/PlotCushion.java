@@ -2,7 +2,7 @@ package org.motion.ballsim.plotter;
 
 import java.awt.Color;
 
-import org.motion.ballsim.Cushion;
+import org.motion.ballsim.motion.Cushion;
 
 public class PlotCushion 
 {
