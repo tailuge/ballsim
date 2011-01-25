@@ -16,6 +16,14 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
 
+/**
+ * @author august
+ *
+ * Table holds a list of balls. By calling the generate method all future events
+ * for these balls are computed. This allows an initial position to be evaluated
+ * to the point all balls are at rest.
+ * 
+ */
 public class Table 
 {
 	private final static Logger logger = LoggerFactory.getLogger(Table.class);
@@ -88,6 +96,11 @@ public class Table
 		return all;
 	}
 
+	/**
+	 *  given a table with balls (possibly in motion) this method
+	 *  expands the event list until all balls are at rest.
+	 *  
+	 */
 	public int generateSequence()
 	{
 		int count=0;
@@ -178,12 +191,6 @@ public class Table
 		return latest;
 	}
 	
-	public Table getClone()
-	{
-		Table t = new Table();
-		
-		return t;
-	}
 
 	public Collection<Ball> balls()
 	{
