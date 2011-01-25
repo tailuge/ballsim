@@ -37,7 +37,7 @@ public class Event {
 	public Vector3D spin;
 	public Vector3D sidespin;
 	public State state;
-	public final double t;
+	public double t;
 	public EventType type;
 	public int ballId;
 	public int otherBallId;
