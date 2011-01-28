@@ -4,11 +4,9 @@ import java.awt.Color;
 import java.util.List;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.motion.Ball;
 import org.motion.ballsim.motion.BallSpot;
 import org.motion.ballsim.motion.Event;
 import org.motion.ballsim.motion.EventType;
-import org.motion.ballsim.motion.State;
 
 public class PlotEvent 
 {
@@ -20,7 +18,7 @@ public class PlotEvent
 		return colours[id-1];
 	}
 	
-	public static void plotEvent(Ball b, Event e, PlotScale scale, boolean alwaysShow, boolean showCushionEvent)
+	public static void plotEvent(Event e, PlotScale scale, boolean alwaysShow, boolean showCushionEvent)
  	{
         int x = scale.scaledX(e.pos.getX());
         int y = scale.scaledY(e.pos.getY());
@@ -30,24 +28,16 @@ public class PlotEvent
         
         if (alwaysShow || e.type != EventType.Interpolated && e.type != EventType.RollEquilibrium)
         {
-        	scale.g2d.setColor(getColour(b.id));
+        	scale.g2d.setColor(getColour(e.ballId));
         	scale.g2d.fillOval(x-scale.r, y-scale.r, 2*scale.r, 2*scale.r); 	
         }
-        
-        if (e.state == State.Sliding)
-        	scale.g2d.setColor(Color.blue);
 
-        if (e.state == State.Rolling)
-        	scale.g2d.setColor(Color.red);
-
-        if (e.state == State.Stationary)
-        	scale.g2d.setColor(Color.black);
+        scale.g2d.setColor(Color.black);
 
         scale.g2d.setStroke(PlotScale.normal);
         if (alwaysShow || e.type != EventType.Interpolated && e.type != EventType.RollEquilibrium)
         {
         	scale.g2d.drawOval(x-scale.r, y-scale.r, 2*scale.r, 2*scale.r); 	
-        	//scale.g2d.drawChars(e.state.toString().toCharArray(), 0, e.state.toString().length(), x+scale.r, y);
         }
  //       int xvel = scale.scaledX(e.pos.getX() + e.vel.getX()/PlotScale.velscale);
  //       int yvel = scale.scaledY(e.pos.getY() + e.vel.getY()/PlotScale.velscale);
