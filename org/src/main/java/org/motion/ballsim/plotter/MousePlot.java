@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,7 +25,7 @@ import org.motion.ballsim.util.UtilEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MousePlot extends JPanel implements ActionListener, MouseListener, MouseMotionListener
+public class MousePlot extends JPanel implements ActionListener, MouseListener, MouseMotionListener, MouseWheelListener
 {	 
 	private final static Logger logger = LoggerFactory.getLogger(AnimatedPlot.class);
 
@@ -41,6 +43,7 @@ public class MousePlot extends JPanel implements ActionListener, MouseListener, 
 		timer = new Timer(1, this);
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		addMouseWheelListener(this);
 	}
 
 	public MousePlot(Table table_)
@@ -73,8 +76,10 @@ public class MousePlot extends JPanel implements ActionListener, MouseListener, 
         	scaleSet = true;
         }
         PlotCushion.plot(scale);
-        plotTable();    		
-        if (t<0.001)plotAim();
+        plotTable();
+        PlotAim.power(power, scale);
+        if (t==0)PlotAim.plot(table.ball(1).lastEvent().pos, aimPoint, scale);
+
     }
 	
 	private void plotTable()
@@ -87,13 +92,8 @@ public class MousePlot extends JPanel implements ActionListener, MouseListener, 
 	}
 
 	Vector3D aimPoint = Vector3D.ZERO;
+	double power = 200;
 	
-	private void plotAim()
-	{	
-		Event e = UtilEvent.hit(aimPoint, Vector3D.PLUS_I, 0, 0);
-		e.ballId=1;
-		PlotEvent.plotEvent(e,scale,true,true);		
-	}
 	
 	double t = 0;
 	
@@ -112,21 +112,14 @@ public class MousePlot extends JPanel implements ActionListener, MouseListener, 
 		return new Vector3D(tablex,tabley,0);
 	}
 	
-	public void mouseClicked(MouseEvent e) {
-	}
+	public void mouseClicked(MouseEvent e) {}
 
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent arg0) {}
 
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent arg0) {}
 
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
 		table.resetToCurrent(t);
 		System.out.println(e);
 		timer.stop();
@@ -141,7 +134,7 @@ public class MousePlot extends JPanel implements ActionListener, MouseListener, 
 		Vector3D mouse = getModelCoordFromMouse(e);
 		Vector3D dir = mouse.subtract(current.pos).normalize();
 		
-		table.ball(1).setFirstEvent(UtilEvent.hit(current.pos, dir.normalize(), 180.0, 0.0));
+		table.ball(1).setFirstEvent(UtilEvent.hit(current.pos, dir.normalize(), power, 0.0));
 		table.generateSequence();
 		t=0;
 		timer.start();
@@ -154,9 +147,11 @@ public class MousePlot extends JPanel implements ActionListener, MouseListener, 
 		repaint();
 	}
 
-	public void mouseMoved(MouseEvent e) {
-		
-		
-		
+	public void mouseMoved(MouseEvent e) {}
+
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		power -= e.getWheelRotation() * 10;
+		if (power < 0) power = 1;
+		if (power > 300) power = 300;		
 	}
 }
