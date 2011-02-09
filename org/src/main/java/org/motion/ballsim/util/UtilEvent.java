@@ -35,6 +35,12 @@ public class UtilEvent
 		return e;
 	}
 	
+	public static Event stationary(Vector3D pos) 
+	{
+		return new Event(pos, Vector3D.ZERO, Vector3D.PLUS_K,Vector3D.PLUS_J,
+				Vector3D.ZERO, Vector3D.ZERO, State.Stationary, 0,
+				EventType.FinishedRoll,0,0);
+	}
 	public static Collection<Event> generateRadialEvents(Vector3D  pos, int segments, double speed, double height)
 	{
 	
