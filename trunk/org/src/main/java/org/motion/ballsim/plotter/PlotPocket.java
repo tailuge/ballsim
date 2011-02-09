@@ -25,6 +25,14 @@ public class PlotPocket {
 		plotKnuckle(scale, Pocket.p4k2);
 		plotHole(scale, Pocket.p4);
 
+		plotKnuckle(scale, Pocket.p5k1);
+		plotKnuckle(scale, Pocket.p5k2);
+		plotHole(scale, Pocket.p5);
+
+		plotKnuckle(scale, Pocket.p6k1);
+		plotKnuckle(scale, Pocket.p6k2);
+		plotHole(scale, Pocket.p6);
+
  	}
 
 	private static void plotHole(PlotScale scale, Vector3D hole) {
@@ -34,6 +42,7 @@ public class PlotPocket {
 		
     	scale.g2d.setColor(Color.black);
     	scale.g2d.fillOval(x-2*scale.r, y-2*scale.r, 4*scale.r, 4*scale.r); 	
+    	scale.g2d.drawOval(x-2*scale.r, y-2*scale.r, 4*scale.r, 4*scale.r); 	
 		
 	}
 
