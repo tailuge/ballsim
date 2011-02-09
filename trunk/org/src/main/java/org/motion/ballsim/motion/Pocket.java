@@ -19,8 +19,23 @@ public class Pocket {
 		return null;
 	}
 	
-	public final static double sep = Ball.R * 1.5;
-	public final static Vector3D p1k1 = new Vector3D(Cushion.xn - Ball.R, Cushion.yp + Ball.R - sep,0);
-	public final static Vector3D p1k2 = new Vector3D(Cushion.xn - Ball.R + sep, Cushion.yp + Ball.R,0);
+	public final static double sep = Ball.R * 3.5;
+	public final static double depth = Ball.R * 2;
+	
+	public final static Vector3D p1k1 = new Vector3D(Cushion.xn - 2*Ball.R, Cushion.yp + 2*Ball.R - sep,0);
+	public final static Vector3D p1k2 = new Vector3D(Cushion.xn - 2*Ball.R + sep, Cushion.yp + 2*Ball.R,0);
+	public final static Vector3D p1 = new Vector3D(Cushion.xn  - depth, Cushion.yp + depth,0);
+
+	public final static Vector3D p2k1 = new Vector3D(Cushion.xp + 2*Ball.R, Cushion.yp + 2*Ball.R - sep,0);
+	public final static Vector3D p2k2 = new Vector3D(Cushion.xp + 2*Ball.R - sep, Cushion.yp + 2*Ball.R,0);
+	public final static Vector3D p2 = new Vector3D(Cushion.xp  + depth, Cushion.yp + depth,0);
+
+	public final static Vector3D p3k1 = new Vector3D(Cushion.xp + 2*Ball.R, Cushion.yn - 2*Ball.R + sep,0);
+	public final static Vector3D p3k2 = new Vector3D(Cushion.xp + 2*Ball.R - sep, Cushion.yn - 2*Ball.R,0);
+	public final static Vector3D p3 = new Vector3D(Cushion.xp  + depth, Cushion.yn - depth,0);
+
+	public final static Vector3D p4k1 = new Vector3D(Cushion.xn - 2*Ball.R, Cushion.yn - 2*Ball.R + sep,0);
+	public final static Vector3D p4k2 = new Vector3D(Cushion.xn - 2*Ball.R + sep, Cushion.yn - 2*Ball.R,0);
+	public final static Vector3D p4 = new Vector3D(Cushion.xn  - depth, Cushion.yn - depth,0);
 
 }

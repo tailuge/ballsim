@@ -76,6 +76,7 @@ public class MousePlot extends JPanel implements ActionListener, MouseListener, 
         	scaleSet = true;
         }
         PlotCushion.plot(scale);
+        PlotPocket.plot(scale);
         plotTable();
         PlotAim.power(power, scale);
         if (t==0)PlotAim.plot(table.ball(1).lastEvent().pos, aimPoint, scale);
