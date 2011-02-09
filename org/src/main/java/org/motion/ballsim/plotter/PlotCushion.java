@@ -21,13 +21,7 @@ public class PlotCushion
 
 		scale.g2d.drawLine(xn, yn, xn, yp);
 		scale.g2d.drawLine(xp, yn, xp, yp);
-		
-//		scale.g2d.fillRect(xp+scale.r, yn, scale.r, (yp-yn)/1);
-//		scale.g2d.fillRect(xn-scale.r, yn, scale.r, (yp-yn)/1);
-		
-//		scale.g2d.fillRect(xn, yp+scale.r, (xp-xn)/1, scale.r);
-//		scale.g2d.fillRect(xn, yn-scale.r, (xp-xn)/1, scale.r);
-		
+
  	}
 
 }
