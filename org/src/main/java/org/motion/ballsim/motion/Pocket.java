@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.util.UtilEvent;
+import org.motion.ballsim.util.UtilVector3D;
 
 public class Pocket {
 
@@ -23,10 +24,70 @@ public class Pocket {
 		return null;
 	}
 	
-	public static double collisionTime(Event e1, Event e2, double maxt)
+	public static Event nextKnuckleCollision(Event e1, double maxt)
 	{
-		return 0;
+		// find next knuckle impact
+		
+		double soonest = Double.MAX_VALUE;
+		Event soonestKnuckle = null;
+		
+		for(Event knuckle:knuckles)
+		{
+			double t = Collision.collisionTime(e1, knuckle, maxt);
+			if (t < soonest)
+			{
+				soonest = t;
+				soonestKnuckle = knuckle;
+			}
+		}
+		
+		if (soonest < maxt)
+		{
+			// progress ball to point of impact, then reflect velocity
+			return knuckleBounce(e1.advanceDelta(soonest),soonestKnuckle);
+		}
+		
+		return null;
 	}
+
+	public static Event knuckleBounce(Event e1, Event knuckle)
+	{
+		Event reflected = e1;
+		reflected.vel = UtilVector3D.reflectAlongAxis(knuckle.pos.subtract(e1.pos).normalize(),e1.vel);
+		reflected.state = State.deriveStateOf(reflected);
+		return reflected;
+	}
+
+
+	public static Event nextPot(Event e1, double maxt)
+	{
+		// find next pocket impact
+		
+		double soonest = Double.MAX_VALUE;
+//		Event soonestPocket = null;
+		
+		for(Event hole:holes)
+		{
+			double t = Collision.collisionTime(e1, hole, maxt);
+			if (t < soonest)
+			{
+				soonest = t;
+	//			soonestPocket = hole;
+			}
+		}
+		
+		
+		if (soonest < maxt)
+		{
+			// progress ball to point of impact, set state as in pocket
+			Event pot = e1.advanceDelta(soonest); 
+			pot.state = State.Sliding;//set to Falling
+			return pot;
+		}
+		
+		return null;
+	}
+	
 	
 	public final static double sep = Ball.R * 3.5;
 	public final static double depth = Ball.R * 1.5;
@@ -59,7 +120,7 @@ public class Pocket {
 	public final static Vector3D p5k2 = new Vector3D(Cushion.xn - 2*Ball.R,   midSep,0);
 	public final static Vector3D p5 = new Vector3D(Cushion.xn  - midDepth, 0,0);
 
-	// middle left
+	// middle right
 	public final static Vector3D p6k1 = new Vector3D(Cushion.xp + 2*Ball.R, - midSep,0);
 	public final static Vector3D p6k2 = new Vector3D(Cushion.xp + 2*Ball.R,   midSep,0);
 	public final static Vector3D p6 = new Vector3D(Cushion.xp  + midDepth, 0,0);
@@ -72,7 +133,7 @@ public class Pocket {
 	private final static List<Event> knuckles;
 	private final static List<Event> holes;
 	
-	
+	// setup static lists
 	static
 	{
 		knuckleList = new ArrayList<Vector3D>();
@@ -112,4 +173,28 @@ public class Pocket {
 		}
 	}
 	
+	public static boolean isCushionEventInPocketRegion(Event e)
+	{
+		// bottom left
+		if ((e.pos.getX() < p1k2.getX()) && (e.pos.getY() > p1k1.getY()) )
+			return true;
+
+		// bottom right
+		if ((e.pos.getX() > p2k2.getX()) && (e.pos.getY() > p2k1.getY()) )
+			return true;
+
+		// top right
+		if ((e.pos.getX() > p3k2.getX()) && (e.pos.getY() < p3k1.getY()) )
+			return true;
+
+		// top left
+		if ((e.pos.getX() < p4k2.getX()) && (e.pos.getY() < p4k1.getY()) )
+			return true;
+
+		// middle pockets
+		if ((e.pos.getY() > p5k1.getY()) && (e.pos.getY() < p5k2.getY()) )
+			return true;
+
+		return false;
+	}
 }

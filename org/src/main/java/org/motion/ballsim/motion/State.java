@@ -86,9 +86,61 @@ public enum State {
 			return RollingMotion.next(e);
 		}
 
+	},
+
+	InPocket {
+		@Override
+		public Vector3D acceleration(Event e) 
+		{
+			return Vector3D.ZERO;
+		}
+
+		@Override
+		public Vector3D angularAcceleration(Event e) 
+		{
+			return Vector3D.ZERO;
+		}
+
+		@Override
+		public Vector3D sidespinAcceleration(Event e) 
+		{
+			return Vector3D.ZERO;
+		}
+
+		@Override
+		public Event next(Event e) 
+		{
+			return e;
+		}
+
+	},
+	
+	FallingInPocket {
+		@Override
+		public Vector3D acceleration(Event e) 
+		{
+			return Vector3D.ZERO;
+		}
+
+		@Override
+		public Vector3D angularAcceleration(Event e) 
+		{
+			return Vector3D.ZERO;
+		}
+
+		@Override
+		public Vector3D sidespinAcceleration(Event e) 
+		{
+			return Vector3D.ZERO;
+		}
+
+		@Override
+		public Event next(Event e) 
+		{
+			return e;
+		}
+
 	};
-
-
 	
 	public abstract Vector3D acceleration(Event e);
 	public abstract Vector3D angularAcceleration(Event e);

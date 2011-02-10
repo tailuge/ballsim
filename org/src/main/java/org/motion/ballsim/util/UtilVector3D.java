@@ -23,12 +23,10 @@ public class UtilVector3D
 		}
 	}
 
-	public static Vector3D reflectAlongAxis(Vector3D arg, Vector3D axis)
+	public static Vector3D reflectAlongAxis(Vector3D vel, Vector3D axis)
 	{
-		if (axis.getY() == 0)
-			return new Vector3D(-arg.getX(),arg.getY(),0);
-
-		return new Vector3D(arg.getX(),-arg.getY(),0);
+		Vector3D changeInVel = axis.scalarMultiply(-2*Vector3D.dotProduct(axis, vel));		
+		return vel.add(changeInVel);
 	}
 	
 	public static double projectionOnAxis(Vector3D arg, Vector3D axis)

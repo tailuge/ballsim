@@ -9,6 +9,7 @@ import org.motion.ballsim.motion.Ball;
 import org.motion.ballsim.motion.Collision;
 import org.motion.ballsim.motion.Cushion;
 import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.motion.Pocket;
 import org.motion.ballsim.motion.State;
 import org.motion.ballsim.plotter.Interpolator;
 import org.motion.ballsim.util.BallEvent;
@@ -135,8 +136,13 @@ public class Table
 		
 		BallEvent nextCushion = Cushion.nextCushionHit(this, next.event.t);		
 		if ((nextCushion != null) && (nextCushion.event.t < next.event.t))
+		{
 			next = nextCushion;
-			
+			if (Pocket.isCushionEventInPocketRegion(next.event))
+			{
+				System.out.println("pot");
+			}
+		}	
 		// use bounds of these to look for next ball/ball collision
 
 		BallEventPair nextCollision = Collision.nextBallCollision(this, next.event.t);
