@@ -13,6 +13,7 @@ import org.motion.ballsim.motion.Ball;
 import org.motion.ballsim.motion.Collision;
 import org.motion.ballsim.motion.Cushion;
 import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.motion.Pocket;
 import org.motion.ballsim.search.Table;
 import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsim.util.UtilVector3D;
@@ -181,4 +182,18 @@ public class SequenceTest {
 		assertTrue("Generated ok",t.generateSequence() > 0);
 	}
 
+	@Test
+	public final void testPottedBallGoesOffTable() 
+	{
+		Table t = new Table(true);		
+		
+		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(50));
+		e.pos = Pocket.p6.add(new Vector3D(-6*Ball.R,+0.2,0));
+
+		t.ball(1).setFirstEvent(e);
+
+		assertEquals("Generate 2 events slide->(roll,potting,potted)",2,t.generateSequence());
+		
+		System.out.println(t.getAllEvents());
+	}
 }

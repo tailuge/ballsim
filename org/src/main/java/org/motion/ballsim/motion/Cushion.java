@@ -151,7 +151,7 @@ public class Cushion
 		for(Ball ball : table.balls())
 		{
 			Event e = ball.lastEvent();
-			if (e.state == State.Stationary)
+			if (!e.state.canCollideWithCushions())
 				continue;
 			
 			Event eCushion = Cushion.hit(e, maxt);
@@ -160,9 +160,8 @@ public class Cushion
 
 			// No impact with cushion if in pocket region.
 			
-			//Pocket.isCushionEventInPocketRegion(next.event)
-			
-			if ((next == null) || (eCushion.t < next.event.t))
+			if (((next == null) || (eCushion.t < next.event.t))
+					&& (!table.hasPockets || !Pocket.isCushionEventInPocketRegion(eCushion)))					
 			{
 				next = new BallEvent(ball,eCushion);
 				assert(next.event.t > e.t);

@@ -61,7 +61,7 @@ public class Table
 		for(Ball ball : balls())
 		{
 			Event e = ball.lastEvent();
-			if (e.state == State.Stationary)
+			if ((e.state == State.Stationary) || (e.state == State.InPocket))
 				continue;
 			
 			Event eNext = e.next();
@@ -157,6 +157,10 @@ public class Table
 			BallEvent nextKnuckle = Pocket.nextKnuckleCollision(this, next.event.t);
 			if ((nextKnuckle != null) && (nextKnuckle.event.t < next.event.t))
 				next = nextKnuckle;
+			
+			BallEvent nextPocket = Pocket.nextPot(this, next.event.t);
+			if ((nextPocket != null) && (nextPocket.event.t < next.event.t))
+				next = nextPocket;			
 		}
 		
 		// use bounds of these to look for next ball/ball collision

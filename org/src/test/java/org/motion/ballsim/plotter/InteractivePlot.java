@@ -12,7 +12,7 @@ public class InteractivePlot {
 	
     public static void main(String[] args) 
     {
- 		Table t = new Table();
+ 		Table t = new Table(true);
 		t.ball(1).setFirstEvent(Utilities.getStationary(new Vector3D(Ball.R*7,-Ball.R*18,0)));
 		t.ball(2).setFirstEvent(Utilities.getStationary(Pocket.p6k1.add(new Vector3D(-3*Ball.R,+0.2,0))));
 				//new Vector3D(-Ball.R*6,-Ball.R*6,0)));
