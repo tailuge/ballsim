@@ -119,7 +119,7 @@ public enum State {
 		@Override
 		public Vector3D acceleration(Event e) 
 		{
-			return Vector3D.ZERO;
+			return PottingMotion.acceleration(e);
 		}
 
 		@Override
@@ -137,7 +137,7 @@ public enum State {
 		@Override
 		public Event next(Event e) 
 		{
-			return e;
+			return PottingMotion.next(e);
 		}
 
 	};

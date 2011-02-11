@@ -158,6 +158,10 @@ public class Cushion
 			if (eCushion == null)
 				continue;
 
+			// No impact with cushion if in pocket region.
+			
+			//Pocket.isCushionEventInPocketRegion(next.event)
+			
 			if ((next == null) || (eCushion.t < next.event.t))
 			{
 				next = new BallEvent(ball,eCushion);

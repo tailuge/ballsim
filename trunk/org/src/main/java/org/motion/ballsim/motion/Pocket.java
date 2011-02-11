@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.search.Table;
+import org.motion.ballsim.util.BallEvent;
 import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsim.util.UtilVector3D;
 
@@ -23,6 +25,36 @@ public class Pocket {
 	{
 		return null;
 	}
+	
+	public static BallEvent nextKnuckleCollision(Table table, double maxt)
+	{
+		BallEvent next = null;
+		for(Ball ball : table.balls())
+		{
+			Event e = ball.lastEvent();
+			if (e.state == State.Stationary)
+				continue;
+			
+			Event eKnuckle = nextKnuckleCollision(e, maxt);
+			if (eKnuckle == null)
+				continue;
+
+			if ((next == null) || (eKnuckle.t < next.event.t))
+			{
+				next = new BallEvent(ball,eKnuckle);
+				assert(next.event.t > e.t);
+				assert(Cushion.onTable(next.event));
+			}		
+		}		
+
+		
+		if ((next != null) && (next.event.t < maxt))
+			return next;
+
+		return null;
+
+	}
+	
 	
 	public static Event nextKnuckleCollision(Event e1, double maxt)
 	{

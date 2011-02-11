@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Maps;
 
 /**
- * @author august
+ * @author luke
  *
  * Table holds a list of balls. By calling the generate method all future events
  * for these balls are computed. This allows an initial position to be evaluated
@@ -36,6 +36,18 @@ public class Table
 	
 	private Map<Integer,Ball> ballMap = Maps.newHashMap();
 
+	public boolean hasPockets;
+	
+	public Table()
+	{
+		hasPockets = false;
+	}
+	
+	public Table(boolean hasPockets_)
+	{
+		hasPockets = hasPockets_;
+	}
+	
 	/**
 	 * Given all balls that are on the table
 	 * check each to see when the next rolling or
@@ -136,13 +148,17 @@ public class Table
 		
 		BallEvent nextCushion = Cushion.nextCushionHit(this, next.event.t);		
 		if ((nextCushion != null) && (nextCushion.event.t < next.event.t))
-		{
 			next = nextCushion;
-			if (Pocket.isCushionEventInPocketRegion(next.event))
-			{
-				System.out.println("pot");
-			}
-		}	
+		
+		// use bounds of this to look for pocket collisions 
+		
+		if (hasPockets)
+		{
+			BallEvent nextKnuckle = Pocket.nextKnuckleCollision(this, next.event.t);
+			if ((nextKnuckle != null) && (nextKnuckle.event.t < next.event.t))
+				next = nextKnuckle;
+		}
+		
 		// use bounds of these to look for next ball/ball collision
 
 		BallEventPair nextCollision = Collision.nextBallCollision(this, next.event.t);
