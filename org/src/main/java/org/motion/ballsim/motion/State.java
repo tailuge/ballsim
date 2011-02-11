@@ -169,4 +169,8 @@ public enum State {
 		return State.Sliding;
 	}
 
+	public boolean canCollideWithCushions()
+	{
+		return this == State.Sliding || this == State.Rolling;
+	}
 }
