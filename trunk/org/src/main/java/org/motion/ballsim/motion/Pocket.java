@@ -9,22 +9,15 @@ import org.motion.ballsim.util.BallEvent;
 import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsim.util.UtilVector3D;
 
+/*
+ * Use ball collision logic to get knuckle events
+ * Use ball collision logic to get in pocket event
+ */
+
 public class Pocket {
 
-	/*
-	 * Use ball collision logic to get knuckle events
-	 * Use ball collision logic to get in pocket event
-	 */
-	public static Event hits(
-			final Event e, 
-			Vector3D knuckle1, 
-			Vector3D knuckle2, 
-			Vector3D center, 
-			double pocketRadius, 
-			double maxt)
-	{
-		return null;
-	}
+
+
 	
 	public static BallEvent nextKnuckleCollision(Table table, double maxt)
 	{
@@ -32,9 +25,10 @@ public class Pocket {
 		for(Ball ball : table.balls())
 		{
 			Event e = ball.lastEvent();
-			if (e.state == State.Stationary)
+
+			if (!e.state.canCollideWithCushions())
 				continue;
-			
+		
 			Event eKnuckle = nextKnuckleCollision(e, maxt);
 			if (eKnuckle == null)
 				continue;
@@ -66,7 +60,7 @@ public class Pocket {
 		for(Event knuckle:knuckles)
 		{
 			double t = Collision.collisionTime(e1, knuckle, maxt);
-			if (t < soonest)
+			if ((t>0) && (t < soonest))
 			{
 				soonest = t;
 				soonestKnuckle = knuckle;
@@ -85,26 +79,56 @@ public class Pocket {
 	public static Event knuckleBounce(Event e1, Event knuckle)
 	{
 		Event reflected = e1;
-		reflected.vel = UtilVector3D.reflectAlongAxis(knuckle.pos.subtract(e1.pos).normalize(),e1.vel);
+		reflected.vel = UtilVector3D.reflectAlongAxis(e1.vel,knuckle.pos.subtract(e1.pos).normalize());
 		reflected.state = State.deriveStateOf(reflected);
+		reflected.type = EventType.KnuckleCushion;
 		return reflected;
 	}
 
+	public static BallEvent nextPot(Table table, double maxt)
+	{
+		BallEvent next = null;
+		for(Ball ball : table.balls())
+		{
+			Event e = ball.lastEvent();
+
+			if (!e.state.canCollideWithCushions())
+				continue;
+						
+			Event ePot = nextKnuckleCollision(e, maxt);
+			if (ePot == null)
+				continue;
+
+			if ((next == null) || (ePot.t < next.event.t))
+			{
+				next = new BallEvent(ball,ePot);
+				assert(next.event.t > e.t);
+				assert(Cushion.onTable(next.event));
+			}		
+		}		
+
+		
+		if ((next != null) && (next.event.t < maxt))
+			return next;
+
+		return null;
+
+	}
 
 	public static Event nextPot(Event e1, double maxt)
 	{
 		// find next pocket impact
 		
 		double soonest = Double.MAX_VALUE;
-//		Event soonestPocket = null;
+		Event soonestPocket = null;
 		
 		for(Event hole:holes)
 		{
 			double t = Collision.collisionTime(e1, hole, maxt);
-			if (t < soonest)
+			if ((t>0) && (t < soonest))
 			{
 				soonest = t;
-	//			soonestPocket = hole;
+				soonestPocket = hole;
 			}
 		}
 		
@@ -113,7 +137,10 @@ public class Pocket {
 		{
 			// progress ball to point of impact, set state as in pocket
 			Event pot = e1.advanceDelta(soonest); 
-			pot.state = State.Sliding;//set to Falling
+			pot.state = State.FallingInPocket;
+			
+			// store target position of pocket in sidespin for now.
+			pot.sidespin = soonestPocket.pos;
 			return pot;
 		}
 		

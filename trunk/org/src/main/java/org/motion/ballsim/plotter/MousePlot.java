@@ -122,7 +122,6 @@ public class MousePlot extends JPanel implements ActionListener, MouseListener, 
 	public void mousePressed(MouseEvent e) {
 		
 		table.resetToCurrent(t);
-		System.out.println(e);
 		timer.stop();
 		t=0;
 	}
