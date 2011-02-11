@@ -95,7 +95,7 @@ public class Pocket {
 			if (!e.state.canCollideWithCushions())
 				continue;
 						
-			Event ePot = nextKnuckleCollision(e, maxt);
+			Event ePot = nextPot(e, maxt);
 			if (ePot == null)
 				continue;
 
@@ -138,8 +138,9 @@ public class Pocket {
 			// progress ball to point of impact, set state as in pocket
 			Event pot = e1.advanceDelta(soonest); 
 			pot.state = State.FallingInPocket;
+			pot.type = EventType.Potting;
 			
-			// store target position of pocket in sidespin for now.
+			// store target position of pocket in side spin for now.
 			pot.sidespin = soonestPocket.pos;
 			return pot;
 		}
