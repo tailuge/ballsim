@@ -26,7 +26,7 @@ public class PottingMotion {
 	
 	private static double timeToFinishPotting(Event e) 
 	{
-		return 0.25;
+		return 0.1;
 	}
 	
 	

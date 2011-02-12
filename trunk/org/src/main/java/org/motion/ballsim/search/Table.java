@@ -61,7 +61,7 @@ public class Table
 		for(Ball ball : balls())
 		{
 			Event e = ball.lastEvent();
-			if ((e.state == State.Stationary) || (e.state == State.InPocket))
+			if (e.state.isMotionlessEndState())
 				continue;
 			
 			Event eNext = e.next();

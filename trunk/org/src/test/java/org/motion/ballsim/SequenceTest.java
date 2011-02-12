@@ -192,8 +192,24 @@ public class SequenceTest {
 
 		t.ball(1).setFirstEvent(e);
 
-		assertEquals("Generate 2 events slide->(roll,potting,potted)",2,t.generateSequence());
+		assertEquals("Generate 2 events (roll,potting,potted)",2,t.generateSequence());
 		
 		System.out.println(t.getAllEvents());
 	}
+
+	@Test
+	public final void testKnuckleBounce() 
+	{
+		Table t = new Table(true);		
+		
+		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(2500));
+		e.pos = Pocket.p6k1.add(new Vector3D(-3*Ball.R,+0.2,0));
+
+		t.ball(1).setFirstEvent(e);
+
+		assertEquals("Generate > 2 events (roll,slide,other)",true,t.generateSequence()>2);
+		
+		System.out.println(t.getAllEvents());
+	}
+
 }

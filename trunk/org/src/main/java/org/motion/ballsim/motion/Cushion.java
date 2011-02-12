@@ -38,7 +38,8 @@ public class Cushion
 			Vector3D axis, 
 			Function<Double,Boolean> onTable, 
 			double cush, 
-			double maxt)
+			double maxt,
+			boolean hasPockets)
 	{	
 		double A = UtilVector3D.projectionOnAxis(e.acceleration(),axis)*0.5;
 		double B = UtilVector3D.projectionOnAxis(e.vel,axis);
@@ -56,7 +57,11 @@ public class Cushion
 		assert( tCollision > 0);
 		assert( tCollision < maxt);
 		
-		return reflect( e.advanceDelta(tCollision) , axis);
+		Event reflected = reflect( e.advanceDelta(tCollision) , axis);
+		if (hasPockets && Pocket.isCushionEventInPocketRegion(reflected))
+			return null;
+		
+		return reflected;
 	}
 
 	/**
@@ -87,14 +92,14 @@ public class Cushion
 	 * @param maxt
 	 * @return
 	 */
-	public static Event hit(Event e, double maxt) 
+	public static Event hit(Event e, double maxt, boolean hasPockets) 
 	{		
 		assert(Cushion.onTable(e));
 		Event next = null;
-		next = sooner(next,hits(e, Vector3D.PLUS_I, onX(e), xp, maxt));
-		next = sooner(next,hits(e, Vector3D.PLUS_I, onX(e), xn, maxt));
-		next = sooner(next,hits(e, Vector3D.PLUS_J, onY(e), yp, maxt));
-		next = sooner(next,hits(e, Vector3D.PLUS_J, onY(e), yn, maxt));	
+		next = sooner(next,hits(e, Vector3D.PLUS_I, onX(e), xp, maxt, hasPockets));
+		next = sooner(next,hits(e, Vector3D.PLUS_I, onX(e), xn, maxt, hasPockets));
+		next = sooner(next,hits(e, Vector3D.PLUS_J, onY(e), yp, maxt, hasPockets));
+		next = sooner(next,hits(e, Vector3D.PLUS_J, onY(e), yn, maxt, hasPockets));	
 		assert((next==null) || Cushion.onTable(next));
 		return next;
 	}
@@ -154,14 +159,13 @@ public class Cushion
 			if (!e.state.canCollideWithCushions())
 				continue;
 			
-			Event eCushion = Cushion.hit(e, maxt);
+			Event eCushion = Cushion.hit(e, maxt, table.hasPockets);
 			if (eCushion == null)
 				continue;
 
 			// No impact with cushion if in pocket region.
 			
-			if (((next == null) || (eCushion.t < next.event.t))
-					&& (!table.hasPockets || !Pocket.isCushionEventInPocketRegion(eCushion)))					
+			if ((next == null) || (eCushion.t < next.event.t))
 			{
 				next = new BallEvent(ball,eCushion);
 				assert(next.event.t > e.t);

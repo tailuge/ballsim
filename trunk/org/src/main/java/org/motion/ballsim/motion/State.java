@@ -173,4 +173,9 @@ public enum State {
 	{
 		return this == State.Sliding || this == State.Rolling;
 	}
+
+	public boolean isMotionlessEndState()
+	{
+		return this == State.Stationary || this == State.InPocket;
+	}
 }
