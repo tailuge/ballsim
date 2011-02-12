@@ -21,7 +21,7 @@ public class SideSpinTest {
 		// place near cushion
 		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(-50));
 		e.pos = Vector3D.PLUS_I.scalarMultiply(Cushion.xn+Ball.R);
-		Event c1 = Cushion.hit(e, e.next().t);
+		Event c1 = Cushion.hit(e, e.next().t,false);
 		assertNotNull("Collides",c1);
 		assertTrue("Collision before ball stops",c1.t < e.next().t);
 		assertEquals("Collision should be at cushion position",Cushion.xn,c1.pos.getX(),0.001);
@@ -35,7 +35,7 @@ public class SideSpinTest {
 		// place near cushion
 		Event e = Utilities.getRollingWithSideSpin(Vector3D.PLUS_I.scalarMultiply(-50),1);
 		e.pos = Vector3D.PLUS_I.scalarMultiply(Cushion.xn+Ball.R);
-		Event c1 = Cushion.hit(e, e.next().t);
+		Event c1 = Cushion.hit(e, e.next().t,false);
 		assertNotNull("Collides",c1);
 		assertTrue("Perpendicular velocity is changed",c1.vel.getY() > 0);
 	}
@@ -48,7 +48,7 @@ public class SideSpinTest {
 		// place near cushion
 		Event e = Utilities.getRollingWithSideSpin(Vector3D.PLUS_I.scalarMultiply(-50),-1);
 		e.pos = Vector3D.PLUS_I.scalarMultiply(Cushion.xn+Ball.R);
-		Event c1 = Cushion.hit(e, e.next().t);
+		Event c1 = Cushion.hit(e, e.next().t,false);
 		assertNotNull("Collides",c1);
 		assertTrue("Perpendicular velocity is changed",c1.vel.getY() > 0);
 	}

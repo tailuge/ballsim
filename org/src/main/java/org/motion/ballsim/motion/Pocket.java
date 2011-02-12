@@ -140,6 +140,7 @@ public class Pocket {
 			pot.state = State.FallingInPocket;
 			pot.type = EventType.Potting;
 			
+			pot.vel = soonestPocket.pos.subtract(pot.pos).normalize().scalarMultiply(15);
 			// store target position of pocket in side spin for now.
 			pot.sidespin = soonestPocket.pos;
 			return pot;
