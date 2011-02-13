@@ -11,14 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.motion.ballsim.motion.Ball;
+import org.motion.ballsim.motion.Event;
 import org.motion.ballsim.search.Table;
-import org.motion.ballsim.util.BallEvent;
 
 public class StaticPlot  extends JPanel 
 {	 
 	private static final long serialVersionUID = 1224879637869008694L;
 
-	private Collection<BallEvent> events = new ArrayList<BallEvent>();
+	private Collection<Event> events = new ArrayList<Event>();
 	private PlotScale scale;
 	
 	public StaticPlot(Collection<Table> tables_, int interpolatedCount)
@@ -31,13 +31,13 @@ public class StaticPlot  extends JPanel
 			double maxt = table.getMaxTime();
 			double delta = maxt / (double)interpolatedCount;		
 
-			events.addAll(table.getAllBallEvents());
+			events.addAll(table.getAllEvents());
 			
 			while(t<=maxt+0.1)
 			{
 				for(Ball b: table.balls())
 				{
-					events.add(new BallEvent(b,Interpolator.interpolate(b, t)));
+					events.add(new Event(Interpolator.interpolate(b, t)));
 				}
 				t += delta;
 			}
@@ -49,13 +49,13 @@ public class StaticPlot  extends JPanel
 	{
 		scale = new PlotScale(table_.getAllEvents());
 		double delta = scale.maxt / (double)interpolatedCount;		
-		events.addAll(table_.getAllBallEvents());
+		events.addAll(table_.getAllEvents());
 		double t = 0;
 		while(t<=scale.maxt+0.1)
 		{
 			for(Ball b: table_.balls())
 			{
-				events.add(new BallEvent(b,Interpolator.interpolate(b, t)));
+				events.add(new Event(Interpolator.interpolate(b, t)));
 			}
 			t += delta;
 		}
@@ -64,7 +64,7 @@ public class StaticPlot  extends JPanel
 
 	public StaticPlot(Table table_)
 	{
-		events = table_.getAllBallEvents();
+		events = table_.getAllEvents();
 		scale = new PlotScale(table_.getAllEvents());
 	}
 
@@ -91,9 +91,9 @@ public class StaticPlot  extends JPanel
 	
 	private void plotTable()
 	{	
- 		for(BallEvent be : events)
+ 		for(Event e : events)
  		{
- 			PlotEvent.plotEvent(be.event, scale,false,true);
+ 			PlotEvent.plotEvent(e, scale,false,true);
  		}
 	}
 }

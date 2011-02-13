@@ -9,11 +9,10 @@ import org.motion.ballsim.motion.Ball;
 import org.motion.ballsim.motion.Collision;
 import org.motion.ballsim.motion.Cushion;
 import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.motion.EventPair;
 import org.motion.ballsim.motion.Pocket;
 import org.motion.ballsim.motion.State;
 import org.motion.ballsim.plotter.Interpolator;
-import org.motion.ballsim.util.BallEvent;
-import org.motion.ballsim.util.BallEventPair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,9 +54,9 @@ public class Table
 	 * 
 	 * @return
 	 */
-	public BallEvent nextNatural() 
+	public Event nextNatural() 
 	{
-		BallEvent next = null;
+		Event next = null;
 		for(Ball ball : balls())
 		{
 			Event e = ball.lastEvent();
@@ -65,10 +64,10 @@ public class Table
 				continue;
 			
 			Event eNext = e.next();
-			if ((next == null) || (eNext.t < next.event.t))
+			if ((next == null) || (eNext.t < next.t))
 			{
-				next = new BallEvent(ball, eNext);
-				assert( next.event.t > e.t);
+				next = eNext;
+				assert( next.t > e.t);
 			}
 		}
 
@@ -96,20 +95,6 @@ public class Table
 		return all;
 	}
 
-	public Collection<BallEvent> getAllBallEvents() 
-	{
-		Collection<BallEvent> all = new ArrayList<BallEvent>();
-
-		for(Ball ball : balls())
-		{
-			for(Event e : ball.getAllEvents())
-			{
-				all.add(new BallEvent(ball,e));
-			}
-		}
-		
-		return all;
-	}
 
 	/**
 	 *  given a table with balls (possibly in motion) this method
@@ -140,55 +125,55 @@ public class Table
 			logger.info("Ball {} : {}", ball.id,ball.lastEvent().format());
 		}		
 				
-		BallEvent next = nextNatural();
+		Event next = nextNatural();
 		if (next == null)
 			return false;
 		
 		// use bounds of this to look for next cushion collision
 		
-		BallEvent nextCushion = Cushion.nextCushionHit(this, next.event.t);		
-		if ((nextCushion != null) && (nextCushion.event.t < next.event.t))
+		Event nextCushion = Cushion.nextCushionHit(this, next.t);		
+		if ((nextCushion != null) && (nextCushion.t < next.t))
 			next = nextCushion;
 		
 		// use bounds of this to look for pocket collisions 
 		
 		if (hasPockets)
 		{
-			BallEvent nextKnuckle = Pocket.nextKnuckleCollision(this, next.event.t);
-			if ((nextKnuckle != null) && (nextKnuckle.event.t < next.event.t))
+			Event nextKnuckle = Pocket.nextKnuckleCollision(this, next.t);
+			if ((nextKnuckle != null) && (nextKnuckle.t < next.t))
 				next = nextKnuckle;
 			
-			BallEvent nextPocket = Pocket.nextPot(this, next.event.t);
-			if ((nextPocket != null) && (nextPocket.event.t < next.event.t))
+			Event nextPocket = Pocket.nextPot(this, next.t);
+			if ((nextPocket != null) && (nextPocket.t < next.t))
 				next = nextPocket;			
 		}
 		
 		// use bounds of these to look for next ball/ball collision
 
-		BallEventPair nextCollision = Collision.nextBallCollision(this, next.event.t);
+		EventPair nextCollision = Collision.nextBallCollision(this, next.t);
 
 		// add the soonest of these outcomes
 		
-		if ((nextCollision == null) || (next.event.t < nextCollision.first.event.t))
+		if ((nextCollision == null) || (next.t < nextCollision.first.t))
 		{
 			logger.info("Single event");
-			logger.info("Ball {} : {}", next.ball.id, next.event.format());
+			logger.info("Ball {} : {}", next.ballId, next.format());
 			logger.info("nextCollision {}",nextCollision);
-			assert(Cushion.onTable(next.event));
-			next.ball.add(next.event);
+			assert(Cushion.onTable(next));
+			this.ball(next.ballId).add(next);
 		}
 		else
 		{
 			logger.info("Collision event: {}",nextCollision);
-			logger.info("Collision event time: {}",nextCollision.first.event.t);
+			logger.info("Collision event time: {}",nextCollision.first.t);
 			logger.info("Discarded single event: {}",next);
-			logger.info("Discarded single event time: {}",next.event.t);
-			logger.info("Collision 1: {}",nextCollision.first.event.format());
-			logger.info("Collision 2: {}",nextCollision.second.event.format());
-			assert(Cushion.onTable(nextCollision.first.event));
-			assert(Cushion.onTable(nextCollision.second.event));
-			nextCollision.first.ball.add(nextCollision.first.event);
-			nextCollision.second.ball.add(nextCollision.second.event);
+			logger.info("Discarded single event time: {}",next.t);
+			logger.info("Collision 1: {}",nextCollision.first.format());
+			logger.info("Collision 2: {}",nextCollision.second.format());
+			assert(Cushion.onTable(nextCollision.first));
+			assert(Cushion.onTable(nextCollision.second));
+			this.ball(nextCollision.first.ballId).add(nextCollision.first);
+			this.ball(nextCollision.second.ballId).add(nextCollision.second);
 		}
 		
 		logger.info("Table:{}",this);

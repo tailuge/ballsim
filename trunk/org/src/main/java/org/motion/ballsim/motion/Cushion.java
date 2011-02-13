@@ -4,7 +4,6 @@ package org.motion.ballsim.motion;
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.search.Table;
-import org.motion.ballsim.util.BallEvent;
 import org.motion.ballsim.util.UtilVector3D;
 
 
@@ -150,9 +149,9 @@ public class Cushion
 	}
 
 	
-	public static BallEvent nextCushionHit(Table table, double maxt) 
+	public static Event nextCushionHit(Table table, double maxt) 
 	{
-		BallEvent next = null;
+		Event next = null;
 		for(Ball ball : table.balls())
 		{
 			Event e = ball.lastEvent();
@@ -165,16 +164,16 @@ public class Cushion
 
 			// No impact with cushion if in pocket region.
 			
-			if ((next == null) || (eCushion.t < next.event.t))
+			if ((next == null) || (eCushion.t < next.t))
 			{
-				next = new BallEvent(ball,eCushion);
-				assert(next.event.t > e.t);
-				assert(Cushion.onTable(next.event));
+				next = eCushion;
+				assert(next.t > e.t);
+				assert(Cushion.onTable(next));
 			}		
 		}		
 
 		
-		if ((next != null) && (next.event.t < maxt))
+		if ((next != null) && (next.t < maxt))
 			return next;
 		return null;
 	}
