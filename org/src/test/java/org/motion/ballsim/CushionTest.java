@@ -9,10 +9,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Quadratic;
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.motion.Ball;
-import org.motion.ballsim.motion.Cushion;
-import org.motion.ballsim.motion.Event;
-import org.motion.ballsim.motion.State;
+import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.Cushion;
+import org.motion.ballsim.physics.Event;
+import org.motion.ballsim.physics.State;
 import org.motion.ballsim.util.UtilVector3D;
 
 public class CushionTest {

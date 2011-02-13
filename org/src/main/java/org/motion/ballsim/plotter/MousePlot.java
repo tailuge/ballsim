@@ -17,9 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.motion.Ball;
-import org.motion.ballsim.motion.Cushion;
-import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.Cushion;
+import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.search.Table;
 import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;

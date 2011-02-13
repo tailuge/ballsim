@@ -9,11 +9,11 @@ import java.util.Collection;
 
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.motion.Ball;
-import org.motion.ballsim.motion.Collision;
-import org.motion.ballsim.motion.Cushion;
-import org.motion.ballsim.motion.Event;
-import org.motion.ballsim.motion.Pocket;
+import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.Collision;
+import org.motion.ballsim.physics.Cushion;
+import org.motion.ballsim.physics.Event;
+import org.motion.ballsim.physics.Pocket;
 import org.motion.ballsim.search.Table;
 import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;

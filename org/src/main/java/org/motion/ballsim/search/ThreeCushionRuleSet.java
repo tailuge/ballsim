@@ -3,11 +3,11 @@ package org.motion.ballsim.search;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.motion.ballsim.motion.Ball;
-import org.motion.ballsim.motion.Collision;
-import org.motion.ballsim.motion.Cushion;
-import org.motion.ballsim.motion.Event;
-import org.motion.ballsim.motion.EventType;
+import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.Collision;
+import org.motion.ballsim.physics.Cushion;
+import org.motion.ballsim.physics.Event;
+import org.motion.ballsim.physics.EventType;
 
 
 public class ThreeCushionRuleSet implements IRuleSet {

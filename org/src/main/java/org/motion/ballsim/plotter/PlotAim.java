@@ -3,7 +3,7 @@ package org.motion.ballsim.plotter;
 import java.awt.Color;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.motion.Cushion;
+import org.motion.ballsim.physics.Cushion;
 
 public class PlotAim {
 
