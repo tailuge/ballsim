@@ -14,7 +14,7 @@ import org.motion.ballsim.physics.Collision;
 import org.motion.ballsim.physics.Cushion;
 import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.Pocket;
-import org.motion.ballsim.search.Table;
+import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsim.util.UtilVector3D;

@@ -1,7 +1,5 @@
-package org.motion.ballsim.search;
+package org.motion.ballsim.physics;
 
-import org.motion.ballsim.physics.Ball;
-import org.motion.ballsim.physics.Event;
 
 /**
  * @author luke

@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Event;
+import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
 

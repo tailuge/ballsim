@@ -1,4 +1,4 @@
-package org.motion.ballsim.search;
+package org.motion.ballsim.physics;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,13 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.Ball;
-import org.motion.ballsim.physics.Collision;
-import org.motion.ballsim.physics.Cushion;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.physics.EventPair;
-import org.motion.ballsim.physics.Pocket;
-import org.motion.ballsim.physics.State;
 
 import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.Logger;

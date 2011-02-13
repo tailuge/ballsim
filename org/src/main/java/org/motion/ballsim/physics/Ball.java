@@ -3,7 +3,6 @@ package org.motion.ballsim.physics;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.motion.ballsim.search.Table;
 
 
 public class Ball 

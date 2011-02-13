@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.search.Table;
 import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsim.util.UtilVector3D;
 
