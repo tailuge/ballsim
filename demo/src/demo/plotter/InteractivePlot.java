@@ -4,7 +4,7 @@ import org.motion.ballsim.Utilities;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Pocket;
-import org.motion.ballsim.plotter.MousePlot;
+import demo.plotter.MousePlot;
 import org.motion.ballsim.search.Table;
 
 public class InteractivePlot {

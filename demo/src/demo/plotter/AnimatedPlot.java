@@ -12,10 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import org.motion.ballsim.physics.Ball;
-import demo.plotter.Interpolator;
 import demo.plotter.PlotCushion;
 import demo.plotter.PlotEvent;
 import demo.plotter.PlotScale;
+
+import org.motion.ballsim.search.Interpolator;
 import org.motion.ballsim.search.Table;
 import org.motion.ballsim.util.Logger;
 

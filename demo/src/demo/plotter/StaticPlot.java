@@ -12,10 +12,11 @@ import javax.swing.JPanel;
 
 import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Event;
-import demo.plotter.Interpolator;
 import demo.plotter.PlotCushion;
 import demo.plotter.PlotEvent;
 import demo.plotter.PlotScale;
+
+import org.motion.ballsim.search.Interpolator;
 import org.motion.ballsim.search.Table;
 
 public class StaticPlot  extends JPanel 
