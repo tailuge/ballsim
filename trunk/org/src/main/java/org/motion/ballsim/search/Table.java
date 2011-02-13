@@ -2,6 +2,7 @@ package org.motion.ballsim.search;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
@@ -13,10 +14,9 @@ import org.motion.ballsim.motion.EventPair;
 import org.motion.ballsim.motion.Pocket;
 import org.motion.ballsim.motion.State;
 import org.motion.ballsim.plotter.Interpolator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.motion.ballsim.util.Assert;
+import org.motion.ballsim.util.Logger;
 
-import com.google.common.collect.Maps;
 
 /**
  * @author luke
@@ -28,12 +28,12 @@ import com.google.common.collect.Maps;
  */
 public class Table 
 {
-	private final static Logger logger = LoggerFactory.getLogger(Table.class);
+	private final static Logger logger = new Logger("Table",false);
 	
 	public final static double froll = 10;
 	public final static double fslide = 40;
 	
-	private Map<Integer,Ball> ballMap = Maps.newHashMap();
+	private Map<Integer,Ball> ballMap = new HashMap<Integer,Ball>();
 
 	public boolean hasPockets;
 	
@@ -67,7 +67,7 @@ public class Table
 			if ((next == null) || (eNext.t < next.t))
 			{
 				next = eNext;
-				assert( next.t > e.t);
+				Assert.isTrue( next.t > e.t);
 			}
 		}
 
@@ -159,7 +159,7 @@ public class Table
 			logger.info("Single event");
 			logger.info("Ball {} : {}", next.ballId, next.format());
 			logger.info("nextCollision {}",nextCollision);
-			assert(Cushion.onTable(next));
+			Assert.isTrue(Cushion.onTable(next));
 			this.ball(next.ballId).add(next);
 		}
 		else
@@ -170,16 +170,16 @@ public class Table
 			logger.info("Discarded single event time: {}",next.t);
 			logger.info("Collision 1: {}",nextCollision.first.format());
 			logger.info("Collision 2: {}",nextCollision.second.format());
-			assert(Cushion.onTable(nextCollision.first));
-			assert(Cushion.onTable(nextCollision.second));
+			Assert.isTrue(Cushion.onTable(nextCollision.first));
+			Assert.isTrue(Cushion.onTable(nextCollision.second));
 			this.ball(nextCollision.first.ballId).add(nextCollision.first);
 			this.ball(nextCollision.second.ballId).add(nextCollision.second);
 		}
 		
 		logger.info("Table:{}",this);
 		
-		assert(Cushion.validPosition(this));
-		assert(Collision.validPosition(this));
+		Assert.isTrue(Cushion.validPosition(this));
+		Assert.isTrue(Collision.validPosition(this));
 		
 		return true;
 	}

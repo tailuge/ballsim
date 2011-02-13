@@ -1,5 +1,6 @@
 package org.motion.ballsim.search;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.motion.ballsim.motion.Ball;
@@ -8,7 +9,6 @@ import org.motion.ballsim.motion.Cushion;
 import org.motion.ballsim.motion.Event;
 import org.motion.ballsim.motion.EventType;
 
-import com.google.common.collect.Maps;
 
 public class ThreeCushionRuleSet implements IRuleSet {
 
@@ -19,7 +19,7 @@ public class ThreeCushionRuleSet implements IRuleSet {
 	public boolean scores(Table table, Ball ball) {
 		
 		int cushions = 0;
-		Map<Integer,Integer> cannons = Maps.newHashMap();
+		Map<Integer,Integer> cannons = new HashMap<Integer,Integer>();
 		
 		for(Event e : ball.getAllEvents())
 		{
@@ -42,7 +42,7 @@ public class ThreeCushionRuleSet implements IRuleSet {
 		int cushions = 0;
 		boolean firstCannon = false;
 		
-		Map<Integer,Integer> cannons = Maps.newHashMap();
+		Map<Integer,Integer> cannons = new HashMap<Integer,Integer>();
 
 		for(Event e : ball.getAllEvents())
 		{

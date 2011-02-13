@@ -15,14 +15,13 @@ import org.motion.ballsim.motion.Cushion;
 import org.motion.ballsim.motion.Event;
 import org.motion.ballsim.motion.Pocket;
 import org.motion.ballsim.search.Table;
+import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsim.util.UtilVector3D;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SequenceTest {
 
-	final Logger logger = LoggerFactory.getLogger(SequenceTest.class);
+	final Logger logger = new Logger("SequenceTest",true);
 	
 	@Test
 	public final void testGenerateNext() 

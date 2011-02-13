@@ -8,14 +8,14 @@ import java.util.HashSet;
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.search.Table;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.motion.ballsim.util.Assert;
+import org.motion.ballsim.util.Logger;
 
 
 public class Collision 
 {
 
-	private final static Logger logger = LoggerFactory.getLogger(Collision.class);
+	private final static Logger logger = new Logger("Collision",false);
 
 	public static double[] quarticCoefficients(Event e1, Event e2)
 	{
@@ -149,12 +149,12 @@ public class Collision
 
 		logger.info("Collision time: {}",tCol);
 
-		assert(Collision.startingSeperation(e1,e2) > 0);
+		Assert.isTrue(Collision.startingSeperation(e1,e2) > 0);
 		
 		if (tCol > 0)
 		{
 			EventPair col = collisionEvents(e1,e2,tCol);
-			assert(Collision.startingSeperation(col.first,col.second) > 0);			
+			Assert.isTrue(Collision.startingSeperation(col.first,col.second) > 0);			
 			return col;
 		}
 		return null;
@@ -182,8 +182,8 @@ public class Collision
 					collision.first.otherBallId = collision.second.ballId;
 					collision.second.otherBallId = collision.first.ballId;					
 					next = new EventPair(collision.first,collision.second);
-					assert(collision.first.otherBallId != 0);
-					assert(collision.second.otherBallId != 0);
+					Assert.isTrue(collision.first.otherBallId != 0);
+					Assert.isTrue(collision.second.otherBallId != 0);
 				}
 			}
 		}

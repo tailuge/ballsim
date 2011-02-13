@@ -1,5 +1,6 @@
 package org.motion.ballsim.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
@@ -7,9 +8,6 @@ import org.motion.ballsim.motion.Ball;
 import org.motion.ballsim.motion.Event;
 import org.motion.ballsim.motion.EventType;
 import org.motion.ballsim.motion.State;
-
-
-import com.google.common.collect.Lists;
 
 public class UtilEvent 
 {
@@ -44,7 +42,7 @@ public class UtilEvent
 	public static Collection<Event> generateRadialEvents(Vector3D  pos, int segments, double speed, double height)
 	{
 	
-		Collection<Event> radialEvents = Lists.newArrayList();
+		Collection<Event> radialEvents = new ArrayList<Event>();
 		for(int i=0; i<segments; i++)
 		{
 			Vector3D dir = new Vector3D(2.0 * Math.PI * (double)i/(double)segments,0);
@@ -57,7 +55,7 @@ public class UtilEvent
 	
 	public static Collection<Event> generateImpactingEvents(Vector3D  pos, Vector3D target, int segments, double speed, double height)
 	{
-		Collection<Event> radialEvents = Lists.newArrayList();
+		Collection<Event> radialEvents = new ArrayList<Event>();
 
 		Vector3D lineOfCenters = target.subtract(pos);
 		Vector3D perpendicular = UtilVector3D.crossUp(lineOfCenters).normalize();
