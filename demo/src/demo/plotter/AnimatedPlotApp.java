@@ -5,9 +5,10 @@ package demo.plotter;
 import org.motion.ballsim.Utilities;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.Table;
+
 import demo.plotter.AnimatedPlot;
 import org.motion.ballsim.search.ShotFinder;
-import org.motion.ballsim.search.Table;
 import org.motion.ballsim.search.ThreeCushionRuleSet;
 
 public class AnimatedPlotApp {

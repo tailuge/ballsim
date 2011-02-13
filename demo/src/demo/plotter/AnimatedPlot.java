@@ -12,12 +12,13 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.Interpolator;
+import org.motion.ballsim.physics.Table;
+
 import demo.plotter.PlotCushion;
 import demo.plotter.PlotEvent;
 import demo.plotter.PlotScale;
 
-import org.motion.ballsim.search.Interpolator;
-import org.motion.ballsim.search.Table;
 import org.motion.ballsim.util.Logger;
 
 public class AnimatedPlot  extends JPanel implements ActionListener

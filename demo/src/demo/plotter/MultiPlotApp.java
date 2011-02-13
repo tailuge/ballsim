@@ -8,8 +8,9 @@ import org.motion.ballsim.Utilities;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Event;
+import org.motion.ballsim.physics.Table;
+
 import demo.plotter.StaticPlot;
-import org.motion.ballsim.search.Table;
 import org.motion.ballsim.search.ThreeCushionRuleSet;
 import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
