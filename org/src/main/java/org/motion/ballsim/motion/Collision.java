@@ -8,7 +8,6 @@ import java.util.HashSet;
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.search.Table;
-import org.motion.ballsim.util.BallEventPair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -161,9 +160,9 @@ public class Collision
 		return null;
 	}
 	
-	public static BallEventPair nextBallCollision(Table table, double maxt) 
+	public static EventPair nextBallCollision(Table table, double maxt) 
 	{
-		BallEventPair next = null;
+		EventPair next = null;
 
 		Collection<Ball> tested = new HashSet<Ball>();
 		
@@ -178,11 +177,11 @@ public class Collision
 
 				if (collision == null)
 					continue;
-				if ((next == null) || (collision.first.t < next.first.event.t))
+				if ((next == null) || (collision.first.t < next.first.t))
 				{
 					collision.first.otherBallId = collision.second.ballId;
 					collision.second.otherBallId = collision.first.ballId;					
-					next = new BallEventPair(a,collision.first,b,collision.second);
+					next = new EventPair(collision.first,collision.second);
 					assert(collision.first.otherBallId != 0);
 					assert(collision.second.otherBallId != 0);
 				}

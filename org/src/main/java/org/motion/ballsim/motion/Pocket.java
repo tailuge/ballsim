@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.search.Table;
-import org.motion.ballsim.util.BallEvent;
 import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsim.util.UtilVector3D;
 
@@ -19,9 +18,9 @@ public class Pocket {
 
 
 	
-	public static BallEvent nextKnuckleCollision(Table table, double maxt)
+	public static Event nextKnuckleCollision(Table table, double maxt)
 	{
-		BallEvent next = null;
+		Event next = null;
 		for(Ball ball : table.balls())
 		{
 			Event e = ball.lastEvent();
@@ -33,16 +32,16 @@ public class Pocket {
 			if (eKnuckle == null)
 				continue;
 
-			if ((next == null) || (eKnuckle.t < next.event.t))
+			if ((next == null) || (eKnuckle.t < next.t))
 			{
-				next = new BallEvent(ball,eKnuckle);
-				assert(next.event.t > e.t);
-				assert(Cushion.onTable(next.event));
+				next = eKnuckle;
+				assert(next.t > e.t);
+				assert(Cushion.onTable(next));
 			}		
 		}		
 
 		
-		if ((next != null) && (next.event.t < maxt))
+		if ((next != null) && (next.t < maxt))
 			return next;
 
 		return null;
@@ -85,9 +84,9 @@ public class Pocket {
 		return reflected;
 	}
 
-	public static BallEvent nextPot(Table table, double maxt)
+	public static Event nextPot(Table table, double maxt)
 	{
-		BallEvent next = null;
+		Event next = null;
 		for(Ball ball : table.balls())
 		{
 			Event e = ball.lastEvent();
@@ -99,16 +98,16 @@ public class Pocket {
 			if (ePot == null)
 				continue;
 
-			if ((next == null) || (ePot.t < next.event.t))
+			if ((next == null) || (ePot.t < next.t))
 			{
-				next = new BallEvent(ball,ePot);
-				assert(next.event.t > e.t);
-				assert(Cushion.onTable(next.event));
+				next = ePot;
+				assert(next.t > e.t);
+				assert(Cushion.onTable(next));
 			}		
 		}		
 
 		
-		if ((next != null) && (next.event.t < maxt))
+		if ((next != null) && (next.t < maxt))
 			return next;
 
 		return null;
