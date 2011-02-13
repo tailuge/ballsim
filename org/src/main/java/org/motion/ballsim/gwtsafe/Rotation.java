@@ -20,7 +20,6 @@ package org.motion.ballsim.gwtsafe;
 
 import java.io.Serializable;
 
-import org.apache.commons.math.MathRuntimeException;
 
 /**
  * This class implements rotations in a three-dimensional space.
@@ -147,7 +146,7 @@ public class Rotation implements Serializable {
 
     double norm = axis.getNorm();
     if (norm == 0) {
-      throw MathRuntimeException.createArithmeticException("zero norm for rotation axis");
+      throw new MathRuntimeException();
     }
 
     double halfAngle = -0.5 * angle;

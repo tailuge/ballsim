@@ -4,6 +4,7 @@ package org.motion.ballsim.motion;
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.search.Table;
+import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.UtilVector3D;
 
 
@@ -49,12 +50,12 @@ public class Cushion
 		if ((tCollision <= 0) || (tCollision>maxt))			
 			return null;
 				
-		assert( tCollision > 0);
+		Assert.isTrue( tCollision > 0);
 		
 		tCollision = org.motion.ballsim.gwtsafe.Quadratic.latestTrueTime(onTable, tCollision);
 		
-		assert( tCollision > 0);
-		assert( tCollision < maxt);
+		Assert.isTrue( tCollision > 0);
+		Assert.isTrue( tCollision < maxt);
 		
 		Event reflected = reflect( e.advanceDelta(tCollision) , axis);
 		if (hasPockets && Pocket.isCushionEventInPocketRegion(reflected))
@@ -93,13 +94,13 @@ public class Cushion
 	 */
 	public static Event hit(Event e, double maxt, boolean hasPockets) 
 	{		
-		assert(Cushion.onTable(e));
+		Assert.isTrue(Cushion.onTable(e));
 		Event next = null;
 		next = sooner(next,hits(e, Vector3D.PLUS_I, onX(e), xp, maxt, hasPockets));
 		next = sooner(next,hits(e, Vector3D.PLUS_I, onX(e), xn, maxt, hasPockets));
 		next = sooner(next,hits(e, Vector3D.PLUS_J, onY(e), yp, maxt, hasPockets));
 		next = sooner(next,hits(e, Vector3D.PLUS_J, onY(e), yn, maxt, hasPockets));	
-		assert((next==null) || Cushion.onTable(next));
+		Assert.isTrue((next==null) || Cushion.onTable(next));
 		return next;
 	}
 	
@@ -167,8 +168,8 @@ public class Cushion
 			if ((next == null) || (eCushion.t < next.t))
 			{
 				next = eCushion;
-				assert(next.t > e.t);
-				assert(Cushion.onTable(next));
+				Assert.isTrue(next.t > e.t);
+				Assert.isTrue(Cushion.onTable(next));
 			}		
 		}		
 

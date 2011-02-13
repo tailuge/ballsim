@@ -7,13 +7,13 @@ import java.util.Map.Entry;
 
 import org.motion.ballsim.motion.Ball;
 import org.motion.ballsim.motion.Event;
+import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 public class ShotFinder {
 
-	private final static Logger logger = LoggerFactory.getLogger(ShotFinder.class);
+	private final static Logger logger = new Logger("ShotFinder",false);
 
 	private IRuleSet rule;
 

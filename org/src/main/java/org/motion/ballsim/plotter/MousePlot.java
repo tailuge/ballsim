@@ -21,13 +21,12 @@ import org.motion.ballsim.motion.Ball;
 import org.motion.ballsim.motion.Cushion;
 import org.motion.ballsim.motion.Event;
 import org.motion.ballsim.search.Table;
+import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MousePlot extends JPanel implements ActionListener, MouseListener, MouseMotionListener, MouseWheelListener
 {	 
-	private final static Logger logger = LoggerFactory.getLogger(AnimatedPlot.class);
+	private final static Logger logger = new Logger("MousePlot",false);
 
 	private static final long serialVersionUID = 1224879637869008694L;
 

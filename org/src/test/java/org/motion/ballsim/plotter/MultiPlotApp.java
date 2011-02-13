@@ -10,23 +10,22 @@ import org.motion.ballsim.motion.Ball;
 import org.motion.ballsim.motion.Event;
 import org.motion.ballsim.search.Table;
 import org.motion.ballsim.search.ThreeCushionRuleSet;
+import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
+
 
 public class MultiPlotApp {
 
 	static StaticPlot plot;
 	
-	private final static Logger logger = LoggerFactory.getLogger(MultiPlotApp.class);
+	private final static Logger logger = new Logger("MultiPlotApp",false);
 
     public static void main(String[] args) 
     {
 		Collection<Table> tables = new ArrayList<Table>();
 
-		Collection<Event> events = Lists.newArrayList();
+		Collection<Event> events = new ArrayList<Event>();
 
 		Event target2 = Utilities.getStationary(new Vector3D(Ball.R * 8.5,-Ball.R * 16, 0));
 		Event target3 = Utilities.getStationary(new Vector3D(Ball.R * 3.9,+Ball.R * 9, 0));
@@ -57,7 +56,7 @@ public class MultiPlotApp {
     {
 		Collection<Table> tables = new ArrayList<Table>();
 
-		Collection<Event> events = Lists.newArrayList();
+		Collection<Event> events = new ArrayList<Event>();
 
 		double h = -1.5;
 		while (h < 1.5)
