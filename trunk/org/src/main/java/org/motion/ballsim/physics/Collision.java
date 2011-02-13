@@ -7,7 +7,6 @@ import java.util.HashSet;
 
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.search.Table;
 import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.Logger;
 

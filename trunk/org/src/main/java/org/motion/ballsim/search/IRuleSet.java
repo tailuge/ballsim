@@ -1,6 +1,7 @@
 package org.motion.ballsim.search;
 
 import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.Table;
 
 public interface IRuleSet 
 {

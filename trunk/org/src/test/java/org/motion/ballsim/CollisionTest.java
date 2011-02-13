@@ -13,7 +13,7 @@ import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.EventPair;
 import org.motion.ballsim.physics.EventType;
 import org.motion.ballsim.physics.State;
-import org.motion.ballsim.search.Table;
+import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.util.UtilVector3D;
 
 

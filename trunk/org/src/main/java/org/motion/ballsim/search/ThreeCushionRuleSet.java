@@ -8,6 +8,7 @@ import org.motion.ballsim.physics.Collision;
 import org.motion.ballsim.physics.Cushion;
 import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.EventType;
+import org.motion.ballsim.physics.Table;
 
 
 public class ThreeCushionRuleSet implements IRuleSet {
