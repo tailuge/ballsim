@@ -13,7 +13,7 @@ import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.EventPair;
 import org.motion.ballsim.physics.Pocket;
 import org.motion.ballsim.physics.State;
-import org.motion.ballsim.plotter.Interpolator;
+
 import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.Logger;
 
