@@ -1,11 +1,16 @@
 package org.motion.ballsim.game;
 
-import java.util.List;
 
 public class Outcome {
 	
-	int firstBallHit;
-	int cushionsHitBeforeSecondObjectBall;
-	List<Integer> ballsPotted;
+	final BallSet firstBallHit;
+	final int cushionsHitBeforeSecondObjectBall;
+	final BallSet[] ballsPotted;
 
+	public Outcome(BallSet first,int cushions,BallSet[] potted)
+	{
+		firstBallHit = first;
+		cushionsHitBeforeSecondObjectBall = cushions;
+		ballsPotted = potted;
+	}
 }

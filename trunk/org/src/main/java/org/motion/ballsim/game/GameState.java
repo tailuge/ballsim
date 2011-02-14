@@ -1,10 +1,13 @@
 package org.motion.ballsim.game;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameState {
 	
-	List<PlayerState> players= new ArrayList<PlayerState>();
-
+	final PlayerState p1,p2;
+	
+	public GameState(PlayerState p1_, PlayerState p2_)
+	{
+		p1 = p1_;
+		p2 = p2_;
+	}
 }
