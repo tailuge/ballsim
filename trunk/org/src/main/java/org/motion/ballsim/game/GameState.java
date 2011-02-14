@@ -3,7 +3,7 @@ package org.motion.ballsim.game;
 
 public class GameState {
 	
-	final PlayerState p1,p2;
+	public final PlayerState p1,p2;
 	
 	public GameState(PlayerState p1_, PlayerState p2_)
 	{

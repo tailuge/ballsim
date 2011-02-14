@@ -1,6 +1,6 @@
 package org.motion.ballsim.game;
 
-public enum PlayerActivity {
+public enum Activity {
 	
 	OfferGame, JoinGame, Aiming, PlacingCueBall, Watching, GameEnded
 
