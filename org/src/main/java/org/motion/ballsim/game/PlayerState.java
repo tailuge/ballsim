@@ -2,9 +2,14 @@ package org.motion.ballsim.game;
 
 public class PlayerState {
 	
-	PlayerActivity activity;
+	final PlayerActivity activity;	
+	final BallSet cueBall;
+	final BallSet target;
 	
-	int frameScore;
-	int score;
-	
+	public PlayerState(PlayerActivity activity_, BallSet cueBall_, BallSet target_)
+	{
+		activity = activity_;
+		cueBall = cueBall_;
+		target = target_;
+	}
 }
