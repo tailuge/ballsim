@@ -1,8 +1,5 @@
 package org.motion.ballsim.physics;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 import org.motion.ballsim.gwtsafe.Vector3D;
 
 
@@ -156,19 +153,19 @@ public class Event {
 
 
 	
-	private static final DecimalFormat SECONDS_FORMAT = new DecimalFormat("0.00");
+	//private static final DecimalFormat SECONDS_FORMAT = new DecimalFormat("0.00");
 
 	public String toString() {
-		return state+" t:" + SECONDS_FORMAT.format(t) + " "+type 
+		return state+" t:" + t + " "+type 
 		+ " p:" + pos + " v:" + vel
 				+ " ap:" + angularPos + " av:" + angularVel;
 	}
 	
 	public String format()
 	{
-		NumberFormat nf = NumberFormat.getInstance();
+		//NumberFormat nf = NumberFormat.getInstance();
 		//nf.setRoundingMode(RoundingMode.UNNECESSARY);
-		nf.setMinimumFractionDigits(17);
+		//nf.setMinimumFractionDigits(17);
 		//Vector3DFormat f = new Vector3DFormat(nf);
 		return state+" t:" + t + " "+type 
 		+ " p:" + pos + " v:" +vel+ " av:" + angularVel;
