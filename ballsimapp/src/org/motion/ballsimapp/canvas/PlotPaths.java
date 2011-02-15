@@ -1,11 +1,14 @@
 package org.motion.ballsimapp.canvas;
 
-import org.motion.ballsimapp.logic.Ball;
-import org.motion.ballsimapp.logic.Event;
-import org.motion.ballsimapp.logic.Table;
+import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.Event;
+import org.motion.ballsim.physics.Interpolator;
+import org.motion.ballsim.physics.Table;
 
 import com.google.gwt.widgetideas.graphics.client.Color;
 import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
+
+
 
 public class PlotPaths 
 {

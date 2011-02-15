@@ -1,10 +1,11 @@
 package org.motion.ballsimapp.canvas;
 
-
-import org.motion.ballsimapp.logic.Cushion;
+import org.motion.ballsim.physics.Cushion;
 
 import com.google.gwt.widgetideas.graphics.client.Color;
 import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
+
+
 
 
 public class PlotCushion 

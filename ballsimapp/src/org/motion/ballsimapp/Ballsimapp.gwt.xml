@@ -14,6 +14,8 @@
 
   <inherits name='com.google.gwt.widgetideas.GWTCanvas'/>
 
+  <inherits name='org.motion.ballsim.ballsim'/>
+ 
   <!-- Specify the app entry point class.                         -->
   
   <entry-point class='org.motion.ballsimapp.client.Ballsimapp'/>
@@ -22,8 +24,6 @@
   
   <source path='client'/>
   <source path='shared'/>
-  <source path='gwtsafe'/>
   <source path='canvas'/>
-  <source path='logic'/>
 
 </module>
