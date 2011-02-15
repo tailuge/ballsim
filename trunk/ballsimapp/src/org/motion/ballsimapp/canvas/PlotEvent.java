@@ -1,12 +1,13 @@
 package org.motion.ballsimapp.canvas;
 
-import org.motion.ballsimapp.logic.Ball;
-import org.motion.ballsimapp.logic.Event;
-import org.motion.ballsimapp.logic.EventType;
-import org.motion.ballsimapp.logic.State;
+import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.Event;
+import org.motion.ballsim.physics.EventType;
+import org.motion.ballsim.physics.State;
 
 import com.google.gwt.widgetideas.graphics.client.Color;
 import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
+
 
 
 

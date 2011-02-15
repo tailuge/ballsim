@@ -3,16 +3,7 @@ package org.motion.ballsimapp.client;
 
 
 
-import org.motion.ballsimapp.canvas.CanvasTable;
-import org.motion.ballsimapp.canvas.Interpolator;
-import org.motion.ballsimapp.canvas.PlotEvent;
-import org.motion.ballsimapp.canvas.PlotPaths;
-import org.motion.ballsimapp.canvas.PlotScale;
-import org.motion.ballsimapp.gwtsafe.Vector3D;
-import org.motion.ballsimapp.logic.Ball;
-import org.motion.ballsimapp.logic.ShotFinder;
-import org.motion.ballsimapp.logic.Table;
-import org.motion.ballsimapp.logic.ThreeCushionRuleSet;
+import org.motion.ballsim.physics.Table;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Timer;
@@ -60,38 +51,37 @@ public class Ballsimapp implements EntryPoint {
 	    // Make a new canvas 
 		final GWTCanvas canvas = new GWTCanvas(300, 600);
 		
-	    final CanvasTable canvasTable = new CanvasTable(canvas);
+//	    final CanvasTable canvasTable = new CanvasTable(canvas);
 
 	    RootPanel.get().add(canvas);
 		
 	    
     	
-		Table t = new Table();
-		t.ball(1).setFirstEvent(Utilities.getStationary(new Vector3D(Ball.R*7,-Ball.R*18,0)));
-		t.ball(2).setFirstEvent(Utilities.getStationary(new Vector3D(-Ball.R*6,-Ball.R*6,0)));
-		t.ball(3).setFirstEvent(Utilities.getStationary(new Vector3D(Ball.R*8,-Ball.R*3,0)));
+		final Table t = new Table();
+	//	t.ball(1).setFirstEvent(UtilEvent.stationary(new Vector3D(Ball.R*7,-Ball.R*18,0)));
+	//	t.ball(2).setFirstEvent(UtilEvent.stationary(new Vector3D(-Ball.R*6,-Ball.R*6,0)));
+	//	t.ball(3).setFirstEvent(UtilEvent.stationary(new Vector3D(Ball.R*8,-Ball.R*3,0)));
 					
-		ShotFinder finder = new ShotFinder(new ThreeCushionRuleSet(),t);
 		
-		final Table tResult = finder.FindBest(t.ball(1),65);
+	//	t.generateSequence();
 		
-		final PlotScale ps = new PlotScale(tResult.getAllEvents());
-		ps.setWindowInfo(300, 600);
+		//final PlotScale ps = new PlotScale(t.getAllEvents());
+		//ps.setWindowInfo(300, 600);
 		
-		nameField.setText("tmax:"+tResult.getMaxTime());
+		nameField.setText("tmax:");
 
 		time = 0;
 		
 	    timer = new Timer() {
 	    	public void run() {
-	    	    canvasTable.renderLoop(ps);
-	    	    PlotPaths.plot(ps, canvas, tResult);
-	    		for(Ball b: tResult.balls())
-	    		{
-	    			PlotEvent.plotEvent(b, Interpolator.interpolate(b, time), canvas, ps, true, true);
-	    		}
+	    	    //canvasTable.renderLoop(ps);
+	    	    //PlotPaths.plot(ps, canvas, t);
+	    		//for(Ball b: t.balls())
+	    		//{
+	    		//	PlotEvent.plotEvent(b, Interpolator.interpolate(b, time), canvas, ps, true, true);
+	    		//}
 	    		time = time + 0.0015;
-	    		if (time > tResult.getMaxTime())
+	    		if (time > t.getMaxTime())
 	    			timer.cancel();
 	    	}
 	    };

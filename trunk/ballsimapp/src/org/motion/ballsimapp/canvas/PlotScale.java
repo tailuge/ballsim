@@ -2,9 +2,10 @@ package org.motion.ballsimapp.canvas;
 
 import java.util.Collection;
 
-import org.motion.ballsimapp.logic.Ball;
-import org.motion.ballsimapp.logic.Cushion;
-import org.motion.ballsimapp.logic.Event;
+import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.Cushion;
+import org.motion.ballsim.physics.Event;
+
 
 
 public class PlotScale {
@@ -98,4 +99,5 @@ public class PlotScale {
  	{
  		return (int)((y-miny)*scale) ;
  	}
+ 	
 }

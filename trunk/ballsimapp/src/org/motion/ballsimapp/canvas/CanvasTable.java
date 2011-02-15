@@ -4,6 +4,7 @@ import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
 import com.google.gwt.widgetideas.graphics.client.ImageLoader;
 
+
 public class CanvasTable {
 
 	private GWTCanvas canvas;
@@ -46,4 +47,5 @@ public class CanvasTable {
 		canvas.stroke();
 	    width++;
 	}
+	
 }
