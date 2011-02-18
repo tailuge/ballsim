@@ -1,23 +1,22 @@
 package org.motion.ballsimapp.canvas;
 
+import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.dom.client.ImageElement;
-import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
-import com.google.gwt.widgetideas.graphics.client.ImageLoader;
 
 
 public class CanvasTable {
 
-	private GWTCanvas canvas;
+	private Canvas canvas;
 	
 	ImageElement bg;
 	
 	int width = 20;
-	public CanvasTable(GWTCanvas canvas_)
+	public CanvasTable(Canvas canvas_)
 	{
 		canvas = canvas_;
 		
 	    String[] urls = new String[] {Resources.INSTANCE.logo().getURL()};
-
+/*
 	    ImageLoader.loadImages(urls, new ImageLoader.CallBack()
 	    {
 	          public void onImagesLoaded(ImageElement[] imageElements)
@@ -25,8 +24,9 @@ public class CanvasTable {
 	              bg = imageElements[0];
 	          }
 	    });	
+	    */
 	}
-	
+/*	
 	public void renderLoop(PlotScale scale)
 	{
 		if (width>600)
@@ -47,5 +47,5 @@ public class CanvasTable {
 		canvas.stroke();
 	    width++;
 	}
-	
+	*/
 }
