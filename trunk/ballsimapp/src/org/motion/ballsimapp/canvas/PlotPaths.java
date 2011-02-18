@@ -1,18 +1,11 @@
 package org.motion.ballsimapp.canvas;
 
-import org.motion.ballsim.physics.Ball;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.physics.Interpolator;
-import org.motion.ballsim.physics.Table;
-
-import com.google.gwt.widgetideas.graphics.client.Color;
-import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
 
 
 
 public class PlotPaths 
 {
-
+/*
 	public static void plot(PlotScale scale, GWTCanvas canvas, Table t)
  	{
 
@@ -44,5 +37,5 @@ public class PlotPaths
 
 		
  	}
-	
+	*/
 }
