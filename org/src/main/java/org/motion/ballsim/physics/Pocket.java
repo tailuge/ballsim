@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsim.util.UtilVector3D;
 
@@ -34,8 +35,8 @@ public class Pocket {
 			if ((next == null) || (eKnuckle.t < next.t))
 			{
 				next = eKnuckle;
-				assert(next.t > e.t);
-				assert(Cushion.onTable(next));
+				Assert.isTrue(next.t > e.t);
+				Assert.isTrue(Cushion.onTable(next));
 			}		
 		}		
 
@@ -100,8 +101,8 @@ public class Pocket {
 			if ((next == null) || (ePot.t < next.t))
 			{
 				next = ePot;
-				assert(next.t > e.t);
-				assert(Cushion.onTable(next));
+				Assert.isTrue(next.t > e.t);
+				Assert.isTrue(Cushion.onTable(next));
 			}		
 		}		
 
