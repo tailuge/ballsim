@@ -40,12 +40,12 @@ public class PlotEvent
 
 	    context.beginPath();
 		context.setLineWidth(1);
-		context.setStrokeStyle(getColour(e.ballId));
+		context.setStrokeStyle(black);
 		context.setFillStyle(getColour(e.ballId));
 		context.arc(x, y, PlotScale.scaled(Ball.R), 0,Math.PI * 2.0, true); 	
 	    context.closePath();
+	    context.stroke();
 	    context.fill();        
-	    
 		plotSpots(e,context);
 
  	}
@@ -69,4 +69,6 @@ public class PlotEvent
 	    context.fill();        
 
 	}
+
+	
 }

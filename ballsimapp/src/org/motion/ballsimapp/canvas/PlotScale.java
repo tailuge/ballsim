@@ -1,5 +1,6 @@
 package org.motion.ballsimapp.canvas;
 
+import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Cushion;
 
 
@@ -35,4 +36,8 @@ public class PlotScale {
 		return (int) (r*scale);
 	}
  	
+	public static Vector3D mouseToWorld(int mouseX, int mouseY)
+	{
+		return new Vector3D((mouseX-w/2)/scale,(mouseY-h/2)/scale,0);
+	}
 }
