@@ -3,16 +3,18 @@ package org.motion.ballsimapp.client;
 
 
 
+import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Table;
-import org.motion.ballsimapp.canvas.PlotCushion;
+import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsimapp.canvas.PlotScale;
 import org.motion.ballsimapp.canvas.PowerInputCanvas;
 import org.motion.ballsimapp.canvas.SpinInputCanvas;
+import org.motion.ballsimapp.canvas.TableCanvas;
 
-import com.google.gwt.canvas.client.Canvas;
-import com.google.gwt.canvas.dom.client.Context2d;
-import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
@@ -24,30 +26,28 @@ import com.google.gwt.user.client.ui.TextBox;
  */
 public class Ballsimapp implements EntryPoint {
 
-	// main table
-	
-	Canvas canvas;
-	Canvas backBuffer;
-	
+
 	// inputs
 	
-	private final SpinInputCanvas spin = new SpinInputCanvas(50,50);
-	private final PowerInputCanvas power = new PowerInputCanvas(400,50);
+	private final SpinInputCanvas spin = new SpinInputCanvas(30,30);
+	private final PowerInputCanvas power = new PowerInputCanvas(200,30);
 
+	// table
+	
+	private final TableCanvas table = new TableCanvas(width,height);
+	
+	final Table t = new Table(true);
 	
 	
 	  //timer refresh rate, in milliseconds
-	  static final int refreshRate = 25;
+	  static final int refreshRate = 30;
 	  
 	  // canvas size, in px
 	  static final int height = 600;
 	  static final int width = 400;
 	  
-	  final CssColor redrawColor = CssColor.make("rgba(255,255,255,0.6)");
-	  final CssColor redColor = CssColor.make("rgba(255,0,0,0.6)");
-	  Context2d context;
-	  Context2d backBufferContext;
-	  	  
+	  private long startTime;
+	  
 	//Timer timer;
 	double time;
 	/**
@@ -56,24 +56,12 @@ public class Ballsimapp implements EntryPoint {
 	public void onModuleLoad() {
 		
 		PlotScale.setWindowInfo(width, height);
-		canvas = Canvas.createIfSupported();
-	    backBuffer = Canvas.createIfSupported();
 	    
-		final Button sendButton = new Button("Save");
+		final Button sendButton = new Button("Replay");
 		final TextBox nameField = new TextBox();
 	       
-	    // initialise the canvases
-	    canvas.setWidth(width + "px");
-	    canvas.setHeight(height + "px");
-	    canvas.setCoordinateSpaceWidth(width);
-	    canvas.setCoordinateSpaceHeight(height);
-	    backBuffer.setCoordinateSpaceWidth(width);
-	    backBuffer.setCoordinateSpaceHeight(height);
-	    RootPanel.get().add(canvas);
-	    context = canvas.getContext2d();
-	    backBufferContext = backBuffer.getContext2d();
-		    
 	    
+	    RootPanel.get().add(table.getInitialisedCanvas());
 	    RootPanel.get().add(spin.getInitialisedCanvas());
 	    RootPanel.get().add(power.getInitialisedCanvas());
 	    
@@ -83,6 +71,25 @@ public class Ballsimapp implements EntryPoint {
 		// We can add style names to widgets
 		sendButton.addStyleName("sendButton");
 
+		// Add a handler to close the DialogBox
+		sendButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				sendButton.setEnabled(true);
+				sendButton.setFocus(true);
+				
+				t.ball(1).setFirstEvent(UtilEvent.hit(Vector3D.ZERO, Vector3D.PLUS_J, 320*power.getPower(), spin.getSpin()));
+				t.ball(2).setFirstEvent(UtilEvent.stationary(new Vector3D(-Ball.R*0.46,+Ball.R*18,0)));
+				t.ball(3).setFirstEvent(UtilEvent.stationary(new Vector3D(Ball.R*8,-Ball.R*3,0)));
+							
+				startTime = System.currentTimeMillis();
+				time = 0;
+				
+				t.generateSequence();
+				
+			}
+		});
+		
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
 		RootPanel.get("nameFieldContainer").add(nameField);
@@ -95,13 +102,12 @@ public class Ballsimapp implements EntryPoint {
 		nameField.selectAll();
 
 	   	
-		final Table t = new Table();
-	//	t.ball(1).setFirstEvent(UtilEvent.stationary(new Vector3D(Ball.R*7,-Ball.R*18,0)));
-	//	t.ball(2).setFirstEvent(UtilEvent.stationary(new Vector3D(-Ball.R*6,-Ball.R*6,0)));
-	//	t.ball(3).setFirstEvent(UtilEvent.stationary(new Vector3D(Ball.R*8,-Ball.R*3,0)));
+		t.ball(1).setFirstEvent(UtilEvent.hit(Vector3D.ZERO, Vector3D.PLUS_J, 250, 0.5));
+		t.ball(2).setFirstEvent(UtilEvent.stationary(new Vector3D(-Ball.R*0.46,+Ball.R*18,0)));
+		t.ball(3).setFirstEvent(UtilEvent.stationary(new Vector3D(Ball.R*8,-Ball.R*3,0)));
 					
 		
-	//	t.generateSequence();
+		t.generateSequence();
 		
 		//final PlotScale ps = new PlotScale(t.getAllEvents());
 		//ps.setWindowInfo(300, 600);
@@ -109,12 +115,14 @@ public class Ballsimapp implements EntryPoint {
 		nameField.setText("tmax:");
 
 		time = 0;
+		startTime = System.currentTimeMillis();
 		
 	    // setup timer
 	    final Timer timer = new Timer() {
 	      @Override
 	      public void run() {
-	        doUpdate();
+	        table.plotAtTime(t, time);
+	        time += (System.currentTimeMillis() - startTime) / 1000000.0;
 	      }
 	    };
 	    timer.scheduleRepeating(refreshRate);
@@ -124,25 +132,6 @@ public class Ballsimapp implements EntryPoint {
 	void doUpdate() 
 	  {
 
-		  moveBackBufferToFront(backBufferContext,context);
-		    // update the back canvas
-		    backBufferContext.setFillStyle(redrawColor);
-		    backBufferContext.fillRect(0, 0, width, height);
-		    PlotCushion.plot(backBufferContext);	
-		    drawItem(backBufferContext);
 	  }
 	  
-  public void moveBackBufferToFront(Context2d back, Context2d front) 
-  {
-	    
-	  front.drawImage(back.getCanvas(), 0, 0);
-  }
-  public void drawItem(Context2d context) {
-	    context.setFillStyle(redColor);
-	    context.beginPath();
-	    context.arc(0, 0, 10, 0, Math.PI * 2.0, true);
-	    context.closePath();
-	    context.fill();
-	    
-	  }
 }
