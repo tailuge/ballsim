@@ -4,7 +4,7 @@
 = Introduction =
 
 Library to statically compute outcomes on a billiard table without iteration.
-For screenshots see [Firstlight].
+For screenshots see [Firstlight]. For demo see http://ballsimapp.appspot.com
 
 [http://ballsim.googlecode.com/files/masse.png]
 
