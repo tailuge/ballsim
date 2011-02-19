@@ -17,7 +17,7 @@ public class PlotScale {
 		
 		// scale to fit table in y dimension
 		
-		scale = (double)h/Cushion.yp*0.3*1.3;
+		scale = (double)h/Cushion.yp*0.3*1.35;
 	}
 
 	public static int screenX(double x)

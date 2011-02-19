@@ -35,9 +35,9 @@ public class PlotCushion
 	private static void plotCushions(Context2d context)
 	{
         context.beginPath();
-		context.setLineWidth(1);
 		context.setStrokeStyle(knuckleColour);
 		context.setFillStyle(knuckleColour);
+		context.setLineWidth(0.25);
 		
 		scaledLine(context,Cushion.xn-Ball.R, Pocket.p4k1.getY(), Cushion.xn-Ball.R, Pocket.p6k1.getY()); 	
 		scaledLine(context,Cushion.xn-Ball.R, Pocket.p6k2.getY(), Cushion.xn-Ball.R, Pocket.p1k1.getY()); 	
@@ -49,9 +49,9 @@ public class PlotCushion
 		scaledLine(context,Pocket.p4k2.getX(),Cushion.yp+Ball.R, Pocket.p3k2.getX(), Cushion.yp+Ball.R); 	
 
 		context.closePath();
-	    context.fill();        
-		
+	    //context.fill();        	
 	}
+	
 	private static void scaledLine(Context2d context, double x, double y, double x2, double y2)
 	{
 		context.moveTo(PlotScale.screenX(x), PlotScale.screenY(y));

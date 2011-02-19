@@ -28,7 +28,7 @@ public class SpinInputCanvas {
 	
 	public double getSpin()
 	{
-		return spinY+spinX*0.1;
+		return -spinY*2+spinX*0.001;
 	}
 	
 	public SpinInputCanvas(int width_, int height_)
