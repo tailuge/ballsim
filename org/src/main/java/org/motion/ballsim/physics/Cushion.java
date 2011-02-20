@@ -75,6 +75,7 @@ public class Cushion
 	{
 		Event reflected = new Event(e);
 		reflected.vel = UtilVector3D.reflectAlongAxis(e.vel, axis);
+		reflected.angularVel = e.angularVel.scalarMultiply(0.3); // until done
 		reflected.state = State.deriveStateOf(reflected);
 		reflected.type = EventType.Cushion;
 		

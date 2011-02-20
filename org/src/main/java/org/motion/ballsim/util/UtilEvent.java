@@ -8,6 +8,7 @@ import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.EventType;
 import org.motion.ballsim.physics.State;
+import org.motion.ballsim.physics.Table;
 
 public class UtilEvent 
 {
@@ -21,7 +22,7 @@ public class UtilEvent
 				dir.scalarMultiply(speed),
 				Vector3D.PLUS_K,
 				Vector3D.PLUS_J,
-				UtilVector3D.crossUp(dir.scalarMultiply(speed/Ball.R)).scalarMultiply(cueHeight),
+				UtilVector3D.crossUp(dir.scalarMultiply(speed/Ball.R)).scalarMultiply(cueHeight*Table.maxAngVel),
 				zero,
 				State.Sliding,
 				0,

@@ -17,7 +17,7 @@ public class SlidingMotion
 	public static Vector3D acceleration(Event e) {
 		try 
 		{
-			return getChangeToNr(e).normalize().scalarMultiply(-Ball.accelSlide);
+			return getChangeToNr(e).normalize().scalarMultiply(-Table.accelSlide);
 		} 
 		catch (ArithmeticException ae) 
 		{
@@ -55,7 +55,7 @@ public class SlidingMotion
 	
 	private static double timeToNaturalRollEquilibrium(Event e) 
 	{
-		return getChangeToNr(e).getNorm() / -Ball.accelSlide;
+		return getChangeToNr(e).getNorm() / -Table.accelSlide;
 	}
 	
 	
