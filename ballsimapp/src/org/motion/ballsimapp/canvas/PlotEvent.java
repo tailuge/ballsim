@@ -7,6 +7,7 @@ import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.BallSpot;
 import org.motion.ballsim.physics.Event;
+import org.motion.ballsim.physics.State;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
@@ -48,7 +49,24 @@ public class PlotEvent
 	    context.fill();        
 		plotSpots(e,context);
 
+		plotDebug(e,context);
  	}
+	
+	private static void plotDebug(Event e, Context2d context)
+	{
+	    double x = PlotScale.screenX(e.pos.getX());
+	    double y = PlotScale.screenY(e.pos.getY());
+
+	    context.beginPath();
+	    String s = ""+e.vel.getNorm();
+	    context.setStrokeStyle(black);
+        context.strokeText("speed:"+(s+"      ").substring(0, 5), x+10, y);
+	    if (e.state == State.Sliding)
+	    	context.setStrokeStyle(CssColor.make("rgba(255,0,0,1)"));
+        context.strokeText(""+e.state, x+10, y+11);
+	    context.closePath();
+		
+	}
 	
 	private static void plotSpots(Event e, Context2d context)
 	{

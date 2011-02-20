@@ -20,6 +20,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextBox;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -50,6 +51,14 @@ public class Ballsimapp implements EntryPoint {
 	  
 	//Timer timer;
 	double time;
+	double maxt;
+
+	final TextBox maxVel = new TextBox();
+	final TextBox accelRoll = new TextBox();
+	final TextBox accelSlide = new TextBox();
+	final TextBox maxAngVel = new TextBox();
+	final TextBox timeText = new TextBox();
+
 	/**
 	 * This is the entry point method.
 	 */
@@ -57,7 +66,8 @@ public class Ballsimapp implements EntryPoint {
 		
 		PlotScale.setWindowInfo(width, height);
 	    
-		final Button sendButton = new Button("Replay");
+		final Button sendButton = new Button("Hit");
+		sendButton.setEnabled(false);
 	       
 	    
 	    RootPanel.get("tableContainer").add(table.getInitialisedCanvas());
@@ -66,40 +76,32 @@ public class Ballsimapp implements EntryPoint {
 		RootPanel.get("hitContainer").add(sendButton);    
 		
 
-		// Add a handler to close the DialogBox
-		sendButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				
-				sendButton.setEnabled(true);
-				sendButton.setFocus(true);
-				
-				Event cueBall = Interpolator.interpolate(t.ball(1), time);
-				
-				t.ball(1).setFirstEvent(UtilEvent.hit(cueBall.pos, table.getAim(), 320*power.getPower(), spin.getSpin()));
-				t.ball(2).setFirstEvent(UtilEvent.stationary(new Vector3D(-Ball.R*0.46,+Ball.R*18,0)));
-				t.ball(3).setFirstEvent(UtilEvent.stationary(new Vector3D(Ball.R*8,-Ball.R*3,0)));
-							
-				t.generateSequence();
+		maxVel.setWidth("4em");
+		accelRoll.setWidth("4em");
+		accelSlide.setWidth("4em");
 
-				startTime = System.currentTimeMillis();
-				time = 0;
-				
-				
-			}
-		});
+		maxVel.setText(""+Table.maxVel);
+		RootPanel.get("maxVel").add(maxVel);
+
+		accelRoll.setText(""+Table.accelRoll);
+		RootPanel.get("accelRoll").add(accelRoll);
+
+		accelSlide.setText(""+Table.accelSlide);
+		RootPanel.get("accelSlide").add(accelSlide);
+
+		maxAngVel.setText(""+Table.maxAngVel);
+		RootPanel.get("maxAngVel").add(maxAngVel);
+
+		timeText.setText(""+time+"/"+maxt);
+		RootPanel.get("time").add(timeText);
 		
-	
-
-	   	
-		t.ball(1).setFirstEvent(UtilEvent.hit(Vector3D.ZERO, Vector3D.PLUS_J, 250, 0.5));
+		t.ball(1).setFirstEvent(UtilEvent.hit(Vector3D.ZERO, Vector3D.PLUS_J, Table.maxVel*0.6, 0.0));
 		t.ball(2).setFirstEvent(UtilEvent.stationary(new Vector3D(-Ball.R*0.46,+Ball.R*18,0)));
 		t.ball(3).setFirstEvent(UtilEvent.stationary(new Vector3D(Ball.R*8,-Ball.R*3,0)));
 					
 		
 		t.generateSequence();
-		
-		//final PlotScale ps = new PlotScale(t.getAllEvents());
-		//ps.setWindowInfo(300, 600);
+		maxt = t.getMaxTime();
 		
 
 		time = 0;
@@ -109,17 +111,56 @@ public class Ballsimapp implements EntryPoint {
 	    final Timer timer = new Timer() {
 	      @Override
 	      public void run() {
-	        table.plotAtTime(t, time);
-	        time += (System.currentTimeMillis() - startTime) / 1000000.0;
+	        time = (System.currentTimeMillis() - startTime) / 1000.0;
+	        double plottime = time > maxt ? maxt : time;
+	        table.plotAtTime(t, plottime);
+			if (time > maxt) 
+				sendButton.setEnabled(true);
+
+			timeText.setText(""+(int)time+"/"+(int)maxt);
 	      }
 	    };
 	    timer.scheduleRepeating(refreshRate);
-	    	    
+	    	
+	    
+		// Add a handler to close the DialogBox
+		sendButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				
+				sendButton.setEnabled(false);
+				sendButton.setFocus(true);
+				timer.cancel();
+				
+				Event cueBall = Interpolator.interpolate(t.ball(1), time);
+				Event b2 = Interpolator.interpolate(t.ball(2), time);
+				Event b3 = Interpolator.interpolate(t.ball(3), time);
+				
+				Table.maxVel = Double.parseDouble(maxVel.getText());
+				Table.maxAngVel = Double.parseDouble(maxAngVel.getText());
+				Table.accelRoll = Double.parseDouble(accelRoll.getText());
+				Table.accelSlide = Double.parseDouble(accelSlide.getText());
+
+				t.ball(1).setFirstEvent(UtilEvent.hit(cueBall.pos, table.getAim(), Table.maxVel*power.getPower(), spin.getSpin()));				
+				t.ball(2).setFirstEvent(UtilEvent.stationary(b2.pos));
+				t.ball(3).setFirstEvent(UtilEvent.stationary(b3.pos));
+				
+				time = 0;
+				startTime = System.currentTimeMillis();
+				
+				
+				t.generateSequence();
+
+				maxt = t.getMaxTime();				
+				time = 0;
+				startTime = System.currentTimeMillis();
+				
+			    timer.scheduleRepeating(refreshRate);
+				
+				
+			}
+		});	    
 	}
 	
-	void doUpdate() 
-	  {
 
-	  }
 	  
 }
