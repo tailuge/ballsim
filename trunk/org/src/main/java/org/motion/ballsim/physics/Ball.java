@@ -10,11 +10,9 @@ public class Ball
 	
 	public static final double R = 1.0;
 	public static final double mg = 10;
-	public static final double accelRoll = -Table.froll * mg;
-	public static final double accelSlide = -Table.fslide * mg;
-	public static final double equilibriumTolerance = 0.0001;
-	public static final double stationaryAngularTolerance = 0.0001;
-	public static final double stationaryTolerance = 0.0001;
+	public static final double equilibriumTolerance = 0.0000001;
+	public static final double stationaryAngularTolerance = 0.0000001;
+	public static final double stationaryTolerance = 0.0000001;
 		
 	private LinkedList<Event> events = new LinkedList<Event>();
 

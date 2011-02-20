@@ -23,7 +23,7 @@ public class RollingMotion
 	{
 		try 
 		{
-			return e.vel.normalize().scalarMultiply(Ball.accelRoll);
+			return e.vel.normalize().scalarMultiply(Table.accelRoll);
 		} 
 		catch (ArithmeticException ae) 
 		{
@@ -61,7 +61,7 @@ public class RollingMotion
 	 */
 	private static double timeToNext(Event e) 
 	{
-		return -e.vel.getNorm() / Ball.accelRoll;
+		return -e.vel.getNorm() / Table.accelRoll;
 	}
 
 	/**

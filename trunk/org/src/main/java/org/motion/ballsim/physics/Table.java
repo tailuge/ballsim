@@ -23,9 +23,11 @@ public class Table
 {
 	private final static Logger logger = new Logger("Table",false);
 	
-	public final static double froll = 10;
-	public final static double fslide = 40;
-	
+	public static double maxVel = 60.0;
+	public static double maxAngVel = 2.0;
+	public static double accelRoll = -0.8;
+	public static double accelSlide = -15.0;
+
 	private Map<Integer,Ball> ballMap = new HashMap<Integer,Ball>();
 
 	public boolean hasPockets;
