@@ -69,8 +69,8 @@ public class PlotCushion
 		context.setStrokeStyle(knuckleColour);
 		context.setFillStyle(knuckleColour);
 		context.arc(x, y, PlotScale.scaled(Ball.R), 0,Math.PI * 2.0, true); 	
+		context.stroke();
 	    context.closePath();
-	    context.fill();        
 	}
 	
 	private static void plotHole(Context2d context, Vector3D pos)
