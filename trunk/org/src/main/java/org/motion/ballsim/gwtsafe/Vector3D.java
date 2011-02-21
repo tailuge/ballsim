@@ -1,5 +1,7 @@
 package org.motion.ballsim.gwtsafe;
 
+import java.io.Serializable;
+
 
 
 
@@ -10,7 +12,7 @@ package org.motion.ballsim.gwtsafe;
  * @since 1.2
  */
 
-public class Vector3D
+public class Vector3D implements Serializable
 {
 
   /** Null vector (coordinates: 0, 0, 0). */
