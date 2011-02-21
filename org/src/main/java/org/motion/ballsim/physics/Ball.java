@@ -1,13 +1,18 @@
 package org.motion.ballsim.physics;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 
 
 
-public class Ball 
+public class Ball implements Serializable
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1823823215921944274L;
 	public static final double R = 1.0;
 	public static final double mg = 10;
 	public static final double equilibriumTolerance = 0.0000001;

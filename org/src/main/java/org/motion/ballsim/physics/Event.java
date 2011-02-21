@@ -1,5 +1,7 @@
 package org.motion.ballsim.physics;
 
+import java.io.Serializable;
+
 import org.motion.ballsim.gwtsafe.Vector3D;
 
 
@@ -19,12 +21,17 @@ import org.motion.ballsim.gwtsafe.Vector3D;
  *         interpolated using simple equations of motion.
  * 
  */
-public class Event {
+public class Event implements Serializable{
 
 
 	/*
 	 * Main characteristics of an event
 	 */
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5080397564947016351L;
 	
 	public Vector3D pos;
 	public Vector3D vel;

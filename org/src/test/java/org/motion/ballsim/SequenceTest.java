@@ -78,7 +78,7 @@ public class SequenceTest {
 	public final void testGenerateSequence() 
 	{
 		Table t = new Table();
-		t.ball(1).setFirstEvent(Utilities.getSliding(UtilVector3D.rnd().scalarMultiply(10),Vector3D.MINUS_I ));
+		t.ball(1).setFirstEvent(Utilities.getSliding(UtilVector3D.rnd().scalarMultiply(Table.maxVel/100),Vector3D.MINUS_I ));
 		assertEquals("Generate 2 events slide->(roll,stationary)",2,t.generateSequence());
 	}
 
