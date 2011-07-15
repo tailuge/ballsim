@@ -8,5 +8,6 @@ public class Assert {
 	{
 		if (!ignore && !test)
 			throw new IllegalArgumentException();
+		
 	}
 }
