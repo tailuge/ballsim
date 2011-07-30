@@ -1,6 +1,6 @@
 package org.oxtail.game.state;
 
-public abstract class AbstractGameState {
+public abstract class AbstractGameState<T> {
 
 	protected final GameEventContext context;
 
@@ -9,4 +9,8 @@ public abstract class AbstractGameState {
 		this.context = context;
 	}
 
+	protected GameEventContext getContext() {
+		return context;
+	}
+	
 }

@@ -20,7 +20,7 @@ public class NewRack extends AbstractNineBallState {
 	 */
 	@Override
 	protected void shotTaken() {
-
+		
 	}
 
 }

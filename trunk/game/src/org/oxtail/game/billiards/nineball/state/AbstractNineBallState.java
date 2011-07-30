@@ -1,5 +1,6 @@
 package org.oxtail.game.billiards.nineball.state;
 
+import org.oxtail.game.billiards.model.BilliardBall;
 import org.oxtail.game.billiards.nineball.model.NineBallTable;
 import org.oxtail.game.state.AbstractGameState;
 import org.oxtail.game.state.GameEventContext;
@@ -42,4 +43,11 @@ public class AbstractNineBallState extends AbstractGameState {
 	protected final boolean isDefiniteFoul() {
 		return false;
 	}
+	
+	protected boolean isNineBallPotted() {
+		// BilliardBall nineBall = 
+		return false;
+	}
+
+	
 }

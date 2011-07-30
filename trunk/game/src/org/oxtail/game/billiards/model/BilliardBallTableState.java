@@ -1,6 +1,6 @@
 package org.oxtail.game.billiards.model;
 
-public enum BillardBallTableState {
+public enum BilliardBallTableState {
 
 	OnTable,OffTable,Potted,InHand;
 }
