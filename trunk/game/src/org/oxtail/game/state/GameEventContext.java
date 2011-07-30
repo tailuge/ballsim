@@ -1,19 +1,12 @@
 package org.oxtail.game.state;
 
-import org.oxtail.game.model.Player;
+import org.oxtail.game.model.Game;
+import org.oxtail.game.model.PlayerMove;
+import org.oxtail.game.model.PlayingSpace;
 
-public class GameEventContext {
+public class GameEventContext<T extends PlayingSpace> {
 
-	private Player inplay;
-
-	public Player getInplay() {
-		return inplay;
-	}
-
-	public void setInplay(Player inplay) {
-		this.inplay = inplay;
-	}
-
-	
+	private PlayerMove<PlayingSpace> inplay;
+	private Game game;
 
 }
