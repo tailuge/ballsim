@@ -1,10 +1,8 @@
 package org.oxtail.game.billiards.model;
 
-/**
- * 
- * @author liam knox
- */
-public enum BilliardBallCategory {
+public interface BilliardBallCategory {
+
+	BilliardBallId getBallCategory();
 	
-	ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE;
+	BilliardsGameCategory getGameCategory();
 }
