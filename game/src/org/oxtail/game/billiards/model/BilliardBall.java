@@ -7,11 +7,12 @@ public class BilliardBall {
 
 	private final BilliardBallCategory category;
 	private int cushionCollisions;
-	private BillardBallTableState tableState;
+	private BilliardBallTableState tableState;
 	/**
 	 * struck directly by cue ball 
 	 */
 	private boolean struckByCueBall;
+	private BilliardsPocket pottedIn;
 	
 	public BilliardBall(BilliardBallCategory category) {
 		this.category = category;
@@ -26,11 +27,11 @@ public class BilliardBall {
 		this.cushionCollisions = cushionCollisions;
 	}
 
-	public BillardBallTableState getTableState() {
+	public BilliardBallTableState getTableState() {
 		return tableState;
 	}
 
-	public void setTableState(BillardBallTableState tableState) {
+	public void setTableState(BilliardBallTableState tableState) {
 		this.tableState = tableState;
 	}
 
@@ -46,7 +47,7 @@ public class BilliardBall {
 	}
 
 	public final void rack() {
-		tableState = BillardBallTableState.OnTable;
+		tableState = BilliardBallTableState.OnTable;
 		cushionCollisions = 0;
 	}
 }
