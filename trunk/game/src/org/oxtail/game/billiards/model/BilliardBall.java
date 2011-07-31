@@ -39,7 +39,7 @@ public class BilliardBall {
 		return category;
 	}
 	
-	public static <T extends BilliardBallCategory> List<BilliardBall> create(T...  categories){
+	public static <T extends BilliardBallCategory> List<BilliardBall> create(Iterable<T>  categories){
 		List<BilliardBall> balls = new ArrayList<BilliardBall>();
 		for(BilliardBallCategory category : categories) 
 			balls.add(new BilliardBall(category));
@@ -50,4 +50,13 @@ public class BilliardBall {
 		tableState = BilliardBallTableState.OnTable;
 		cushionCollisions = 0;
 	}
+	
+	public boolean isPotted() {
+		return tableState == BilliardBallTableState.Potted;
+	}
+
+	public boolean isOnTable() {
+		return tableState == BilliardBallTableState.OnTable;
+	}
+
 }

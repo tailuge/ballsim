@@ -6,7 +6,23 @@ import org.oxtail.game.model.PlayingSpace;
 
 public class GameEventContext<T extends PlayingSpace> {
 
-	private PlayerMove<PlayingSpace> inplay;
-	private Game game;
+	private PlayerMove<T> inplay;
+	private Game<T> game;
+
+	public PlayerMove<T> getInplay() {
+		return inplay;
+	}
+
+	public void setInplay(PlayerMove<T> inplay) {
+		this.inplay = inplay;
+	}
+
+	public Game<T> getGame() {
+		return game;
+	}
+
+	public void setGame(Game<T> game) {
+		this.game = game;
+	}
 
 }
