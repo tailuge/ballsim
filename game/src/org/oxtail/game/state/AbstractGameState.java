@@ -1,15 +1,17 @@
 package org.oxtail.game.state;
 
-public abstract class AbstractGameState<T> {
+import org.oxtail.game.model.PlayingSpace;
 
-	protected final GameEventContext context;
+public abstract class AbstractGameState<T extends PlayingSpace> {
 
-	public AbstractGameState(GameEventContext context) {
+	protected final GameEventContext<T> context;
+
+	public AbstractGameState(GameEventContext<T> context) {
 		super();
 		this.context = context;
 	}
 
-	protected GameEventContext getContext() {
+	protected GameEventContext<T> getContext() {
 		return context;
 	}
 	

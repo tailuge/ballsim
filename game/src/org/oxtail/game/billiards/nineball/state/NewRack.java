@@ -20,7 +20,15 @@ public class NewRack extends AbstractNineBallState {
 	 */
 	@Override
 	protected void shotTaken() {
-		
+		// straight win off the break and no in off
+		if (isStraightWinOffBreak()) {
+			doInPlayPlayerWins();
+		}
+		// TODO other logic for fouls etc...
+	}
+
+	private boolean isStraightWinOffBreak() {
+		return isNineBallPotted() && isCueBallOnTable();
 	}
 
 }
