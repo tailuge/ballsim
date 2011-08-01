@@ -63,6 +63,10 @@ public class AbstractNineBallState extends
 		return getTable().isAnyBallPotted();
 	}
 
+	protected final boolean isNextBallHitFirst() {
+		return getTable().isNextBallHitFirst();
+	}
+
 	private NineBallTable getTable() {
 		return getGame().getCurrentPlayingSpace();
 	}

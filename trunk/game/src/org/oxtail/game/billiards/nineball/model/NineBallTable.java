@@ -55,5 +55,9 @@ public final class NineBallTable extends BilliardsTable {
 	public boolean isCueBallPotted() {
 		return cueBall.isPotted();
 	}
+	
+	public boolean isNextBallHitFirst() {
+		return getNextBallToHit().isStruckByCueBall();
+	}
 
 }
