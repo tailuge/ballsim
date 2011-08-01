@@ -55,13 +55,24 @@ public abstract class BilliardsTable extends PlayingSpace {
 	public boolean isBallsLeftOnTable() {
 		return !getBallsLeftOnTable().isEmpty();
 	}
-	
+
+	public boolean isAnyBallPotted() {
+		for (BilliardBall ball : balls) {
+			if (ball.isPotted())
+				return true;
+		}
+		return false;
+	}
+
 	public BilliardBall getBall(BilliardBallCategory category) {
-		for(BilliardBall ball : balls) {
-			if(ball.getCategory().getGameCategory() == category.getGameCategory()
-					&& ball.getCategory().getBallCategory() == category.getBallCategory())
+		for (BilliardBall ball : balls) {
+			if (ball.getCategory().getGameCategory() == category
+					.getGameCategory()
+					&& ball.getCategory().getBallCategory() == category
+							.getBallCategory())
 				return ball;
 		}
-		throw new IllegalArgumentException("no ball found for "+category);
+		throw new IllegalArgumentException("no ball found for " + category);
 	}
+
 }

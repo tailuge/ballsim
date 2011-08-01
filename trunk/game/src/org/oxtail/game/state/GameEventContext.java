@@ -4,10 +4,10 @@ import org.oxtail.game.model.Game;
 import org.oxtail.game.model.PlayerMove;
 import org.oxtail.game.model.PlayingSpace;
 
-public class GameEventContext<T extends PlayingSpace> {
+public class GameEventContext<T extends PlayingSpace, S extends Game<T>> {
 
 	private PlayerMove<T> inplay;
-	private Game<T> game;
+	private S game;
 
 	public PlayerMove<T> getInplay() {
 		return inplay;
@@ -17,11 +17,11 @@ public class GameEventContext<T extends PlayingSpace> {
 		this.inplay = inplay;
 	}
 
-	public Game<T> getGame() {
+	public S getGame() {
 		return game;
 	}
 
-	public void setGame(Game<T> game) {
+	public void setGame(S game) {
 		this.game = game;
 	}
 

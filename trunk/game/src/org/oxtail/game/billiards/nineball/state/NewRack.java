@@ -1,5 +1,6 @@
 package org.oxtail.game.billiards.nineball.state;
 
+import org.oxtail.game.billiards.nineball.model.NineBallGame;
 import org.oxtail.game.billiards.nineball.model.NineBallTable;
 import org.oxtail.game.state.GameEventContext;
 
@@ -10,7 +11,7 @@ import org.oxtail.game.state.GameEventContext;
  */
 public class NewRack extends AbstractNineBallState {
 
-	public NewRack(GameEventContext<NineBallTable> context) {
+	public NewRack(GameEventContext<NineBallTable,NineBallGame> context) {
 		super(context);
 	}
 
@@ -20,20 +21,20 @@ public class NewRack extends AbstractNineBallState {
 	 */
 	@Override
 	protected void shotTaken() {
-		// straight win off the break and no in off
-		if (isStraightWinOffBreak()) {
+		if (isStraightWinOffBreak())
 			doInPlayPlayerWins();
-		}
-		else if (isFoul()) {
-			
-		}
-		// TODO other logic for fouls etc...
+		else if (isFoul())
+			doFoul();
+		else if (isAnyBallPotted())
+			doContinueBreak();
+		else
+			doPlayerTurnChange();
 	}
 
 	private boolean isFoul() {
 		return isCueBallPotted();
 	}
-	
+
 	private boolean isStraightWinOffBreak() {
 		return isNineBallPotted() && isCueBallOnTable();
 	}
