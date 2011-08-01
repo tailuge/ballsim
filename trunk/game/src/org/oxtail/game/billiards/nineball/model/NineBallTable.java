@@ -8,6 +8,10 @@ import org.oxtail.game.billiards.model.BilliardBall;
 import org.oxtail.game.billiards.model.BilliardsGameCategory;
 import org.oxtail.game.billiards.model.BilliardsTable;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
 public final class NineBallTable extends BilliardsTable {
 
 	private static final Comparator<BilliardBall> ValueComparator = new Comparator<BilliardBall>() {
@@ -56,5 +60,22 @@ public final class NineBallTable extends BilliardsTable {
 		return cueBall.isPotted();
 	}
 	
+	public BilliardBall getBallStruckByCueBall() {
+		List<BilliardBall> struck = Lists.newArrayList(Iterables.filter(
+				getBallsLeftOnTable(), StruckByCueBallFilter));
+		
+		if (struck.size() != 1)
+			throw new IllegalStateException("No ball struck by cue ball");
 
+		return struck.get(0);		
+	}
+
+	private static final Predicate<BilliardBall> StruckByCueBallFilter = new Predicate<BilliardBall>() {
+
+		@Override
+		public boolean apply(BilliardBall ball) {
+			return ball.isStruckByCueBall();
+		}
+
+	};
 }
