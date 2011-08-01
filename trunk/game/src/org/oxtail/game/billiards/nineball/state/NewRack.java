@@ -24,9 +24,16 @@ public class NewRack extends AbstractNineBallState {
 		if (isStraightWinOffBreak()) {
 			doInPlayPlayerWins();
 		}
+		else if (isFoul()) {
+			
+		}
 		// TODO other logic for fouls etc...
 	}
 
+	private boolean isFoul() {
+		return isCueBallPotted();
+	}
+	
 	private boolean isStraightWinOffBreak() {
 		return isNineBallPotted() && isCueBallOnTable();
 	}

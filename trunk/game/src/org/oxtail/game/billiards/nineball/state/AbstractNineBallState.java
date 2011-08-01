@@ -1,6 +1,5 @@
 package org.oxtail.game.billiards.nineball.state;
 
-import org.oxtail.game.billiards.model.BilliardBall;
 import org.oxtail.game.billiards.nineball.model.NineBallTable;
 import org.oxtail.game.model.Game;
 import org.oxtail.game.state.AbstractGameState;
@@ -54,6 +53,11 @@ public class AbstractNineBallState extends AbstractGameState<NineBallTable> {
 		return getTable().isCueBallOnTable();
 	}
 
+	protected boolean isCueBallPotted() {
+		return getTable().isCueBallPotted();
+	}
+
+	
 	private NineBallTable getTable() {
 		return getGame().getCurrentPlayingSpace();
 	}
