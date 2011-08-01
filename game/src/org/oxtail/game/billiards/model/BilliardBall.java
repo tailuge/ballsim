@@ -27,6 +27,10 @@ public class BilliardBall {
 		this.cushionCollisions = cushionCollisions;
 	}
 
+	public void setStruckByCueBall() {
+		this.struckByCueBall = true;
+	}
+
 	public BilliardBallTableState getTableState() {
 		return tableState;
 	}
@@ -59,4 +63,7 @@ public class BilliardBall {
 		return tableState == BilliardBallTableState.OnTable;
 	}
 
+	public boolean isStruckByCueBall() {
+		return struckByCueBall;
+	}
 }

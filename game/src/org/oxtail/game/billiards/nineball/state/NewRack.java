@@ -32,11 +32,11 @@ public class NewRack extends AbstractNineBallState {
 	}
 
 	private boolean isFoul() {
-		return isCueBallPotted();
+		return isCueBallPotted() || !isNextBallHitFirst();
 	}
 
 	private boolean isStraightWinOffBreak() {
-		return isNineBallPotted() && isCueBallOnTable();
+		return isNineBallPotted() && isCueBallOnTable() && isNextBallHitFirst();
 	}
 
 }
