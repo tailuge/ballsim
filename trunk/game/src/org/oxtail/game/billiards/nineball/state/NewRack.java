@@ -1,7 +1,9 @@
 package org.oxtail.game.billiards.nineball.state;
 
 import org.oxtail.game.billiards.nineball.model.NineBallGame;
+import org.oxtail.game.billiards.nineball.model.NineBallMoveEvaluator;
 import org.oxtail.game.billiards.nineball.model.NineBallTable;
+import org.oxtail.game.model.PlayerMove;
 import org.oxtail.game.state.GameEventContext;
 
 /**
@@ -32,11 +34,13 @@ public class NewRack extends AbstractNineBallState {
 	}
 
 	private boolean isFoul() {
-		return isCueBallPotted() || !isNextBallHitFirst();
+		NineBallMoveEvaluator move = new NineBallMoveEvaluator(context.getInplay());		
+		return isCueBallPotted() || !move.isBallHitValid();
 	}
 
 	private boolean isStraightWinOffBreak() {
-		return isNineBallPotted() && isCueBallOnTable() && isNextBallHitFirst();
+		NineBallMoveEvaluator move = new NineBallMoveEvaluator(context.getInplay());		
+		return isNineBallPotted() && isCueBallOnTable() && move.isBallHitValid();
 	}
 
 }
