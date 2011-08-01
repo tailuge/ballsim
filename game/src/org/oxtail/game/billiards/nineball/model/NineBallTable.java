@@ -5,16 +5,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.oxtail.game.billiards.model.BilliardBall;
-import org.oxtail.game.billiards.model.BilliardBallCategory;
-import org.oxtail.game.billiards.model.BilliardBallId;
 import org.oxtail.game.billiards.model.BilliardsGameCategory;
 import org.oxtail.game.billiards.model.BilliardsTable;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-
-public class NineBallTable extends BilliardsTable {
+public final class NineBallTable extends BilliardsTable {
 
 	private static final Comparator<BilliardBall> ValueComparator = new Comparator<BilliardBall>() {
 		@Override
@@ -56,6 +50,10 @@ public class NineBallTable extends BilliardsTable {
 
 	public boolean isCueBallOnTable() {
 		return cueBall.isOnTable();
+	}
+
+	public boolean isCueBallPotted() {
+		return cueBall.isPotted();
 	}
 
 }
