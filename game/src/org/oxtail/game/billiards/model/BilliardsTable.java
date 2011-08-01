@@ -75,7 +75,5 @@ public abstract class BilliardsTable extends PlayingSpace {
 		throw new IllegalArgumentException("no ball found for " + category);
 	}
 
-	public BilliardBall getBallStruckByCueBall() {
-		return null;
-	}
+
 }

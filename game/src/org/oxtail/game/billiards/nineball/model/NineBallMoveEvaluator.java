@@ -1,7 +1,6 @@
 package org.oxtail.game.billiards.nineball.model;
 
 import org.oxtail.game.billiards.model.BilliardBall;
-import org.oxtail.game.billiards.model.BilliardsTable;
 import org.oxtail.game.model.PlayerMove;
 
 public class NineBallMoveEvaluator {
@@ -16,7 +15,7 @@ public class NineBallMoveEvaluator {
 	public boolean isBallHitValid()
 	{
 		BilliardBall target = playerMove.getBeforeMoveState().getNextBallToHit();
-		BilliardBall struckByCueBall = playerMove.getBeforeMoveState().getBallStruckByCueBall();
+		BilliardBall struckByCueBall = playerMove.getAfterMoveState().getBallStruckByCueBall();
 		
 		return (target.getCategory().getBallCategory() == struckByCueBall.getCategory().getBallCategory());
 	}
