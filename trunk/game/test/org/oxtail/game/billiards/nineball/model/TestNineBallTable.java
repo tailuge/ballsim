@@ -4,9 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.oxtail.game.billiards.model.BilliardBall;
 import org.oxtail.game.billiards.model.BilliardBallId;
+import org.oxtail.game.billiards.model.BilliardBallTableState;
 import org.oxtail.game.billiards.model.BilliardsGameCategory;
 import org.oxtail.game.billiards.nineball.model.NineBallTable;
 
@@ -56,8 +58,28 @@ public class TestNineBallTable {
 				.getBallCategory(), BilliardBallId.ONE);
 	}
 
+	@Ignore
+	public void testGetNextBallToHitNone() {
+		
+		clearTable();
+		
+		// what is expected here? for several of the queries 
+		// there should be a BallNotFound named exception.
+		
+		BilliardBall ball = table.getNextBallToHit();
+		
+	}
+
+	private void clearTable() {
+		for (BilliardBall ball : table.getBallsLeftOnTable()) {
+			ball.setTableState(BilliardBallTableState.OffTable);
+		}		
+	}
+	
 	@Test (expected=IllegalStateException.class)
 	public void testGetBallStruckByCueBall() {
 		table.getBallStruckByCueBall();
 	}
+	
+	
 }
