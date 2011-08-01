@@ -1,7 +1,7 @@
 package org.oxtail.game.billiards.nineball.state;
 
+import org.oxtail.game.billiards.nineball.model.NineBallGame;
 import org.oxtail.game.billiards.nineball.model.NineBallTable;
-import org.oxtail.game.model.Game;
 import org.oxtail.game.state.AbstractGameState;
 import org.oxtail.game.state.GameEventContext;
 
@@ -10,9 +10,11 @@ import org.oxtail.game.state.GameEventContext;
  * 
  * @author liam knox
  */
-public class AbstractNineBallState extends AbstractGameState<NineBallTable> {
+public class AbstractNineBallState extends
+		AbstractGameState<NineBallTable, NineBallGame> {
 
-	public AbstractNineBallState(GameEventContext<NineBallTable> context) {
+	public AbstractNineBallState(
+			GameEventContext<NineBallTable, NineBallGame> context) {
 		super(context);
 	}
 
@@ -53,23 +55,52 @@ public class AbstractNineBallState extends AbstractGameState<NineBallTable> {
 		return getTable().isCueBallOnTable();
 	}
 
-	protected boolean isCueBallPotted() {
+	protected final boolean isCueBallPotted() {
 		return getTable().isCueBallPotted();
 	}
 
-	
+	protected final boolean isAnyBallPotted() {
+		return getTable().isAnyBallPotted();
+	}
+
 	private NineBallTable getTable() {
 		return getGame().getCurrentPlayingSpace();
 	}
 
-	protected Game<NineBallTable> getGame() {
+	protected final NineBallGame getGame() {
 		return getContext().getGame();
+	}
+
+	private void setState(AbstractNineBallState state) {
+		getGame().setStateId(state.getStateId());
 	}
 
 	/**
 	 * Player in play wins
 	 */
 	protected final void doInPlayPlayerWins() {
-		getGame().setState(new GameOver(getContext()));
+		setState(new GameOver(getContext()));
 	}
+
+	protected final void doFoul() {
+		getGame().turnOver();
+		setState(new Foul(getContext()));
+	}
+
+
+	/**
+	 * continue the break with same player
+	 */
+	protected final void doContinueBreak() {
+		setState(new ShotTaken(getContext()));
+	}
+
+	/**
+	 * change the player in turn and continue
+	 */
+	protected final void doPlayerTurnChange() {
+		getGame().turnOver();
+		setState(new ShotTaken(getContext()));
+	}
+
 }
