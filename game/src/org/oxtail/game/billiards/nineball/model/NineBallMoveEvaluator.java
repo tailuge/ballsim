@@ -1,22 +1,29 @@
 package org.oxtail.game.billiards.nineball.model;
 
-import org.oxtail.game.billiards.model.BilliardBall;
-import org.oxtail.game.model.PlayerMove;
-
+/**
+ * Evaluation of valid nine ball moves
+ * @author luke taylor
+ */
 public class NineBallMoveEvaluator {
 
-	private PlayerMove<NineBallTable> playerMove;
+	/** The table before the move is played */
+	private final NineBallTable table;
 	
-	public NineBallMoveEvaluator(PlayerMove<NineBallTable> playerMove) {
-		this.playerMove = playerMove;
+	/** The move to play */
+	private final NineBallMove move;
+	
+	public NineBallMoveEvaluator(NineBallTable table, NineBallMove move) {
+		this.table = table;
+		this.move = move;
 	}
 
-	
-	public boolean isBallHitValid()
-	{
-		BilliardBall target = playerMove.getBeforeMoveState().getNextBallToHit();
-		BilliardBall struckByCueBall = playerMove.getAfterMoveState().getBallStruckByCueBall();
-		
-		return (target.getCategory().getBallCategory() == struckByCueBall.getCategory().getBallCategory());
+	/**
+	 * We should be valid if the ball expected to be hit is the one hit 
+	 */
+	public boolean isBallHitValid() {
+		if(move.isAnyBallHitByCueBall()) {
+			move.getFirstBallStruckByCueBall().isSame(table.getNextBallToHit());
+		}
+		return false;
 	}
 }

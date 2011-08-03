@@ -13,5 +13,8 @@ public class StateId {
 		this.stateClass = stateClass;
 	}
 
+	public Class<?> getStateClass() {
+		return stateClass;
+	}
 
 }

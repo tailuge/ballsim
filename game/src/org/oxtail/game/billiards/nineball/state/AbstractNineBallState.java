@@ -1,6 +1,8 @@
 package org.oxtail.game.billiards.nineball.state;
 
 import org.oxtail.game.billiards.nineball.model.NineBallGame;
+import org.oxtail.game.billiards.nineball.model.NineBallMove;
+import org.oxtail.game.billiards.nineball.model.NineBallMoveEvaluator;
 import org.oxtail.game.billiards.nineball.model.NineBallTable;
 import org.oxtail.game.state.AbstractGameState;
 import org.oxtail.game.state.GameEventContext;
@@ -11,11 +13,14 @@ import org.oxtail.game.state.GameEventContext;
  * @author liam knox
  */
 public class AbstractNineBallState extends
-		AbstractGameState<NineBallTable, NineBallGame> {
+		AbstractGameState<NineBallGame, NineBallMove,NineBallTable> {
 
+	private NineBallMoveEvaluator evaluator;
+	
 	public AbstractNineBallState(
-			GameEventContext<NineBallTable, NineBallGame> context) {
+			GameEventContext<NineBallGame, NineBallMove,NineBallTable> context) {
 		super(context);
+		evaluator = new NineBallMoveEvaluator(context.getGame().getCurrentPlayingSpace(), context.getMove());
 	}
 
 	/**
@@ -68,7 +73,7 @@ public class AbstractNineBallState extends
 	}
 
 	protected final NineBallGame getGame() {
-		return getContext().getGame();
+		return context.getGame();
 	}
 
 	private void setState(AbstractNineBallState state) {
@@ -79,12 +84,12 @@ public class AbstractNineBallState extends
 	 * Player in play wins
 	 */
 	protected final void doInPlayPlayerWins() {
-		setState(new GameOver(getContext()));
+		setState(new GameOver(context));
 	}
 
 	protected final void doFoul() {
 		getGame().turnOver();
-		setState(new Foul(getContext()));
+		setState(new Foul(context));
 	}
 
 
@@ -92,7 +97,7 @@ public class AbstractNineBallState extends
 	 * continue the break with same player
 	 */
 	protected final void doContinueBreak() {
-		setState(new ShotTaken(getContext()));
+		setState(new ShotTaken(context));
 	}
 
 	/**
@@ -100,7 +105,15 @@ public class AbstractNineBallState extends
 	 */
 	protected final void doPlayerTurnChange() {
 		getGame().turnOver();
-		setState(new ShotTaken(getContext()));
+		setState(new ShotTaken(context));
 	}
 
+	protected NineBallMoveEvaluator getNineBallMoveEvaluator() {
+		return evaluator;
+	}
+
+	@Override
+	protected void afterStateExecution() {
+		getGame().applyMove(context.getMove());
+	}
 }
