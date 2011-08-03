@@ -66,4 +66,12 @@ public class BilliardBall {
 	public boolean isStruckByCueBall() {
 		return struckByCueBall;
 	}
+	
+	public boolean isSame(BilliardBall ball) {
+		return ball.getCategory() == getCategory();
+	}
+
+	public void pot(BilliardsPocket pocket) {
+		
+	}
 }

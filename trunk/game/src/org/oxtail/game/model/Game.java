@@ -3,8 +3,7 @@ package org.oxtail.game.model;
 import java.util.List;
 
 /**
- * Top level Game, A unique instance of a games
- * 
+ * Top level Game, A unique instance of game
  */
 public abstract class Game<T extends PlayingSpace> {
 
@@ -45,6 +44,5 @@ public abstract class Game<T extends PlayingSpace> {
 	public final void setVersion(GameVersion version) {
 		this.version = version;
 	}
-
 	
 }

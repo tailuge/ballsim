@@ -11,8 +11,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 /**
- * Nine Ball specific billiard ball category TODO interface to make this
- * polymorphic to the ball, table etc
+ * Nine Ball specific billiard ball category 
  * 
  * @author liam knox
  */
