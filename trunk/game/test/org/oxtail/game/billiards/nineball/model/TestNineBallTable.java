@@ -1,16 +1,16 @@
 package org.oxtail.game.billiards.nineball.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.oxtail.game.billiards.model.BilliardBall;
-import org.oxtail.game.billiards.model.BilliardBallId;
+import org.oxtail.game.billiards.model.BilliardBallNotFoundException;
 import org.oxtail.game.billiards.model.BilliardBallTableState;
 import org.oxtail.game.billiards.model.BilliardsGameCategory;
-import org.oxtail.game.billiards.nineball.model.NineBallTable;
 
 public class TestNineBallTable {
 
@@ -20,10 +20,6 @@ public class TestNineBallTable {
 	public void setUp() throws Exception {
 		table = new NineBallTable();
 	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
 	
 	@Test
 	public void testNineBallTable() {
@@ -32,18 +28,22 @@ public class TestNineBallTable {
 
 	@Test
 	public void testRack() {
+		clearTable();
+		assertEquals("expect no balls on table", 0, table
+				.getBallsLeftOnTable().size());
 		table.rack();
-		// will this expect 9 or 10 ?
 		assertEquals("expect all balls on table", 9, table
 				.getBallsLeftOnTable().size());
 	}
 
 	@Test
-	public void testBallCategory() {
-		for (BilliardBall ball : table.getBallsLeftOnTable()) {
-			assertEquals("expect nineball category", ball.getCategory()
-					.getGameCategory(), BilliardsGameCategory.NineBall);
-		}
+	public void testGetBall() throws BilliardBallNotFoundException {		
+		assertNotNull("expect a ball", table.getBall(NineBallBallCategory.NINE_BALL));
+	}
+
+	@Test (expected=BilliardBallNotFoundException.class)
+	public void testGetBallNotFound() throws BilliardBallNotFoundException {		
+		table.getBall(NineBallBallCategory.CUE_BALL);
 	}
 
 	@Test
@@ -52,22 +52,33 @@ public class TestNineBallTable {
 	}
 
 	@Test
-	public void testGetNextBallToHit() {
-		BilliardBall ball = table.getNextBallToHit();
-		assertEquals("expect 1 ball is first to hit", ball.getCategory()
-				.getBallCategory(), BilliardBallId.ONE);
+	public void testBallsLeftOnTableCategory() {
+		for (BilliardBall ball : table.getBallsLeftOnTable()) {
+			assertEquals("expect nineball category", ball.getCategory()
+					.getGameCategory(), BilliardsGameCategory.NineBall);
+		}
 	}
 
-	@Ignore
-	public void testGetNextBallToHitNone() {
-		
+	@Test
+	public void testBallsLeftOnTableNotCueBall() throws BilliardBallNotFoundException {	
+		assertTrue("expect a nine ball", 
+				table.getBallsLeftOnTable().contains(table.getBall(NineBallBallCategory.NINE_BALL)));
+		assertFalse("expect no cue ball", 
+				table.getBallsLeftOnTable().contains(table.getCueBall()));
+	}
+
+
+	@Test
+	public void testGetNextBallToHit() throws BilliardBallNotFoundException {
+		assertEquals("expect 1 ball is first to hit", 
+				table.getBall(NineBallBallCategory.ONE_BALL) , 
+				table.getNextBallToHit());
+	}
+
+	@Test (expected=BilliardBallNotFoundException.class)
+	public void testGetNextBallToHitNone() throws BilliardBallNotFoundException {
 		clearTable();
-		
-		// what is expected here? for several of the queries 
-		// there should be a BallNotFound named exception.
-		
-		BilliardBall ball = table.getNextBallToHit();
-		
+		table.getNextBallToHit();
 	}
 
 	private void clearTable() {
@@ -76,10 +87,7 @@ public class TestNineBallTable {
 		}		
 	}
 	
-	@Test (expected=IllegalStateException.class)
-	public void testGetBallStruckByCueBall() {
-		table.getBallStruckByCueBall();
-	}
+
 	
 	
 }

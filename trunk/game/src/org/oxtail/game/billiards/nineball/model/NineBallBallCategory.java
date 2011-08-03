@@ -17,7 +17,7 @@ import com.google.common.collect.Lists;
  */
 public enum NineBallBallCategory implements BilliardBallCategory {
 
-	CUE_BALL(BilliardBallId.ONE), //
+	CUE_BALL(BilliardBallId.CUE), //
 	ONE_BALL(BilliardBallId.ONE), //
 	TWO_BALL(BilliardBallId.TWO), //
 	THREE_BALL(BilliardBallId.THREE), //
