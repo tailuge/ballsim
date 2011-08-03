@@ -19,6 +19,10 @@ public class BilliardBall {
 		rack();
 	}
 
+	public BilliardsPocket getPocket() {
+		return pottedIn;
+	}
+	
 	public int getCushionCollisions() {
 		return cushionCollisions;
 	}
@@ -72,6 +76,6 @@ public class BilliardBall {
 	}
 
 	public void pot(BilliardsPocket pocket) {
-		
+		pottedIn = pocket;
 	}
 }

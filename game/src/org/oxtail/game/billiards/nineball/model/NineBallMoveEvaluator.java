@@ -1,5 +1,7 @@
 package org.oxtail.game.billiards.nineball.model;
 
+import org.oxtail.game.billiards.model.BilliardBallNotFoundException;
+
 /**
  * Evaluation of valid nine ball moves
  * @author luke taylor
@@ -22,7 +24,11 @@ public class NineBallMoveEvaluator {
 	 */
 	public boolean isBallHitValid() {
 		if(move.isAnyBallHitByCueBall()) {
-			move.getFirstBallStruckByCueBall().isSame(table.getNextBallToHit());
+			try {
+				move.getFirstBallStruckByCueBall().isSame(table.getNextBallToHit());
+			} catch (BilliardBallNotFoundException e) {
+				return false;
+			}
 		}
 		return false;
 	}
