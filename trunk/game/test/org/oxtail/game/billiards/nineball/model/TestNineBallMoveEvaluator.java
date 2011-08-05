@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.oxtail.game.billiards.model.BilliardBallNotFoundException;
 import org.oxtail.game.billiards.model.BilliardBallTableState;
 
 public class TestNineBallMoveEvaluator {
@@ -28,8 +27,8 @@ public class TestNineBallMoveEvaluator {
 	}
 
 	@Test
-	public void testIsBallHitValid() throws BilliardBallNotFoundException {
-		move.setFirstBallStruckByCueBall(table.getBall(NineBallBallCategory.ONE_BALL));
+	public void testIsBallHitValid() {
+		move.setFirstBallStruckByCueBall(table.oneBall());
 		assertTrue(evaluator.isBallHitValid());
 	}
 
