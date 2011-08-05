@@ -78,4 +78,14 @@ public class BilliardBall {
 	public void pot(BilliardsPocket pocket) {
 		pottedIn = pocket;
 	}
+
+	@Override
+	public String toString() {
+		return "BilliardBall [category=" + category + ", cushionCollisions="
+				+ cushionCollisions + ", tableState=" + tableState
+				+ ", struckByCueBall=" + struckByCueBall + ", pottedIn="
+				+ pottedIn + "]";
+	}
+
+
 }
