@@ -66,15 +66,9 @@ public abstract class BilliardsTable extends PlayingSpace {
 
 	public BilliardBall getBall(BilliardBallCategory category) throws BilliardBallNotFoundException {
 		for (BilliardBall ball : balls) {
-			if (ball.getCategory().getGameCategory() == category
-					.getGameCategory()
-					&& ball.getCategory().getBallCategory() == category
-							.getBallCategory())
+			if (BilliardBallCategory.EqualsComparator.compare(category, ball.getCategory())==0)
 				return ball;
 		}
 		throw new BilliardBallNotFoundException();
-		//throw new IllegalArgumentException("no ball found for " + category);
 	}
-
-
 }

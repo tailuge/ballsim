@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.oxtail.game.billiards.model.BilliardBallNotFoundException;
 import org.oxtail.game.billiards.model.BilliardBallTableState;
 
 public class TestNineBallMoveEvaluator {

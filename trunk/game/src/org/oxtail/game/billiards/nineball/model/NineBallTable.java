@@ -11,7 +11,7 @@ import org.oxtail.game.billiards.model.BilliardsTable;
 
 public final class NineBallTable extends BilliardsTable {
 
-	private static final Comparator<BilliardBall> ValueComparator = new Comparator<BilliardBall>() {
+	private static final Comparator<BilliardBall> PotOrderComparator = new Comparator<BilliardBall>() {
 		@Override
 		public int compare(BilliardBall o1, BilliardBall o2) {
 			return o1.getTableState().ordinal() - o2.getTableState().ordinal();
@@ -39,23 +39,21 @@ public final class NineBallTable extends BilliardsTable {
 		List<BilliardBall> balls = getBallsLeftOnTable();
 		if (balls.size() == 0)
 			throw new BilliardBallNotFoundException();
-		
-		Collections.sort(balls, ValueComparator);
+
+		Collections.sort(balls, PotOrderComparator);
 		return balls.get(0);
 	}
 
-	public BilliardBall getCueBall()
-	{
+	public BilliardBall cueBall() {
 		return cueBall;
 	}
-	
-	protected BilliardBall nineBall() {
-		
-		try {
-			return getBall(NineBallBallCategory.NINE_BALL);
-		} catch (BilliardBallNotFoundException e) {
-			throw new IllegalArgumentException("no nine ball found.");
-		}
+
+	public BilliardBall oneBall() {
+		return getBall(NineBallBallCategory.ONE_BALL);
+	}
+
+	public BilliardBall nineBall() {
+		return getBall(NineBallBallCategory.NINE_BALL);
 	}
 
 	public boolean isNineBallPotted() {
