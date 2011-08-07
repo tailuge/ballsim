@@ -6,6 +6,7 @@ package org.oxtail.game.model;
  */
 public class Player {
 
+	
 	private String alias;
 
 	public String getAlias() {
@@ -15,6 +16,8 @@ public class Player {
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
+	
+	
 	
 	
 	
