@@ -15,13 +15,17 @@ public class PlayerPendingLogin extends PlayerState {
 	/**
 	 * invoked to login into the game system
 	 */
-	public void actionLogin() {
+	@Action
+	public void login() {
+		// player().pendingGame();
 	}
 
 	/**
 	 * invoked to register the player with the system
 	 */
-	public void actionRegister() {
+	@Action
+	public void register() {
+		// TODO we will look at registration etc. later
 	}
 
 	@Override
