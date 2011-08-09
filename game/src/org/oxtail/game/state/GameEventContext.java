@@ -2,10 +2,11 @@ package org.oxtail.game.state;
 
 import org.oxtail.game.model.Game;
 import org.oxtail.game.model.Move;
+import org.oxtail.game.model.Player;
 import org.oxtail.game.model.PlayingSpace;
 
 /**
- * Binds the core components of the Game and current Move for access via the
+ * Binds the core components of the Game and current Move and Player for access via the
  * Statemachine
  * @author liam knox
  */
@@ -13,6 +14,8 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 
 	private G game;
 	private M move;
+	private Player inPlay;
+	private Player agaist;
 
 	public G getGame() {
 		return game;
@@ -30,4 +33,5 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 		this.move = move;
 	}
 
+	
 }
