@@ -1,7 +1,9 @@
 package org.oxtail.game.billiards.nineball.model;
 
+import org.oxtail.game.billiards.nineball.state.NewRack;
 import org.oxtail.game.model.Game;
 import org.oxtail.game.model.Player;
+import org.oxtail.game.model.StateId;
 
 public class NineBallGame extends Game<NineBallTable> {
 
@@ -31,5 +33,10 @@ public class NineBallGame extends Game<NineBallTable> {
 	 */
 	public void applyMove(NineBallMove move) {
 		// TODO
+	}
+
+	@Override
+	protected StateId getInitialState() {
+		return new StateId(NewRack.class);
 	}
 }
