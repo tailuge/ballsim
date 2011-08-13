@@ -45,4 +45,5 @@ public abstract class Game<T extends PlayingSpace> {
 		this.version = version;
 	}
 	
+	protected abstract StateId getInitialState();
 }

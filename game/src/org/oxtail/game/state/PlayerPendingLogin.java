@@ -17,7 +17,8 @@ public class PlayerPendingLogin extends PlayerState {
 	 */
 	@Action
 	public void login() {
-		// player().pendingGame();
+		player().notifySelfPendingGame();
+		others().notifyOfPlayerPendingGame(player());
 	}
 
 	/**

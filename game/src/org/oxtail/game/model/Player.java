@@ -1,11 +1,14 @@
 package org.oxtail.game.model;
 
+import org.oxtail.game.event.EventCallback;
+import org.oxtail.game.event.GameEvent;
+
 /**
  * An entity that participates in a Game
  * 
  * @author liam knox
  */
-public class Player {
+public class Player implements EventCallback {
 
 	private String alias;
 
@@ -25,6 +28,10 @@ public class Player {
 
 	public void setStateId(StateId stateId) {
 		this.stateId = stateId;
+	}
+
+	@Override
+	public void notify(GameEvent event) {
 	}
 
 }

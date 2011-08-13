@@ -1,9 +1,14 @@
 package org.oxtail.game.state;
 
+import java.util.List;
+
 import org.oxtail.game.model.Game;
 import org.oxtail.game.model.Move;
+import org.oxtail.game.model.Player;
 import org.oxtail.game.model.PlayingSpace;
 import org.oxtail.game.model.StateId;
+
+import com.google.common.collect.Lists;
 
 public abstract class AbstractGameState<G extends Game<S>, M extends Move, S extends PlayingSpace> {
 
@@ -19,4 +24,20 @@ public abstract class AbstractGameState<G extends Game<S>, M extends Move, S ext
 
 	/** Called by the statemachine after the state execution is performed */
 	protected abstract void afterStateExecution();
+
+	protected PlayerProxy player() {
+		return new PlayerProxy(context.getInPlay());
+	}
+
+	private List<PlayerProxy> toProxies(Iterable<Player> players) {
+		List<PlayerProxy> proxies = Lists.newArrayList();
+		for (Player p : players)
+			proxies.add(new PlayerProxy(p));
+		return proxies;
+	}
+
+	protected PlayersProxy others() {
+		return new PlayersProxy(toProxies(context.getOthers()));
+	}
+
 }

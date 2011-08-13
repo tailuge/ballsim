@@ -19,6 +19,7 @@ public class PlayerPendingGame extends PlayerState {
 	public void challenge() {
 		// player().pendingAccept();
 		// challenger().challenged();
+		
 		// others().playersUnavailable(player(),challenger());
 	}
 	
@@ -29,8 +30,10 @@ public class PlayerPendingGame extends PlayerState {
 	public void accept() {
 		// create Game and join it
 		// Game game = createGame();
+		
 		// player().inGame();
 		// challenger().inGame();
+		
 		// TODO what should we do about starting the game, let the game decide who goes first ?
 	}
 	
