@@ -42,6 +42,18 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 		return inPlay;
 	}
 
+	public GameHome getHome() {
+		return home;
+	}
+
+	public void setHome(GameHome home) {
+		this.home = home;
+	}
+
+	public void setInPlay(Player inPlay) {
+		this.inPlay = inPlay;
+	}
+
 	public Iterable<Player> getOthers() {
 		return home.findPlayers(new Predicate<Player>() {
 

@@ -1,5 +1,7 @@
 package org.oxtail.game.event;
 
+import java.util.Map;
+
 /**
  * Communication packet between client and server
  */
@@ -8,6 +10,8 @@ public class GameEvent {
 	private String action;
 	private String eventFrom;
 	private String eventTo;
+	private String gameId;
+	private Map<String,String> move;
 
 	public GameEvent(String action, String eventFrom, String eventTo) {
 		this.action = action;
@@ -47,4 +51,15 @@ public class GameEvent {
 		this.eventTo = eventTo;
 	}
 
+	public String getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(String gameId) {
+		this.gameId = gameId;
+	}
+	
+	public boolean hasGameId() {
+		return gameId != null;
+	}
 }
