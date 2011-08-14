@@ -16,7 +16,7 @@ public abstract class BilliardsTable extends PlayingSpace {
 	private final List<BilliardBall> balls;
 
 	private static final Predicate<BilliardBall> BallsOnTable = new Predicate<BilliardBall>() {
-
+		
 		@Override
 		public boolean apply(BilliardBall ball) {
 			return ball.getTableState() == BilliardBallTableState.OnTable;

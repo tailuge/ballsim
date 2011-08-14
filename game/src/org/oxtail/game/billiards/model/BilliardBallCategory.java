@@ -10,7 +10,6 @@ public interface BilliardBallCategory {
 
 	static Comparator<BilliardBallCategory> EqualsComparator = new Comparator<BilliardBallCategory>() {
 
-		@Override
 		public int compare(BilliardBallCategory o1, BilliardBallCategory o2) {
 			return (100 * (o1.getGameCategory().ordinal() - o1.getGameCategory().ordinal())) + (o1.getBallCategory().ordinal() - o2.getBallCategory().ordinal());
 		}

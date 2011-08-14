@@ -18,6 +18,10 @@ public class StateId {
 		this.id = id;
 	}
 
+	public String getId() {
+		return id;
+	}
+
 	@Override
 	public String toString() {
 		return "StateId [id=" + id + "]";

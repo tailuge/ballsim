@@ -1,17 +1,20 @@
 package org.oxtail.game.event;
 
+import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Communication packet between client and server
  */
-public class GameEvent {
+public class GameEvent implements Serializable {
 
+	
 	private String action;
 	private String eventFrom;
 	private String eventTo;
 	private String gameId;
-	private Map<String,String> move;
+	private List<Attribute> attributes;
 
 	public GameEvent(String action, String eventFrom, String eventTo) {
 		this.action = action;
