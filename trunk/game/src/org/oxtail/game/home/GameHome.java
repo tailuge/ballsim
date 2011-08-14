@@ -15,7 +15,7 @@ public interface GameHome {
 
 	void storePlayer(Player player);
 
-	void findPlayer(String playerAlias);
+	Player findPlayer(String playerAlias);
 
 	Game<? extends PlayingSpace> findGame(String gameId);
 
@@ -23,5 +23,4 @@ public interface GameHome {
 
 	Iterable<Player> findPlayers(Predicate<Player> playerFilter);
 
-	Game<? extends PlayingSpace> newGame();
 }
