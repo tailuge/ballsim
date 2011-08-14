@@ -10,6 +10,11 @@ import org.oxtail.game.model.StateId;
 
 import com.google.common.collect.Lists;
 
+/**
+ * Base state for Games and Players
+ * 
+ * @author liam knox
+ */
 public abstract class AbstractGameState<G extends Game<S>, M extends Move, S extends PlayingSpace> {
 
 	protected final GameEventContext<G, M, S> context;
@@ -22,8 +27,10 @@ public abstract class AbstractGameState<G extends Game<S>, M extends Move, S ext
 		return new StateId(getClass());
 	}
 
-	/** Called by the statemachine after the state execution is performed */
-	protected abstract void afterStateExecution();
+	/** Called by the state machine after the state execution is performed */
+	protected void afterStateExecution() {
+
+	}
 
 	protected PlayerProxy player() {
 		return new PlayerProxy(context.getInPlay());

@@ -52,7 +52,6 @@ public enum NineBallBallCategory implements BilliardBallCategory {
 
 	private static final Predicate<NineBallBallCategory> CueBallFilter = new Predicate<NineBallBallCategory>() {
 
-		@Override
 		public boolean apply(NineBallBallCategory category) {
 			return category != NineBallBallCategory.CUE_BALL;
 		}
