@@ -40,6 +40,16 @@ public class TestReflectStateFactory {
 		}
 	}
 
+	@Test(expected = NoSuchMethodException.class)
+	public void testStateFailsOnConstructorAccess() throws Throwable {
+		try {
+			assertNotNull(factory.createState(new StateId(
+					FailingAccessState.class), null));
+		} catch (OxtailRuntimeException e) {
+			throw e.getCause();
+		}
+	}
+
 	@SuppressWarnings("rawtypes")
 	public static class FailingState extends AbstractGameState {
 
@@ -50,4 +60,16 @@ public class TestReflectStateFactory {
 		}
 
 	}
+
+	@SuppressWarnings("rawtypes")
+	public static class FailingAccessState extends AbstractGameState {
+
+		@SuppressWarnings("unchecked")
+		private FailingAccessState(GameEventContext context) {
+			super(context);
+			throw new IllegalArgumentException();
+		}
+
+	}
+
 }
