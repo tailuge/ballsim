@@ -3,7 +3,7 @@ package org.oxtail.game.state;
 import org.oxtail.game.event.GameEvent;
 import org.oxtail.game.model.StateId;
 
-public abstract class AbstractStatemachine {
+public abstract class AbstractStatemachine implements GameStatemachine {
 
 	public abstract void execute(GameEvent gameEvent);
 
@@ -12,8 +12,9 @@ public abstract class AbstractStatemachine {
 	private StateActionExecutor stateActionExecutor;
 
 	protected void executeForState(StateId stateId, String action,
-			GameEventContext context) {
-		AbstractGameState state = stateFactory.createState(stateId, context);
+			GameEventContext<?,?,?> context) {
+		context.setStatemachine(this);
+		AbstractGameState<?,?,?> state = stateFactory.createState(stateId, context);
 		stateActionExecutor.execute(state, action);
 	}
 }
