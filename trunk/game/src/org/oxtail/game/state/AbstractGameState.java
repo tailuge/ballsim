@@ -32,10 +32,14 @@ public abstract class AbstractGameState<G extends Game<S>, M extends Move, S ext
 
 	}
 
-	protected PlayerProxy player() {
+	protected PlayerProxy inPlay() {
 		return new PlayerProxy(context.getInPlay());
 	}
 
+	protected PlayerProxy notInPlay() {
+		return new PlayerProxy(context.getNotInPlay());
+	}
+	
 	private List<PlayerProxy> toProxies(Iterable<Player> players) {
 		List<PlayerProxy> proxies = Lists.newArrayList();
 		for (Player p : players)
@@ -47,4 +51,15 @@ public abstract class AbstractGameState<G extends Game<S>, M extends Move, S ext
 		return new PlayersProxy(toProxies(context.getOthers()));
 	}
 
+	protected G getGame() {
+		return context.getGame();
+	}
+	
+	protected M getMove() {
+		return context.getMove();
+	}
+
+	protected GameStatemachine getStatemachine() {
+		return context.getStatemachine();
+	}
 }

@@ -19,8 +19,9 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 	private G game;
 	private M move;
 	private Player inPlay;
-	private Player against;
+	private Player notInPlay;
 	private GameHome home;
+	private GameStatemachine statemachine;
 
 	public G getGame() {
 		return game;
@@ -54,13 +55,31 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 		this.inPlay = inPlay;
 	}
 
+	public Player getNotInPlay() {
+		return notInPlay;
+	}
+
+	public void setNotInPlay(Player notInPlay) {
+		this.notInPlay = notInPlay;
+	}
+
 	public Iterable<Player> getOthers() {
 		return home.findPlayers(new Predicate<Player>() {
 
 			@Override
 			public boolean apply(Player p) {
-				return !p.equals(inPlay);
+				return !p.equals(inPlay) && !p.equals(notInPlay);
 			}
 		});
 	}
+
+	protected GameStatemachine getStatemachine() {
+		return statemachine;
+	}
+
+	protected void setStatemachine(GameStatemachine statemachine) {
+		this.statemachine = statemachine;
+	}
+
+
 }

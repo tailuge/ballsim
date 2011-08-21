@@ -1,5 +1,8 @@
 package org.oxtail.game.state;
 
+import org.oxtail.game.event.GameEvent;
+import org.oxtail.game.model.Player;
+
 /**
  * State where the player is waiting to join a Game
  * 
@@ -7,47 +10,33 @@ package org.oxtail.game.state;
  */
 public class PlayerPendingGame extends PlayerState {
 
-	
 	public PlayerPendingGame(GameEventContext context) {
 		super(context);
 	}
-	
+
 	/**
 	 * Challenge another player
 	 */
 	@Action
 	public void challenge() {
-		// player().pendingAccept();
-		// challenger().challenged();
-		
-		// others().playersUnavailable(player(),challenger());
+		inPlay().notifyPendingChallengeAccept();
+		notInPlay().notifyChallengeOffered(inPlay());
+		others().notifyOfUnavalibility(inPlay(), notInPlay());
 	}
-	
+
 	/**
-	 * Challenge another player
+	 * Challenge is accepted so we should start the game
 	 */
 	@Action
-	public void accept() {
-		// create Game and join it
-		// Game game = createGame();
-		
-		// player().inGame();
-		// challenger().inGame();
-		
-		// TODO what should we do about starting the game, let the game decide who goes first ?
-	}
-	
-	@Action
-	public void decline() {
-		// player go back to pending
-		// player().pendingGame();
-		// challenger().pendingGame();
-		// others().playersAvailable(player(),challenger());
+	public void challengeAccepted() {
+		Player player1 = inPlay().getPlayer();
+		Player player2 = notInPlay().getPlayer();
+		GameEvent gameStart = GameEvent.toOther(player1.getAlias(), player2.getAlias(), "startGame");
+		getStatemachine().execute(gameStart);
 	}
 	
 	@Override
 	protected void afterStateExecution() {
 	}
 
-	
 }

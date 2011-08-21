@@ -21,8 +21,8 @@ public class PlayerPendingLogin<G extends Game<S>, M extends Move, S extends Pla
 	 */
 	@Action
 	public void login() {
-		others().notifyOfPlayerPendingGame(player());
-		player().notifySelfPendingGame();
+		others().notifyOfPlayerPendingGame(inPlay());
+		inPlay().notifySelfPendingGame();
 	}
 
 	@Override
