@@ -46,15 +46,18 @@ public class PlayerProxy {
 	}
 
 	private GameEvent toSelf(String action) {
-		return GameEvent.toSelf(player.getAlias(), action);
+		return null;
+		//
+		//return GameEvent.toSelf(player.getAlias(), action);
 	}
 
 	private GameEvent toOther(String action, Player other) {
-		return GameEvent.toOther(other.getAlias(), player.getAlias(), action);
+		return null;
+		//return GameEvent.toOther(other.getAlias(), player.getAlias(), action);
 	}
 
 	public void notifyOf(GameEvent event) {
-		player.notify(event);
+		player.onEvent(event);
 	}
 
 	Player getPlayer() {

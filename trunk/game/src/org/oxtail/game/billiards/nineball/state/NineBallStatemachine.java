@@ -12,14 +12,14 @@ public class NineBallStatemachine extends AbstractStatemachine {
 
 	@Override
 	public void execute(GameEvent gameEvent) {
-		String action = gameEvent.getAction();
-		String playerAlias = gameEvent.getEventFrom();
-		Player player = gameHome.findPlayer(playerAlias);
-		if (gameEvent.hasGameId()) {
-			// executeForGame(gameEvent,player);
-		} else {
-			executeForPlayer(player, action);
-		}
+//		String action = gameEvent.getAction();
+//		String playerAlias = gameEvent.getEventFrom();
+//		Player player = gameHome.findPlayer(playerAlias);
+//		if (gameEvent.hasGameId()) {
+//			// executeForGame(gameEvent,player);
+//		} else {
+//			executeForPlayer(player, action);
+//		}
 	}
 
 	/**
