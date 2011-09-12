@@ -20,4 +20,6 @@
   <source path='client'/>
   <source path='shared'/>
 
+  <servlet path='/greet' class='org.communications.layer.server.GreetingServiceImpl'/>
+
 </module>
