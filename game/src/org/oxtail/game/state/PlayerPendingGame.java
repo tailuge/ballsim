@@ -31,8 +31,8 @@ public class PlayerPendingGame extends PlayerState {
 	public void challengeAccepted() {
 		Player player1 = inPlay().getPlayer();
 		Player player2 = notInPlay().getPlayer();
-		GameEvent gameStart = GameEvent.toOther(player1.getAlias(), player2.getAlias(), "startGame");
-		getStatemachine().execute(gameStart);
+		//GameEvent gameStart = GameEvent.toOther(player1.getAlias(), player2.getAlias(), "startGame");
+		//getStatemachine().execute(gameStart);
 	}
 	
 	@Override

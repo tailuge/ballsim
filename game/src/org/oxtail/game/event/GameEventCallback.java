@@ -6,7 +6,7 @@ package org.oxtail.game.event;
  * @author liam knox
  * 
  */
-public interface EventCallback {
+public interface GameEventCallback {
 
-	void notify(GameEvent event);
+	void onEvent(GameEvent event);
 }

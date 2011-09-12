@@ -1,6 +1,6 @@
 package org.oxtail.game.model;
 
-import org.oxtail.game.event.EventCallback;
+import org.oxtail.game.event.GameEventCallback;
 import org.oxtail.game.event.GameEvent;
 import org.springframework.util.Assert;
 
@@ -9,7 +9,7 @@ import org.springframework.util.Assert;
  * 
  * @author liam knox
  */
-public class Player implements EventCallback {
+public class Player implements GameEventCallback {
 
 	private String alias;
 
@@ -37,7 +37,7 @@ public class Player implements EventCallback {
 	}
 
 	@Override
-	public void notify(GameEvent event) {
+	public void onEvent(GameEvent event) {
 	}
 
 	@Override

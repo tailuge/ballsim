@@ -26,7 +26,7 @@ public class PlayersProxy {
 
 	public void notifyOf(GameEvent event) {
 		for (PlayerProxy p : players)
-			p.getPlayer().notify(event);
+			p.getPlayer().onEvent(event);
 	}
 
 }
