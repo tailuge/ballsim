@@ -15,9 +15,12 @@ public class SimpleTest extends GWTTestCase{
 	
 
 	@Test
-	public void testFirst()
+	public void testRPC()
 	{		
-		assertTrue(new Integer(1) != null);
+		GreetingServiceAsync greetingService = GWT
+		.create(GreetingService.class);
+
+		assertNotNull(greetingService);
 	}
 
 	
@@ -28,25 +31,44 @@ public class SimpleTest extends GWTTestCase{
 		GreetingServiceAsync greetingService = GWT
 		.create(GreetingService.class);
 
-		assertNotNull(greetingService);
-		
 		delayTestFinish(1000);
 		
 		greetingService.greetServer("username1",
 				new AsyncCallback<String>() {
 					public void onFailure(Throwable caught) {
-						System.out.println("caught:"+caught.getMessage());
 						assertTrue(false);
 						finishTest();
 					}
 
 					public void onSuccess(String result) {
-						System.out.println("ok");
+						System.out.println("result:"+result);
+						assertTrue(result.length() > 0);
+						finishTest();
+					}
+				});		
+	}
+
+
+	@Test
+	public void testInvalidLogin()
+	{
+		GreetingServiceAsync greetingService = GWT
+		.create(GreetingService.class);
+
+		delayTestFinish(1000);
+		
+		greetingService.greetServer("",
+				new AsyncCallback<String>() {
+					public void onFailure(Throwable caught) {
 						assertTrue(true);
 						finishTest();
 					}
-				});
-		
+
+					public void onSuccess(String result) {
+						assertTrue(false);
+						finishTest();
+					}
+				});		
 	}
 
 
