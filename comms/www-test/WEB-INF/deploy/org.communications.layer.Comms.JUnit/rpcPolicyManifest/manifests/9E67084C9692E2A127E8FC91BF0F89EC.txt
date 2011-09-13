@@ -1,0 +1,2 @@
+serviceClass: org.communications.layer.client.GreetingService
+path: D859D082508B51927F72B9B56E2FDD31.gwt.rpc
