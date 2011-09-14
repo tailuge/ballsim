@@ -1,10 +1,12 @@
 package org.communications.layer.client;
 
+import org.communications.layer.shared.GameEvent;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 
-@RemoteServiceRelativePath("gameserver")
+@RemoteServiceRelativePath("gameServer")
 public interface GWTGameServer extends RemoteService {
-	String notify(String data) throws IllegalArgumentException;
+	void notify(GameEvent data) throws IllegalArgumentException;
 }

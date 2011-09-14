@@ -21,5 +21,6 @@
   <source path='shared'/>
 
   <servlet path='/greet' class='org.communications.layer.server.GreetingServiceImpl'/>
+  <servlet path='/gameServer' class='org.communications.layer.server.GWTGameServerImpl'/>
 
 </module>
