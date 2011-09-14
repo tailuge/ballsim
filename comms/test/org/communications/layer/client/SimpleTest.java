@@ -33,7 +33,7 @@ public class SimpleTest extends GWTTestCase{
 
 		delayTestFinish(1000);
 		
-		greetingService.greetServer("username1",
+		greetingService.greetServer("bobby",
 				new AsyncCallback<String>() {
 					public void onFailure(Throwable caught) {
 						assertTrue(false);
