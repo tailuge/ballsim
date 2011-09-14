@@ -1,6 +1,6 @@
 package org.communications.layer.client;
 
-
+import org.communications.layer.shared.GameEvent;
 import org.junit.Test;
 
 import com.google.gwt.core.client.GWT;
@@ -17,13 +17,34 @@ public class SimpleTest extends GWTTestCase{
 	@Test
 	public void testRPC()
 	{		
-		GreetingServiceAsync greetingService = GWT
-		.create(GreetingService.class);
-
-		assertNotNull(greetingService);
+		GWTGameServerAsync gameServer = GWT.create(GWTGameServer.class);
+		assertNotNull(gameServer);
 	}
 
-	
+
+	@SuppressWarnings("rawtypes")
+	@Test
+	public void testNotify()
+	{		
+		GWTGameServerAsync gameServer = GWT.create(GWTGameServer.class);
+
+		delayTestFinish(1000);
+		
+		GameEvent event = new GameEvent();
+		
+		gameServer.notify(event,
+				new AsyncCallback() {
+					public void onFailure(Throwable caught) {
+						assertTrue(false);
+						finishTest();
+					}
+
+					public void onSuccess(Object object) {
+						finishTest();
+					}
+				});		
+		
+	}
 
 	@Test
 	public void testLogin()
