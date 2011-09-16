@@ -1,10 +1,8 @@
 package org.motion.ballsimapp.canvas;
 
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.Interpolator;
-import org.motion.ballsim.physics.State;
 import org.motion.ballsim.physics.Table;
 
 import com.google.gwt.canvas.client.Canvas;
@@ -21,21 +19,21 @@ import com.google.gwt.event.dom.client.MouseUpHandler;
 
 public class TableCanvas {
 
-	// handle aiming events
-	
 	// plot a table
-	
 
+	public PlotScale scale = new PlotScale();
+	
 	private Canvas canvas;
 	private Canvas backBuffer;
+	private Canvas background;
 
 	private Context2d context;
 	private Context2d backBufferContext;
+	private Context2d backgroundContext;
 
-	private PlotAim aim = new PlotAim();
+	private final PlotAim aim;
 	
-	//private final CssColor whiteColor = CssColor.make("rgba(170,200,200,0.8)");
-	private final CssColor redrawColor = CssColor.make("rgba(95,95,205,0.2)");
+	private final CssColor redrawColor = CssColor.make("rgba(95,95,205,0.5)");
 
     private final int width,height;
     private int mouseX,mouseY;
@@ -48,12 +46,28 @@ public class TableCanvas {
 		height = h;
 		mouseX=width/2;
 		mouseY=height/2;
+		scale.setWindowInfo(width, height);
+		aim = new PlotAim(scale);
+	}
+	
+	private void initialiseBackground()
+	{
+		background = Canvas.createIfSupported();
+	    background.setWidth(width + "px");
+	    background.setHeight(height + "px");
+	    background.setCoordinateSpaceWidth(width);
+	    background.setCoordinateSpaceHeight(height);
+	    backgroundContext = background.getContext2d();
+	    backgroundContext.setFillStyle(redrawColor);
+	    backgroundContext.fillRect(0, 0, width, height);
+	    PlotCushion.plot(backgroundContext,scale);
 	}
 	
 	public Canvas getInitialisedCanvas()
 	{
 		canvas = Canvas.createIfSupported();	
 		backBuffer = Canvas.createIfSupported();
+		
 		
 	    canvas.setWidth(width + "px");
 	    canvas.setHeight(height + "px");
@@ -69,7 +83,13 @@ public class TableCanvas {
 	    context = canvas.getContext2d();
 	    backBufferContext = backBuffer.getContext2d();
 	    
+	    initialiseBackground();
+	    
 	    initHandlers();
+	    
+		clearBackBuffer(); 
+		moveBackBufferToFront(backBufferContext,context);
+		
 		return canvas;
 	}
 
@@ -79,45 +99,33 @@ public class TableCanvas {
 	{
 		clearBackBuffer(); 
 
-		PlotCushion.plot(backBufferContext);
-
 		for(Ball ball : table.balls())
 		{
 			Event e = Interpolator.interpolate(ball, t);
-			PlotEvent.plotEvent(e, backBufferContext);
+			PlotEvent.plotEvent(e, backBufferContext,scale);
 		}
 
-		Event cueBall = Interpolator.interpolate(table.ball(1), t);
-		if (cueBall.state == State.Stationary)
-		{
-			aim.setAim(PlotScale.mouseToWorld(mouseX, mouseY), cueBall.pos);
-			aim.plotAim(backBufferContext);
-		}
-		
-		
 		moveBackBufferToFront(backBufferContext,context);
 
 	}
 
 	void clearBackBuffer() 
 	{
-		backBufferContext.setFillStyle(redrawColor);
-		backBufferContext.fillRect(0, 0, width, height);
-		PlotCushion.plot(backBufferContext);	
+		backBufferContext.drawImage(backgroundContext.getCanvas(), 0, 0);
 	}
 	
-	void doUpdate() 
-	{
-		clearBackBuffer(); 
-
-		moveBackBufferToFront(backBufferContext,context);
- 	}
 	  
 	public void moveBackBufferToFront(Context2d back, Context2d front) 
 	{
 		front.drawImage(back.getCanvas(), 0, 0);
 	}
 	
+	private void updateAim(int x, int y)
+	{
+		moveBackBufferToFront(backBufferContext,context);
+		aim.setAim(scale.mouseToWorld(x, y));
+		aim.plotAim(context);
+	}
 	
 	private void initHandlers() 
 	{
@@ -128,7 +136,8 @@ public class TableCanvas {
 	    				if(active)
 	    					{
 	    					mouseX = event.getRelativeX(canvas.getElement());
-	    					mouseY = event.getRelativeY(canvas.getElement());    				
+	    					mouseY = event.getRelativeY(canvas.getElement());    
+	    					updateAim(mouseX,mouseY);
 	    					}
 	    			}
 	    		});
@@ -139,6 +148,7 @@ public class TableCanvas {
 	    				active = true;	    				
 	    				mouseX = event.getRelativeX(canvas.getElement());
 	    				mouseY = event.getRelativeY(canvas.getElement());
+    					updateAim(mouseX,mouseY);
 	    			}
 	    		});
 
@@ -156,9 +166,12 @@ public class TableCanvas {
 	      });
 	}
 
-	public Vector3D getAim()
+	public void beginAim(Table table) 
 	{
-		return aim.getAim();
+		Event cueBall = Interpolator.interpolate(table.ball(1), 0);
+		aim.setAimFrom(cueBall.pos);
 	}
+
+	
 	
 }
