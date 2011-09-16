@@ -32,8 +32,7 @@ public class GameStart extends AbstractNumberGuessGameState {
 
 		if (opponent != null) {
 			// someone can play us
-			opponent.setState(PlayerState.InPlay.name());
-			player.setState(PlayerState.InPlay.name());
+			PlayerState.InPlay.set(opponent,player);
 			NumberGuessGame game = new NumberGuessGame(createWinningNumber(),
 					new NumberGuessBoard(1, 9), player, opponent);
 			getGameHome().store(game);
@@ -58,7 +57,7 @@ public class GameStart extends AbstractNumberGuessGameState {
 	@Action
 	public void logout() {
 		Player player = getInPlay();
-		player.setState(PlayerState.LoggedOut.name());
+		PlayerState.LoggedOut.set(player);
 		notifyLoggedOut(player);
 	}
 

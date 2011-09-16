@@ -2,6 +2,7 @@ package org.oxtail.game.numberguess.state;
 
 import org.oxtail.game.event.GameEvent;
 import org.oxtail.game.event.GameEventAttribute;
+import org.oxtail.game.model.Player;
 import org.oxtail.game.numberguess.model.NumberGuessBoard;
 import org.oxtail.game.numberguess.model.NumberGuessGame;
 import org.oxtail.game.numberguess.model.NumberGuessMove;
@@ -31,6 +32,19 @@ public class PlayerToGuess extends
 			turnOver();
 			notifyMove(game);
 		}
+	}
+
+	@Action
+	public void logout() {
+		NumberGuessGame game = getGame();
+		PlayerState.LoggedOut.set(game.player1(), game.player2());
+		notifyLoggedOut(game);
+	}
+
+	private void notifyLoggedOut(NumberGuessGame game) {
+		GameEvent event = new GameEvent();
+		event.addAttribute(new GameEventAttribute("state", "loggedout"));
+		game.notify(event);
 	}
 
 	private void notifyMove(NumberGuessGame game) {
