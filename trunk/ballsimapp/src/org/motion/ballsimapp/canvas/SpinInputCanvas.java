@@ -104,7 +104,7 @@ public class SpinInputCanvas {
 		int dx = (mouseX - width/2);
 		int dy = (mouseY - height/2);
 		
-		if (Math.sqrt(dx*dx +dy*dy)<width/2.5)
+		if (Math.sqrt(dx*dx +dy*dy)<width/2.1)
 		{
 			spinX = (double)dx/(double)width;
 			spinY = (double)dy/(double)height;

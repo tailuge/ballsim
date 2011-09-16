@@ -26,16 +26,16 @@ public class PlotEvent
 		return colours[id-1];
 	}
 	
-	public static void plotEvent(Event e, Context2d context)
+	public static void plotEvent(Event e, Context2d context, PlotScale scale)
  	{
-        double x = PlotScale.screenX(e.pos.getX());
-        double y = PlotScale.screenY(e.pos.getY());
+        double x = scale.screenX(e.pos.getX());
+        double y = scale.screenY(e.pos.getY());
 
         context.beginPath();
 		context.setLineWidth(1);
 		context.setStrokeStyle(black);
 		context.setFillStyle(black);
-		context.arc(x+1, y+1, PlotScale.scaled(Ball.R)+0.5, 0,Math.PI * 2.0, true); 	
+		context.arc(x+1, y+1, scale.scaled(Ball.R)+0.5, 0,Math.PI * 2.0, true); 	
 	    context.closePath();
 	    context.fill();        
 
@@ -43,19 +43,20 @@ public class PlotEvent
 		context.setLineWidth(1);
 		context.setStrokeStyle(black);
 		context.setFillStyle(getColour(e.ballId));
-		context.arc(x, y, PlotScale.scaled(Ball.R), 0,Math.PI * 2.0, true); 	
+		context.arc(x, y, scale.scaled(Ball.R), 0,Math.PI * 2.0, true); 	
 	    context.closePath();
 	    context.stroke();
 	    context.fill();        
-		plotSpots(e,context);
-
-		plotDebug(e,context);
+	    
+		plotSpots(e,context,scale);
+		//plotDebug(e,context,scale);
  	}
 	
-	private static void plotDebug(Event e, Context2d context)
+	@SuppressWarnings("unused")
+	private static void plotDebug(Event e, Context2d context, PlotScale scale)
 	{
-	    double x = PlotScale.screenX(e.pos.getX());
-	    double y = PlotScale.screenY(e.pos.getY());
+	    double x = scale.screenX(e.pos.getX());
+	    double y = scale.screenY(e.pos.getY());
 
 	    context.beginPath();
 	    String s = ""+e.vel.getNorm();
@@ -68,7 +69,7 @@ public class PlotEvent
 		
 	}
 	
-	private static void plotSpots(Event e, Context2d context)
+	private static void plotSpots(Event e, Context2d context, PlotScale scale)
 	{
         context.beginPath();
 		context.setLineWidth(1);
@@ -78,8 +79,8 @@ public class PlotEvent
     
 		for(Vector3D spot : spots)
 		{
-			int x=PlotScale.screenX(spot.getX());
-			int y=PlotScale.screenY(spot.getY());
+			int x=scale.screenX(spot.getX());
+			int y=scale.screenY(spot.getY());
 			context.rect(x, y, 1, 1);
 		}
 		
