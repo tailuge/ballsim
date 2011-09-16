@@ -42,8 +42,7 @@ public class TestNumberGuessGameStatemachine {
 				stateActionExecutor);
 		bob.setCallbackDelegate(bobCallback);
 		jim.setCallbackDelegate(jimCallback);
-		bob.setState(PlayerState.LoggedOut.name());
-		jim.setState(PlayerState.LoggedOut.name());
+		PlayerState.LoggedOut.set(bob,jim);
 		gameHome.storePlayer(bob);
 		gameHome.storePlayer(jim);
 	}
