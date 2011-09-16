@@ -20,7 +20,7 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 	private M move;
 	private Player inPlay;
 	private Player notInPlay;
-	private GameHome home;
+	private GameHome gameHome;
 	private GameStatemachine statemachine;
 
 	public G getGame() {
@@ -43,12 +43,12 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 		return inPlay;
 	}
 
-	public GameHome getHome() {
-		return home;
+	public GameHome getGameHome() {
+		return gameHome;
 	}
 
-	public void setHome(GameHome home) {
-		this.home = home;
+	public void setGameHome(GameHome home) {
+		this.gameHome = home;
 	}
 
 	public void setInPlay(Player inPlay) {
@@ -64,7 +64,7 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 	}
 
 	public Iterable<Player> getOthers() {
-		return home.findPlayers(new Predicate<Player>() {
+		return gameHome.findPlayers(new Predicate<Player>() {
 
 			@Override
 			public boolean apply(Player p) {

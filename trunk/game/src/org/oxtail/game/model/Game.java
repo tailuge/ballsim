@@ -1,5 +1,6 @@
 package org.oxtail.game.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,11 +8,22 @@ import java.util.List;
  */
 public abstract class Game<T extends PlayingSpace> {
 
-	private List<Player> players;
+	private List<Player> players = new ArrayList<Player>();
 	private GameVersion version;
 	private T currentPlayingSpace;
 	private StateId stateId;
 	private Player inPlay;
+
+	public Game(Player... ps) {
+		for (Player p : ps)
+			players.add(p);
+	}
+
+	public Game(T currentPlayingSpace, Player... ps) {
+		this.currentPlayingSpace = currentPlayingSpace;
+		for (Player p : ps)
+			players.add(p);
+	}
 
 	public T getCurrentPlayingSpace() {
 		return currentPlayingSpace;
@@ -21,7 +33,7 @@ public abstract class Game<T extends PlayingSpace> {
 		return players.get(index);
 	}
 
-	public final Player getInPlay() {
+	public final Player inPlay() {
 		return inPlay;
 	}
 
@@ -44,6 +56,10 @@ public abstract class Game<T extends PlayingSpace> {
 	public final void setVersion(GameVersion version) {
 		this.version = version;
 	}
+
+	public String getId() {
+		return version.getId();
+	}
+
 	
-	protected abstract StateId getInitialState();
 }

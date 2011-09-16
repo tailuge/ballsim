@@ -2,6 +2,7 @@ package org.oxtail.game.state;
 
 import java.util.List;
 
+import org.oxtail.game.home.GameHome;
 import org.oxtail.game.model.Game;
 import org.oxtail.game.model.Move;
 import org.oxtail.game.model.Player;
@@ -18,7 +19,7 @@ import com.google.common.collect.Lists;
 public abstract class AbstractGameState<G extends Game<S>, M extends Move, S extends PlayingSpace> {
 
 	protected final GameEventContext<G, M, S> context;
-
+	
 	public AbstractGameState(GameEventContext<G, M, S> context) {
 		this.context = context;
 	}
@@ -32,6 +33,10 @@ public abstract class AbstractGameState<G extends Game<S>, M extends Move, S ext
 
 	}
 
+	protected Player getInPlay() {
+		return context.getInPlay();
+	}
+	
 	protected PlayerProxy inPlay() {
 		return new PlayerProxy(context.getInPlay());
 	}
@@ -62,4 +67,10 @@ public abstract class AbstractGameState<G extends Game<S>, M extends Move, S ext
 	protected GameStatemachine getStatemachine() {
 		return context.getStatemachine();
 	}
+
+	protected GameHome getGameHome() {
+		return context.getGameHome();
+	}
+
+	
 }

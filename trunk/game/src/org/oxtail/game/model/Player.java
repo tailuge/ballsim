@@ -1,7 +1,7 @@
 package org.oxtail.game.model;
 
-import org.oxtail.game.event.GameEventCallback;
 import org.oxtail.game.event.GameEvent;
+import org.oxtail.game.event.GameEventCallback;
 import org.springframework.util.Assert;
 
 /**
@@ -11,9 +11,11 @@ import org.springframework.util.Assert;
  */
 public class Player implements GameEventCallback {
 
+	private GameEventCallback callbackDelegate;
+
 	private String alias;
 
-	private StateId stateId;
+	private String stateId;
 
 	public Player(String alias) {
 		setAlias(alias);
@@ -28,16 +30,18 @@ public class Player implements GameEventCallback {
 		this.alias = alias;
 	}
 
-	public StateId getStateId() {
+	public String getState() {
 		return stateId;
 	}
 
-	public void setStateId(StateId stateId) {
-		this.stateId = stateId;
+	public void setState(String state) {
+		this.stateId = state;
 	}
 
 	@Override
 	public void onEvent(GameEvent event) {
+		if (callbackDelegate != null)
+			callbackDelegate.onEvent(event);
 	}
 
 	@Override
@@ -65,4 +69,14 @@ public class Player implements GameEventCallback {
 		return true;
 	}
 
+	public void setCallbackDelegate(GameEventCallback callbackDelegate) {
+		this.callbackDelegate = callbackDelegate;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [alias=" + alias + ", stateId=" + stateId + "]";
+	}
+
+	
 }
