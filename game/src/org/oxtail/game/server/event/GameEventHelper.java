@@ -17,6 +17,13 @@ public class GameEventHelper {
 
 	public String getString(String name) {
 		return event.getAttribute(name).getValue();
+	}
 
+	public Integer getInt(String name) {
+		return Integer.parseInt(getString(name));
+	}
+
+	public boolean hasValue(String name) {
+		return event.hasAttribute(name);
 	}
 }

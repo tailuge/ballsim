@@ -12,6 +12,9 @@ import org.oxtail.game.state.GameStatemachine;
 import org.oxtail.game.state.StateActionExecutor;
 import org.oxtail.game.state.StateFactory;
 
+/**
+ * [gamestart] <-{start}-> [playertoguess] <-{move}-> [gameover]
+ */
 public class NumberGuessGameStatemachine implements GameStatemachine {
 
 	private GameHome gameHome;
@@ -35,29 +38,36 @@ public class NumberGuessGameStatemachine implements GameStatemachine {
 
 	@Override
 	public void execute(GameEvent gameEvent) {
-		GameEventHelper event = new GameEventHelper(gameEvent);
+		final GameEventHelper event = new GameEventHelper(gameEvent);
 		Player player = gameHome.findPlayer(event.getString("player.alias"));
 		autoLogin(player);
-		if (gameEvent.hasAttribute("game.id")) {
+		String action = event.getString("action");
+		GameEventContext<NumberGuessGame, NumberGuessMove, NumberGuessBoard> context = newContext(gameEvent);
+		//
+		if (event.hasValue("game.id")) {
+			// assume we are in a game 
 			NumberGuessGame game = (NumberGuessGame) gameHome.findGame(event
 					.getString("game.id"));
-			String numberGuess = event.getString("guess");
-			String action = event.getString("action");
+			String numberGuess = event.getString("move");
 			NumberGuessMove move = new NumberGuessMove(player,
 					Integer.parseInt(numberGuess));
-			GameEventContext<NumberGuessGame, NumberGuessMove, NumberGuessBoard> context = new GameEventContext<NumberGuessGame, NumberGuessMove, NumberGuessBoard>();
 			context.setGame(game);
 			context.setMove(move);
-			context.setGameHome(gameHome);
 			executor.execute(
 					stateFactory.createState(game.getStateId(), context),
 					action);
 		} else { // player not in game we assume
-			GameEventContext<NumberGuessGame, NumberGuessMove, NumberGuessBoard> context = new GameEventContext<NumberGuessGame, NumberGuessMove, NumberGuessBoard>();
 			context.setInPlay(player);
-			context.setGameHome(gameHome);
-			new GameStart(context).startGame();
+			executor.execute(new GameStart(context), action);
 		}
+	}
+
+	private GameEventContext<NumberGuessGame, NumberGuessMove, NumberGuessBoard> newContext(
+			GameEvent gameEvent) {
+		GameEventContext<NumberGuessGame, NumberGuessMove, NumberGuessBoard> context = new GameEventContext<NumberGuessGame, NumberGuessMove, NumberGuessBoard>();
+		context.setGameHome(gameHome);
+		context.setGameEvent(gameEvent);
+		return context;
 	}
 
 }

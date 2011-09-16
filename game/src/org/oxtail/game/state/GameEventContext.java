@@ -1,5 +1,6 @@
 package org.oxtail.game.state;
 
+import org.oxtail.game.event.GameEvent;
 import org.oxtail.game.home.GameHome;
 import org.oxtail.game.model.Game;
 import org.oxtail.game.model.Move;
@@ -16,6 +17,7 @@ import com.google.common.base.Predicate;
  */
 public class GameEventContext<G extends Game<S>, M extends Move, S extends PlayingSpace> {
 
+	private GameEvent gameEvent;
 	private G game;
 	private M move;
 	private Player inPlay;
@@ -81,5 +83,12 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 		this.statemachine = statemachine;
 	}
 
+	public GameEvent getGameEvent() {
+		return gameEvent;
+	}
+
+	public void setGameEvent(GameEvent gameEvent) {
+		this.gameEvent = gameEvent;
+	}
 
 }
