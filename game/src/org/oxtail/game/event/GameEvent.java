@@ -1,6 +1,7 @@
 package org.oxtail.game.event;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ public class GameEvent implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<GameEventAttribute> attributes;
+	private List<GameEventAttribute> attributes = new ArrayList<GameEventAttribute>();
 
 	public List<GameEventAttribute> getAttributes() {
 		return attributes;
@@ -18,6 +19,21 @@ public class GameEvent implements Serializable {
 
 	public void setAttributes(List<GameEventAttribute> attributes) {
 		this.attributes = attributes;
+	}
+
+	public void addAttribute(GameEventAttribute attribute) {
+		this.attributes.add(attribute);
+	}
+
+	public boolean hasAttribute(String attributeName) {
+		return getAttribute(attributeName) != null;
+	}
+
+	public GameEventAttribute getAttribute(String attributeName) {
+		for (GameEventAttribute a : attributes)
+			if (a.getName().equals(attributeName))
+				return a;
+		return null;
 	}
 
 }

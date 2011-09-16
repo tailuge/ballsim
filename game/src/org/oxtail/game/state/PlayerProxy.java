@@ -15,12 +15,7 @@ public class PlayerProxy {
 		this.player = player;
 	}
 
-	protected void setState(Class<?> stateClass) {
-		player.setStateId(new StateId(stateClass));
-	}
-
 	public void notifySelfPendingGame() {
-		setState(PlayerPendingGame.class);
 		notifyOf(pendingGameEvent());
 	}
 
@@ -29,7 +24,6 @@ public class PlayerProxy {
 	}
 
 	public void notifyPendingChallengeAccept() {
-		setState(PlayerPendingGame.class);
 		notifyOf(pendingChallengeAccept());
 	}
 

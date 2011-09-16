@@ -19,9 +19,9 @@ public class NineBallGame extends Game<NineBallTable> {
 	 * Called when the current players turn is over
 	 */
 	public final void turnOver() {
-		if (getInPlay() == getPlayerOne())
+		if (inPlay() == getPlayerOne())
 			setInPlay(getPlayerTwo());
-		else if (getInPlay() == getPlayerTwo())
+		else if (inPlay() == getPlayerTwo())
 			setInPlay(getPlayerOne());
 		else
 			throw new IllegalStateException("Can`t swap players for game! "
@@ -35,8 +35,5 @@ public class NineBallGame extends Game<NineBallTable> {
 		// TODO
 	}
 
-	@Override
-	protected StateId getInitialState() {
-		return new StateId(NewRack.class);
-	}
+	
 }

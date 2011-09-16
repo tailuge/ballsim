@@ -39,9 +39,23 @@ public class NumberGuessBoard extends PlayingSpace {
 		Assert.isTrue(number <= endNumber);
 		Assert.isTrue(!guessBoard.containsKey(number), "number already guessed");
 	}
-	
+
 	NumberGuessMove getGuessFor(int number) {
 		return guessBoard.get(number);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = startNumber; i <= endNumber; i++) {
+			if (guessBoard.containsKey(i)) {
+				sb.append(i + "=" + guessBoard.get(i).getPlayer().getAlias());
+				sb.append(";");
+			} else {
+				sb.append(i + ";");
+			}
+		}
+		return sb.toString();
 	}
 
 }

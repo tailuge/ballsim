@@ -27,9 +27,9 @@ public class NineBallStatemachine extends AbstractStatemachine {
 	 */
 	private void executeForPlayer(Player player, String action) {
 		GameEventContext context = new GameEventContext();
-		context.setHome(gameHome);
+		context.setGameHome(gameHome);
 		context.setInPlay(player);
-		executeForState(player.getStateId(), action, context);
+		//executeForState(player.getStateId(), action, context);
 	}
 
 }

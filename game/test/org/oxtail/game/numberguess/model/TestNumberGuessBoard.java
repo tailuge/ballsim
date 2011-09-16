@@ -62,4 +62,12 @@ public class TestNumberGuessBoard {
 		board.guessNumber(bob, 1);
 	}
 
+	@Test
+	public void testToString() {
+		NumberGuessBoard board = new NumberGuessBoard(1, 4);
+		Assert.assertEquals("1;2;3;4;", board.toString());
+		board.guessNumber(bob, 1);
+		Assert.assertEquals("1=bob;2;3;4;", board.toString());
+
+	}
 }

@@ -1,56 +1,68 @@
 package org.oxtail.game.numberguess.model;
 
+import java.util.Date;
+
+import org.oxtail.game.event.GameEvent;
 import org.oxtail.game.model.Game;
+import org.oxtail.game.model.GameVersion;
 import org.oxtail.game.model.Player;
 import org.oxtail.game.model.StateId;
-import org.oxtail.game.model.TwoPlayerGameHelper;
 
 public class NumberGuessGame extends Game<NumberGuessBoard> {
 
 	private int winningNumber;
 
-	private NumberGuessBoard board;
-
-	private TwoPlayerGameHelper helper;
-
-	public NumberGuessGame(int winningNumber, NumberGuessBoard board) {
+	public NumberGuessGame(int winningNumber, NumberGuessBoard board,
+			Player player1, Player player2) {
+		super(board,player1, player2);
 		this.winningNumber = winningNumber;
-		this.board = board;
-		helper = new TwoPlayerGameHelper(this);
+		setInPlay(player1);
+		newGame();
+	}
+
+	private void newGame() {
+		setVersion(new GameVersion(String.valueOf(System.currentTimeMillis()),
+				new Date()));
+
 	}
 
 	/**
 	 * Called when the current players turn is over
 	 */
 	public final void turnOver() {
-		if (getInPlay() == getPlayerOne())
-			setInPlay(getPlayerTwo());
-		else if (getInPlay() == getPlayerTwo())
-			setInPlay(getPlayerOne());
+		if (inPlay() == player1())
+			setInPlay(player2());
+		else if (inPlay() == player2())
+			setInPlay(player1());
 		else
 			throw new IllegalStateException("Can`t swap players for game! "
 					+ this);
 	}
 
-	private Player getPlayerTwo() {
-		return helper.getPlayerTwo();
+	public Player player1() {
+		return getPlayer(0);
 	}
 
-	private Player getPlayerOne() {
-		return helper.getPlayerOne();
+	public Player player2() {
+		return getPlayer(1);
 	}
 
-	@Override
-	protected StateId getInitialState() {
-		return null;
+	public Player notInPlay() {
+		return player1() == inPlay() ? player2() : player1();
 	}
-	
+
 	public boolean isGuessWin(int number) {
-		board.guessNumber(getInPlay(), number);
+		getCurrentPlayingSpace().guessNumber(inPlay(), number);
 		return (number == winningNumber);
 	}
 
 	public void setGameState(Class<?> k) {
 		setStateId(new StateId(k));
 	}
+
+	public void notify(GameEvent event) {
+		player1().onEvent(event);
+		player2().onEvent(event);
+	}
+
 }

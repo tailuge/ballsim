@@ -1,6 +1,7 @@
 package org.oxtail.game.numberguess.state;
 
 import org.oxtail.game.event.GameEvent;
+import org.oxtail.game.event.GameEventAttribute;
 import org.oxtail.game.numberguess.model.NumberGuessBoard;
 import org.oxtail.game.numberguess.model.NumberGuessGame;
 import org.oxtail.game.numberguess.model.NumberGuessMove;
@@ -20,22 +21,45 @@ public class PlayerToGuess extends
 	public void guess() {
 		NumberGuessGame game = getGame();
 		if (game.isGuessWin(getMove().getNumberGuessed())) {
-			inPlay().notifyOf(win());
-			notInPlay().notifyOf(loss());
 			gameOver();
+			notifyGameOver(game);
 		} else {
-			inPlay().notifyOf(move());
-			notInPlay().notifyOf(move());
 			turnOver();
+			notifyMove(game);
 		}
 	}
 
-	private GameEvent move() {
-		return null;
+	private void notifyMove(NumberGuessGame game) {
+		GameEvent event = new GameEvent();
+		event.addAttribute(new GameEventAttribute("state", "move"));
+		event.addAttribute(new GameEventAttribute("player.inplay", game
+				.inPlay().getAlias()));
+		event.addAttribute(new GameEventAttribute("player.notinplay", game
+				.notInPlay().getAlias()));
+		event.addAttribute(new GameEventAttribute("game.id", game.getVersion()
+				.getId()));
+		event.addAttribute(new GameEventAttribute("game.board", game.getCurrentPlayingSpace().toString()));
+		game.notify(event);
+	}
+
+	private void notifyGameOver(NumberGuessGame game) {
+		GameEvent event = new GameEvent();
+		event.addAttribute(new GameEventAttribute("state", "gameover"));
+		event.addAttribute(new GameEventAttribute("player.winner", game
+				.inPlay().getAlias()));
+		event.addAttribute(new GameEventAttribute("player.losser", game
+				.notInPlay().getAlias()));
+		event.addAttribute(new GameEventAttribute("game.id", game.getVersion()
+				.getId()));
+		event.addAttribute(new GameEventAttribute("game.board", game.getCurrentPlayingSpace().toString()));
+		game.inPlay().setState(PlayerState.LoggedIn.name());
+		game.notInPlay().setState(PlayerState.LoggedIn.name());
+		game.notify(event);
+		
 	}
 
 	private void gameOver() {
-		getGame().setGameState(GameOver.class);
+		
 	}
 
 	private void turnOver() {
@@ -43,11 +67,4 @@ public class PlayerToGuess extends
 		getGame().setGameState(PlayerToGuess.class);
 	}
 
-	private GameEvent loss() {
-		return null;
-	}
-
-	private GameEvent win() {
-		return null;
-	}
 }
