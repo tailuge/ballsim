@@ -29,4 +29,11 @@ public class GameEventAttribute implements Serializable {
 		this.value = value;
 	}
 
+	@Override
+	public String toString() {
+		return "["+name + "=" + value + "]";
+	}
+
+	
+	
 }

@@ -2,7 +2,7 @@ package org.oxtail.game.numberguess.state;
 
 import org.oxtail.game.event.GameEvent;
 import org.oxtail.game.event.GameEventAttribute;
-import org.oxtail.game.model.Player;
+import org.oxtail.game.numberguess.model.InvalidGuessException;
 import org.oxtail.game.numberguess.model.NumberGuessBoard;
 import org.oxtail.game.numberguess.model.NumberGuessGame;
 import org.oxtail.game.numberguess.model.NumberGuessMove;
@@ -25,10 +25,17 @@ public class PlayerToGuess extends
 	@Action
 	public void move() {
 		NumberGuessGame game = getGame();
-		if (game.isGuessWin(getMove().getNumberGuessed())) {
-			gameOver();
-			notifyGameOver(game);
-		} else {
+		try {
+			if (game.isGuessWin(getMove().getNumberGuessed())) {
+				gameOver();
+				notifyGameOver(game);
+			} else {
+				turnOver();
+				notifyMove(game);
+			}
+		} catch (InvalidGuessException e) {
+			System.err.println(game.inPlay().getAlias() + ", Fuckwit !!! "
+					+ e.getMessage());
 			turnOver();
 			notifyMove(game);
 		}
@@ -75,7 +82,7 @@ public class PlayerToGuess extends
 		game.inPlay().setState(PlayerState.LoggedIn.name());
 		game.notInPlay().setState(PlayerState.LoggedIn.name());
 		game.notify(event);
-
+		getGameHome().deleteGame(game.getId());
 	}
 
 	private void gameOver() {

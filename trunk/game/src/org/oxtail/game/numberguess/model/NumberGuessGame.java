@@ -1,6 +1,7 @@
 package org.oxtail.game.numberguess.model;
 
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.oxtail.game.event.GameEvent;
 import org.oxtail.game.model.Game;
@@ -10,19 +11,20 @@ import org.oxtail.game.model.StateId;
 
 public class NumberGuessGame extends Game<NumberGuessBoard> {
 
+	private static final AtomicInteger INSTANCE_COUNT = new AtomicInteger();
 	private int winningNumber;
 
 	public NumberGuessGame(int winningNumber, NumberGuessBoard board,
 			Player player1, Player player2) {
-		super(board,player1, player2);
+		super(board, player1, player2);
 		this.winningNumber = winningNumber;
 		setInPlay(player1);
 		newGame();
 	}
 
 	private void newGame() {
-		setVersion(new GameVersion(String.valueOf(System.currentTimeMillis()),
-				new Date()));
+		setVersion(new GameVersion(String.valueOf(INSTANCE_COUNT
+				.incrementAndGet()), new Date()));
 
 	}
 
@@ -63,6 +65,10 @@ public class NumberGuessGame extends Game<NumberGuessBoard> {
 	public void notify(GameEvent event) {
 		player1().onEvent(event);
 		player2().onEvent(event);
+	}
+
+	public String toSummaryString() {
+		return "["+getId()+":"+winningNumber+"] "+player1().getAlias()+" vs. "+player2().getAlias();
 	}
 
 }

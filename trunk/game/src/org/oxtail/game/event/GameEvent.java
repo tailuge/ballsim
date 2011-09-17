@@ -36,4 +36,10 @@ public class GameEvent implements Serializable {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "GameEvent [attributes=" + attributes + "]";
+	}
+
+	
 }

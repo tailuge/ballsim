@@ -24,4 +24,6 @@ public interface GameHome {
 	Iterable<Player> findPlayers(Predicate<Player> playerFilter);
 
 	void deleteGame(String gameId);
+
+	Iterable<Game<?>> findGames(Predicate<Game<?>> gameFilter);
 }
