@@ -6,8 +6,11 @@ import org.motion.ballsim.physics.Table;
 public interface GameView {
 
 	void setPlayer(String playerId);
+	void setAimCompleteHandler(AimNotify aimHandler);
+	void setAnimationCompleteHandler(ViewNotify animationComplete);
+
 	void appendMessage(String message);
-	void addAimCompleteHandler(AimHandler aimHandler);
 	void aim(Table table, int timeout);
 	void animate(Table shotSequence);
+	
 }

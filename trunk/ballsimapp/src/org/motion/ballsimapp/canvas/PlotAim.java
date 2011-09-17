@@ -36,6 +36,10 @@ public class PlotAim {
 		return aimPoint.subtract(cuePoint).normalize();
 	}
 	
+	public Vector3D getAimPoint()
+	{
+		return cuePoint;
+	}
 	
 	public void plotAim(Context2d context)
  	{		

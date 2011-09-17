@@ -1,6 +1,7 @@
 package org.motion.ballsimapp.client;
 
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsimapp.canvas.Animation;
 import org.motion.ballsimapp.canvas.PowerInputCanvas;
 import org.motion.ballsimapp.canvas.SpinInputCanvas;
@@ -31,8 +32,8 @@ public class GameViewImpl implements GameView {
 
 	// callbacks
 	
-	AimHandler aimHandler;
-	
+	AimNotify aimHandler;
+	ViewNotify animationComplete;
 
 	public GameViewImpl(int width, RootPanel root)
 	{
@@ -71,16 +72,22 @@ public class GameViewImpl implements GameView {
 
 
 	@Override
-	public void addAimCompleteHandler(final AimHandler aimHandler) {
+	public void setAimCompleteHandler(final AimNotify aimHandler) {
 		hitButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {				
 				hitButton.setEnabled(false);
-				aimHandler.handleAim();
+				aimHandler.handle(
+						UtilEvent.hit(tableCanvas.getAimPoint(),tableCanvas.getAim(),Table.maxVel*power.getPower(), spin.getSpin()));
 			}
 		});
 	}
 
+	@Override
+	public void setAnimationCompleteHandler(final ViewNotify animationComplete) {
+		this.animationComplete = animationComplete;
+	}
 
+	
 
 	/* (non-Javadoc)
 	 * @see org.motion.ballsimapp.client.GameView#aim(int)
@@ -94,7 +101,6 @@ public class GameViewImpl implements GameView {
 		hitButton.setEnabled(true);
 		tableCanvas.plotAtTime(table, 0);
 		tableCanvas.beginAim(table);
-		
 	}
 
 
@@ -105,7 +111,7 @@ public class GameViewImpl implements GameView {
 		hitButton.setEnabled(false);
 		
 		@SuppressWarnings("unused")
-		Animation showAnimation = new Animation(table,tableCanvas);
+		Animation showAnimation = new Animation(table,tableCanvas,animationComplete);
 		
 	}
 	

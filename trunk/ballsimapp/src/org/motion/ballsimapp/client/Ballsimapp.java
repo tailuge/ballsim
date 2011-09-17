@@ -16,14 +16,14 @@ public class Ballsimapp implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 
-		int width = 800;
+		int width = 600;
 		
 		// player 1
 		GameModel gameModelP1 = new GameModel("bobby");
 		GameView gameViewP1 = new GameViewImpl(width/2, RootPanel.get("player1"));
 		
 		gamePresenterP1 = new GamePresenter(gameModelP1, gameViewP1);
-		gamePresenterP1.begin();
+		gamePresenterP1.beginAim();
 		
 		
 		// player 2
@@ -31,7 +31,6 @@ public class Ballsimapp implements EntryPoint {
 		GameView gameViewP2 = new GameViewImpl(width/2, RootPanel.get("player2"));
 		
 		gamePresenterP2 = new GamePresenter(gameModelP2, gameViewP2);
-		gamePresenterP2.begin();
 		gamePresenterP2.beginAim();
 		
 	
