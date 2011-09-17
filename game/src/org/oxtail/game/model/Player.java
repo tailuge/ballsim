@@ -15,7 +15,7 @@ public class Player implements GameEventCallback {
 
 	private String alias;
 
-	private String stateId;
+	private StateId stateId;
 
 	public Player(String alias) {
 		setAlias(alias);
@@ -31,11 +31,11 @@ public class Player implements GameEventCallback {
 	}
 
 	public String getState() {
-		return stateId;
+		return stateId.getId();
 	}
 
 	public void setState(String state) {
-		this.stateId = state;
+		this.stateId = new StateId(state);
 	}
 
 	@Override
@@ -78,5 +78,4 @@ public class Player implements GameEventCallback {
 		return "Player [alias=" + alias + ", stateId=" + stateId + "]";
 	}
 
-	
 }

@@ -35,9 +35,14 @@ public class NumberGuessBoard extends PlayingSpace {
 	}
 
 	private void assertNumberValid(int number) {
-		Assert.isTrue(number >= startNumber);
-		Assert.isTrue(number <= endNumber);
-		Assert.isTrue(!guessBoard.containsKey(number), "number already guessed");
+		try {
+			Assert.isTrue(number >= startNumber);
+			Assert.isTrue(number <= endNumber);
+			Assert.isTrue(!guessBoard.containsKey(number),
+					"number already guessed");
+		} catch (IllegalArgumentException e) {
+			throw new InvalidGuessException(e);
+		}
 	}
 
 	NumberGuessMove getGuessFor(int number) {

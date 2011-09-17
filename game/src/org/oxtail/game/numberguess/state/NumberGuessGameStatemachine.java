@@ -38,6 +38,14 @@ public class NumberGuessGameStatemachine implements GameStatemachine {
 
 	@Override
 	public void execute(GameEvent gameEvent) {
+		try {
+			doExecute(gameEvent);
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+		}
+	}
+
+	private void doExecute(GameEvent gameEvent) {
 		final GameEventHelper event = new GameEventHelper(gameEvent);
 		Player player = gameHome.findPlayer(event.getString("player.alias"));
 		autoLogin(player);
@@ -45,7 +53,7 @@ public class NumberGuessGameStatemachine implements GameStatemachine {
 		GameEventContext<NumberGuessGame, NumberGuessMove, NumberGuessBoard> context = newContext(gameEvent);
 		//
 		if (event.hasValue("game.id")) {
-			// assume we are in a game 
+			// assume we are in a game
 			NumberGuessGame game = (NumberGuessGame) gameHome.findGame(event
 					.getString("game.id"));
 			String numberGuess = event.getString("move");

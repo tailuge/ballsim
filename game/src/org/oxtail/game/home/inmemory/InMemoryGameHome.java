@@ -52,4 +52,10 @@ public class InMemoryGameHome implements GameHome {
 		games.remove(id);
 	}
 
+	@Override
+	public Iterable<Game<?>> findGames(Predicate<Game<?>> gameFilter) {
+		return Iterables.filter(games.values(), gameFilter);
+	}
+
+	
 }
