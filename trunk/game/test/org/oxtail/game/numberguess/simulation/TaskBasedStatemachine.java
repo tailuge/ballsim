@@ -5,15 +5,17 @@ import java.util.concurrent.ExecutorService;
 import org.oxtail.game.event.GameEvent;
 import org.oxtail.game.state.GameStatemachine;
 
+/**
+ * Every {@link GameEvent} is queued for execution
+ */
 public class TaskBasedStatemachine implements GameStatemachine {
 
 	private GameStatemachine delegate;
 
 	private ExecutorService executorService;
-	
+
 	public TaskBasedStatemachine(GameStatemachine delegate,
 			ExecutorService executorService) {
-		super();
 		this.delegate = delegate;
 		this.executorService = executorService;
 	}
@@ -22,7 +24,7 @@ public class TaskBasedStatemachine implements GameStatemachine {
 	public void execute(GameEvent event) {
 		executorService.submit(new GameEventTask(event));
 	}
-	
+
 	private class GameEventTask implements Runnable {
 
 		private final GameEvent event;

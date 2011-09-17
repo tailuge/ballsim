@@ -31,14 +31,13 @@ public class NumberGuessGameSimulation {
 
 	private GameStatemachine statemachine;
 	private GameHome gameHome = new InMemoryGameHome();
-
 	private StateFactory stateFactory = new ReflectStateFactory();
 	private StateActionExecutor stateActionExecutor = new ReflectStateActionExecutor();
 
 	/** main executor for the simulation */
 	private ExecutorService simulationExecutor = Executors
 			.newFixedThreadPool(10);
-	/** executor for the statemachine to accept {@link GameEvent}'s on */
+	/** executor for the state machine to accept {@link GameEvent}'s on */
 	private ExecutorService statemachineExecutor = Executors
 			.newFixedThreadPool(10);
 
@@ -137,7 +136,8 @@ public class NumberGuessGameSimulation {
 					}
 					if (snapshot.size() > 0)
 						System.err.println("\n>>> " + snapshot.size()
-								+ " game(s) in progess: " + sb.toString()+"\n");
+								+ " game(s) in progess: " + sb.toString()
+								+ "\n");
 				} while (!snapshot.isEmpty());
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
