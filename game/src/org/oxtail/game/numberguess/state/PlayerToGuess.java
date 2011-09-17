@@ -95,4 +95,20 @@ public class PlayerToGuess extends
 		getGame().setGameState(PlayerToGuess.class);
 	}
 
+	@Action
+	public void chat() {
+		GameEvent event = context.getGameEvent();
+		String chatTo = getGame().notInPlay().getAlias();
+		String chatFrom = getGame().inPlay().getAlias();
+		event.addAttribute(new GameEventAttribute("state", "inplay"));
+		event.addAttribute(new GameEventAttribute("player.inplay", getGame()
+				.inPlay().getAlias()));
+		event.addAttribute(new GameEventAttribute("player.notinplay", getGame()
+				.notInPlay().getAlias()));
+		event.addAttribute(new GameEventAttribute("chat.from", chatFrom));
+		event.addAttribute(new GameEventAttribute("chat.to", chatTo));
+		event.addAttribute(new GameEventAttribute("game.id", getGame()
+				.getVersion().getId()));
+		getGame().notInPlay().onEvent(event);
+	}
 }

@@ -2,6 +2,7 @@ package org.oxtail.game.numberguess.state;
 
 import org.oxtail.game.event.GameEvent;
 import org.oxtail.game.home.GameHome;
+import org.oxtail.game.home.GameNotFoundException;
 import org.oxtail.game.model.Player;
 import org.oxtail.game.numberguess.model.NumberGuessBoard;
 import org.oxtail.game.numberguess.model.NumberGuessGame;
@@ -40,7 +41,11 @@ public class NumberGuessGameStatemachine implements GameStatemachine {
 	public void execute(GameEvent gameEvent) {
 		try {
 			doExecute(gameEvent);
+		} catch (GameNotFoundException e) {
+			System.err.println("warning, failed to execute : " + gameEvent
+					+ " " + e.getMessage());
 		} catch (Exception e) {
+			System.err.println("failed to execute : " + gameEvent);
 			e.printStackTrace(System.err);
 		}
 	}
@@ -53,6 +58,7 @@ public class NumberGuessGameStatemachine implements GameStatemachine {
 		GameEventContext<NumberGuessGame, NumberGuessMove, NumberGuessBoard> context = newContext(gameEvent);
 		//
 		if (event.hasValue("game.id")) {
+
 			// assume we are in a game
 			NumberGuessGame game = (NumberGuessGame) gameHome.findGame(event
 					.getString("game.id"));
