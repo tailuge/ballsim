@@ -1,5 +1,7 @@
 package org.oxtail.game.numberguess.state;
 
+import javax.xml.ws.Action;
+
 import org.oxtail.game.model.Player;
 import org.oxtail.game.numberguess.model.NumberGuessBoard;
 import org.oxtail.game.numberguess.model.NumberGuessGame;
@@ -29,5 +31,10 @@ public abstract class AbstractNumberGuessGameState extends AbstractGameState<Num
 			return null;
 		}
 		return others.iterator().next();
+	}
+
+	@Action
+	public void chat() {
+		// do nothing by default
 	}
 }
