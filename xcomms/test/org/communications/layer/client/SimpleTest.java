@@ -29,10 +29,8 @@ public class SimpleTest extends GWTTestCase{
 		GWTGameServerAsync gameServer = GWT.create(GWTGameServer.class);
 
 		delayTestFinish(1000);
-		
-		GameEvent event = new GameEvent();
-		
-		gameServer.notify(event,
+	
+		gameServer.notify(GameEvent.simpleEvent("message", "hi"),
 				new AsyncCallback() {
 					public void onFailure(Throwable caught) {
 						assertTrue(false);
@@ -47,50 +45,25 @@ public class SimpleTest extends GWTTestCase{
 	}
 
 	@Test
-	public void testLogin()
-	{
-		GreetingServiceAsync greetingService = GWT
-		.create(GreetingService.class);
+	public void testConnect()
+	{		
+		GWTGameServerAsync gameServer = GWT.create(GWTGameServer.class);
 
 		delayTestFinish(1000);
-		
-		greetingService.greetServer("bobby",
-				new AsyncCallback<String>() {
+	
+		gameServer.connect(GameEvent.simpleEvent("user", "frank"),
+				new AsyncCallback<GameEvent>() {
 					public void onFailure(Throwable caught) {
 						assertTrue(false);
 						finishTest();
 					}
 
-					public void onSuccess(String result) {
-						System.out.println("result:"+result);
-						assertTrue(result.length() > 0);
+					public void onSuccess(GameEvent object) {
 						finishTest();
 					}
 				});		
-	}
-
-
-	@Test
-	public void testInvalidLogin()
-	{
-		GreetingServiceAsync greetingService = GWT
-		.create(GreetingService.class);
-
-		delayTestFinish(1000);
 		
-		greetingService.greetServer("",
-				new AsyncCallback<String>() {
-					public void onFailure(Throwable caught) {
-						assertTrue(true);
-						finishTest();
-					}
-
-					public void onSuccess(String result) {
-						assertTrue(false);
-						finishTest();
-					}
-				});		
 	}
 
-
+	
 }
