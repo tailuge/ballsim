@@ -1,6 +1,7 @@
 package org.motion.ballsimapp.canvas;
 
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsimapp.client.ViewNotify;
 
 import com.google.gwt.user.client.Timer;
 
@@ -10,11 +11,14 @@ public class Animation {
 	private TableCanvas tableCanvas;
 	double time, startTime;
 	double maxt;
+	final private ViewNotify animationComplete;
 	
-	public Animation(Table table, TableCanvas tableCanvas)
+	public Animation(Table table, TableCanvas tableCanvas,ViewNotify animationComplete)
 	{
 		this.table = table;
 		this.tableCanvas = tableCanvas;
+		this.animationComplete = animationComplete;
+		
 		maxt = table.getMaxTime();
 		startTime = System.currentTimeMillis();
 		getTimer().scheduleRepeating(30);
@@ -28,7 +32,10 @@ public class Animation {
 	        double plottime = time > maxt ? maxt : time;
 	        tableCanvas.plotAtTime(table, plottime);
 			if (time > maxt) 
+			{
 				this.cancel();
+				animationComplete.handle();
+			}
 	      }
 	    };
 	}

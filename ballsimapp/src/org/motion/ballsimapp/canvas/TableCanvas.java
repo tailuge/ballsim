@@ -1,5 +1,6 @@
 package org.motion.ballsimapp.canvas;
 
+import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.Interpolator;
@@ -172,6 +173,14 @@ public class TableCanvas {
 		aim.setAimFrom(cueBall.pos);
 	}
 
-	
-	
+	public Vector3D getAim()
+	{
+		return aim.getAim();	
+	}
+
+	public Vector3D getAimPoint()
+	{
+		return aim.getAimPoint();	
+	}
+
 }

@@ -1,5 +1,7 @@
 package org.motion.ballsimapp.client;
 
+import org.motion.ballsim.physics.Event;
+
 
 public class GamePresenter {
 	
@@ -15,19 +17,14 @@ public class GamePresenter {
 	public GamePresenter(GameModel model, GameView view) {
 		this.model = model;
 		this.view = view;
-		view.addAimCompleteHandler(aimHandler());
+		view.setAimCompleteHandler(aimHandler());
+		view.setAnimationCompleteHandler(animationCompleteHandler());
 	}
 
-
-	public void begin() {
-		
+	// temporary
+	public void beginWatching() {		
 		view.setPlayer(model.playerId);
 		view.appendMessage("init");
-		
-		// hit callback
-		
-		
-		
 	}
 	 
 	// temporary
@@ -38,23 +35,37 @@ public class GamePresenter {
 		view.aim(model.table, 15);
 	}
 	
-	public AimHandler aimHandler()
+	public AimNotify aimHandler()
 	{
-		return new AimHandler() {
+		return new AimNotify() {
 			
 			@Override
-			public void handleAim() {
+			public void handle(Event aimEvent) {
 				
 				// pass to model
 				
-				model.temp();
+				model.table.ball(1).setFirstEvent(aimEvent);
+				model.table.generateSequence();
 				
 				// update view
 				
-				view.appendMessage("aim");
+				view.appendMessage("animate");
 				view.animate(model.table);
 			}
 		};
 	}
+	
+	public ViewNotify animationCompleteHandler()
+	{
+		return new ViewNotify() {
+			
+			@Override
+			public void handle() {
+				model.table.resetToCurrent(model.table.getMaxTime());
+				view.aim(model.table, 15);
+			}
+		};
+	}
+
 	
 }
