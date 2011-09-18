@@ -18,6 +18,8 @@ import com.google.common.base.Supplier;
 
 public class NumberGuessPlayer implements Runnable, GameEventCallback {
 
+	//private static ShitPane shitPane = ShitPane.create();
+	
 	private static final String[] messages = { "Arse Face", "God your Great",
 			"You smell of piss", "I Love You", "Chees and Beans", "Sheep",
 			"Gary Glitter", "Your Mother Sucks Cocks in Hell" };
@@ -161,7 +163,7 @@ public class NumberGuessPlayer implements Runnable, GameEventCallback {
 	}
 
 	private void handleEvent(GameEvent event) {
-		log("event received " + event.toString());
+	//	log("event received " + event.toString());
 		try {
 			GameEventHelper helper = new GameEventHelper(event);
 
@@ -173,6 +175,7 @@ public class NumberGuessPlayer implements Runnable, GameEventCallback {
 					String message = helper.getString("chat.message");
 					String from = helper.getString("chat.from");
 					String to = helper.getString("chat.to");
+					//shitPane.notifyMessage(from, now()+":"+message);
 					log(gameId, "{" + from + "@" + to + "} '" + message + "'");
 				}
 				if (gameOver(helper)) {
