@@ -9,6 +9,7 @@ public class GameEventAttribute implements Serializable {
 	private String value;
 
 	public GameEventAttribute(String name, String value) {
+	
 		this.name = name;
 		this.value = value;
 	}
