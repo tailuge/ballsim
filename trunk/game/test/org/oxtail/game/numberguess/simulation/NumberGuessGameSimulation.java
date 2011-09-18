@@ -36,10 +36,10 @@ public class NumberGuessGameSimulation {
 
 	/** main executor for the simulation */
 	private ExecutorService simulationExecutor = Executors
-			.newFixedThreadPool(10);
+			.newCachedThreadPool();
 	/** executor for the state machine to accept {@link GameEvent}'s on */
 	private ExecutorService statemachineExecutor = Executors
-			.newFixedThreadPool(10);
+			.newCachedThreadPool();
 
 	@Before
 	public void before() {
@@ -63,10 +63,27 @@ public class NumberGuessGameSimulation {
 		terminateSimulation();
 	}
 
+	@Ignore
 	@Test
 	public void simulateReligousPlayers() throws InterruptedException {
 		simulateWith("jesus", "buddha", "matthew", "mark", "luke", "john",
 				"muhammed", "allah", "The Pope", "GOD");
+		terminateSimulation();
+	}
+
+	@Test
+	public void simulateOneHunderPlayers() throws InterruptedException {
+		String[] s = new String[100];
+		for (int i=0;i<100;++i)
+			s[i] = "p"+i;
+		simulateWith(s);
+		terminateSimulation();
+	}
+
+	@Ignore
+	@Test
+	public void simulateIconicPlayers() throws InterruptedException {
+		simulateWith("hitler", "einstein", "blair", "cameron","glitter","west","obama","west");
 		terminateSimulation();
 	}
 
@@ -126,7 +143,7 @@ public class NumberGuessGameSimulation {
 			try {
 				System.err.println(">>> START");
 				do {
-					Thread.sleep(10000);
+					Thread.sleep(5000);
 					Predicate<Game<?>> allGames = Predicates.alwaysTrue();
 					snapshot = Lists.newArrayList(gameHome.findGames(allGames));
 					StringBuilder sb = new StringBuilder();
