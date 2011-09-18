@@ -12,6 +12,16 @@ public class GameEventAttribute implements Serializable {
 		return name;
 	}
 
+	public GameEventAttribute()
+	{		
+	}
+	
+	public GameEventAttribute(String name, String value) {
+		super();
+		this.name = name;
+		this.value = value;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}

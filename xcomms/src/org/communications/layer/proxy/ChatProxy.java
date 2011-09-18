@@ -1,15 +1,11 @@
 package org.communications.layer.proxy;
 
-import java.util.logging.Logger;
-
-import org.communications.layer.shared.GameEvent;
-import org.communications.layer.shared.GameEventCallback;
-import org.communications.layer.shared.GameServer;
 
 /**
  * Proxy from GWT to game server
  */
-public class ChatProxy implements GameServer, org.oxtail.game.event.GameServer,
+public class ChatProxy {}
+/*implements GameServer, org.oxtail.game.event.GameServer,
 		GameEventCallback {
 
 	private static final Logger log = Logger.getLogger(ChatProxy.class
@@ -51,3 +47,4 @@ public class ChatProxy implements GameServer, org.oxtail.game.event.GameServer,
 	}
 
 }
+*/

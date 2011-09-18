@@ -12,7 +12,8 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
-
+  <inherits name='org.oxtail.game.game'/>
+  
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.communications.layer.client.Xcomms'/>
 
@@ -20,7 +21,6 @@
   <source path='client'/>
   <source path='shared'/>
   
-  <servlet path='/greet' class='org.communications.layer.server.GreetingServiceImpl'/>
   <servlet path='/gameServer' class='org.communications.layer.server.GWTGameServerImpl'/>
 
 </module>

@@ -1,7 +1,6 @@
 package org.communications.layer.shared;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,21 +18,6 @@ public class GameEvent implements Serializable {
 
 	public void setAttributes(List<GameEventAttribute> attributes) {
 		this.attributes = attributes;
-	}
-	
-	public static GameEvent simpleEvent(String name,String value)
-	{
-		GameEventAttribute attribute = new GameEventAttribute();
-		attribute.setName(name);
-		attribute.setValue(value);
-		
-		ArrayList<GameEventAttribute> attributes = new ArrayList<GameEventAttribute>();
-		attributes.add(attribute);
-
-		GameEvent event = new GameEvent();
-		event.setAttributes(attributes);
-
-		return event;
 	}
 
 }

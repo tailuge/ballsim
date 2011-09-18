@@ -1,0 +1,2 @@
+serviceClass: org.communications.layer.client.GWTGameServer
+path: C8C7BC1B74FFCE0B12B7468EF6084EA3.gwt.rpc

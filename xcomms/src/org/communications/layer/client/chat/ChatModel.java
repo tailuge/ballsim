@@ -8,6 +8,7 @@ import org.communications.layer.client.GWTGameServerAsync;
 import org.communications.layer.client.SocketError;
 import org.communications.layer.client.SocketListener;
 import org.communications.layer.shared.GameEvent;
+import org.communications.layer.shared.GameEventUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -26,12 +27,12 @@ public class ChatModel {
 	
 
 	public void broadcastMessage(String text) {		
-		gameServer.notify(GameEvent.simpleEvent("message",text),showErrorCallback());		
+		gameServer.notify(GameEventUtil.simpleEvent("message",text),showErrorCallback());		
 	}
 	
 	
 	public void login(final String user) {
-		gameServer.connect(GameEvent.simpleEvent("user",user),
+		gameServer.connect(GameEventUtil.simpleEvent("user",user),
 				new AsyncCallback<GameEvent>() {
 			public void onFailure(Throwable caught) {
 				networkMessageHandler.handle("problem:" + caught.getMessage());

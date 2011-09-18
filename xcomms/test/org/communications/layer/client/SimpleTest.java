@@ -1,6 +1,7 @@
 package org.communications.layer.client;
 
 import org.communications.layer.shared.GameEvent;
+import org.communications.layer.shared.GameEventUtil;
 import org.junit.Test;
 
 import com.google.gwt.core.client.GWT;
@@ -30,7 +31,7 @@ public class SimpleTest extends GWTTestCase{
 
 		delayTestFinish(1000);
 	
-		gameServer.notify(GameEvent.simpleEvent("message", "hi"),
+		gameServer.notify(GameEventUtil.simpleEvent("message", "hi"),
 				new AsyncCallback() {
 					public void onFailure(Throwable caught) {
 						assertTrue(false);
@@ -51,7 +52,7 @@ public class SimpleTest extends GWTTestCase{
 
 		delayTestFinish(1000);
 	
-		gameServer.connect(GameEvent.simpleEvent("user", "frank"),
+		gameServer.connect(GameEventUtil.simpleEvent("user", "frank"),
 				new AsyncCallback<GameEvent>() {
 					public void onFailure(Throwable caught) {
 						assertTrue(false);
