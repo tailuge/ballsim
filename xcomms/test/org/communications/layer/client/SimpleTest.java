@@ -1,10 +1,18 @@
 package org.communications.layer.client;
 
 import org.communications.layer.shared.GameEvent;
+import org.communications.layer.shared.GameEventAttribute;
 import org.communications.layer.shared.GameEventUtil;
 import org.junit.Test;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONException;
+import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -66,5 +74,30 @@ public class SimpleTest extends GWTTestCase{
 		
 	}
 
+	@Test
+	public void testClientMarshallingEmpty()
+	{
+		GameEvent testEvent = new GameEvent();
+		GameEvent result = GameEventMarshaller.deMarshal(GameEventMarshaller.marshal(testEvent));
+		assertTrue(testEvent.equals(result));
+	}
+
+	@Test
+	public void testClientMarshallingSimple()
+	{
+		GameEvent testEvent = GameEventUtil.simpleEvent("user", "frank");
+		GameEvent result= GameEventMarshaller.deMarshal(GameEventMarshaller.marshal(testEvent));
+		assertTrue(testEvent.equals(result));
+	}		
+
+	@Test
+	public void testClientMarshalling()
+	{
+		GameEvent testEvent = GameEventUtil.simpleEvent("user", "frank");
+		testEvent.addAttribute(new GameEventAttribute("destination","mark"));		
+		GameEvent result= GameEventMarshaller.deMarshal(GameEventMarshaller.marshal(testEvent));
+		assertTrue(testEvent.equals(result));
+	}
+	
 	
 }

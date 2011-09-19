@@ -12,8 +12,7 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
-  <inherits name='org.oxtail.game.game'/>
-  
+  <inherits name="com.google.gwt.json.JSON" />
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.communications.layer.client.Xcomms'/>
 
