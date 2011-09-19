@@ -9,6 +9,7 @@ import org.communications.layer.client.GameEventMarshaller;
 import org.communications.layer.client.SocketError;
 import org.communications.layer.client.SocketListener;
 import org.communications.layer.shared.GameEvent;
+import org.communications.layer.shared.GameEventAttribute;
 import org.communications.layer.shared.GameEventUtil;
 
 import com.google.gwt.core.client.GWT;
@@ -27,8 +28,10 @@ public class ChatModel {
 	}
 	
 
-	public void broadcastMessage(String text) {		
-		gameServer.notify(GameEventMarshaller.marshal(GameEventUtil.simpleEvent("message",text)),showErrorCallback());		
+	public void sendMessage(String target,String text) {		
+		GameEvent event = GameEventUtil.simpleEvent("message",text);
+		event.addAttribute(new GameEventAttribute("target",target));
+		gameServer.notify(GameEventMarshaller.marshal(event),showErrorCallback());		
 	}
 	
 	
@@ -36,11 +39,11 @@ public class ChatModel {
 		gameServer.connect(GameEventMarshaller.marshal(GameEventUtil.simpleEvent("user",user)),
 				new AsyncCallback<String>() {
 			public void onFailure(Throwable caught) {
-				networkMessageHandler.handle("problem:" + caught.getMessage());
+				networkMessageHandler.handle("","problem:" + caught.getMessage());
 			}
 
 			public void onSuccess(String jsonEvent) {
-				networkMessageHandler.handle("login confirmed: "+jsonEvent);
+				networkMessageHandler.handle("","login confirmed: "+jsonEvent);
 				GameEvent event = GameEventMarshaller.deMarshal(jsonEvent);
 				String channelId = event.getAttribute("channelName").getValue();
 				createNamedChannelListener(channelId);
@@ -58,22 +61,22 @@ public class ChatModel {
 				channel.open(new SocketListener() {
 					@Override
 					public void onOpen() {
-						networkMessageHandler.handle(channelName + " Channel opened!");
+						networkMessageHandler.handle("",channelName + " Channel opened!");
 					}
 
 					@Override
 					public void onMessage(String message) {
-						networkMessageHandler.handle(message);
+						networkMessageHandler.handle("",message);
 					}
 
 					@Override
 					public void onError(SocketError error) {
-						networkMessageHandler.handle("Error: " + error.getDescription());
+						networkMessageHandler.handle("","Error: " + error.getDescription());
 					}
 
 					@Override
 					public void onClose() {
-						networkMessageHandler.handle("Channel closed!");
+						networkMessageHandler.handle("","Channel closed!");
 					}
 				});
 			}
@@ -88,7 +91,7 @@ public class ChatModel {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				networkMessageHandler.handle("Could not send to server:" + caught.getMessage());
+				networkMessageHandler.handle("","Could not send to server:" + caught.getMessage());
 			}
 
 			@Override

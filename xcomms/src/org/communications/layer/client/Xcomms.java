@@ -25,8 +25,8 @@ public class Xcomms implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		
-		presenter1 = new ChatPresenter(new ChatViewImpl(RootPanel.get("chat1"),"frank"), new ChatModel());
-		presenter2 = new ChatPresenter(new ChatViewImpl(RootPanel.get("chat2"),"benny"), new ChatModel());
+		presenter1 = new ChatPresenter(new ChatViewImpl(RootPanel.get("chat1"),"frank","benny"), new ChatModel());
+		presenter2 = new ChatPresenter(new ChatViewImpl(RootPanel.get("chat2"),"benny","frank"), new ChatModel());
 		
 	}
 

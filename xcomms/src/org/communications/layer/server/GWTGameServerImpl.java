@@ -23,7 +23,6 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 			.getName());
 
 
-	private ConnectionStore connections = ConnectionStore.getInstance();
 	
 
 	/** Called by Server via callback */
@@ -34,11 +33,8 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 		try {
 			ChannelService channelService = ChannelServiceFactory
 					.getChannelService();
-			for(String user : connections.getConnections())
-			{
-				System.out.println("sending to user:"+user);
-				channelService.sendMessage(new ChannelMessage(user,GameEventMarshaller.marshal(event)));				
-			}
+			String target = event.getAttribute("target").getValue();
+			channelService.sendMessage(new ChannelMessage(target,GameEventMarshaller.marshal(event)));				
 
 		} catch (ChannelFailureException channelFailureException) {
 			channelFailureException.printStackTrace();
@@ -88,9 +84,6 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 		String channelName = createChannel(user);
 		GameEvent connectEvent = GameEventUtil.simpleEvent("channelName",
 				channelName);
-		//proxy.notify(connectEvent);
-		
-		connections.addNewConnection(user);
 		
 		return connectEvent;
 	}

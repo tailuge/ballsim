@@ -31,8 +31,8 @@ public class ChatPresenter implements TextInputNotify{
 		return new TextInputNotify() {
 
 			@Override
-			public void handle(String text) {
-				model.broadcastMessage(text);
+			public void handle(String target,String text) {
+				model.sendMessage(target,text);
 			}
 			
 		};
@@ -40,7 +40,7 @@ public class ChatPresenter implements TextInputNotify{
 
 
 	@Override
-	public void handle(String text) {
+	public void handle(String target,String text) {
 		view.showMessage(text);
 	}
 	

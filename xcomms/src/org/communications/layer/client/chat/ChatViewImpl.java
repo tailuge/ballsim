@@ -3,6 +3,7 @@ package org.communications.layer.client.chat;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -14,12 +15,16 @@ public class ChatViewImpl implements ChatView {
 	final TextArea messageArea = new TextArea();
 	final TextBox userName = new TextBox();
 	final TextBox inputText = new TextBox();
+	final Label toLabelPrefix = new Label();
+	final Label toLabel = new Label();
 	final static String newline = "\n";
 	
-	public ChatViewImpl(RootPanel root,String defaultName)
+	public ChatViewImpl(RootPanel root,String defaultName,String target)
 	{
 		addElementsToRoot(root);
 		userName.setText(defaultName);
+		toLabelPrefix.setText("Send to:");
+		toLabel.setText(target);
 	}
 	
 	private void addElementsToRoot(RootPanel root)
@@ -31,6 +36,8 @@ public class ChatViewImpl implements ChatView {
 		root.add(userName);
 		root.add(loginButton);
 		root.add(messageArea);
+		root.add(toLabelPrefix);		
+		root.add(toLabel);		
 		root.add(inputText);		
 		root.add(sendButton);
 	}
@@ -46,7 +53,7 @@ public class ChatViewImpl implements ChatView {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				text.handle(inputText.getText());
+				text.handle(toLabel.getText(),inputText.getText());
 				inputText.setText("");				
 			}
 		});
