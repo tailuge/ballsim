@@ -1,37 +1,56 @@
 package org.communications.layer.server;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.communications.layer.shared.GameEvent;
 import org.communications.layer.shared.GameEventAttribute;
-import org.mortbay.util.ajax.JSON;
-import org.mortbay.util.ajax.JSONObjectConvertor;
+
+import com.google.appengine.repackaged.org.json.JSONArray;
+import com.google.appengine.repackaged.org.json.JSONException;
+import com.google.appengine.repackaged.org.json.JSONObject;
 
 public class GameEventMarshaller {
 
 	public static String marshal(GameEvent event) {
-		JSON.registerConvertor(GameEvent.class, new JSONObjectConvertor(false));
-		JSON.registerConvertor(GameEventAttribute.class,
-				new JSONObjectConvertor(false));
-		return JSON.toString(event);
+		try {
+
+			List<JSONObject> list = new ArrayList<JSONObject>();
+			
+			for(GameEventAttribute a : event.getAttributes())
+			{
+				JSONObject attribute = new JSONObject();
+				attribute.put("name",a.getName());
+				attribute.put("value",a.getValue());
+				list.add(attribute);
+			}			
+			
+			JSONObject jsonEvent = new JSONObject();
+			jsonEvent.put("attributes", list);
+			
+			return jsonEvent.toString();
+			
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return "";
+		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	public static GameEvent deMarshal(String data) {
 		GameEvent event = new GameEvent();
-
 		try {
-			Object eventObject = JSON.parse(data);
-			Object attributes = ((Map) eventObject).get("attributes");
-			for (Object j : (Object[]) attributes) {
-				Map attribute = (Map) j;
-				event.addAttribute(new GameEventAttribute(attribute.get("name")
-						.toString(), attribute.get("value").toString()));
+			JSONObject jsonEvent = new JSONObject(data);
+			JSONArray attributes = (JSONArray)jsonEvent.get("attributes");
+			for(int i =0 ; i < attributes.length(); i++)
+			{
+				JSONObject attribute = attributes.getJSONObject(i);
+				event.addAttribute(new GameEventAttribute(attribute.getString("name"),attribute.getString("value")));
 			}
-		} catch (Exception e) {
-			// failed to parse
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
 		return event;
 	}
 }

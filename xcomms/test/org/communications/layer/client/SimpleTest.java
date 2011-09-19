@@ -6,13 +6,6 @@ import org.communications.layer.shared.GameEventUtil;
 import org.junit.Test;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONException;
-import com.google.gwt.json.client.JSONNumber;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONString;
-import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -39,7 +32,7 @@ public class SimpleTest extends GWTTestCase{
 
 		delayTestFinish(1000);
 	
-		gameServer.notify(GameEventUtil.simpleEvent("message", "hi"),
+		gameServer.notify(GameEventMarshaller.marshal(GameEventUtil.simpleEvent("message", "hi")),
 				new AsyncCallback() {
 					public void onFailure(Throwable caught) {
 						assertTrue(false);
@@ -60,14 +53,14 @@ public class SimpleTest extends GWTTestCase{
 
 		delayTestFinish(1000);
 	
-		gameServer.connect(GameEventUtil.simpleEvent("user", "frank"),
-				new AsyncCallback<GameEvent>() {
+		gameServer.connect(GameEventMarshaller.marshal(GameEventUtil.simpleEvent("user", "frank")),
+				new AsyncCallback<String>() {
 					public void onFailure(Throwable caught) {
 						assertTrue(false);
 						finishTest();
 					}
 
-					public void onSuccess(GameEvent object) {
+					public void onSuccess(String object) {
 						finishTest();
 					}
 				});		

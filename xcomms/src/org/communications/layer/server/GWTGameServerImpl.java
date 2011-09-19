@@ -3,7 +3,6 @@ package org.communications.layer.server;
 import java.util.logging.Logger;
 
 import org.communications.layer.client.GWTGameServer;
-import org.communications.layer.proxy.ChatProxy;
 import org.communications.layer.shared.GameEvent;
 import org.communications.layer.shared.GameEventAttribute;
 import org.communications.layer.shared.GameEventCallback;
@@ -20,16 +19,12 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = Logger.getLogger(ChatProxy.class
+	private static final Logger log = Logger.getLogger(GWTGameServerImpl.class
 			.getName());
 
-	//private ChatProxy proxy;
 
 	private ConnectionStore connections = ConnectionStore.getInstance();
 	
-	public GWTGameServerImpl() {
-		//proxy = new ChatProxy(this);
-	}
 
 	/** Called by Server via callback */
 	@Override
@@ -42,7 +37,7 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 			for(String user : connections.getConnections())
 			{
 				System.out.println("sending to user:"+user);
-				channelService.sendMessage(new ChannelMessage(user,event.toString()));				
+				channelService.sendMessage(new ChannelMessage(user,GameEventMarshaller.marshal(event)));				
 			}
 
 		} catch (ChannelFailureException channelFailureException) {
@@ -55,6 +50,11 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 	/**
 	 * Called by Client
 	 */
+	@Override
+	public void notify(String data) throws IllegalArgumentException {
+		notify(GameEventMarshaller.deMarshal(data));
+	}
+	
 	public void notify(GameEvent event) {
 
 		System.out.println("notify");
@@ -70,10 +70,16 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 	}
 
 	/**
-	 * Called by client on first contact
+	 * Called by client on first contact with json GameEvent
 	 * 
 	 * @return connection details
 	 */
+	public String connect(String json) throws IllegalArgumentException {
+		GameEvent event = GameEventMarshaller.deMarshal(json);
+		return GameEventMarshaller.marshal(connect(event));
+	}
+
+	
 	public GameEvent connect(GameEvent event) throws IllegalArgumentException {
 		for (GameEventAttribute a : event.getAttributes()) {
 			System.out.println(a.getName() + ":" + a.getValue());
@@ -101,4 +107,6 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 			return null;
 		}
 	}
+
+
 }

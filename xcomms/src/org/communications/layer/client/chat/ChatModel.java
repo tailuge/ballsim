@@ -5,6 +5,7 @@ import org.communications.layer.client.ChannelFactory;
 import org.communications.layer.client.ChannelFactory.ChannelCreatedCallback;
 import org.communications.layer.client.GWTGameServer;
 import org.communications.layer.client.GWTGameServerAsync;
+import org.communications.layer.client.GameEventMarshaller;
 import org.communications.layer.client.SocketError;
 import org.communications.layer.client.SocketListener;
 import org.communications.layer.shared.GameEvent;
@@ -27,20 +28,21 @@ public class ChatModel {
 	
 
 	public void broadcastMessage(String text) {		
-		gameServer.notify(GameEventUtil.simpleEvent("message",text),showErrorCallback());		
+		gameServer.notify(GameEventMarshaller.marshal(GameEventUtil.simpleEvent("message",text)),showErrorCallback());		
 	}
 	
 	
 	public void login(final String user) {
-		gameServer.connect(GameEventUtil.simpleEvent("user",user),
-				new AsyncCallback<GameEvent>() {
+		gameServer.connect(GameEventMarshaller.marshal(GameEventUtil.simpleEvent("user",user)),
+				new AsyncCallback<String>() {
 			public void onFailure(Throwable caught) {
 				networkMessageHandler.handle("problem:" + caught.getMessage());
 			}
 
-			public void onSuccess(GameEvent event) {
-				networkMessageHandler.handle("login confirmed");
-				String channelId = event.getAttributes().get(0).getValue();
+			public void onSuccess(String jsonEvent) {
+				networkMessageHandler.handle("login confirmed: "+jsonEvent);
+				GameEvent event = GameEventMarshaller.deMarshal(jsonEvent);
+				String channelId = event.getAttribute("channelName").getValue();
 				createNamedChannelListener(channelId);
 			}
 		});
