@@ -53,7 +53,7 @@ public class ChatViewImpl implements ChatView {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				text.handle(toLabel.getText(),inputText.getText());
+				text.handle(userName.getText(), toLabel.getText(), inputText.getText());
 				inputText.setText("");				
 			}
 		});

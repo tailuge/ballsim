@@ -1,6 +1,6 @@
 package org.communications.layer.client.chat;
 
-public class ChatPresenter implements TextInputNotify{
+public class ChatPresenter implements NetworkMessageNotify {
 
 	final ChatView view;
 	final ChatModel model;
@@ -31,8 +31,8 @@ public class ChatPresenter implements TextInputNotify{
 		return new TextInputNotify() {
 
 			@Override
-			public void handle(String target,String text) {
-				model.sendMessage(target,text);
+			public void handle(String sender, String target, String text) {
+				model.sendMessage(sender, target, text);
 			}
 			
 		};
@@ -40,8 +40,8 @@ public class ChatPresenter implements TextInputNotify{
 
 
 	@Override
-	public void handle(String target,String text) {
-		view.showMessage(text);
+	public void handle(String message) {
+		view.showMessage(message);
 	}
 	
 

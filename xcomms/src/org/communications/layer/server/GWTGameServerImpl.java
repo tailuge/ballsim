@@ -1,5 +1,7 @@
 package org.communications.layer.server;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.communications.layer.client.GWTGameServer;
@@ -22,7 +24,7 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 	private static final Logger log = Logger.getLogger(GWTGameServerImpl.class
 			.getName());
 
-
+	private static final Map<String,String> channelMap = new HashMap<String, String>();
 	
 
 	/** Called by Server via callback */
@@ -34,8 +36,15 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 			ChannelService channelService = ChannelServiceFactory
 					.getChannelService();
 			String target = event.getAttribute("target").getValue();
-			channelService.sendMessage(new ChannelMessage(target,GameEventMarshaller.marshal(event)));				
 
+			if (channelMap.containsKey(target))
+			{
+				log.warning("Sending message for "+target+" on channel for "+channelMap.get(target));
+				target = channelMap.get(target);
+			}
+			
+			channelService.sendMessage(new ChannelMessage(target,GameEventMarshaller.marshal(event)));				
+			log.warning("Message sent to: "+target);
 		} catch (ChannelFailureException channelFailureException) {
 			channelFailureException.printStackTrace();
 		} catch (Exception otherException) {
@@ -77,10 +86,12 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 
 	
 	public GameEvent connect(GameEvent event) throws IllegalArgumentException {
-		for (GameEventAttribute a : event.getAttributes()) {
-			System.out.println(a.getName() + ":" + a.getValue());
+
+		String user = event.getAttribute("user").getValue();
+		if (event.hasAttribute("synonym"))
+		{
+			channelMap.put(user,event.getAttribute("synonym").getValue());
 		}
-		String user = event.getAttributes().get(0).getValue();
 		String channelName = createChannel(user);
 		GameEvent connectEvent = GameEventUtil.simpleEvent("channelName",
 				channelName);
