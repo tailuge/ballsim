@@ -1,4 +1,4 @@
-package org.communications.layer.client;
+package org.communications.layer.client.comms;
 
 import org.communications.layer.shared.GameEvent;
 import org.communications.layer.shared.GameEventAttribute;

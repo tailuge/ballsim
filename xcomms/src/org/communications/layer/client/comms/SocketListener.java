@@ -14,7 +14,8 @@
  * the License.
  */
 
-package org.communications.layer.client;
+package org.communications.layer.client.comms;
+
 
 /**
  * Listener to receive messages from the server.

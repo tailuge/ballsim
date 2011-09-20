@@ -14,7 +14,8 @@
  * the License.
  */
 
-package org.communications.layer.client;
+package org.communications.layer.client.comms;
+
 
 import com.google.gwt.core.client.JavaScriptObject;
 
@@ -27,21 +28,21 @@ public class Channel extends JavaScriptObject {
   public final native Socket open(SocketListener listener) /*-{
     var socket = this.open();
     socket.onopen = function(event) {
-      listener.@org.communications.layer.client.SocketListener::onOpen()();
+      listener.@org.communications.layer.client.comms.SocketListener::onOpen()();
     };
     socket.onmessage = function(event) {
       listener.
-      @org.communications.layer.client.SocketListener::onMessage(Ljava/lang/String;)
+      @org.communications.layer.client.comms.SocketListener::onMessage(Ljava/lang/String;)
       (event.data);
     };
     socket.onerror = function(error) {
       listener.
-      @org.communications.layer.client.SocketListener::onError(Lorg/communications/layer/client/SocketError;)
+      @org.communications.layer.client.comms.SocketListener::onError(Lorg/communications/layer/client/comms/SocketError;)
       (error);
     };
     socket.onclose = function(event) {
       listener.
-      @org.communications.layer.client.SocketListener::onClose()();
+      @org.communications.layer.client.comms.SocketListener::onClose()();
     };
     return socket;
   }-*/;

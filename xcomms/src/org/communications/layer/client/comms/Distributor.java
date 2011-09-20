@@ -1,4 +1,4 @@
-package org.communications.layer.client.chat;
+package org.communications.layer.client.comms;
 
 import java.util.HashMap;
 import java.util.Map;

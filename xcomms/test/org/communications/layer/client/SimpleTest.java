@@ -1,5 +1,6 @@
 package org.communications.layer.client;
 
+import org.communications.layer.client.comms.GameEventMarshaller;
 import org.communications.layer.shared.GameEvent;
 import org.communications.layer.shared.GameEventAttribute;
 import org.communications.layer.shared.GameEventUtil;

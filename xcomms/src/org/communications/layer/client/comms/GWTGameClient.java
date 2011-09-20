@@ -1,13 +1,8 @@
-package org.communications.layer.client.chat;
+package org.communications.layer.client.comms;
 
-import org.communications.layer.client.Channel;
-import org.communications.layer.client.ChannelFactory;
-import org.communications.layer.client.ChannelFactory.ChannelCreatedCallback;
+import org.communications.layer.client.comms.ChannelFactory.ChannelCreatedCallback;
 import org.communications.layer.client.GWTGameServer;
 import org.communications.layer.client.GWTGameServerAsync;
-import org.communications.layer.client.GameEventMarshaller;
-import org.communications.layer.client.SocketError;
-import org.communications.layer.client.SocketListener;
 import org.communications.layer.shared.GameEvent;
 import org.communications.layer.shared.GameEventAttribute;
 import org.communications.layer.shared.GameEventUtil;
@@ -19,7 +14,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  * Only one channel can be opened per client therefore this class
  * acts as a distributer of messages arriving at that channel to
  * registered listeners based on the 'target' name in the message
- *
+ * Only needed to support multiple clients per browser during development.
  */
 public class GWTGameClient {
 

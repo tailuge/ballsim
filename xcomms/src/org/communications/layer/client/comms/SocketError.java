@@ -14,7 +14,8 @@
  * the License.
  */
 
-package org.communications.layer.client;
+package org.communications.layer.client.comms;
+
 
 import com.google.gwt.core.client.JavaScriptObject;
 

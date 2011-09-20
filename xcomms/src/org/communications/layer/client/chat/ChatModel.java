@@ -1,5 +1,7 @@
 package org.communications.layer.client.chat;
 
+import org.communications.layer.client.comms.GWTGameClient;
+import org.communications.layer.client.comms.GWTGameEventHandler;
 import org.communications.layer.shared.GameEvent;
 
 

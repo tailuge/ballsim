@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import org.communications.layer.client.GWTGameServer;
 import org.communications.layer.shared.GameEvent;
-import org.communications.layer.shared.GameEventAttribute;
 import org.communications.layer.shared.GameEventCallback;
 import org.communications.layer.shared.GameEventUtil;
 
@@ -31,14 +30,16 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 	@Override
 	public void onEvent(GameEvent event) {
 		log.warning("Callback from server received " + event);
-		System.out.println("onEvent");
 		try {
 			ChannelService channelService = ChannelServiceFactory
 					.getChannelService();
 			String target = event.getAttribute("target").getValue();
 
+			
 			if (channelMap.containsKey(target))
 			{
+				// when debugging 2 clients in one browser we need to route messages
+				// down a single channel connection.
 				log.warning("Sending message for "+target+" on channel for "+channelMap.get(target));
 				target = channelMap.get(target);
 			}
@@ -61,16 +62,9 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 	}
 	
 	public void notify(GameEvent event) {
-
-		System.out.println("notify");
-		
-		for (GameEventAttribute a : event.getAttributes()) {
-			System.out.println(a.getName() + ":" + a.getValue());
-		}
-		
-		// temporary loop back
-		onEvent(event);
-		
+		log.warning("notify:"+event);
+		// game server will be called here
+		onEvent(event);		
 		return;
 	}
 
@@ -87,6 +81,7 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 	
 	public GameEvent connect(GameEvent event) throws IllegalArgumentException {
 
+		log.warning("connect:"+event);
 		String user = event.getAttribute("user").getValue();
 		if (event.hasAttribute("synonym"))
 		{
