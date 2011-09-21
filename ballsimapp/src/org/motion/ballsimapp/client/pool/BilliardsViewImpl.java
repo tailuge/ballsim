@@ -43,8 +43,8 @@ public class BilliardsViewImpl implements BilliardsView {
 		spin = new SpinInputCanvas(width/8,width/8);
 		power = new PowerInputCanvas(width-width/4,width/10);
 		tableCanvas = new TableCanvas(width/2,height/2);
-		messageArea.setWidth(width*3 +"px");	
-		messageArea.setHeight(width +"px");	
+		messageArea.setWidth(width*8 +"px");	
+		messageArea.setHeight(width/2 +"px");	
 		
 		addElementsToRoot();
 	}
