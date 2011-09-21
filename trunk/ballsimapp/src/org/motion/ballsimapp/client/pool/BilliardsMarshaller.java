@@ -1,34 +1,52 @@
 package org.motion.ballsimapp.client.pool;
 
+import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsimapp.shared.GameEvent;
+import org.motion.ballsimapp.shared.GameEventAttribute;
+import org.motion.ballsimapp.shared.GameEventUtil;
 
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 
 public class BilliardsMarshaller {
 	
-	public final static GameEvent aimUpdate(Vector3D dir,Vector3D spin,double speed)
+	public final static GameEvent eventFromAim(Aim aim)
 	{
-		GameEvent event = new GameEvent();
-	
-//		JSONObject aim = new JSONObject();
-		
-		return event;
+		JSONObject jsonAim = new JSONObject();
+		jsonAim.put("dir", marshal(aim.dir));
+		jsonAim.put("spin", marshal(aim.spin));
+		jsonAim.put("speed", new JSONNumber(aim.speed));		
+		return GameEventUtil.simpleEvent("aim", jsonAim.toString());
 	}
 
-	public static JSONObject marshal(double x,double y ,double z) {
+	private static JSONObject marshal(Vector3D v) {
 		JSONObject vector = new JSONObject();
-		vector.put("x", new JSONNumber(x));
-		vector.put("y", new JSONNumber(y));
-		vector.put("z", new JSONNumber(z));
+		vector.put("x", new JSONNumber(v.getX()));
+		vector.put("y", new JSONNumber(v.getY()));
+		vector.put("z", new JSONNumber(v.getZ()));
 		return vector;
 	}
+
+	public static Aim aimFromEvent(GameEvent event)
+	{
+		String data = event.getAttribute("aim").getValue();
+		JSONValue jsonAim = JSONParser.parseStrict(data);
+		JSONObject jdir = jsonAim.isObject().get("dir").isObject();
+		JSONObject jspin = jsonAim.isObject().get("spin").isObject();
+		
+		return new Aim(deMarshal(jdir),deMarshal(jspin),jsonAim.isObject().get("speed").isNumber().doubleValue());
+		
+	}
 	
-//	private final static GameEvent marshalVector(String name,Vector3D vec)
-//	{
-	//	GameEvent event = new GameEvent();
-//		event.addAttribute(new GameEventAttribute(name+"x",vec.getX()));
-		//return event;
-	//}
+	private static Vector3D deMarshal(JSONObject v)
+	{
+		return new Vector3D(
+				v.get("x").isNumber().doubleValue(),
+				v.get("y").isNumber().doubleValue(),
+				v.get("z").isNumber().doubleValue());				
+	}
 }
