@@ -3,7 +3,7 @@ package org.motion.ballsimapp.client.pool;
 import org.motion.ballsim.physics.Table;
 
 
-public interface GameView {
+public interface BilliardsView {
 
 	void setPlayer(String playerId);
 	void setAimCompleteHandler(AimNotify aimHandler);

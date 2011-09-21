@@ -3,23 +3,33 @@ package org.motion.ballsimapp.client.pool;
 import org.motion.ballsim.physics.Event;
 
 
-public class GamePresenter {
+public class BilliardsPresenter implements MessageNotify {
 	
 	// model
 	
-	private GameModel model;
+	private BilliardsModel model;
 
 	// view
 	
-	private GameView view;
+	private BilliardsView view;
 
 	
-	public GamePresenter(GameModel model, GameView view) {
+	public BilliardsPresenter(BilliardsModel model, BilliardsView view) {
 		this.model = model;
 		this.view = view;
 		view.setAimCompleteHandler(aimHandler());
 		view.setAnimationCompleteHandler(animationCompleteHandler());
 		view.setPlayer(model.playerId);
+		
+		
+		model.setMessageHandler(this);
+	}
+
+	// temporary
+	public void forceLogin() {		
+	
+		model.login(model.playerId);
+		
 	}
 
 	// temporary
@@ -47,9 +57,11 @@ public class GamePresenter {
 				
 				model.table.ball(1).setFirstEvent(aimEvent);
 				model.table.generateSequence();
+				model.sendAim("");
 				
 				// update view
 				
+				view.appendMessage("sent aim");
 				view.appendMessage("animate");
 				view.animate(model.table);
 			}
@@ -66,6 +78,11 @@ public class GamePresenter {
 				view.aim(model.table, 15);
 			}
 		};
+	}
+
+	@Override
+	public void handle(String message) {
+		view.appendMessage(message);		
 	}
 
 	

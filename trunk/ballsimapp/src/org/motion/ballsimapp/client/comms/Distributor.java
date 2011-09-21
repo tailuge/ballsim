@@ -39,7 +39,12 @@ public class Distributor {
 	{
 		handlers.get(user).handle(error(message));
 	}
-	
+
+	public void sendInfo(String user,String message)
+	{
+		handlers.get(user).handle(info(message));
+	}
+
 	public void addGameEventListener(String user,GWTGameEventHandler handler)
 	{
 		handlers.put(user, handler);		

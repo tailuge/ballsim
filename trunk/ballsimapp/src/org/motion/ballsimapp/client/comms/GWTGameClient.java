@@ -29,8 +29,18 @@ public class GWTGameClient {
 	public void login(final String user, GWTGameEventHandler handler) {
 		
 		distributor.addGameEventListener(user, handler);
+
+		final boolean connected = !connectedUser.isEmpty();
 		
-		gameServer.connect(GameEventMarshaller.marshal(connect(user)),
+		GameEvent login = connect(user);
+		
+		// only allow first user to connect (in single browser)
+		if (connectedUser.isEmpty())
+		{
+			connectedUser = user;
+		}
+		
+		gameServer.connect(GameEventMarshaller.marshal(login),
 				new AsyncCallback<String>() {
 			public void onFailure(Throwable caught) {
 				distributor.sendError(user,caught.getMessage());
@@ -39,13 +49,13 @@ public class GWTGameClient {
 			public void onSuccess(String jsonEvent) {
 				GameEvent event = GameEventMarshaller.deMarshal(jsonEvent);
 				distributor.distribute(distributor.target(user,event));
-				if (connectedUser.isEmpty())
+				if (!connected)
 				{
 					createNamedChannelListener(user,event.getAttribute("channelName").getValue());
 				}
 				else
 				{
-					distributor.sendError(user,"browser already connected");					
+					distributor.sendInfo(user,"browser already connected");					
 				}
 			}
 		});
@@ -72,7 +82,7 @@ public class GWTGameClient {
 					@Override
 					public void onOpen() {
 						distributor.distributeAll(distributor.info("Channel opened"));
-						connectedUser = user;
+						//connectedUser = user;
 					}
 
 					@Override

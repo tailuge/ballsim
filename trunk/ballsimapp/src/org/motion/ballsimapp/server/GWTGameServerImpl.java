@@ -86,7 +86,9 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 		if (event.hasAttribute("synonym"))
 		{
 			channelMap.put(user,event.getAttribute("synonym").getValue());
+			return GameEventUtil.simpleEvent("channelName","alreadyConnected");
 		}
+		
 		String channelName = createChannel(user);
 		GameEvent connectEvent = GameEventUtil.simpleEvent("channelName",
 				channelName);
