@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 
-public class GameViewImpl implements GameView {
+public class BilliardsViewImpl implements BilliardsView {
 
 	RootPanel root;
 
@@ -29,21 +29,23 @@ public class GameViewImpl implements GameView {
 	private  TableCanvas tableCanvas;
 	final TextArea messageArea = new TextArea();
 	final Label playerName = new Label();
+	final static String newline = "\n";
 
 	// callbacks
 	
 	AimNotify aimHandler;
 	ViewNotify animationComplete;
 
-	public GameViewImpl(int width, RootPanel root)
+	public BilliardsViewImpl(int width, RootPanel root)
 	{
 		int height = width * 15 / 10;
 		this.root= root;
 		spin = new SpinInputCanvas(width/8,width/8);
-		power = new PowerInputCanvas(width-width/5,width/10);
-		tableCanvas = new TableCanvas(width,height);
-		messageArea.setWidth(width +"px");	
-		messageArea.setHeight(width/3 +"px");	
+		power = new PowerInputCanvas(width-width/4,width/10);
+		tableCanvas = new TableCanvas(width/2,height/2);
+		messageArea.setWidth(width*3 +"px");	
+		messageArea.setHeight(width +"px");	
+		
 		addElementsToRoot();
 	}
 	
@@ -66,7 +68,7 @@ public class GameViewImpl implements GameView {
 
 	@Override
 	public void appendMessage(String message) {
-		messageArea.setText(message + ", " + messageArea.getText());		
+		messageArea.setText(messageArea.getText() + newline + message);		
 	}
 
 
