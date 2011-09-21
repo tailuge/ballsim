@@ -1,4 +1,4 @@
-package org.motion.ballsimapp.client;
+package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsim.physics.Event;
 
@@ -19,6 +19,7 @@ public class GamePresenter {
 		this.view = view;
 		view.setAimCompleteHandler(aimHandler());
 		view.setAnimationCompleteHandler(animationCompleteHandler());
+		view.setPlayer(model.playerId);
 	}
 
 	// temporary

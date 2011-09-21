@@ -1,4 +1,4 @@
-package org.motion.ballsimapp.client;
+package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsim.physics.Table;
 
