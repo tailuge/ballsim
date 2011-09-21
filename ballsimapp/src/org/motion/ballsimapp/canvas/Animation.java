@@ -1,7 +1,7 @@
 package org.motion.ballsimapp.canvas;
 
 import org.motion.ballsim.physics.Table;
-import org.motion.ballsimapp.client.ViewNotify;
+import org.motion.ballsimapp.client.pool.ViewNotify;
 
 import com.google.gwt.user.client.Timer;
 

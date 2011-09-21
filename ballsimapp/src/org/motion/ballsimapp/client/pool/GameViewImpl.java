@@ -1,4 +1,4 @@
-package org.motion.ballsimapp.client;
+package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.util.UtilEvent;
@@ -40,9 +40,10 @@ public class GameViewImpl implements GameView {
 		int height = width * 15 / 10;
 		this.root= root;
 		spin = new SpinInputCanvas(width/8,width/8);
-		power = new PowerInputCanvas(width-width/8,width/16);
+		power = new PowerInputCanvas(width-width/5,width/10);
 		tableCanvas = new TableCanvas(width,height);
 		messageArea.setWidth(width +"px");	
+		messageArea.setHeight(width/3 +"px");	
 		addElementsToRoot();
 	}
 	
