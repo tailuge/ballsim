@@ -19,7 +19,7 @@ public class UtilEvent
 	{
 		Event e = new Event(
 				pos,
-				dir.scalarMultiply(speed),
+				dir.scalarMultiply(speed*Table.maxVel),
 				Vector3D.PLUS_K,
 				Vector3D.PLUS_J,
 				UtilVector3D.crossUp(dir.scalarMultiply(speed/Ball.R)).scalarMultiply(cueHeight*Table.maxAngVel),
