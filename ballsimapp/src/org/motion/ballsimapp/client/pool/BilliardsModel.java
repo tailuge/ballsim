@@ -16,7 +16,7 @@ public class BilliardsModel extends GWTGameClient {
 	
 	// table position and game state
 
-	Table table;
+	public Table table = new Table(false);
 	
 	String playerId;
 
@@ -31,9 +31,8 @@ public class BilliardsModel extends GWTGameClient {
 		this.eventHandler = eventHandler;
 	}
 	
-	public void temp()
+	public void tempInitTable()
 	{
-		table = new Table(true);
 		table.ball(1).setFirstEvent(UtilEvent.stationary(Vector3D.ZERO));
 		table.ball(2).setFirstEvent(UtilEvent.stationary(new Vector3D(-Ball.R*0.46,+Ball.R*18,0)));
 		table.ball(3).setFirstEvent(UtilEvent.stationary(new Vector3D(Ball.R*8,-Ball.R*3,0)));					
@@ -47,7 +46,7 @@ public class BilliardsModel extends GWTGameClient {
 	public void sendAimUpdate(Aim aim)
 	{
 		GameEvent aimEvent = BilliardsMarshaller.eventFromAim(aim);
-		aimEvent.addAttribute(new GameEventAttribute("target","spectator"));
+		aimEvent.addAttribute(new GameEventAttribute("target","frank"));
 		notify(aimEvent);
 	}
 

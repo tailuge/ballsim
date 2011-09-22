@@ -33,19 +33,12 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 		try {
 			ChannelService channelService = ChannelServiceFactory
 					.getChannelService();
-			String target = event.getAttribute("target").getValue();
-
 			
-			if (channelMap.containsKey(target))
-			{
-				// when debugging 2 clients in one browser we need to route messages
-				// down a single channel connection.
-				log.warning("Sending message for "+target+" on channel for "+channelMap.get(target));
-				target = channelMap.get(target);
-			}
+			String target = event.getAttribute("target").getValue();
+			log.warning("Sending message for "+target+" on channel for "+channelMap.get(target));
+			target = channelMap.get(target);
 			
 			channelService.sendMessage(new ChannelMessage(target,GameEventMarshaller.marshal(event)));				
-			log.warning("Message sent to: "+target);
 		} catch (ChannelFailureException channelFailureException) {
 			channelFailureException.printStackTrace();
 		} catch (Exception otherException) {
@@ -83,10 +76,16 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 
 		log.warning("connect:"+event);
 		String user = event.getAttribute("user").getValue();
+		// when debugging 2 clients in one browser we need to route messages
+		// down a single channel connection.
 		if (event.hasAttribute("synonym"))
 		{
 			channelMap.put(user,event.getAttribute("synonym").getValue());
 			return GameEventUtil.simpleEvent("channelName","alreadyConnected");
+		}
+		else
+		{
+			channelMap.put(user,user);
 		}
 		
 		String channelName = createChannel(user);

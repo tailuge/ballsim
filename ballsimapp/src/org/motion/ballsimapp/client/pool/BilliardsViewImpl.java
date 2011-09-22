@@ -46,7 +46,7 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 		spin = new SpinInputCanvas(width/8,width/8,this);
 		power = new PowerInputCanvas(width-width/4,width/10,this);
 		tableCanvas = new TableCanvas(width/2,height/2,this);
-		messageArea.setWidth(width*8 +"px");	
+		messageArea.setWidth(width*4 +"px");	
 		messageArea.setHeight(width/2 +"px");	
 		
 		addElementsToRoot();
@@ -81,12 +81,16 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 		this.animationComplete = animationComplete;
 	}
 
+
+	@Override
+	public void showTable(Table table) {
+		tableCanvas.plotAtTime(table, 0);
+	}
 	
 	@Override
 	public void aim(Table table, int timeout) {
 		
 		hitButton.setEnabled(true);
-		tableCanvas.plotAtTime(table, 0);
 		tableCanvas.beginAim(table);
 	}
 
