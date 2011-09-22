@@ -14,7 +14,8 @@ public interface BilliardsView {
 	void setAnimationCompleteHandler(ViewNotify animationComplete);
 
 	void appendMessage(String message);
-	void aim(Table table, int timeout);
+	void showTable(Table table);
+	void aim(Table table,int timeout);
 	void animate(Table shotSequence);
 	void setAim(Aim aim);
 	

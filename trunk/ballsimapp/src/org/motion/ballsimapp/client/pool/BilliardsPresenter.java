@@ -6,18 +6,21 @@ import org.motion.ballsimapp.client.pool.handlers.AimNotify;
 import org.motion.ballsimapp.client.pool.handlers.ViewNotify;
 import org.motion.ballsimapp.client.pool.mode.AimingMode;
 import org.motion.ballsimapp.client.pool.mode.BilliardsMode;
+import org.motion.ballsimapp.client.pool.mode.ViewingMode;
 import org.motion.ballsimapp.shared.GameEvent;
+import org.motion.ballsimapp.shared.GameEventAttribute;
+import org.motion.ballsimapp.shared.GameEventUtil;
 
 
 public class BilliardsPresenter {
 	
 	// model
 	
-	final private BilliardsModel model;
+	final public BilliardsModel model;
 
 	// view
 	
-	final private BilliardsView view;
+	final public BilliardsView view;
 
 	// mode
 	
@@ -27,7 +30,7 @@ public class BilliardsPresenter {
 	public BilliardsPresenter(BilliardsModel model, BilliardsView view) {
 		this.model = model;
 		this.view = view;
-		this.mode = new AimingMode(this);
+//		this.mode = new AimingMode(this);
 		
 		view.setAimUpdateHandler(aimUpdateHandler());
 		view.setAimCompleteHandler(aimCompleteHandler());
@@ -37,24 +40,22 @@ public class BilliardsPresenter {
 	}
 
 	// temporary
-	public void forceLogin() {		
-	
+	public void forceLoginAim() {			
+		mode = new AimingMode(this);
+		model.tempInitTable();
+		view.showTable(model.table);
 		model.login(model.playerId);
-		
+		view.aim(model.table, 15);
 	}
 
 	// temporary
-	public void beginWatching() {		
-		view.setPlayer(model.playerId);
-		view.appendMessage("init");
+	public void forceLoginView() {			
+		mode = new ViewingMode(this);
+		model.tempInitTable();
+		view.showTable(model.table);
+		model.login(model.playerId);
 	}
-	 
-	// temporary
-	public void beginAim()
-	{
-		model.temp();
-		view.aim(model.table, 15);
-	}
+
 	
 	public AimNotify aimUpdateHandler()
 	{
@@ -62,8 +63,9 @@ public class BilliardsPresenter {
 			
 			@Override
 			public void handle(Aim aim) {				
-				// pass to model
-				model.sendAimUpdate(aim);
+				GameEvent aimComplete = BilliardsMarshaller.eventFromAim(aim);
+				aimComplete.addAttribute(new GameEventAttribute("aimUpdate",""));
+				mode = mode.handle(aimComplete);
 			}
 		};
 	}
@@ -74,33 +76,23 @@ public class BilliardsPresenter {
 			
 			@Override
 			public void handle(Aim aim) {
-				
-				// pass to model
-				model.hit(aim);
-				
-				// update view				
-				view.appendMessage("animate");
-				view.animate(model.table);
+				GameEvent aimComplete = BilliardsMarshaller.eventFromAim(aim);
+				aimComplete.addAttribute(new GameEventAttribute("aimComplete",""));
+				mode = mode.handle(aimComplete);
 			}
 		};
 	}
 
 	public ViewNotify animationCompleteHandler()
 	{
-		return new ViewNotify() {
-			
+		return new ViewNotify() {			
 			@Override
 			public void handle() {
-				model.table.resetToCurrent(model.table.getMaxTime());
-				view.aim(model.table, 15);
+				mode = mode.handle(GameEventUtil.simpleEvent("animationComplete", ""));
 			}
 		};
 	}
 
-	public void showMessage(String message)
-	{
-		view.appendMessage(message);
-	}
 
 	// the mode of the presenter is driven by network events
 	// and local input actions

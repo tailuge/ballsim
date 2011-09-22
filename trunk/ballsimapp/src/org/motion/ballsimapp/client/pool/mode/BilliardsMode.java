@@ -5,7 +5,7 @@ import org.motion.ballsimapp.shared.GameEvent;
 
 public abstract class BilliardsMode {
 	
-	private final BilliardsPresenter presenter;
+	protected final BilliardsPresenter presenter;
 	
 	public BilliardsMode(BilliardsPresenter presenter)
 	{
@@ -16,7 +16,7 @@ public abstract class BilliardsMode {
 	
 	protected void message(String message)
 	{
-		presenter.showMessage(message);
+		presenter.view.appendMessage(message);
 	}
 
 }
