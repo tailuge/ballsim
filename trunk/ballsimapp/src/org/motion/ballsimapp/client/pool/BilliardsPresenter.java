@@ -1,5 +1,6 @@
 package org.motion.ballsimapp.client.pool;
 
+import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.physics.Event;
 
 
@@ -17,7 +18,8 @@ public class BilliardsPresenter implements MessageNotify {
 	public BilliardsPresenter(BilliardsModel model, BilliardsView view) {
 		this.model = model;
 		this.view = view;
-		view.setAimCompleteHandler(aimHandler());
+		view.setAimUpdateHandler(aimUpdateHandler());
+		view.setAimCompleteHandler(aimCompleteHandler());
 		view.setAnimationCompleteHandler(animationCompleteHandler());
 		view.setPlayer(model.playerId);
 		
@@ -46,28 +48,37 @@ public class BilliardsPresenter implements MessageNotify {
 		view.aim(model.table, 15);
 	}
 	
-	public AimNotify aimHandler()
+	public AimNotify aimUpdateHandler()
 	{
 		return new AimNotify() {
 			
 			@Override
-			public void handle(Event aimEvent) {
+			public void handle(Aim aim) {				
+				// pass to model
+				model.sendAimUpdate(aim);
+			}
+		};
+	}
+
+	public AimNotify aimCompleteHandler()
+	{
+		return new AimNotify() {
+			
+			@Override
+			public void handle(Aim aim) {
 				
 				// pass to model
-				
-				model.table.ball(1).setFirstEvent(aimEvent);
-				model.table.generateSequence();
-				model.sendAim("");
+				model.hit(aim);
+				model.sendAimUpdate(aim);
 				
 				// update view
 				
-				view.appendMessage("sent aim");
 				view.appendMessage("animate");
 				view.animate(model.table);
 			}
 		};
 	}
-	
+
 	public ViewNotify animationCompleteHandler()
 	{
 		return new ViewNotify() {

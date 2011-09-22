@@ -1,7 +1,7 @@
 package org.motion.ballsimapp.client.pool;
 
-import org.motion.ballsim.physics.Event;
+import org.motion.ballsim.game.Aim;
 
 public interface AimNotify {
-	void handle(Event aimEvent);
+	void handle(Aim aim);
 }

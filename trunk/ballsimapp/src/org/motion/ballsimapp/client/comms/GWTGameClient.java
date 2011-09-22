@@ -61,7 +61,7 @@ public class GWTGameClient {
 		});
 	}
 
-	public GameEvent connect(String user)
+	private GameEvent connect(String user)
 	{
 		GameEvent loginEvent = GameEventUtil.simpleEvent("user", user);
 		if (!connectedUser.isEmpty())
@@ -105,21 +105,19 @@ public class GWTGameClient {
 		});
 	}
 	
-	public void notify(String sender, String target, String message) {		
-		GameEvent event = GameEventUtil.simpleEvent("message",message);
-		event.addAttribute(new GameEventAttribute("target",target));
-		gameServer.notify(GameEventMarshaller.marshal(event),ackHandler(sender));		
+	public void notify(GameEvent event) {		
+		gameServer.notify(GameEventMarshaller.marshal(event),ackHandler());		
 	}
 	
 	
 	@SuppressWarnings("rawtypes")
-	private AsyncCallback ackHandler(final String user) {
+	private AsyncCallback ackHandler() {
 		
 		return new AsyncCallback() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				distributor.sendError(user,caught.getMessage());
+				distributor.distributeAll(distributor.error(caught.getMessage()));
 			}
 
 			@Override
