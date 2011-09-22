@@ -5,7 +5,7 @@ import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.Interpolator;
 import org.motion.ballsim.physics.Table;
-import org.motion.ballsimapp.client.pool.AimChange;
+import org.motion.ballsimapp.client.pool.handlers.AimChange;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -175,7 +175,7 @@ public class TableCanvas {
 
 	public Vector3D getAim()
 	{
-		return aim.getAim().subtract(aim.getAimPoint());
+		return aim.getAim().subtract(aim.getAimPoint()).normalize();
 	}
 
 	public Vector3D getAimPoint()

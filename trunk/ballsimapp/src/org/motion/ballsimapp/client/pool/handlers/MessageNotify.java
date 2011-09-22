@@ -1,4 +1,4 @@
-package org.motion.ballsimapp.client.pool;
+package org.motion.ballsimapp.client.pool.handlers;
 
 public interface MessageNotify {
 	

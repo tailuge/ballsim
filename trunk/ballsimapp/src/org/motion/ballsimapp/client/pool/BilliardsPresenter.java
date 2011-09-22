@@ -1,30 +1,39 @@
 package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsim.game.Aim;
-import org.motion.ballsim.physics.Event;
+import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
+import org.motion.ballsimapp.client.pool.handlers.AimNotify;
+import org.motion.ballsimapp.client.pool.handlers.ViewNotify;
+import org.motion.ballsimapp.client.pool.mode.AimingMode;
+import org.motion.ballsimapp.client.pool.mode.BilliardsMode;
+import org.motion.ballsimapp.shared.GameEvent;
 
 
-public class BilliardsPresenter implements MessageNotify {
+public class BilliardsPresenter {
 	
 	// model
 	
-	private BilliardsModel model;
+	final private BilliardsModel model;
 
 	// view
 	
-	private BilliardsView view;
+	final private BilliardsView view;
 
+	// mode
+	
+	private BilliardsMode mode;
+	
 	
 	public BilliardsPresenter(BilliardsModel model, BilliardsView view) {
 		this.model = model;
 		this.view = view;
+		this.mode = new AimingMode(this);
+		
 		view.setAimUpdateHandler(aimUpdateHandler());
 		view.setAimCompleteHandler(aimCompleteHandler());
 		view.setAnimationCompleteHandler(animationCompleteHandler());
-		view.setPlayer(model.playerId);
-		
-		
-		model.setMessageHandler(this);
+		view.setPlayer(model.playerId);	
+		model.setEventHandler(getEventHandler());
 	}
 
 	// temporary
@@ -44,7 +53,6 @@ public class BilliardsPresenter implements MessageNotify {
 	public void beginAim()
 	{
 		model.temp();
-		model.table.resetToCurrent(model.table.getMaxTime());
 		view.aim(model.table, 15);
 	}
 	
@@ -69,10 +77,8 @@ public class BilliardsPresenter implements MessageNotify {
 				
 				// pass to model
 				model.hit(aim);
-				model.sendAimUpdate(aim);
 				
-				// update view
-				
+				// update view				
 				view.appendMessage("animate");
 				view.animate(model.table);
 			}
@@ -91,10 +97,21 @@ public class BilliardsPresenter implements MessageNotify {
 		};
 	}
 
-	@Override
-	public void handle(String message) {
-		view.appendMessage(message);		
+	public void showMessage(String message)
+	{
+		view.appendMessage(message);
 	}
 
+	// the mode of the presenter is driven by network events
+	// and local input actions
 	
+	private GWTGameEventHandler getEventHandler()
+	{
+		return new GWTGameEventHandler() {
+			@Override
+			public void handle(GameEvent event) {
+				mode = mode.handle(event);				
+			}
+		};
+	}
 }

@@ -20,29 +20,28 @@ public class BilliardsModel extends GWTGameClient {
 	
 	String playerId;
 
-	MessageNotify messageHandler;
+	GWTGameEventHandler eventHandler;
 	
 	public BilliardsModel(String playerId) {
 		this.playerId = playerId;
 	}
 	
-	public void setMessageHandler(MessageNotify messageHandler)
+	public void setEventHandler(GWTGameEventHandler eventHandler)
 	{
-		this.messageHandler = messageHandler;
+		this.eventHandler = eventHandler;
 	}
 	
 	public void temp()
 	{
 		table = new Table(true);
-		table.ball(1).setFirstEvent(UtilEvent.hit(Vector3D.ZERO, Vector3D.PLUS_J, Table.maxVel*0.6, 0.0));
+		table.ball(1).setFirstEvent(UtilEvent.stationary(Vector3D.ZERO));
 		table.ball(2).setFirstEvent(UtilEvent.stationary(new Vector3D(-Ball.R*0.46,+Ball.R*18,0)));
 		table.ball(3).setFirstEvent(UtilEvent.stationary(new Vector3D(Ball.R*8,-Ball.R*3,0)));					
-		table.generateSequence();
 	}
 	
 	
 	public void login(final String user) {
-		login(user, getEventHandler());
+		login(user, eventHandler);
 	}
 
 	public void sendAimUpdate(Aim aim)
@@ -61,16 +60,5 @@ public class BilliardsModel extends GWTGameClient {
 	}
 
 
-	private GWTGameEventHandler getEventHandler()
-	{
-		return new GWTGameEventHandler() {
 
-			@Override
-			public void handle(GameEvent event) {
-				// for now just display message
-				messageHandler.handle(playerId+"-recv:"+event.toString());
-			}
-			
-		};
-	}
 }

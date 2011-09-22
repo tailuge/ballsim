@@ -6,6 +6,9 @@ import org.motion.ballsimapp.canvas.Animation;
 import org.motion.ballsimapp.canvas.PowerInputCanvas;
 import org.motion.ballsimapp.canvas.SpinInputCanvas;
 import org.motion.ballsimapp.canvas.TableCanvas;
+import org.motion.ballsimapp.client.pool.handlers.AimChange;
+import org.motion.ballsimapp.client.pool.handlers.AimNotify;
+import org.motion.ballsimapp.client.pool.handlers.ViewNotify;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -40,8 +43,8 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 	{
 		int height = width * 15 / 10;
 		this.root= root;
-		spin = new SpinInputCanvas(width/8,width/8);
-		power = new PowerInputCanvas(width-width/4,width/10);
+		spin = new SpinInputCanvas(width/8,width/8,this);
+		power = new PowerInputCanvas(width-width/4,width/10,this);
 		tableCanvas = new TableCanvas(width/2,height/2,this);
 		messageArea.setWidth(width*8 +"px");	
 		messageArea.setHeight(width/2 +"px");	
@@ -125,6 +128,11 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 			Aim aim = new Aim(tableCanvas.getAim(),spin.getSpin(),power.getPower());
 			aimUpdateHandler.handle(aim);
 		}
+	}
+
+	@Override
+	public void setAim(Aim aim) {
+		
 	}
 
 	
