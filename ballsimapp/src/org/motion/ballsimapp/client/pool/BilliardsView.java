@@ -1,6 +1,9 @@
 package org.motion.ballsimapp.client.pool;
 
+import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsimapp.client.pool.handlers.AimNotify;
+import org.motion.ballsimapp.client.pool.handlers.ViewNotify;
 
 
 public interface BilliardsView {
@@ -13,5 +16,6 @@ public interface BilliardsView {
 	void appendMessage(String message);
 	void aim(Table table, int timeout);
 	void animate(Table shotSequence);
+	void setAim(Aim aim);
 	
 }

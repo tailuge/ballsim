@@ -1,6 +1,8 @@
 package org.motion.ballsimapp.canvas;
 
 
+import org.motion.ballsimapp.client.pool.handlers.AimChange;
+
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
@@ -25,12 +27,14 @@ public class PowerInputCanvas {
 	private boolean active = false;
 	
 	private double power = 0.75;
+	private final AimChange aimChangeHandler;
 	
-	public PowerInputCanvas(int width_, int height_)
+	public PowerInputCanvas(int width_, int height_,AimChange aimChangeHandler)
 	{
 		height = height_;
 		width = width_;
 		mouseX = width/2;
+		this.aimChangeHandler = aimChangeHandler;
 	}
 
 	public double getPower()
@@ -93,6 +97,7 @@ public class PowerInputCanvas {
 		computePower();
 		plotPowerScale();
 		plotPower(mouseX);
+		aimChangeHandler.handle();
 	}
 	
 	private void computePower()

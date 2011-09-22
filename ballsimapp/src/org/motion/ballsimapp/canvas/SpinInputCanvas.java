@@ -2,6 +2,7 @@ package org.motion.ballsimapp.canvas;
 
 
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsimapp.client.pool.handlers.AimChange;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -27,18 +28,20 @@ public class SpinInputCanvas {
 	private boolean active = false;
 	
 	private double spinX, spinY;
+	private final AimChange aimChangeHandler;
 	
 	public Vector3D getSpin()
 	{
 		return new Vector3D(spinX,spinY,0);
 	}
 	
-	public SpinInputCanvas(int width_, int height_)
+	public SpinInputCanvas(int width_, int height_,AimChange aimChangeHandler)
 	{
 		height = height_;
 		width = width_;
 		mouseX = width/2;
 		mouseY = height/2;
+		this.aimChangeHandler = aimChangeHandler;
 	}
 
 	public Canvas getInitialisedCanvas()
@@ -99,6 +102,7 @@ public class SpinInputCanvas {
 		{
 			plotSpinBall();
 			plotSpinAim(mouseX,mouseY);
+			aimChangeHandler.handle();
 		}
 	}
 	private boolean computeSpin()
