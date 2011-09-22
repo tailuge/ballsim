@@ -1,6 +1,8 @@
 package org.motion.ballsimapp.canvas;
 
 
+import org.motion.ballsim.gwtsafe.Vector3D;
+
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
@@ -26,9 +28,9 @@ public class SpinInputCanvas {
 	
 	private double spinX, spinY;
 	
-	public double getSpin()
+	public Vector3D getSpin()
 	{
-		return -spinY*2+spinX*0.001;
+		return new Vector3D(spinX,spinY,0);
 	}
 	
 	public SpinInputCanvas(int width_, int height_)
@@ -55,7 +57,7 @@ public class SpinInputCanvas {
 	}
 	
 	
-	void initHandlers() 
+	private void initHandlers() 
 	{
 	    canvas.addMouseMoveHandler(
 	    		new MouseMoveHandler() 

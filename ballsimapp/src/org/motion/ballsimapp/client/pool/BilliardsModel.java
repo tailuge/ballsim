@@ -1,12 +1,16 @@
 package org.motion.ballsimapp.client.pool;
 
+import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.Event;
+import org.motion.ballsim.physics.Interpolator;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsimapp.client.comms.GWTGameClient;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
 import org.motion.ballsimapp.shared.GameEvent;
+import org.motion.ballsimapp.shared.GameEventAttribute;
 
 public class BilliardsModel extends GWTGameClient {
 	
@@ -41,11 +45,22 @@ public class BilliardsModel extends GWTGameClient {
 		login(user, getEventHandler());
 	}
 
-	public void sendAim(String message)
+	public void sendAimUpdate(Aim aim)
 	{
-		notify(playerId,"spectator","aim");
+		GameEvent aimEvent = BilliardsMarshaller.eventFromAim(aim);
+		aimEvent.addAttribute(new GameEventAttribute("target","spectator"));
+		notify(aimEvent);
 	}
-	
+
+	public void hit(Aim aim)
+	{
+		Event cueBall = Interpolator.interpolate(table.ball(1), 0);
+		Event hit = UtilEvent.hit(cueBall.pos, aim.dir, aim.speed, aim.spin.getY());
+		table.ball(1).setFirstEvent(hit);
+		table.generateSequence();
+	}
+
+
 	private GWTGameEventHandler getEventHandler()
 	{
 		return new GWTGameEventHandler() {
@@ -53,8 +68,7 @@ public class BilliardsModel extends GWTGameClient {
 			@Override
 			public void handle(GameEvent event) {
 				// for now just display message
-				System.out.println("Recv:"+playerId+":"+event);
-				messageHandler.handle(event.toString());
+				messageHandler.handle(playerId+"-recv:"+event.toString());
 			}
 			
 		};

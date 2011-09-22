@@ -3,10 +3,8 @@ package org.motion.ballsimapp.client.pool;
 import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsimapp.shared.GameEvent;
-import org.motion.ballsimapp.shared.GameEventAttribute;
 import org.motion.ballsimapp.shared.GameEventUtil;
 
-import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;

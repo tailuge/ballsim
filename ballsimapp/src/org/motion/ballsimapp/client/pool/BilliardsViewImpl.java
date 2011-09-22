@@ -1,7 +1,7 @@
 package org.motion.ballsimapp.client.pool;
 
+import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.physics.Table;
-import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsimapp.canvas.Animation;
 import org.motion.ballsimapp.canvas.PowerInputCanvas;
 import org.motion.ballsimapp.canvas.SpinInputCanvas;
@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 
-public class BilliardsViewImpl implements BilliardsView {
+public class BilliardsViewImpl implements BilliardsView, AimChange {
 
 	RootPanel root;
 
@@ -33,7 +33,7 @@ public class BilliardsViewImpl implements BilliardsView {
 
 	// callbacks
 	
-	AimNotify aimHandler;
+	AimNotify aimUpdateHandler;
 	ViewNotify animationComplete;
 
 	public BilliardsViewImpl(int width, RootPanel root)
@@ -42,7 +42,7 @@ public class BilliardsViewImpl implements BilliardsView {
 		this.root= root;
 		spin = new SpinInputCanvas(width/8,width/8);
 		power = new PowerInputCanvas(width-width/4,width/10);
-		tableCanvas = new TableCanvas(width/2,height/2);
+		tableCanvas = new TableCanvas(width/2,height/2,this);
 		messageArea.setWidth(width*8 +"px");	
 		messageArea.setHeight(width/2 +"px");	
 		
@@ -73,31 +73,12 @@ public class BilliardsViewImpl implements BilliardsView {
 
 
 
-
-	@Override
-	public void setAimCompleteHandler(final AimNotify aimHandler) {
-		hitButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {				
-				hitButton.setEnabled(false);
-				aimHandler.handle(
-						UtilEvent.hit(tableCanvas.getAimPoint(),tableCanvas.getAim(),Table.maxVel*power.getPower(), spin.getSpin()));
-			}
-		});
-	}
-
 	@Override
 	public void setAnimationCompleteHandler(final ViewNotify animationComplete) {
 		this.animationComplete = animationComplete;
 	}
 
 	
-
-	/* (non-Javadoc)
-	 * @see org.motion.ballsimapp.client.GameView#aim(int)
-	 * 
-	 * Place view is state where it gets users aiming input.
-	 * 
-	 */
 	@Override
 	public void aim(Table table, int timeout) {
 		
@@ -117,7 +98,34 @@ public class BilliardsViewImpl implements BilliardsView {
 		Animation showAnimation = new Animation(table,tableCanvas,animationComplete);
 		
 	}
+
+	TimeFilter timeFilter = new TimeFilter();
 	
+
+	@Override
+	public void setAimUpdateHandler(final AimNotify aimUpdateHandler) {
+		this.aimUpdateHandler = aimUpdateHandler;
+	}
+	
+	@Override
+	public void setAimCompleteHandler(final AimNotify aimCompleteHandler) {
+		hitButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {				
+				hitButton.setEnabled(false);
+				Aim aim = new Aim(tableCanvas.getAim(),spin.getSpin(),power.getPower());
+				aimCompleteHandler.handle(aim);
+			}
+		});
+	}
+
+	@Override
+	public void handle() {
+		if (timeFilter.hasElapsed(1))
+		{
+			Aim aim = new Aim(tableCanvas.getAim(),spin.getSpin(),power.getPower());
+			aimUpdateHandler.handle(aim);
+		}
+	}
 
 	
 }

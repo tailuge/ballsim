@@ -5,6 +5,7 @@ import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.Interpolator;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsimapp.client.pool.AimChange;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -20,9 +21,7 @@ import com.google.gwt.event.dom.client.MouseUpHandler;
 
 public class TableCanvas {
 
-	// plot a table
-
-	public PlotScale scale = new PlotScale();
+	private final PlotScale scale = new PlotScale();
 	
 	private Canvas canvas;
 	private Canvas backBuffer;
@@ -32,16 +31,15 @@ public class TableCanvas {
 	private Context2d backBufferContext;
 	private Context2d backgroundContext;
 
-	private final PlotAim aim;
-	
+	private final PlotAim aim;	
 	private final CssColor redrawColor = CssColor.make("rgba(95,95,205,0.5)");
-
     private final int width,height;
-    private int mouseX,mouseY;
+	private final AimChange aimChangeHandler;
+
+	private int mouseX,mouseY;
 	private boolean active = false;
 	
-	
-	public TableCanvas(int w, int h)
+	public TableCanvas(int w, int h,AimChange aimChangeHandler)
 	{
 		width = w;
 		height = h;
@@ -49,6 +47,7 @@ public class TableCanvas {
 		mouseY=height/2;
 		scale.setWindowInfo(width, height);
 		aim = new PlotAim(scale);
+		this.aimChangeHandler = aimChangeHandler;
 	}
 	
 	private void initialiseBackground()
@@ -126,6 +125,7 @@ public class TableCanvas {
 		moveBackBufferToFront(backBufferContext,context);
 		aim.setAim(scale.mouseToWorld(x, y));
 		aim.plotAim(context);
+		aimChangeHandler.handle();
 	}
 	
 	private void initHandlers() 
@@ -175,7 +175,7 @@ public class TableCanvas {
 
 	public Vector3D getAim()
 	{
-		return aim.getAim();	
+		return aim.getAim().subtract(aim.getAimPoint());
 	}
 
 	public Vector3D getAimPoint()
