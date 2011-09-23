@@ -110,8 +110,8 @@ public class TableCanvas {
 	
 	private void updateAim(int x, int y)
 	{
+		aim.setAimToTarget(scale.mouseToWorld(x, y));
 		moveBackBufferToFront(backBufferContext,context);
-		aim.setAim(scale.mouseToWorld(x, y));
 		aim.plotAim(context);
 	}
 	
@@ -132,23 +132,20 @@ public class TableCanvas {
 
 	public void beginAim(Vector3D position) 
 	{
-		aim.setAimFrom(position);
+		aim.setCueBallPosition(position);
 	}
 
 	public Vector3D getAim()
 	{
-		return aim.getAim().subtract(aim.getAimPoint()).normalize();
+		return aim.getAimDirection();
 	}
 
 	public void setAim(Vector3D aimPoint)
 	{
-		aim.setAim(aimPoint);
+		aim.setAimDirection(aimPoint);
+		moveBackBufferToFront(backBufferContext,context);
 		aim.plotAim(context);
 	}
 
-	public Vector3D getAimPoint()
-	{
-		return aim.getAimPoint();	
-	}
 
 }
