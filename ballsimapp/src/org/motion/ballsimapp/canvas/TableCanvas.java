@@ -7,85 +7,20 @@ import org.motion.ballsim.physics.Interpolator;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsimapp.client.pool.handlers.AimChange;
 
-import com.google.gwt.canvas.client.Canvas;
-import com.google.gwt.canvas.dom.client.Context2d;
-import com.google.gwt.canvas.dom.client.CssColor;
 
-public class TableCanvas {
+public class TableCanvas extends TableRenderer implements ActiveMouseMoveHandler.MouseEvent {
 
-	private final PlotScale scale = new PlotScale();
-	
-	private Canvas canvas;
-	private Canvas backBuffer;
-	private Canvas background;
-
-	private Context2d context;
-	private Context2d backBufferContext;
-	private Context2d backgroundContext;
-
-	private final PlotAim aim;	
-	private final PlotPlacer placer;
-    private final int width,height;
+	@SuppressWarnings("unused")
+	private final ActiveMouseMoveHandler mouseHandler;
 	private final AimChange aimChangeHandler;
-	
-	private final CssColor redrawColor = CssColor.make("rgba(95,95,205,0.5)");
-
 	boolean aiming = false;
 	
 	public TableCanvas(int w, int h,AimChange aimChangeHandler)
 	{
-		width = w;
-		height = h;
-		scale.setWindowInfo(width, height);
-		aim = new PlotAim(scale);
-		placer = new PlotPlacer(scale);
+		super(w,h);
 		this.aimChangeHandler = aimChangeHandler;
+		mouseHandler = new ActiveMouseMoveHandler(canvas, this);
 	}
-	
-	private void initialiseBackground()
-	{
-		background = Canvas.createIfSupported();
-	    background.setWidth(width + "px");
-	    background.setHeight(height + "px");
-	    background.setCoordinateSpaceWidth(width);
-	    background.setCoordinateSpaceHeight(height);
-	    backgroundContext = background.getContext2d();
-	    backgroundContext.setFillStyle(redrawColor);
-	    backgroundContext.fillRect(0, 0, width, height);
-	    PlotCushion.plot(backgroundContext,scale);
-	}
-	
-	public Canvas getInitialisedCanvas()
-	{
-		canvas = Canvas.createIfSupported();	
-		backBuffer = Canvas.createIfSupported();
-		
-		
-	    canvas.setWidth(width + "px");
-	    canvas.setHeight(height + "px");
-	    canvas.setCoordinateSpaceWidth(width);
-	    canvas.setCoordinateSpaceHeight(height);
-
-	    backBuffer.setWidth(width + "px");
-	    backBuffer.setHeight(height + "px");
-	    backBuffer.setCoordinateSpaceWidth(width);
-	    backBuffer.setCoordinateSpaceHeight(height);
-
-	    
-	    context = canvas.getContext2d();
-	    backBufferContext = backBuffer.getContext2d();
-	    
-	    initialiseBackground();
-	    
-	    initHandlers();
-	    
-		clearBackBuffer(); 
-		moveBackBufferToFront(backBufferContext,context);
-		
-		return canvas;
-	}
-
-
 	
 	public void plotAtTime(Table table,double t)
 	{
@@ -101,30 +36,10 @@ public class TableCanvas {
 
 	}
 
-	void clearBackBuffer() 
-	{
-		backBufferContext.drawImage(backgroundContext.getCanvas(), 0, 0);
-	}
-	
-	  
-	public void moveBackBufferToFront(Context2d back, Context2d front) 
-	{
-		front.drawImage(back.getCanvas(), 0, 0);
-	}
-	
-	
-
-	private void initHandlers() {
-
-		new ActiveMouseMoveHandler(canvas,
-				new ActiveMouseMoveHandler.MouseEvent() {
-
-					@Override
-					public void handle(int mouseX, int mouseY) {
-						updateAim(mouseX,mouseY);
-						aimChangeHandler.handleAimChanged();
-					}
-				});
+	@Override
+	public void handle(int mouseX, int mouseY) {
+		updateAim(mouseX,mouseY);
+		aimChangeHandler.handleAimChanged();
 	}
 	
 	private void updateAim(int x, int y)
@@ -142,22 +57,24 @@ public class TableCanvas {
 		}
 	}
 
-	public void setCueBallPosition(Vector3D position) 
-	{
-		aim.setCueBallPosition(position);
-	}
 
-	public Vector3D getAim()
+	public Vector3D getAimDirection()
 	{
 		return aim.getAimDirection();
 	}
 
-	public void setAim(Vector3D aimPoint)
+	public void setAimDirection(Vector3D aimDirection)
 	{
 		aiming=true;
-		aim.setAimDirection(aimPoint);
+		aim.setAimDirection(aimDirection);
 		moveBackBufferToFront(backBufferContext,context);
 		aim.plotAim(context);
+	}
+
+	// for aiming.. refactor.
+	public void setCueBallPosition(Vector3D position) 
+	{
+		aim.setCueBallPosition(position);
 	}
 
 	public void setPlacer(Vector3D cueBallPosition)
@@ -166,6 +83,7 @@ public class TableCanvas {
 		placer.setCueBallPosition(cueBallPosition);
 		moveBackBufferToFront(backBufferContext,context);
 		placer.plotPlacer(context);
+		
 	}
 
 }
