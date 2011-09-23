@@ -13,7 +13,7 @@ public class TableCanvas extends TableRenderer implements ActiveMouseMoveHandler
 	@SuppressWarnings("unused")
 	private final ActiveMouseMoveHandler mouseHandler;
 	private final AimChange aimChangeHandler;
-	boolean aiming = false;
+	boolean aiming = true;
 	
 	public TableCanvas(int w, int h,AimChange aimChangeHandler)
 	{

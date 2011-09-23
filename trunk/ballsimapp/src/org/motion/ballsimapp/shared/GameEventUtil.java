@@ -11,7 +11,7 @@ public class GameEventUtil {
 	public final static String PLACEBALL_UPDATE = "aimUpdate";
 	public final static String PLACEBALL_COMPLETE = "aimUpdate";
 
-	public static GameEvent simpleEvent(String name,String value)
+	public static GameEvent makeEvent(String name,String value)
 	{
 		GameEventAttribute attribute = new GameEventAttribute(name,value);
 		
@@ -23,5 +23,9 @@ public class GameEventUtil {
 
 		return event;
 	}
-	
+
+	public static GameEvent makeEvent(String name)
+	{
+		return makeEvent(name,"");
+	}
 }

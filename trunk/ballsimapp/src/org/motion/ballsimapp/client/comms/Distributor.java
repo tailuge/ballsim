@@ -52,12 +52,12 @@ public class Distributor {
 	
 	public GameEvent error(String message)
 	{
-		return GameEventUtil.simpleEvent("error", message);
+		return GameEventUtil.makeEvent("error", message);
 	}
 
 	public GameEvent info(String message)
 	{
-		return GameEventUtil.simpleEvent("info", message);
+		return GameEventUtil.makeEvent("info", message);
 	}
 
 

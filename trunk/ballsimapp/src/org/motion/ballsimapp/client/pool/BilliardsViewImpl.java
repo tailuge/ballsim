@@ -9,9 +9,10 @@ import org.motion.ballsimapp.canvas.Animation;
 import org.motion.ballsimapp.canvas.PowerInputCanvas;
 import org.motion.ballsimapp.canvas.SpinInputCanvas;
 import org.motion.ballsimapp.canvas.TableCanvas;
+import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
 import org.motion.ballsimapp.client.pool.handlers.AimChange;
-import org.motion.ballsimapp.client.pool.handlers.AimNotify;
-import org.motion.ballsimapp.client.pool.handlers.ViewNotify;
+import org.motion.ballsimapp.shared.GameEvent;
+import org.motion.ballsimapp.shared.GameEventAttribute;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -22,26 +23,24 @@ import com.google.gwt.user.client.ui.TextArea;
 
 public class BilliardsViewImpl implements BilliardsView, AimChange {
 
-	RootPanel root;
-
 	// inputs
 
-	private SpinInputCanvas spin;
-	private PowerInputCanvas power;
+	final private SpinInputCanvas spin;
+	final private PowerInputCanvas power;
 	final Button hitButton = new Button("Hit");
 	final TimeFilter timeFilter = new TimeFilter();
 
-	// outputs
+	// visual elements
 
-	private TableCanvas tableCanvas;
+	final private RootPanel root;
+	final private TableCanvas tableCanvas;
 	final TextArea messageArea = new TextArea();
 	final Label playerName = new Label();
 	final static String newline = "\n";
 
-	// callbacks
+	// event sink
 
-	AimNotify aimHandler;
-	ViewNotify animationComplete;
+	GWTGameEventHandler eventHandler;
 
 	public BilliardsViewImpl(int width, RootPanel root) {
 		int height = width * 15 / 10;
@@ -53,6 +52,19 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 		messageArea.setHeight(width / 2 + "px");
 
 		addElementsToRoot();
+
+		hitButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				hitButton.setEnabled(false);
+				Aim aim = new Aim(tableCanvas.getAimDirection(),
+						spin.getSpin(), power.getPower());
+				GameEvent aimComplete = BilliardsMarshaller.eventFromAim(aim);
+				aimComplete.addAttribute(new GameEventAttribute("aimComplete",
+						""));
+
+				eventHandler.handleEvent(aimComplete);
+			}
+		});
 	}
 
 	private void addElementsToRoot() {
@@ -75,8 +87,8 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 	}
 
 	@Override
-	public void setAnimationCompleteHandler(final ViewNotify animationComplete) {
-		this.animationComplete = animationComplete;
+	public void setEventHandler(GWTGameEventHandler eventHandler) {
+		this.eventHandler = eventHandler;
 	}
 
 	@Override
@@ -89,13 +101,13 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 	@Override
 	public void aim(int timeout) {
 		hitButton.setText("Hit");
-		hitButton.setEnabled(true);		
+		hitButton.setEnabled(true);
 	}
 
 	@Override
 	public void place(int timeout) {
 		hitButton.setText("Place");
-		hitButton.setEnabled(true);		
+		hitButton.setEnabled(true);
 	}
 
 	@Override
@@ -105,21 +117,8 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 
 		@SuppressWarnings("unused")
 		Animation showAnimation = new Animation(table, tableCanvas,
-				animationComplete);
+				eventHandler);
 
-	}
-
-	@Override
-	public void setAimHandler(final AimNotify aimHandler) {
-		this.aimHandler = aimHandler;
-		hitButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				hitButton.setEnabled(false);
-				Aim aim = new Aim(tableCanvas.getAimDirection(), spin.getSpin(), power
-						.getPower());
-				aimHandler.handleAimComplete(aim);
-			}
-		});
 	}
 
 	@Override
@@ -127,7 +126,10 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 		if (timeFilter.hasElapsed(2)) {
 			Aim aim = new Aim(tableCanvas.getAimDirection(), spin.getSpin(),
 					power.getPower());
-			aimHandler.handleAimUpdate(aim);
+			GameEvent aimComplete = BilliardsMarshaller.eventFromAim(aim);
+			aimComplete.addAttribute(new GameEventAttribute("aimUpdate", ""));
+
+			eventHandler.handleEvent(aimComplete);
 		}
 	}
 

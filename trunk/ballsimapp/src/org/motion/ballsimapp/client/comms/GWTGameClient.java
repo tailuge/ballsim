@@ -63,7 +63,7 @@ public class GWTGameClient {
 
 	private GameEvent connect(String user)
 	{
-		GameEvent loginEvent = GameEventUtil.simpleEvent("user", user);
+		GameEvent loginEvent = GameEventUtil.makeEvent("user", user);
 		if (!connectedUser.isEmpty())
 		{
 			loginEvent.addAttribute(new GameEventAttribute("synonym",connectedUser));
