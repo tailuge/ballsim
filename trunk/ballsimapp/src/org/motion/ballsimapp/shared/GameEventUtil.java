@@ -2,11 +2,12 @@ package org.motion.ballsimapp.shared;
 
 import java.util.ArrayList;
 
-//import org.oxtail.game.event.GameEvent;
-//import org.oxtail.game.event.GameEventAttribute;
-
 public class GameEventUtil {
 
+	public final static String AIM_COMPLETE = "aimComplete";
+	public final static String AIM_UPDATE = "aimUpdate";
+	public final static String ANIMATION_COMPLETE = "animationComplete";
+	
 	public static GameEvent simpleEvent(String name,String value)
 	{
 		GameEventAttribute attribute = new GameEventAttribute(name,value);

@@ -30,7 +30,6 @@ public class BilliardsPresenter {
 	public BilliardsPresenter(BilliardsModel model, BilliardsView view) {
 		this.model = model;
 		this.view = view;
-//		this.mode = new AimingMode(this);
 		
 		view.setAimUpdateHandler(aimUpdateHandler());
 		view.setAimCompleteHandler(aimCompleteHandler());
@@ -41,7 +40,7 @@ public class BilliardsPresenter {
 
 	// temporary
 	public void forceLoginAim() {			
-		mode = new AimingMode(this);
+		mode = new AimingMode(model,view);
 		model.tempInitTable();
 		view.showTable(model.table);
 		model.login(model.playerId);
@@ -50,7 +49,7 @@ public class BilliardsPresenter {
 
 	// temporary
 	public void forceLoginView() {			
-		mode = new ViewingMode(this);
+		mode = new ViewingMode(model,view);
 		model.tempInitTable();
 		view.showTable(model.table);
 		model.login(model.playerId);

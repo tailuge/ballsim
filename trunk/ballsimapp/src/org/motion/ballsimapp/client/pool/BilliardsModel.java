@@ -61,6 +61,10 @@ public class BilliardsModel extends GWTGameClient {
 
 	public void sendHit(Aim aim)
 	{
+		updateWithHit(aim);
+		
+		// TODO extract outcome of shot and include in event
+		
 		GameEvent hitEvent = BilliardsMarshaller.eventFromAim(aim);
 		hitEvent.addAttribute(new GameEventAttribute("target","frank"));
 		hitEvent.addAttribute(new GameEventAttribute("aimComplete",""));

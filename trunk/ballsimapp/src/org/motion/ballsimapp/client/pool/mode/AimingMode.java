@@ -1,47 +1,44 @@
 package org.motion.ballsimapp.client.pool.mode;
 
+import static org.motion.ballsimapp.shared.GameEventUtil.*;
+
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
-import org.motion.ballsimapp.client.pool.BilliardsPresenter;
+import org.motion.ballsimapp.client.pool.BilliardsModel;
+import org.motion.ballsimapp.client.pool.BilliardsView;
 import org.motion.ballsimapp.shared.GameEvent;
 
 import com.google.gwt.core.client.GWT;
 
+
 public class AimingMode extends BilliardsMode {
 
-	public AimingMode(BilliardsPresenter presenter) {
-		super(presenter);
+	public AimingMode(BilliardsModel model,BilliardsView view) {
+		super(model,view);
 	}
 
 	@Override
 	public BilliardsMode handle(GameEvent event) {
 
-		if (event.hasAttribute("animationComplete"))
+		if (event.hasAttribute(ANIMATION_COMPLETE))
 		{
-			presenter.model.resetForNextShot();
-			presenter.view.showTable(presenter.model.table);
-			
+			model.resetForNextShot();
+			view.showTable(model.table);			
 			// for now enter aiming state again
-			presenter.view.aim(15);
+			view.aim(15);
 			return this;
 			
 		}
 
-		if (event.hasAttribute("aimUpdate"))
+		if (event.hasAttribute(AIM_UPDATE))
 		{
-			// send to model
-			presenter.model.sendAimUpdate(BilliardsMarshaller.aimFromEvent(event));
+			model.sendAimUpdate(BilliardsMarshaller.aimFromEvent(event));
 			return this;
 		}
 
-		if (event.hasAttribute("aimComplete"))
+		if (event.hasAttribute(AIM_COMPLETE))
 		{			
-			// pass to model
-			presenter.model.sendHit(BilliardsMarshaller.aimFromEvent(event));
-			presenter.model.updateWithHit(BilliardsMarshaller.aimFromEvent(event));
-		
-			// update view				
-			presenter.view.appendMessage("animate");
-			presenter.view.animate(presenter.model.table);
+			model.sendHit(BilliardsMarshaller.aimFromEvent(event));
+			view.animate(model.table);
 			return this;
 		}
 		
