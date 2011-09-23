@@ -60,7 +60,7 @@ public class PowerInputCanvas {
 					@Override
 					public void handle(int mouseX, int mouseY) {
 						setPower((double)mouseX / (double)width);
-						aimChangeHandler.handle();
+						aimChangeHandler.handleAimChanged();
 					}
 				});
 	}

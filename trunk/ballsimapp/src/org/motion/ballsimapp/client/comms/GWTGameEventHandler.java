@@ -4,6 +4,6 @@ import org.motion.ballsimapp.shared.GameEvent;
 
 public interface GWTGameEventHandler {
 
-	void handle(GameEvent event);
+	void handleEvent(GameEvent event);
 	
 }

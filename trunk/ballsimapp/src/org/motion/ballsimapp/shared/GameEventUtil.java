@@ -7,7 +7,10 @@ public class GameEventUtil {
 	public final static String AIM_COMPLETE = "aimComplete";
 	public final static String AIM_UPDATE = "aimUpdate";
 	public final static String ANIMATION_COMPLETE = "animationComplete";
-	
+
+	public final static String PLACEBALL_UPDATE = "aimUpdate";
+	public final static String PLACEBALL_COMPLETE = "aimUpdate";
+
 	public static GameEvent simpleEvent(String name,String value)
 	{
 		GameEventAttribute attribute = new GameEventAttribute(name,value);

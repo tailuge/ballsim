@@ -34,7 +34,7 @@ public class Animation {
 			if (time > maxt) 
 			{
 				this.cancel();
-				animationComplete.handle();
+				animationComplete.handleAnimationComplete();
 			}
 	      }
 	    };

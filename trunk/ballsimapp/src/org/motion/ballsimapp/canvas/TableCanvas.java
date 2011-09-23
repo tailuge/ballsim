@@ -24,10 +24,13 @@ public class TableCanvas {
 	private Context2d backgroundContext;
 
 	private final PlotAim aim;	
-	private final CssColor redrawColor = CssColor.make("rgba(95,95,205,0.5)");
+	private final PlotPlacer placer;
     private final int width,height;
 	private final AimChange aimChangeHandler;
+	
+	private final CssColor redrawColor = CssColor.make("rgba(95,95,205,0.5)");
 
+	boolean aiming = false;
 	
 	public TableCanvas(int w, int h,AimChange aimChangeHandler)
 	{
@@ -35,6 +38,7 @@ public class TableCanvas {
 		height = h;
 		scale.setWindowInfo(width, height);
 		aim = new PlotAim(scale);
+		placer = new PlotPlacer(scale);
 		this.aimChangeHandler = aimChangeHandler;
 	}
 	
@@ -108,12 +112,6 @@ public class TableCanvas {
 		front.drawImage(back.getCanvas(), 0, 0);
 	}
 	
-	private void updateAim(int x, int y)
-	{
-		aim.setAimToTarget(scale.mouseToWorld(x, y));
-		moveBackBufferToFront(backBufferContext,context);
-		aim.plotAim(context);
-	}
 	
 
 	private void initHandlers() {
@@ -124,11 +122,25 @@ public class TableCanvas {
 					@Override
 					public void handle(int mouseX, int mouseY) {
 						updateAim(mouseX,mouseY);
-						aimChangeHandler.handle();
+						aimChangeHandler.handleAimChanged();
 					}
 				});
 	}
 	
+	private void updateAim(int x, int y)
+	{
+		moveBackBufferToFront(backBufferContext,context);
+		if(aiming)
+		{
+			aim.setAimToTarget(scale.mouseToWorld(x, y));
+			aim.plotAim(context);
+		}
+		else
+		{
+			placer.setCueBallPosition(scale.mouseToWorld(x, y));
+			placer.plotPlacer(context);
+		}
+	}
 
 	public void setCueBallPosition(Vector3D position) 
 	{
@@ -142,10 +154,18 @@ public class TableCanvas {
 
 	public void setAim(Vector3D aimPoint)
 	{
+		aiming=true;
 		aim.setAimDirection(aimPoint);
 		moveBackBufferToFront(backBufferContext,context);
 		aim.plotAim(context);
 	}
 
+	public void setPlacer(Vector3D cueBallPosition)
+	{
+		aiming=false;
+		placer.setCueBallPosition(cueBallPosition);
+		moveBackBufferToFront(backBufferContext,context);
+		placer.plotPlacer(context);
+	}
 
 }
