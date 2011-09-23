@@ -18,6 +18,7 @@ public class AimingMode extends BilliardsMode {
 		if (event.hasAttribute("animationComplete"))
 		{
 			presenter.model.table.resetToCurrent(presenter.model.table.getMaxTime());
+			
 			// for now enter aiming state again
 			presenter.view.aim(presenter.model.table, 15);
 			return this;

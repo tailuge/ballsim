@@ -1,127 +1,86 @@
 package org.motion.ballsimapp.canvas;
 
-
 import org.motion.ballsimapp.client.pool.handlers.AimChange;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseMoveEvent;
-import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseUpEvent;
-import com.google.gwt.event.dom.client.MouseUpHandler;
 
 public class PowerInputCanvas {
-	
+
 	private Canvas canvas;
 	private Context2d context;
-	private final CssColor redColor = CssColor.make("rgba(255,0,0,0.6)");
-	private final CssColor whiteColor = CssColor.make("rgba(170,200,200,0.8)");
+	private final CssColor barColor = CssColor.make("rgba(255,0,0,0.6)");
+	private final CssColor scaleColor = CssColor.make("rgba(170,200,200,0.8)");
 
-    private final int width,height;
-    private int mouseX;
-	private boolean active = false;
-	
-	private double power = 0.75;
+	private final int width, height;
+
+	private double power;
 	private final AimChange aimChangeHandler;
-	
-	public PowerInputCanvas(int width_, int height_,AimChange aimChangeHandler)
-	{
+
+	public PowerInputCanvas(int width_, int height_, AimChange aimChangeHandler) {
 		height = height_;
 		width = width_;
-		mouseX = width/2;
 		this.aimChangeHandler = aimChangeHandler;
 	}
 
-	public double getPower()
-	{
+	public double getPower() {
 		return power;
 	}
-	
-	public Canvas getInitialisedCanvas()
-	{
-		canvas = Canvas.createIfSupported();	
-		
-	    canvas.setWidth(width + "px");
-	    canvas.setHeight(height + "px");
-	    canvas.setCoordinateSpaceWidth(width);
-	    canvas.setCoordinateSpaceHeight(height);
-	    
-	    context = canvas.getContext2d();
-	    initHandlers();
-	    updatePower();
+
+	public void setPower(double power) {
+		this.power = power;
+		updateCanvas();
+	}
+
+	public void updateCanvas() {
+		plotScale();
+		plotPowerBar((int) ((double)width * power));
+	}
+
+	public Canvas getInitialisedCanvas() {
+		canvas = Canvas.createIfSupported();
+
+		canvas.setWidth(width + "px");
+		canvas.setHeight(height + "px");
+		canvas.setCoordinateSpaceWidth(width);
+		canvas.setCoordinateSpaceHeight(height);
+
+		context = canvas.getContext2d();
+		initHandlers();
+		setPower(0.75);
 		return canvas;
 	}
-	
-	
-	void initHandlers() 
-	{
-	    canvas.addMouseMoveHandler(
-	    		new MouseMoveHandler() 
-	    		{
-	    			public void onMouseMove(MouseMoveEvent event) {
-	    				mouseX = event.getRelativeX(canvas.getElement());
-	    				if (active) updatePower();
-	    			}
-	    		});
-	
-	    canvas.addMouseDownHandler(
-	    		new MouseDownHandler() {
-	    			public void onMouseDown(MouseDownEvent event) {
-	    				mouseX = event.getRelativeX(canvas.getElement());
-	    				active = true;
-	    				updatePower();
-	    			}
-	    		});
 
-	    canvas.addMouseUpHandler(
-	    		new MouseUpHandler() {
-	    			public void onMouseUp(MouseUpEvent event) {
-	    				active = false;
-	    			}
-	    		});
+	private void initHandlers() {
 
-	    canvas.addMouseOutHandler(new MouseOutHandler() {
-	        public void onMouseOut(MouseOutEvent event) {
-	          active = false;
-	        }
-	      });
-	}
+		new ActiveMouseMoveHandler(canvas,
+				new ActiveMouseMoveHandler.MouseEvent() {
 
-	private void updatePower()
-	{
-		computePower();
-		plotPowerScale();
-		plotPower(mouseX);
-		aimChangeHandler.handle();
+					@Override
+					public void handle(int mouseX, int mouseY) {
+						setPower((double)mouseX / (double)width);
+						aimChangeHandler.handle();
+					}
+				});
 	}
 	
-	private void computePower()
-	{
-		power = (double)mouseX/(double)width;
-	}
-	
-	private void plotPower(int x)
- 	{
-        context.beginPath();
+
+	private void plotPowerBar(int x) {
+		context.beginPath();
 		context.setLineWidth(1);
-		context.setFillStyle(redColor);
-		context.fillRect(0, 0, mouseX, height);
-	    context.closePath();
-	    context.fill();        
- 	}
-	
-	private void plotPowerScale()
- 	{
-        context.beginPath();
+		context.setFillStyle(barColor);
+		context.fillRect(0, 0, x, height);
+		context.closePath();
+		context.fill();
+	}
+
+	private void plotScale() {
+		context.beginPath();
 		context.setLineWidth(1);
-		context.setFillStyle(whiteColor);
+		context.setFillStyle(scaleColor);
 		context.fillRect(0, 0, width, height);
-	    context.closePath();
-	    context.fill();        
- 	}
+		context.closePath();
+		context.fill();
+	}
 }

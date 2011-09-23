@@ -1,6 +1,8 @@
 package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsim.game.Aim;
+import org.motion.ballsim.physics.Event;
+import org.motion.ballsim.physics.Interpolator;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsimapp.canvas.Animation;
 import org.motion.ballsimapp.canvas.PowerInputCanvas;
@@ -45,8 +47,8 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 		this.root= root;
 		spin = new SpinInputCanvas(width/8,width/8,this);
 		power = new PowerInputCanvas(width-width/4,width/10,this);
-		tableCanvas = new TableCanvas(width/2,height/2,this);
-		messageArea.setWidth(width*4 +"px");	
+		tableCanvas = new TableCanvas(width,height,this);
+		messageArea.setWidth(width*3 +"px");	
 		messageArea.setHeight(width/2 +"px");	
 		
 		addElementsToRoot();
@@ -86,12 +88,13 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 	public void showTable(Table table) {
 		tableCanvas.plotAtTime(table, 0);
 	}
-	
+
 	@Override
 	public void aim(Table table, int timeout) {
 		
 		hitButton.setEnabled(true);
-		tableCanvas.beginAim(table);
+		Event cueBall = Interpolator.interpolate(table.ball(1), 0);
+		tableCanvas.beginAim(cueBall.pos);
 	}
 
 
@@ -107,7 +110,6 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 	}
 
 	TimeFilter timeFilter = new TimeFilter();
-	
 
 	@Override
 	public void setAimUpdateHandler(final AimNotify aimUpdateHandler) {
@@ -127,7 +129,7 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 
 	@Override
 	public void handle() {
-		if (timeFilter.hasElapsed(1))
+		if (timeFilter.hasElapsed(2))
 		{
 			Aim aim = new Aim(tableCanvas.getAim(),spin.getSpin(),power.getPower());
 			aimUpdateHandler.handle(aim);
@@ -136,7 +138,9 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 
 	@Override
 	public void setAim(Aim aim) {
-		
+		spin.setSpin(aim.spin);
+		power.setPower(aim.speed);
+		tableCanvas.setAim(aim.dir);
 	}
 
 	
