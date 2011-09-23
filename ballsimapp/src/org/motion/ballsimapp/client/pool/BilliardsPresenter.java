@@ -45,7 +45,7 @@ public class BilliardsPresenter {
 		model.tempInitTable();
 		view.showTable(model.table);
 		model.login(model.playerId);
-		view.aim(model.table, 15);
+		view.aim(15);
 	}
 
 	// temporary

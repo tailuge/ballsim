@@ -51,12 +51,25 @@ public class BilliardsModel extends GWTGameClient {
 		notify(aimEvent);
 	}
 
-	public void hit(Aim aim)
+	public void updateWithHit(Aim aim)
 	{
 		Event cueBall = Interpolator.interpolate(table.ball(1), 0);
 		Event hit = UtilEvent.hit(cueBall.pos, aim.dir, aim.speed, aim.spin.getY());
 		table.ball(1).setFirstEvent(hit);
-		table.generateSequence();
+		table.generateSequence();	
+	}
+
+	public void sendHit(Aim aim)
+	{
+		GameEvent hitEvent = BilliardsMarshaller.eventFromAim(aim);
+		hitEvent.addAttribute(new GameEventAttribute("target","frank"));
+		hitEvent.addAttribute(new GameEventAttribute("aimComplete",""));
+		notify(hitEvent);
+
+	}
+
+	public void resetForNextShot() {
+		table.resetToCurrent(table.getMaxTime());
 	}
 
 

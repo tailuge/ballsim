@@ -130,7 +130,7 @@ public class TableCanvas {
 	}
 	
 
-	public void beginAim(Vector3D position) 
+	public void setCueBallPosition(Vector3D position) 
 	{
 		aim.setCueBallPosition(position);
 	}

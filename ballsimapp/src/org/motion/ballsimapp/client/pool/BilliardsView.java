@@ -15,7 +15,7 @@ public interface BilliardsView {
 
 	void appendMessage(String message);
 	void showTable(Table table);
-	void aim(Table table,int timeout);
+	void aim(int timeout);
 	void animate(Table shotSequence);
 	void setAim(Aim aim);
 	
