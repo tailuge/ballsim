@@ -47,6 +47,7 @@ public class BilliardsModel extends GWTGameClient {
 	{
 		GameEvent aimEvent = BilliardsMarshaller.eventFromAim(aim);
 		aimEvent.addAttribute(new GameEventAttribute("target","frank"));
+		aimEvent.addAttribute(new GameEventAttribute("aimUpdate",""));
 		notify(aimEvent);
 	}
 

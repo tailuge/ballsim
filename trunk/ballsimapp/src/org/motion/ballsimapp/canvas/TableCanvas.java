@@ -10,14 +10,6 @@ import org.motion.ballsimapp.client.pool.handlers.AimChange;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseMoveEvent;
-import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseUpEvent;
-import com.google.gwt.event.dom.client.MouseUpHandler;
 
 public class TableCanvas {
 
@@ -36,15 +28,11 @@ public class TableCanvas {
     private final int width,height;
 	private final AimChange aimChangeHandler;
 
-	private int mouseX,mouseY;
-	private boolean active = false;
 	
 	public TableCanvas(int w, int h,AimChange aimChangeHandler)
 	{
 		width = w;
 		height = h;
-		mouseX=width/2;
-		mouseY=height/2;
 		scale.setWindowInfo(width, height);
 		aim = new PlotAim(scale);
 		this.aimChangeHandler = aimChangeHandler;
@@ -125,57 +113,37 @@ public class TableCanvas {
 		moveBackBufferToFront(backBufferContext,context);
 		aim.setAim(scale.mouseToWorld(x, y));
 		aim.plotAim(context);
-		aimChangeHandler.handle();
 	}
 	
-	private void initHandlers() 
-	{
-	    canvas.addMouseMoveHandler(
-	    		new MouseMoveHandler() 
-	    		{
-	    			public void onMouseMove(MouseMoveEvent event) {
-	    				if(active)
-	    					{
-	    					mouseX = event.getRelativeX(canvas.getElement());
-	    					mouseY = event.getRelativeY(canvas.getElement());    
-	    					updateAim(mouseX,mouseY);
-	    					}
-	    			}
-	    		});
-	
-	    canvas.addMouseDownHandler(
-	    		new MouseDownHandler() {
-	    			public void onMouseDown(MouseDownEvent event) {
-	    				active = true;	    				
-	    				mouseX = event.getRelativeX(canvas.getElement());
-	    				mouseY = event.getRelativeY(canvas.getElement());
-    					updateAim(mouseX,mouseY);
-	    			}
-	    		});
 
-	    canvas.addMouseUpHandler(
-	    		new MouseUpHandler() {
-	    			public void onMouseUp(MouseUpEvent event) {
-	    				active = false;
-	    			}
-	    		});
+	private void initHandlers() {
 
-	    canvas.addMouseOutHandler(new MouseOutHandler() {
-	        public void onMouseOut(MouseOutEvent event) {
-	          active = false;
-	        }
-	      });
+		new ActiveMouseMoveHandler(canvas,
+				new ActiveMouseMoveHandler.MouseEvent() {
+
+					@Override
+					public void handle(int mouseX, int mouseY) {
+						updateAim(mouseX,mouseY);
+						aimChangeHandler.handle();
+					}
+				});
 	}
+	
 
-	public void beginAim(Table table) 
+	public void beginAim(Vector3D position) 
 	{
-		Event cueBall = Interpolator.interpolate(table.ball(1), 0);
-		aim.setAimFrom(cueBall.pos);
+		aim.setAimFrom(position);
 	}
 
 	public Vector3D getAim()
 	{
 		return aim.getAim().subtract(aim.getAimPoint()).normalize();
+	}
+
+	public void setAim(Vector3D aimPoint)
+	{
+		aim.setAim(aimPoint);
+		aim.plotAim(context);
 	}
 
 	public Vector3D getAimPoint()
