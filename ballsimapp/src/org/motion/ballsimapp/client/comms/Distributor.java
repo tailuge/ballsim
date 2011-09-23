@@ -22,7 +22,7 @@ public class Distributor {
 			GWTGameEventHandler targetHandler = handlers.get(attribute.getValue());
 			if (targetHandler != null)
 			{
-				targetHandler.handle(event);
+				targetHandler.handleEvent(event);
 			}
 		}
 	}
@@ -31,18 +31,18 @@ public class Distributor {
 	{
 		for (String user : handlers.keySet())
 		{
-			handlers.get(user).handle(event);
+			handlers.get(user).handleEvent(event);
 		}
 	}
 	
 	public void sendError(String user,String message)
 	{
-		handlers.get(user).handle(error(message));
+		handlers.get(user).handleEvent(error(message));
 	}
 
 	public void sendInfo(String user,String message)
 	{
-		handlers.get(user).handle(info(message));
+		handlers.get(user).handleEvent(info(message));
 	}
 
 	public void addGameEventListener(String user,GWTGameEventHandler handler)

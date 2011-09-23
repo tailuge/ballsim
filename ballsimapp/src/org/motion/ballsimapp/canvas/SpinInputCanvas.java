@@ -61,7 +61,7 @@ public class SpinInputCanvas {
 					@Override
 					public void handle(int mouseX, int mouseY) {
 						updateIfLegalSpin(mouseX, mouseY);
-						aimChangeHandler.handle();
+						aimChangeHandler.handleAimChanged();
 					}
 				});
 	}
@@ -73,7 +73,7 @@ public class SpinInputCanvas {
 		if (Math.sqrt(dx * dx + dy * dy) < width / 2.1) {
 			setSpin(new Vector3D((double) dx / (double) width, (double) dy
 					/ (double) height, 0.0));
-			aimChangeHandler.handle();
+			aimChangeHandler.handleAimChanged();
 		}
 	}
 

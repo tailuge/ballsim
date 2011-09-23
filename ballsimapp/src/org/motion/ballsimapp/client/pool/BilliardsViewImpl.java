@@ -1,6 +1,7 @@
 package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsim.game.Aim;
+import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.Interpolator;
 import org.motion.ballsim.physics.Table;
@@ -24,65 +25,59 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 	RootPanel root;
 
 	// inputs
-	
-	private  SpinInputCanvas spin;
-	private  PowerInputCanvas power;
-	final Button hitButton = new Button("Hit");	
+
+	private SpinInputCanvas spin;
+	private PowerInputCanvas power;
+	final Button hitButton = new Button("Hit");
+	final TimeFilter timeFilter = new TimeFilter();
 
 	// outputs
-	
-	private  TableCanvas tableCanvas;
+
+	private TableCanvas tableCanvas;
 	final TextArea messageArea = new TextArea();
 	final Label playerName = new Label();
 	final static String newline = "\n";
 
 	// callbacks
-	
-	AimNotify aimUpdateHandler;
+
+	AimNotify aimHandler;
 	ViewNotify animationComplete;
 
-	public BilliardsViewImpl(int width, RootPanel root)
-	{
+	public BilliardsViewImpl(int width, RootPanel root) {
 		int height = width * 15 / 10;
-		this.root= root;
-		spin = new SpinInputCanvas(width/8,width/8,this);
-		power = new PowerInputCanvas(width-width/4,width/10,this);
-		tableCanvas = new TableCanvas(width,height,this);
-		messageArea.setWidth(width*3 +"px");	
-		messageArea.setHeight(width/2 +"px");	
-		
+		this.root = root;
+		spin = new SpinInputCanvas(width / 8, width / 8, this);
+		power = new PowerInputCanvas(width - width / 4, width / 10, this);
+		tableCanvas = new TableCanvas(width, height, this);
+		messageArea.setWidth(width * 3 + "px");
+		messageArea.setHeight(width / 2 + "px");
+
 		addElementsToRoot();
 	}
-	
-	private void addElementsToRoot()
-	{
+
+	private void addElementsToRoot() {
 		root.add(playerName);
 		root.add(tableCanvas.getInitialisedCanvas());
 		root.add(spin.getInitialisedCanvas());
 		root.add(power.getInitialisedCanvas());
-		root.add(hitButton);    
-		root.add(messageArea);    		
+		root.add(hitButton);
+		root.add(messageArea);
 	}
-	
+
 	@Override
 	public void setPlayer(String playerId) {
-		playerName.setText(playerId);		
+		playerName.setText(playerId);
 	}
-
-
 
 	@Override
 	public void appendMessage(String message) {
-		messageArea.setText(messageArea.getText() + newline + message);		
+		messageArea.setText(messageArea.getText() + newline + message);
 	}
-
-
 
 	@Override
 	public void setAnimationCompleteHandler(final ViewNotify animationComplete) {
 		this.animationComplete = animationComplete;
 	}
-
 
 	@Override
 	public void showTable(Table table) {
@@ -96,42 +91,36 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 		hitButton.setEnabled(true);
 	}
 
-
-
 	@Override
 	public void animate(Table table) {
-		
+
 		hitButton.setEnabled(false);
-		
+
 		@SuppressWarnings("unused")
-		Animation showAnimation = new Animation(table,tableCanvas,animationComplete);
-		
+		Animation showAnimation = new Animation(table, tableCanvas,
+				animationComplete);
+
 	}
 
-	TimeFilter timeFilter = new TimeFilter();
-
 	@Override
-	public void setAimUpdateHandler(final AimNotify aimUpdateHandler) {
-		this.aimUpdateHandler = aimUpdateHandler;
-	}
-	
-	@Override
-	public void setAimCompleteHandler(final AimNotify aimCompleteHandler) {
+	public void setAimHandler(final AimNotify aimHandler) {
+		this.aimHandler = aimHandler;
 		hitButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {				
+			public void onClick(ClickEvent event) {
 				hitButton.setEnabled(false);
-				Aim aim = new Aim(tableCanvas.getAim(),spin.getSpin(),power.getPower());
-				aimCompleteHandler.handle(aim);
+				Aim aim = new Aim(tableCanvas.getAim(), spin.getSpin(), power
+						.getPower());
+				aimHandler.handleAimComplete(aim);
 			}
 		});
 	}
 
 	@Override
-	public void handle() {
-		if (timeFilter.hasElapsed(2))
-		{
-			Aim aim = new Aim(tableCanvas.getAim(),spin.getSpin(),power.getPower());
-			aimUpdateHandler.handle(aim);
+	public void handleAimChanged() {
+		if (timeFilter.hasElapsed(2)) {
+			Aim aim = new Aim(tableCanvas.getAim(), spin.getSpin(),
+					power.getPower());
+			aimHandler.handleAimUpdate(aim);
 		}
 	}
 
@@ -142,5 +131,9 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 		tableCanvas.setAim(aim.dir);
 	}
 
-	
+	@Override
+	public void setPlacer(Vector3D pos) {
+		tableCanvas.setPlacer(pos);
+	}
+
 }

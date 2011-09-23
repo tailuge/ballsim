@@ -12,32 +12,15 @@ import org.motion.ballsimapp.shared.GameEvent;
 
 import com.google.gwt.core.client.GWT;
 
-public class ViewingMode extends BilliardsMode {
+public class PlacingMode extends BilliardsMode {
 
-	public ViewingMode(BilliardsModel model, BilliardsView view) {
+	public PlacingMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
 	}
 
 	@Override
 	public BilliardsMode handle(GameEvent event) {
-
-		if (event.hasAttribute(AIM_UPDATE)) {
-			view.setAim(BilliardsMarshaller.aimFromEvent(event));
-			return this;
-		}
-
-		if (event.hasAttribute(AIM_COMPLETE)) {
-			model.updateWithHit(BilliardsMarshaller.aimFromEvent(event));
-			view.animate(model.table);
-			return this;
-		}
-
-		if (event.hasAttribute(ANIMATION_COMPLETE)) {
-			model.resetForNextShot();
-			view.showTable(model.table);
-			return this;
-		}
-
+		
 		if (event.hasAttribute(PLACEBALL_UPDATE))
 		{
 			Vector3D pos = BilliardsMarshaller.placeFromEvent(event);
@@ -57,9 +40,9 @@ public class ViewingMode extends BilliardsMode {
 			view.aim(15);
 			return new AimingMode(model,view);
 		}
-		
-		GWT.log("ViewingMode handled unexpected event:" + event);
 
+		GWT.log("PlacingMode handled unexpected event:"+event);
+		
 		return this;
 	}
 
