@@ -13,7 +13,9 @@ import com.google.gwt.user.client.ui.RootPanel;
  */
 public class Ballsimapp implements EntryPoint {
 
+	@SuppressWarnings("unused")
 	private BilliardsPresenter gamePresenterP1;
+	@SuppressWarnings("unused")
 	private BilliardsPresenter gamePresenterP2;
 
 	/**
@@ -34,9 +36,6 @@ public class Ballsimapp implements EntryPoint {
 		BilliardsView gameViewP2 = new BilliardsViewImpl(width/4, RootPanel.get("player2"));		
 		gamePresenterP2 = new BilliardsPresenter(gameModelP2, gameViewP2);
 		
-		
-		gamePresenterP1.forceLoginAim();
-		gamePresenterP2.forceLoginView();
 		
 	}
 	

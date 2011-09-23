@@ -18,12 +18,12 @@ public class BilliardsMarshaller {
 		jsonAim.put("dir", marshal(aim.dir));
 		jsonAim.put("spin", marshal(aim.spin));
 		jsonAim.put("speed", new JSONNumber(aim.speed));		
-		return GameEventUtil.simpleEvent("aim", jsonAim.toString());
+		return GameEventUtil.makeEvent("aim", jsonAim.toString());
 	}
 
 	public final static GameEvent eventFromPlace(Vector3D place)
 	{
-		return GameEventUtil.simpleEvent("place", marshal(place).toString());
+		return GameEventUtil.makeEvent("place", marshal(place).toString());
 	}
 	
 	private static JSONObject marshal(Vector3D v) {

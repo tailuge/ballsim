@@ -81,7 +81,7 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 		if (event.hasAttribute("synonym"))
 		{
 			channelMap.put(user,event.getAttribute("synonym").getValue());
-			return GameEventUtil.simpleEvent("channelName","alreadyConnected");
+			return GameEventUtil.makeEvent("channelName","alreadyConnected");
 		}
 		else
 		{
@@ -89,7 +89,7 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 		}
 		
 		String channelName = createChannel(user);
-		GameEvent connectEvent = GameEventUtil.simpleEvent("channelName",
+		GameEvent connectEvent = GameEventUtil.makeEvent("channelName",
 				channelName);
 		
 		return connectEvent;
