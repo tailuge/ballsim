@@ -8,7 +8,6 @@ import com.google.gwt.canvas.dom.client.CssColor;
 
 public class PlotAim {
 
-	private static CssColor black = CssColor.make("rgba(5,5,5,0.1)");
 	private static CssColor white = CssColor.make("rgba(255,255,255,0.1)");
 	private static CssColor brown = CssColor.make("rgba(155,55,55,1)");
 	

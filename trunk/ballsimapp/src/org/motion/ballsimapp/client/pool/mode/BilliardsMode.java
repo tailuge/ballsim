@@ -14,9 +14,5 @@ public abstract class BilliardsMode {
 	
 	public abstract BilliardsMode handle(GameEvent event);
 	
-	protected void message(String message)
-	{
-		presenter.view.appendMessage(message);
-	}
 
 }

@@ -87,14 +87,13 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 	@Override
 	public void showTable(Table table) {
 		tableCanvas.plotAtTime(table, 0);
+		Event cueBall = Interpolator.interpolate(table.ball(1), 0);
+		tableCanvas.setCueBallPosition(cueBall.pos);
 	}
 
 	@Override
-	public void aim(Table table, int timeout) {
-		
+	public void aim(int timeout) {
 		hitButton.setEnabled(true);
-		Event cueBall = Interpolator.interpolate(table.ball(1), 0);
-		tableCanvas.beginAim(cueBall.pos);
 	}
 
 

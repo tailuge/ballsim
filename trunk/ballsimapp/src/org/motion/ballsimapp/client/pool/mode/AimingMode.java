@@ -17,10 +17,11 @@ public class AimingMode extends BilliardsMode {
 
 		if (event.hasAttribute("animationComplete"))
 		{
-			presenter.model.table.resetToCurrent(presenter.model.table.getMaxTime());
+			presenter.model.resetForNextShot();
+			presenter.view.showTable(presenter.model.table);
 			
 			// for now enter aiming state again
-			presenter.view.aim(presenter.model.table, 15);
+			presenter.view.aim(15);
 			return this;
 			
 		}
@@ -35,7 +36,8 @@ public class AimingMode extends BilliardsMode {
 		if (event.hasAttribute("aimComplete"))
 		{			
 			// pass to model
-			presenter.model.hit(BilliardsMarshaller.aimFromEvent(event));
+			presenter.model.sendHit(BilliardsMarshaller.aimFromEvent(event));
+			presenter.model.updateWithHit(BilliardsMarshaller.aimFromEvent(event));
 		
 			// update view				
 			presenter.view.appendMessage("animate");
@@ -43,7 +45,7 @@ public class AimingMode extends BilliardsMode {
 			return this;
 		}
 		
-		GWT.log("AimingMode handled unexcpected event:"+event);
+		GWT.log("AimingMode handled unexpected event:"+event);
 		
 		return this;
 	}

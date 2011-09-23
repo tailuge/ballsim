@@ -1,6 +1,5 @@
 package org.motion.ballsimapp.client.pool.mode;
 
-import org.motion.ballsim.game.Aim;
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsPresenter;
 import org.motion.ballsimapp.shared.GameEvent;
@@ -18,18 +17,28 @@ public class ViewingMode extends BilliardsMode {
 		
 		if (event.hasAttribute("aimUpdate"))
 		{
-			Aim aim = BilliardsMarshaller.aimFromEvent(event);
-			presenter.view.setAim(aim);
+			presenter.view.setAim(BilliardsMarshaller.aimFromEvent(event));
 			return this;
 		}
-		
+
+		if (event.hasAttribute("aimComplete"))
+		{
+			presenter.model.updateWithHit(BilliardsMarshaller.aimFromEvent(event));
+			
+			// update view				
+			presenter.view.appendMessage("animate");
+			presenter.view.animate(presenter.model.table);
+			return this;
+		}
+
 		if (event.hasAttribute("animationComplete"))
 		{
-			presenter.model.table.resetToCurrent(presenter.model.table.getMaxTime());
+			presenter.model.resetForNextShot();
+			presenter.view.showTable(presenter.model.table);
 			return this;
 		}
 		
-		GWT.log("ViewingMode handled unexcpected event:"+event);
+		GWT.log("ViewingMode handled unexpected event:"+event);
 
 		return this;
 	}

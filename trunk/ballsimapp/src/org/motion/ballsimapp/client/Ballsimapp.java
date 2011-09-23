@@ -31,7 +31,7 @@ public class Ballsimapp implements EntryPoint {
 		
 		// player 2
 		BilliardsModel gameModelP2 = new BilliardsModel("frank");
-		BilliardsView gameViewP2 = new BilliardsViewImpl(width/2, RootPanel.get("player2"));		
+		BilliardsView gameViewP2 = new BilliardsViewImpl(width/4, RootPanel.get("player2"));		
 		gamePresenterP2 = new BilliardsPresenter(gameModelP2, gameViewP2);
 		
 		
