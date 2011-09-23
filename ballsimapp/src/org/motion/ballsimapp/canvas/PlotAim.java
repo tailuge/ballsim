@@ -9,10 +9,11 @@ import com.google.gwt.canvas.dom.client.CssColor;
 public class PlotAim {
 
 	private static CssColor black = CssColor.make("rgba(5,5,5,0.1)");
-	private static CssColor white = CssColor.make("rgba(255,255,255,9)");
+	private static CssColor white = CssColor.make("rgba(255,255,255,0.1)");
+	private static CssColor brown = CssColor.make("rgba(155,55,55,1)");
 	
-	private Vector3D cuePoint = Vector3D.ZERO;
-	private Vector3D aimPoint = Vector3D.PLUS_I;
+	private Vector3D cueBallPosition = Vector3D.ZERO;
+	private Vector3D aimDirection = Vector3D.PLUS_I;
 
 	private final PlotScale scale;
 	
@@ -21,61 +22,75 @@ public class PlotAim {
 		this.scale = scale;		
 	}
 	
-	public void setAim(Vector3D aimPoint_)
+	public void setAimDirection(Vector3D aimDirection)
  	{
-		aimPoint = aimPoint_;
+		this.aimDirection = aimDirection;
  	}
 
-	public void setAimFrom(Vector3D cuePoint_)
+	public Vector3D getAimDirection()
+	{
+		return aimDirection;
+	}
+
+	public void setCueBallPosition(Vector3D cueBallPosition_)
  	{
-		cuePoint = cuePoint_;
+		cueBallPosition = cueBallPosition_;
  	}
 	
-	public Vector3D getAim()
+	public void setAimToTarget(Vector3D target)
 	{
-		return aimPoint.subtract(cuePoint).normalize();
+		aimDirection = target.subtract(cueBallPosition).normalize();
 	}
-	
-	public Vector3D getAimPoint()
-	{
-		return cuePoint;
-	}
+
 	
 	public void plotAim(Context2d context)
- 	{		
-		plotAim(scale.screenX(aimPoint.getX()),
-				scale.screenY(aimPoint.getY()),
-				scale.screenX(cuePoint.getX()),
-				scale.screenY(cuePoint.getY()),context);
+ 	{	
+		plotAimPath(context);
+		plotCue(context);
  	}
 
 	
-	private void plotAim(double x, double y, double fromX, double fromY,Context2d context)
+	private void plotAimPath(Context2d context)
  	{
 	    context.beginPath();
 		context.setStrokeStyle(white);
-	    context.setLineWidth(scale.scaled(Ball.R*0.02));
+	    context.setLineWidth(scale.scaled(Ball.R*2));
 
-	    context.moveTo(fromX,fromY);
-	    context.lineTo(x,y);
+	    double start = -scale.scaled(Ball.R * 1);
+	    double end = scale.scaled(Ball.R*130);
+	    
+	    plotAimDirection(start,end,context);
+	    
 	    context.stroke();
 	    context.closePath();
-
-	    context.beginPath();
-		context.setLineWidth(1);
-		context.setStrokeStyle(black);
-		context.arc(x, y, scale.scaled(Ball.R), 0,Math.PI * 2.0); 	
-	    context.stroke();    
-	    context.closePath();
-
-	    context.beginPath();
-		context.setStrokeStyle(black);
-		context.setLineWidth(0.5);
-	    context.moveTo(x-scale.scaled(Ball.R)*1.3, y);
-	    context.lineTo(x+scale.scaled(Ball.R)*1.3, y);
-	    context.moveTo(x,y-scale.scaled(Ball.R)*1.3);
-	    context.lineTo(x,y+scale.scaled(Ball.R)*1.3);
-	    context.stroke();
-	    context.closePath();
+	    
+	    plotCue(context);
  	}
+	
+	private void plotCue(Context2d context)
+ 	{
+	    context.beginPath();
+		context.setStrokeStyle(brown);
+	    context.setLineWidth(scale.scaled(Ball.R*0.5));
+	    
+	    double start = -scale.scaled(Ball.R * 1.5);
+	    double end = -scale.scaled(Ball.R*30);
+	    
+	    plotAimDirection(start,end,context);
+	    
+	    context.stroke();
+	    context.closePath();		
+ 	}	
+
+	private void plotAimDirection(double start, double end,Context2d context)
+ 	{
+	    double dirX = getAimDirection().getX();
+	    double dirY = getAimDirection().getY();	
+	    double x = scale.screenX(cueBallPosition.getX());
+	    double y = scale.screenY(cueBallPosition.getY());
+	    
+	    context.moveTo(x+(dirX*start),y+(dirY*start));
+	    context.lineTo(x+(dirX*end),y+(dirY*end));
+ 	}	
+
 }
