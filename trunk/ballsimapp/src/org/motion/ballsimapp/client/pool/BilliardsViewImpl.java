@@ -88,7 +88,14 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 
 	@Override
 	public void aim(int timeout) {
-		hitButton.setEnabled(true);
+		hitButton.setText("Hit");
+		hitButton.setEnabled(true);		
+	}
+
+	@Override
+	public void place(int timeout) {
+		hitButton.setText("Place");
+		hitButton.setEnabled(true);		
 	}
 
 	@Override
@@ -108,7 +115,7 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 		hitButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hitButton.setEnabled(false);
-				Aim aim = new Aim(tableCanvas.getAim(), spin.getSpin(), power
+				Aim aim = new Aim(tableCanvas.getAimDirection(), spin.getSpin(), power
 						.getPower());
 				aimHandler.handleAimComplete(aim);
 			}
@@ -118,7 +125,7 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 	@Override
 	public void handleAimChanged() {
 		if (timeFilter.hasElapsed(2)) {
-			Aim aim = new Aim(tableCanvas.getAim(), spin.getSpin(),
+			Aim aim = new Aim(tableCanvas.getAimDirection(), spin.getSpin(),
 					power.getPower());
 			aimHandler.handleAimUpdate(aim);
 		}
@@ -128,7 +135,7 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 	public void setAim(Aim aim) {
 		spin.setSpin(aim.spin);
 		power.setPower(aim.speed);
-		tableCanvas.setAim(aim.dir);
+		tableCanvas.setAimDirection(aim.dir);
 	}
 
 	@Override

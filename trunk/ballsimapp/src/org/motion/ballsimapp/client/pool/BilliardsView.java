@@ -13,9 +13,11 @@ public interface BilliardsView {
 	void setAimHandler(AimNotify aimHandler);
 	void setAnimationCompleteHandler(ViewNotify animationComplete);
 
-	void appendMessage(String message);
-	void showTable(Table table);
 	void aim(int timeout);
+	void place(int timeout);
+	void appendMessage(String message);
+
+	void showTable(Table table);
 	void animate(Table shotSequence);
 	void setAim(Aim aim);
 	void setPlacer(Vector3D pos);
