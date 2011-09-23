@@ -14,6 +14,7 @@ public class AimingMode extends BilliardsMode {
 
 	public AimingMode(BilliardsModel model,BilliardsView view) {
 		super(model,view);
+		view.aim(15);
 	}
 
 	@Override

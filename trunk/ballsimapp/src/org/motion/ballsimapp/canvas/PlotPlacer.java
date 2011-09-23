@@ -51,4 +51,8 @@ public class PlotPlacer {
 	    context.closePath();
  	}
 
+	public Vector3D getCueBallPosition() {
+		return cueBallPosition;
+	}
+
 }

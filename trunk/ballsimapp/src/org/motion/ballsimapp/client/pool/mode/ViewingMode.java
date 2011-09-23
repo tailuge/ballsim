@@ -54,7 +54,6 @@ public class ViewingMode extends BilliardsMode {
 			Event hit = UtilEvent.stationary(pos);
 			model.table.ball(1).setFirstEvent(hit);
 			view.showTable(model.table);
-			view.aim(15);
 			return new AimingMode(model,view);
 		}
 		

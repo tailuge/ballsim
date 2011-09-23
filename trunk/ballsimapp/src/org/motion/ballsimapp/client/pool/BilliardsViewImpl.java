@@ -37,6 +37,7 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 	final TextArea messageArea = new TextArea();
 	final Label playerName = new Label();
 	final static String newline = "\n";
+	private boolean aiming;
 
 	// event sink
 
@@ -56,13 +57,23 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 		hitButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hitButton.setEnabled(false);
-				Aim aim = new Aim(tableCanvas.getAimDirection(),
-						spin.getSpin(), power.getPower());
-				GameEvent aimComplete = BilliardsMarshaller.eventFromAim(aim);
-				aimComplete.addAttribute(new GameEventAttribute("aimComplete",
-						""));
+				if (aiming) {
+					Aim aim = new Aim(tableCanvas.getAimDirection(), spin
+							.getSpin(), power.getPower());
+					GameEvent aimComplete = BilliardsMarshaller
+							.eventFromAim(aim);
+					aimComplete.addAttribute(new GameEventAttribute(
+							"aimComplete", ""));
 
-				eventHandler.handleEvent(aimComplete);
+					eventHandler.handleEvent(aimComplete);
+				} else {
+					Vector3D pos = tableCanvas.getCueBallPosition();
+					GameEvent placeComplete = BilliardsMarshaller
+							.eventFromPlace(pos);
+					placeComplete.addAttribute(new GameEventAttribute(
+							"placeComplete", ""));
+					eventHandler.handleEvent(placeComplete);					
+				}
 			}
 		});
 	}
@@ -100,14 +111,18 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 
 	@Override
 	public void aim(int timeout) {
+		aiming = true;
 		hitButton.setText("Hit");
 		hitButton.setEnabled(true);
+		tableCanvas.aim();
 	}
 
 	@Override
 	public void place(int timeout) {
+		aiming = false;
 		hitButton.setText("Place");
 		hitButton.setEnabled(true);
+		tableCanvas.place();
 	}
 
 	@Override

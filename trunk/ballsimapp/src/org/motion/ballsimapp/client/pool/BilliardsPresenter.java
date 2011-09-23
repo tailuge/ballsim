@@ -3,6 +3,7 @@ package org.motion.ballsimapp.client.pool;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
 import org.motion.ballsimapp.client.pool.mode.AimingMode;
 import org.motion.ballsimapp.client.pool.mode.BilliardsMode;
+import org.motion.ballsimapp.client.pool.mode.PlacingMode;
 import org.motion.ballsimapp.client.pool.mode.ViewingMode;
 import org.motion.ballsimapp.shared.GameEvent;
 
@@ -24,16 +25,16 @@ public class BilliardsPresenter implements GWTGameEventHandler {
 		this.model = model;
 		this.view = view;
 
-		view.setEventHandler(this);
-		view.setPlayer(model.playerId);
-		model.setEventHandler(this);
 		model.tempInitTable();
+		model.setEventHandler(this);
+		view.setEventHandler(this);
+
+		view.setPlayer(model.playerId);
 		view.showTable(model.table);
 		model.login(model.playerId);
 
 		if (model.playerId.equals("bobby")) {
-			mode = new AimingMode(model, view);
-			view.aim(15);
+			mode = new PlacingMode(model, view);
 		} else {
 			mode = new ViewingMode(model, view);
 		}
