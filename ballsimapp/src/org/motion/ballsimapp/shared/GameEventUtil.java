@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 public class GameEventUtil {
 
-	public final static String AIM_COMPLETE = "aimComplete";
 	public final static String AIM_UPDATE = "aimUpdate";
+	public final static String AIM_COMPLETE = "aimComplete";
+
+	public final static String PLACEBALL_UPDATE = "placeUpdate";
+	public final static String PLACEBALL_COMPLETE = "placeComplete";
+
 	public final static String ANIMATION_COMPLETE = "animationComplete";
 
-	public final static String PLACEBALL_UPDATE = "aimUpdate";
-	public final static String PLACEBALL_COMPLETE = "aimUpdate";
+	public static GameEvent makeEvent(String name, String value) {
+		GameEventAttribute attribute = new GameEventAttribute(name, value);
 
-	public static GameEvent makeEvent(String name,String value)
-	{
-		GameEventAttribute attribute = new GameEventAttribute(name,value);
-		
 		ArrayList<GameEventAttribute> attributes = new ArrayList<GameEventAttribute>();
 		attributes.add(attribute);
 
@@ -24,8 +24,7 @@ public class GameEventUtil {
 		return event;
 	}
 
-	public static GameEvent makeEvent(String name)
-	{
-		return makeEvent(name,"");
+	public static GameEvent makeEvent(String name) {
+		return makeEvent(name, "");
 	}
 }

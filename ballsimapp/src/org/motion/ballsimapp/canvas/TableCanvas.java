@@ -77,6 +77,11 @@ public class TableCanvas extends TableRenderer implements ActiveMouseMoveHandler
 		aim.setCueBallPosition(position);
 	}
 
+	public Vector3D getCueBallPosition() 
+	{
+		return placer.getCueBallPosition();
+	}
+
 	public void setPlacer(Vector3D cueBallPosition)
 	{
 		aiming=false;
@@ -84,6 +89,14 @@ public class TableCanvas extends TableRenderer implements ActiveMouseMoveHandler
 		moveBackBufferToFront(backBufferContext,context);
 		placer.plotPlacer(context);
 		
+	}
+
+	public void place() {
+		aiming=false;
+	}
+
+	public void aim() {
+		aiming=true;		
 	}
 
 }

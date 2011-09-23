@@ -16,6 +16,7 @@ public class PlacingMode extends BilliardsMode {
 
 	public PlacingMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
+		view.place(15);
 	}
 
 	@Override
@@ -37,7 +38,6 @@ public class PlacingMode extends BilliardsMode {
 			Event hit = UtilEvent.stationary(pos);
 			model.table.ball(1).setFirstEvent(hit);
 			view.showTable(model.table);
-			view.aim(15);
 			return new AimingMode(model,view);
 		}
 
