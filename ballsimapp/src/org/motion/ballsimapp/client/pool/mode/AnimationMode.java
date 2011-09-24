@@ -2,7 +2,6 @@ package org.motion.ballsimapp.client.pool.mode;
 
 import static org.motion.ballsimapp.shared.GameEventUtil.ANIMATION_COMPLETE;
 
-import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
 import org.motion.ballsimapp.shared.GameEvent;
@@ -11,13 +10,12 @@ import com.google.gwt.core.client.GWT;
 
 public class AnimationMode extends BilliardsMode {
 
-	private final BilliardsMode continuation;
+	private final boolean aimNotView;
 
 	public AnimationMode(BilliardsModel model, BilliardsView view,
-			GameEvent hitEvent, BilliardsMode continuation) {
+			boolean aimNotView) {
 		super(model, view);
-		this.continuation = continuation;
-		model.updateWithHit(BilliardsMarshaller.aimFromEvent(hitEvent));
+		this.aimNotView = aimNotView;
 		view.animate(model.table);
 	}
 
@@ -26,9 +24,12 @@ public class AnimationMode extends BilliardsMode {
 
 		if (event.hasAttribute(ANIMATION_COMPLETE)) {
 			model.resetForNextShot();
-			return continuation;
+			view.showTable(model.table);
+			return aimNotView ? new AimingMode(model,view) : new ViewingMode(model,view);
 		}
 
+		// may listen for server choice on next state here
+		
 		GWT.log("AnimationMode handled unexpected event:" + event);
 
 		return this;
