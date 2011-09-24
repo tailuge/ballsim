@@ -25,6 +25,7 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 
 	private static final Map<String,String> channelMap = new HashMap<String, String>();
 	
+	
 
 	/** Called by Server via callback */
 	@Override
