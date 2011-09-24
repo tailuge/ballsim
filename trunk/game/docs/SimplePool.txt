@@ -1,0 +1,19 @@
+@gameevent protocol for SimplePool
+
+# Common fields for all types of game
+
+player.alias               // the player [mandatory]
+player.action              // what the player did [mandatory]
+player.state               // the current state of the player
+
+game.id                    // the id of the game
+game.type                  // the type of game i.e. 9Ball
+game.state                 // state of game (inplay, gameover)
+game.player.inplay         // the inplay player
+
+# Simple Pool specific
+
+game.player.notinplay      // the other player
+game.shot.ballspotted      // list of balls potted
+game.shot.anyballhit       // any ball hit [boolean]
+game.shot.data             // shot vectors etc.
