@@ -86,8 +86,10 @@ public class BilliardsModel extends GWTGameClient {
 	}
 
 	public void placeBall(Vector3D pos) {
+		resetForNextShot();
 		Event hit = UtilEvent.stationary(pos);
 		table.ball(1).setFirstEvent(hit);
+		resetForNextShot();
 	}
 
 	public void sendLimitedPlaceBallUpdate(Vector3D pos) {

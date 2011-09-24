@@ -61,6 +61,7 @@ public class TableCanvas extends TableRenderer implements
 	// for aiming.. refactor.
 	public void setCueBallPosition(Vector3D position) {
 		aim.setCueBallPosition(position);
+		placer.setCueBallPosition(position); // fix
 	}
 
 	public Vector3D getCueBallPosition() {

@@ -34,6 +34,7 @@ public class PlacingMode extends BilliardsMode {
 		{
 			Vector3D pos = BilliardsMarshaller.placeFromEvent(event);
 			model.sendPlaceBallUpdate(pos);
+			model.resetForNextShot();
 			view.showTable(model.table);
 			return new AimingMode(model,view);
 		}
