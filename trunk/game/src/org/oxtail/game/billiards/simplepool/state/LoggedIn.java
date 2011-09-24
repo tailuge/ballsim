@@ -6,7 +6,6 @@ import org.oxtail.game.billiards.simplepool.model.SimplePoolTable;
 import org.oxtail.game.event.GameEvent;
 import org.oxtail.game.event.GameEventAttribute;
 import org.oxtail.game.model.Player;
-import org.oxtail.game.numberguess.state.PlayerState;
 import org.oxtail.game.state.Action;
 import org.oxtail.game.state.GameEventContext;
 
@@ -40,6 +39,7 @@ public class LoggedIn extends AbstractSimplePoolGameState {
 			notifyGameStarted(game);
 		} else {
 			// no one is available
+			PlayerState.AwaitingGame.set(player);
 			notifyAwaitingGame(player);
 		}
 	}
