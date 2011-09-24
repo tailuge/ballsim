@@ -1,6 +1,7 @@
 package org.motion.ballsimapp.client.pool.mode;
 
-import static org.motion.ballsimapp.shared.GameEventUtil.*;
+import static org.motion.ballsimapp.shared.GameEventUtil.AIM_COMPLETE;
+import static org.motion.ballsimapp.shared.GameEventUtil.AIM_UPDATE;
 
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
@@ -14,21 +15,13 @@ public class AimingMode extends BilliardsMode {
 
 	public AimingMode(BilliardsModel model,BilliardsView view) {
 		super(model,view);
+		view.showTable(model.table);
 		view.aim(15);
 	}
 
 	@Override
 	public BilliardsMode handle(GameEvent event) {
 
-		if (event.hasAttribute(ANIMATION_COMPLETE))
-		{
-			model.resetForNextShot();
-			view.showTable(model.table);			
-			// for now enter aiming state again
-			view.aim(15);
-			return this;
-			
-		}
 
 		if (event.hasAttribute(AIM_UPDATE))
 		{
@@ -39,8 +32,7 @@ public class AimingMode extends BilliardsMode {
 		if (event.hasAttribute(AIM_COMPLETE))
 		{			
 			model.sendHit(BilliardsMarshaller.aimFromEvent(event));
-			view.animate(model.table);
-			return this;
+			return new AnimationMode(model,view,event,this);
 		}
 		
 		GWT.log("AimingMode handled unexpected event:"+event);

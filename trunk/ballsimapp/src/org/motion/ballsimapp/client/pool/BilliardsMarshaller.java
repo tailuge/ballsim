@@ -59,4 +59,5 @@ public class BilliardsMarshaller {
 				v.get("y").isNumber().doubleValue(),
 				v.get("z").isNumber().doubleValue());				
 	}
+	
 }

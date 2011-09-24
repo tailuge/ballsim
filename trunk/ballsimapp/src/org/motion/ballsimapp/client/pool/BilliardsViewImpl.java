@@ -11,8 +11,6 @@ import org.motion.ballsimapp.canvas.SpinInputCanvas;
 import org.motion.ballsimapp.canvas.TableCanvas;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
 import org.motion.ballsimapp.client.pool.handlers.AimChange;
-import org.motion.ballsimapp.shared.GameEvent;
-import org.motion.ballsimapp.shared.GameEventAttribute;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -58,24 +56,27 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 			public void onClick(ClickEvent event) {
 				hitButton.setEnabled(false);
 				if (aiming) {
-					Aim aim = new Aim(tableCanvas.getAimDirection(), spin
-							.getSpin(), power.getPower());
-					GameEvent aimComplete = BilliardsMarshaller
-							.eventFromAim(aim);
-					aimComplete.addAttribute(new GameEventAttribute(
-							"aimComplete", ""));
-
-					eventHandler.handleEvent(aimComplete);
+					eventHandler.handleEvent(BilliardsEventFactory
+							.aimComplete(new Aim(tableCanvas.getAimDirection(),
+									spin.getSpin(), power.getPower())));
 				} else {
-					Vector3D pos = tableCanvas.getCueBallPosition();
-					GameEvent placeComplete = BilliardsMarshaller
-							.eventFromPlace(pos);
-					placeComplete.addAttribute(new GameEventAttribute(
-							"placeComplete", ""));
-					eventHandler.handleEvent(placeComplete);					
+					eventHandler.handleEvent(BilliardsEventFactory
+							.placeBallComplete(tableCanvas.getCueBallPosition()));
 				}
 			}
 		});
+	}
+
+	@Override
+	public void handleAimChanged() {
+		if (aiming) {
+			eventHandler.handleEvent(BilliardsEventFactory.aimUpdate(new Aim(
+					tableCanvas.getAimDirection(), spin.getSpin(), power
+							.getPower())));
+		} else {
+			eventHandler.handleEvent(BilliardsEventFactory
+					.placeBallUpdate(tableCanvas.getCueBallPosition()));
+		}
 	}
 
 	private void addElementsToRoot() {
@@ -104,9 +105,9 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 
 	@Override
 	public void showTable(Table table) {
-		tableCanvas.plotAtTime(table, 0);
 		Event cueBall = Interpolator.interpolate(table.ball(1), 0);
 		tableCanvas.setCueBallPosition(cueBall.pos);
+		tableCanvas.plotAtTime(table, 0);
 	}
 
 	@Override
@@ -134,18 +135,6 @@ public class BilliardsViewImpl implements BilliardsView, AimChange {
 		Animation showAnimation = new Animation(table, tableCanvas,
 				eventHandler);
 
-	}
-
-	@Override
-	public void handleAimChanged() {
-		if (timeFilter.hasElapsed(2)) {
-			Aim aim = new Aim(tableCanvas.getAimDirection(), spin.getSpin(),
-					power.getPower());
-			GameEvent aimComplete = BilliardsMarshaller.eventFromAim(aim);
-			aimComplete.addAttribute(new GameEventAttribute("aimUpdate", ""));
-
-			eventHandler.handleEvent(aimComplete);
-		}
 	}
 
 	@Override
