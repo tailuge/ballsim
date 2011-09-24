@@ -2,7 +2,7 @@
 
 # Common fields for all types of game
 
-event.player.alias        // who the event is from
+event.from.player.alias   // who the event is from
 
 player.[index].alias      // the player at the index[0..n]
 player.[index].state      // the current state of the player i.e. viewing, logged in
