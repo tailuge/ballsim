@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.motion.ballsimapp.client.GWTGameServer;
+import org.motion.ballsimapp.proxy.GameServerProxy;
 import org.motion.ballsimapp.shared.GameEvent;
 import org.motion.ballsimapp.shared.GameEventCallback;
 import org.motion.ballsimapp.shared.GameEventUtil;
@@ -25,7 +26,16 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 
 	private static final Map<String,String> channelMap = new HashMap<String, String>();
 	
+	private GameServerProxy proxy;
 	
+	public GWTGameServerImpl() {
+		proxy = new GameServerProxy(this);
+	}
+
+	public GWTGameServerImpl(Object delegate) {
+		super(delegate);
+		// TODO Auto-generated constructor stub
+	}
 
 	/** Called by Server via callback */
 	@Override
@@ -58,6 +68,7 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 	public void notify(GameEvent event) {
 		log.warning("notify:"+event);
 		// game server will be called here
+		//proxy.notify(event);
 		onEvent(event);		
 		return;
 	}
