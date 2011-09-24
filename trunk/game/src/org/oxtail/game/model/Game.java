@@ -3,6 +3,8 @@ package org.oxtail.game.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.oxtail.game.event.GameEvent;
+
 /**
  * Top level Game, A unique instance of game
  */
@@ -61,5 +63,16 @@ public abstract class Game<T extends PlayingSpace> {
 		return version.getId();
 	}
 
-	
+	public void setGameState(Class<?> k) {
+		setStateId(new StateId(k));
+	}
+
+	/**
+	 * Notifies all players in the game of an event
+	 */
+	public void notify(GameEvent event) {
+		for (Player player : players)
+			player.onEvent(event);
+	}
+
 }

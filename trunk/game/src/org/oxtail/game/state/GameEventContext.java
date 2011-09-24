@@ -25,6 +25,7 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 	private GameHome gameHome;
 	private GameStatemachine statemachine;
 
+	
 	public G getGame() {
 		return game;
 	}

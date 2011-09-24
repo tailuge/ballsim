@@ -18,7 +18,12 @@ public class BilliardBall {
 		this.category = category;
 		rack();
 	}
-
+	
+	public void apply(BilliardBall ball) {
+		this.pottedIn = ball.pottedIn;
+		this.tableState = ball.tableState;
+	}
+	
 	public BilliardsPocket getPocket() {
 		return pottedIn;
 	}
