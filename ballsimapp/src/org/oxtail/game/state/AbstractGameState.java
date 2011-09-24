@@ -1,15 +1,11 @@
 package org.oxtail.game.state;
 
-import java.util.List;
-
 import org.oxtail.game.home.GameHome;
 import org.oxtail.game.model.Game;
 import org.oxtail.game.model.Move;
 import org.oxtail.game.model.Player;
 import org.oxtail.game.model.PlayingSpace;
 import org.oxtail.game.model.StateId;
-
-import com.google.common.collect.Lists;
 
 /**
  * Base state for Games and Players
@@ -37,25 +33,6 @@ public abstract class AbstractGameState<G extends Game<S>, M extends Move, S ext
 		return context.getInPlay();
 	}
 	
-	protected PlayerProxy inPlay() {
-		return new PlayerProxy(context.getInPlay());
-	}
-
-	protected PlayerProxy notInPlay() {
-		return new PlayerProxy(context.getNotInPlay());
-	}
-	
-	private List<PlayerProxy> toProxies(Iterable<Player> players) {
-		List<PlayerProxy> proxies = Lists.newArrayList();
-		for (Player p : players)
-			proxies.add(new PlayerProxy(p));
-		return proxies;
-	}
-
-	protected PlayersProxy others() {
-		return new PlayersProxy(toProxies(context.getOthers()));
-	}
-
 	protected G getGame() {
 		return context.getGame();
 	}
