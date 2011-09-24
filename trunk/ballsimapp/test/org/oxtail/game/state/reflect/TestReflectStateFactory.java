@@ -7,7 +7,6 @@ import org.oxtail.exception.OxtailRuntimeException;
 import org.oxtail.game.model.StateId;
 import org.oxtail.game.state.AbstractGameState;
 import org.oxtail.game.state.GameEventContext;
-import org.oxtail.game.state.PlayerPendingLogin;
 import org.oxtail.game.state.StateFactory;
 
 /**
@@ -72,4 +71,13 @@ public class TestReflectStateFactory {
 
 	}
 
+	@SuppressWarnings("rawtypes")
+	public static class PlayerPendingLogin extends AbstractGameState {
+
+		@SuppressWarnings("unchecked")
+		public PlayerPendingLogin(GameEventContext context) {
+			super(context);
+		}
+		
+	}
 }

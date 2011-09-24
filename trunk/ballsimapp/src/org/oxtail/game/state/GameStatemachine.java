@@ -4,6 +4,6 @@ import org.motion.ballsimapp.shared.GameEvent;
 
 public interface GameStatemachine {
 
-	public void execute(GameEvent gameEvent);
+	void execute(GameEvent gameEvent);
 
 }
