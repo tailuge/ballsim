@@ -14,10 +14,9 @@ public class SetupMode extends BilliardsMode {
 
 	@Override
 	public BilliardsMode handle(GameEvent event) {
-		
-		
-		GWT.log("PlacingMode handled unexpected event:"+event);
-		
+
+		GWT.log("PlacingMode handled unexpected event:" + event);
+
 		return this;
 	}
 

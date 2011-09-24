@@ -1,7 +1,6 @@
 package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
-import org.motion.ballsimapp.client.pool.mode.AimingMode;
 import org.motion.ballsimapp.client.pool.mode.BilliardsMode;
 import org.motion.ballsimapp.client.pool.mode.PlacingMode;
 import org.motion.ballsimapp.client.pool.mode.ViewingMode;

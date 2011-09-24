@@ -7,96 +7,80 @@ import org.motion.ballsim.physics.Interpolator;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsimapp.client.pool.handlers.AimChange;
 
-
-public class TableCanvas extends TableRenderer implements ActiveMouseMoveHandler.MouseEvent {
+public class TableCanvas extends TableRenderer implements
+		ActiveMouseMoveHandler.MouseEvent {
 
 	@SuppressWarnings("unused")
 	private final ActiveMouseMoveHandler mouseHandler;
 	private final AimChange aimChangeHandler;
 	boolean aiming = true;
-	
-	public TableCanvas(int w, int h,AimChange aimChangeHandler)
-	{
-		super(w,h);
+
+	public TableCanvas(int w, int h, AimChange aimChangeHandler) {
+		super(w, h);
 		this.aimChangeHandler = aimChangeHandler;
 		mouseHandler = new ActiveMouseMoveHandler(canvas, this);
 	}
-	
-	public void plotAtTime(Table table,double t)
-	{
-		clearBackBuffer(); 
 
-		for(Ball ball : table.balls())
-		{
+	public void plotAtTime(Table table, double t) {
+		clearBackBuffer();
+		for (Ball ball : table.balls()) {
 			Event e = Interpolator.interpolate(ball, t);
-			PlotEvent.plotEvent(e, backBufferContext,scale);
+			PlotEvent.plotEvent(e, backBufferContext, scale);
 		}
-
-		moveBackBufferToFront(backBufferContext,context);
-
+		moveBackBufferToFront(backBufferContext, context);
 	}
 
 	@Override
 	public void handle(int mouseX, int mouseY) {
-		updateAim(mouseX,mouseY);
+		updateAim(mouseX, mouseY);
 		aimChangeHandler.handleAimChanged();
 	}
-	
-	private void updateAim(int x, int y)
-	{
-		moveBackBufferToFront(backBufferContext,context);
-		if(aiming)
-		{
+
+	private void updateAim(int x, int y) {
+		moveBackBufferToFront(backBufferContext, context);
+		if (aiming) {
 			aim.setAimToTarget(scale.mouseToWorld(x, y));
 			aim.plotAim(context);
-		}
-		else
-		{
+		} else {
 			placer.setCueBallPosition(scale.mouseToWorld(x, y));
 			placer.plotPlacer(context);
 		}
 	}
 
-
-	public Vector3D getAimDirection()
-	{
+	public Vector3D getAimDirection() {
 		return aim.getAimDirection();
 	}
 
-	public void setAimDirection(Vector3D aimDirection)
-	{
-		aiming=true;
+	public void setAimDirection(Vector3D aimDirection) {
+		aiming = true;
 		aim.setAimDirection(aimDirection);
-		moveBackBufferToFront(backBufferContext,context);
+		moveBackBufferToFront(backBufferContext, context);
 		aim.plotAim(context);
 	}
 
 	// for aiming.. refactor.
-	public void setCueBallPosition(Vector3D position) 
-	{
+	public void setCueBallPosition(Vector3D position) {
 		aim.setCueBallPosition(position);
 	}
 
-	public Vector3D getCueBallPosition() 
-	{
+	public Vector3D getCueBallPosition() {
 		return placer.getCueBallPosition();
 	}
 
-	public void setPlacer(Vector3D cueBallPosition)
-	{
-		aiming=false;
+	public void setPlacer(Vector3D cueBallPosition) {
+		aiming = false;
 		placer.setCueBallPosition(cueBallPosition);
-		moveBackBufferToFront(backBufferContext,context);
+		moveBackBufferToFront(backBufferContext, context);
 		placer.plotPlacer(context);
-		
+
 	}
 
 	public void place() {
-		aiming=false;
+		aiming = false;
 	}
 
 	public void aim() {
-		aiming=true;		
+		aiming = true;
 	}
 
 }

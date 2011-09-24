@@ -1,10 +1,9 @@
 package org.motion.ballsimapp.client.pool.mode;
 
-import static org.motion.ballsimapp.shared.GameEventUtil.*;
+import static org.motion.ballsimapp.shared.GameEventUtil.PLACEBALL_COMPLETE;
+import static org.motion.ballsimapp.shared.GameEventUtil.PLACEBALL_UPDATE;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
@@ -25,8 +24,7 @@ public class PlacingMode extends BilliardsMode {
 		if (event.hasAttribute(PLACEBALL_UPDATE))
 		{
 			Vector3D pos = BilliardsMarshaller.placeFromEvent(event);
-			Event hit = UtilEvent.stationary(pos);
-			model.table.ball(1).setFirstEvent(hit);
+			model.sendLimitedPlaceBallUpdate(pos);
 			view.showTable(model.table);
 			view.setPlacer(pos);
 			return this;
@@ -35,8 +33,7 @@ public class PlacingMode extends BilliardsMode {
 		if (event.hasAttribute(PLACEBALL_COMPLETE))
 		{
 			Vector3D pos = BilliardsMarshaller.placeFromEvent(event);
-			Event hit = UtilEvent.stationary(pos);
-			model.table.ball(1).setFirstEvent(hit);
+			model.sendPlaceBallUpdate(pos);
 			view.showTable(model.table);
 			return new AimingMode(model,view);
 		}
