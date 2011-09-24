@@ -58,15 +58,6 @@ public class NumberGuessGame extends Game<NumberGuessBoard> {
 		return (number == winningNumber);
 	}
 
-	public void setGameState(Class<?> k) {
-		setStateId(new StateId(k));
-	}
-
-	public void notify(GameEvent event) {
-		player1().onEvent(event);
-		player2().onEvent(event);
-	}
-
 	public String toSummaryString() {
 		return "["+getId()+":"+winningNumber+"] "+player1().getAlias()+" vs. "+player2().getAlias();
 	}
