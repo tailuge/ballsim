@@ -4,15 +4,18 @@ public class Events {
 
 	// connectivity
 
-	public final static String LOGIN = "login";
-	public final static String ALIAS = "player.alias";
+	public final static String ACTION = "action";
 	public final static String STATE = "state";
 	public final static String TARGET = "target";
+	public final static String LOGIN = "login";
+	public final static String REQUEST_GAME = "requestGame";
+	public final static String PLAYER_ALIAS = "player.alias";
+	public final static String PASSWORD = "password";
 	public final static String CLIENT_ERROR = "error";
 	public final static String CHANNEL_CONNECTED = "connected";
 	public final static String LOGIN_SUCCESS = "loggedin";
 	public final static String AWAITING_GAME = "awaitinggame";
-	
+
 	// billiards specific (move to another class?)
 
 	public final static String AIM_UPDATE = "aimUpdate";
@@ -34,15 +37,15 @@ public class Events {
 	}
 
 	public static GameEvent login(String playerId, String password) {
-		GameEvent loginRequest = event("action", "login");
-		loginRequest.addAttribute(attr("player.alias", playerId));
-		loginRequest.addAttribute(attr("password", password));
+		GameEvent loginRequest = event(ACTION, LOGIN);
+		loginRequest.addAttribute(attr(PLAYER_ALIAS, playerId));
+		loginRequest.addAttribute(attr(PASSWORD, password));
 		return loginRequest;
 	}
 
 	public static GameEvent requestGame(String playerId) {
-		GameEvent loginRequest = event("action", "requestGame");
-		loginRequest.addAttribute(attr("player.alias", playerId));
+		GameEvent loginRequest = event(ACTION, REQUEST_GAME);
+		loginRequest.addAttribute(attr(PLAYER_ALIAS, playerId));
 		return loginRequest;
 	}
 
@@ -51,10 +54,10 @@ public class Events {
 	}
 
 	// predicates
-	
-	public static boolean isState(GameEvent event,String value) {
+
+	public static boolean isState(GameEvent event, String value) {
 		return event.hasAttribute(STATE)
 				&& event.getAttribute(STATE).getValue().equals(value);
 	}
-	
+
 }

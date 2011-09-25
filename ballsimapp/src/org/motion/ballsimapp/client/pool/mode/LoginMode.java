@@ -50,7 +50,7 @@ public class LoginMode extends BilliardsMode {
 
 		if (Events.isState(event,"todo begin watching"))
 		{			
-			return new AimingMode(model,view);
+			return new ViewingMode(model,view);
 		}
 
 		GWT.log("LoginMode handled unexpected event:" + event);
