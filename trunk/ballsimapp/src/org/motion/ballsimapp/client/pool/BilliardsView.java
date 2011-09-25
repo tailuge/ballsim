@@ -8,7 +8,6 @@ import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
 
 public interface BilliardsView {
 
-	void setPlayer(String playerId);
 	void setEventHandler(GWTGameEventHandler eventHandler);
 
 	void aim(int timeout);
@@ -20,4 +19,6 @@ public interface BilliardsView {
 	void setAim(Aim aim);
 	void setPlacer(Vector3D pos);
 	
+	String getPlayerId();
+	String getPassword();
 }
