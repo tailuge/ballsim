@@ -46,7 +46,7 @@ public class GameEventUtil {
 
 	public static GameEvent requestGame(String playerId)
 	{
-		GameEvent loginRequest = makeEvent("action","gameRequest");
+		GameEvent loginRequest = makeEvent("action","requestGame");
 		loginRequest.addAttribute(new GameEventAttribute("player.alias", playerId));
 		return loginRequest;
 	}

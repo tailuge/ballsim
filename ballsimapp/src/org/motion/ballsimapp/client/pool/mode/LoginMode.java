@@ -29,11 +29,12 @@ public class LoginMode extends BilliardsMode {
 			return this;
 		}
 
-		if (event.hasAttribute(LOGIN_SUCCESS))
-		{
+		if (event.hasAttribute("state") && event.getAttribute("state").getValue().equals("loggedin"))
+		{			
 			view.appendMessage("login successfull.");
 			view.appendMessage("requesting game");
 			model.notify(GameEventUtil.requestGame(view.getPlayerId()));			
+			return this;
 		}
 
 		GWT.log("LoginMode handled unexpected event:" + event);
