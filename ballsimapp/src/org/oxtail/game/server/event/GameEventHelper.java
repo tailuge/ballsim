@@ -1,6 +1,7 @@
 package org.oxtail.game.server.event;
 
 import org.motion.ballsimapp.shared.GameEvent;
+import org.motion.ballsimapp.shared.GameEventAttribute;
 
 /**
  * Server side helper for the {@link GameEvent}, to simplify access without
@@ -16,10 +17,10 @@ public class GameEventHelper {
 	}
 
 	public String getString(String name) {
-		final String value = event.getAttribute(name).getValue();
-		if (value == null)
-			throw new IllegalArgumentException("no such value "+name);
-		return value;
+		GameEventAttribute attribute = event.getAttribute(name);
+		if (attribute == null)
+			throw new IllegalArgumentException("no such attribute "+name);
+		return attribute.getValue();
 	}
 
 	public Integer getInt(String name) {
