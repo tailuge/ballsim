@@ -1,13 +1,26 @@
 package org.oxtail.game.billiards.simplepool.model;
 
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.oxtail.game.billiards.model.BilliardBall;
 import org.oxtail.game.model.Game;
+import org.oxtail.game.model.GameVersion;
 import org.oxtail.game.model.Player;
 
 public class SimplePoolGame extends Game<SimplePoolTable> {
 
+	private static final AtomicInteger INSTANCE_COUNT = new AtomicInteger();
+
 	public SimplePoolGame(Player player1, Player player2) {
 		super(new SimplePoolTable(), player1, player2);
+		newGame();
+	}
+
+	private void newGame() {
+		setVersion(new GameVersion(String.valueOf(INSTANCE_COUNT
+				.incrementAndGet()), new Date()));
+
 	}
 
 	public Player player1() {
@@ -85,5 +98,4 @@ public class SimplePoolGame extends Game<SimplePoolTable> {
 			previousBallState(ball).apply(ball);
 	}
 
-	
 }

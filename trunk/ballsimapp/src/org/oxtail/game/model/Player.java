@@ -1,6 +1,7 @@
 package org.oxtail.game.model;
 
 import org.motion.ballsimapp.shared.GameEvent;
+import org.motion.ballsimapp.shared.GameEventAttribute;
 import org.motion.ballsimapp.shared.GameEventCallback;
 
 /**
@@ -39,6 +40,7 @@ public class Player implements GameEventCallback {
 
 	@Override
 	public void onEvent(GameEvent event) {
+		event.addAttribute(new GameEventAttribute("target",getAlias()));
 		if (callbackDelegate != null) {
 			callbackDelegate.onEvent(event);
 		}

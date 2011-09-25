@@ -22,11 +22,19 @@ public class GameServerProxy implements GameServer {
 	private final GameHome gameHome;
 
 	public GameServerProxy(GameEventCallback callback) {
-		gameHome = new CallbackEnrichedGameHome(new InMemoryGameHome(),
-				callback);
-		statemachine = new SimplePoolStatemachine(gameHome,
-				new ReflectStateFactory(), new ReflectStateActionExecutor());
-		setUpPlayers("jim", "bob");
+		this.gameHome = newGameHome(callback);
+		this.statemachine = newStatemachine();
+		setUpPlayerInState("jim", PlayerState.LoggedIn);
+		setUpPlayerInState("bob", PlayerState.LoggedOut);
+	}
+
+	private SimplePoolStatemachine newStatemachine() {
+		return new SimplePoolStatemachine(gameHome, new ReflectStateFactory(),
+				new ReflectStateActionExecutor());
+	}
+
+	private GameHome newGameHome(GameEventCallback callback) {
+		return new CallbackEnrichedGameHome(new InMemoryGameHome(), callback);
 	}
 
 	@Override
@@ -34,17 +42,9 @@ public class GameServerProxy implements GameServer {
 		statemachine.execute(event);
 	}
 
-	/**
-	 * Temporary to hard code some players,
-	 */
-	private void setUpPlayers(String... playerAliases) {
-		for (String playerAlias : playerAliases)
-			setUpPlayer(playerAlias);
-	}
-
-	private void setUpPlayer(String playerAlias) {
+	private void setUpPlayerInState(String playerAlias, PlayerState state) {
 		Player player = new Player(playerAlias);
-		PlayerState.LoggedOut.set(player);
+		state.set(player);
 		gameHome.storePlayer(player);
 	}
 

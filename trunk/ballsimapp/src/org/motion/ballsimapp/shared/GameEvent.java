@@ -4,17 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Communication packet between client and server
  */
 public class GameEvent implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private List<GameEventAttribute> attributes = new ArrayList<GameEventAttribute>();
 
 	public List<GameEventAttribute> getAttributes() {
@@ -71,5 +67,12 @@ public class GameEvent implements Serializable {
 		return true;
 	}
 
+	public GameEvent copy() {
+		GameEvent event = new GameEvent();
+		for (GameEventAttribute attribute : getAttributes())
+			event.addAttribute(new GameEventAttribute(attribute.getName(),
+					attribute.getValue()));
+		return event;
+	}
 
 }
