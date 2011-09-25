@@ -68,8 +68,8 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 	public void notify(GameEvent event) {
 		log.warning("notify:"+event);
 		// game server will be called here
-		//proxy.notify(event);
-		onEvent(event);		
+		proxy.notify(event);
+		//onEvent(event);		
 		return;
 	}
 

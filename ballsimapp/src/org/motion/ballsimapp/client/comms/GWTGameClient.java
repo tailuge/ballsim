@@ -26,7 +26,7 @@ public class GWTGameClient {
 			.create(GWTGameServer.class);
 
 
-	public void login(final String user, GWTGameEventHandler handler) {
+	public void connect(final String user, GWTGameEventHandler handler) {
 		
 		distributor.addGameEventListener(user, handler);
 
@@ -81,8 +81,7 @@ public class GWTGameClient {
 				channel.open(new SocketListener() {
 					@Override
 					public void onOpen() {
-						distributor.distributeAll(distributor.info("Channel opened"));
-						//connectedUser = user;
+						distributor.distributeAll(distributor.confirmConnected());
 					}
 
 					@Override

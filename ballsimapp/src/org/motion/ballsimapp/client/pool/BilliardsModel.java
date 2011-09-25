@@ -37,10 +37,15 @@ public class BilliardsModel extends GWTGameClient {
 				UtilEvent.stationary(new Vector3D(Ball.R * 8, -Ball.R * 3, 0)));
 	}
 
-	public void login(String playerId, String password) {
-		login(playerId, eventHandler);
+	public void connect(String playerId) {
+		connect(playerId, eventHandler);
 	}
 
+	public void notify(GameEvent event)
+	{
+		super.notify(event);
+	}
+	
 	public void sendAimUpdate(Aim aim) {
 		if (filter.hasElapsed(2)) {
 			GameEvent aimEvent = BilliardsEventFactory.aimUpdate(aim);
