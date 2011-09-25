@@ -71,8 +71,9 @@ public abstract class Game<T extends PlayingSpace> {
 	 * Notifies all players in the game of an event
 	 */
 	public void notify(GameEvent event) {
-		for (Player player : players)
-			player.onEvent(event);
+		for (Player player : players) {
+			player.onEvent(event.copy());
+		}
 	}
 
 }

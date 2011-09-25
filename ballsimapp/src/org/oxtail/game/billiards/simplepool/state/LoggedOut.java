@@ -1,7 +1,5 @@
 package org.oxtail.game.billiards.simplepool.state;
 
-import org.motion.ballsimapp.shared.GameEvent;
-import org.motion.ballsimapp.shared.GameEventAttribute;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolGame;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolMove;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolTable;
@@ -27,9 +25,6 @@ public class LoggedOut extends AbstractSimplePoolGameState {
 	}
 
 	private void notifyLoggedIn(Player player) {
-		GameEvent event = new GameEvent();
-		event.addAttribute(new GameEventAttribute("state", "loggedin"));
-		event.addAttribute(new GameEventAttribute("target", player.getAlias()));
-		player.onEvent(event);
+		player.onEvent(event("state=loggedin"));
 	}
 }

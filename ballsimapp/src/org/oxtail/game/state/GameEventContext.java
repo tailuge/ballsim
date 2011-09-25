@@ -25,7 +25,6 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 	private GameHome gameHome;
 	private GameStatemachine statemachine;
 
-	
 	public G getGame() {
 		return game;
 	}
@@ -43,7 +42,7 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 	}
 
 	public Player getInPlay() {
-		return inPlay;
+		return assertSet(inPlay, "inPlay");
 	}
 
 	public GameHome getGameHome() {
@@ -92,4 +91,12 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 		this.gameEvent = gameEvent;
 	}
 
+	/**
+	 * Asserts the a value is set and returns it
+	 */
+	private <T> T assertSet(T value, String name) {
+		if (value == null)
+			throw new NullPointerException(name + " not set on context");
+		return value;
+	}
 }
