@@ -37,7 +37,7 @@ public class LoggedIn extends AbstractSimplePoolGameState {
 			SimplePoolGame game = new SimplePoolGame(player, opponent);
 			game.setInPlay(player);
 			game.setGameState(InPlay.class);
-			notifyGameStarted(game);
+			notifyGameStarted2(game);
 		} else {
 			// no one is available
 			PlayerState.AwaitingGame.set(player);
@@ -53,9 +53,8 @@ public class LoggedIn extends AbstractSimplePoolGameState {
 		player.onEvent(event("state=loggedout"));
 	}
 
-	private void notifyGameStarted(SimplePoolGame game) {
-		GameEvent event = new GameEvent();
-		event.addAttribute(new GameEventAttribute("state", "gamestarted"));
+	private GameEvent newGameStarted(String state, SimplePoolGame game) {
+		GameEvent event = event("state=" + state);
 		event.addAttribute(new GameEventAttribute("player.inplay", game
 				.inPlay().getAlias()));
 		event.addAttribute(new GameEventAttribute("player.notinplay", game
@@ -64,6 +63,18 @@ public class LoggedIn extends AbstractSimplePoolGameState {
 				.getId()));
 		event.addAttribute(new GameEventAttribute("game.table", game
 				.getCurrentPlayingSpace().toString()));
+		return event;
+	}
+
+	private void notifyGameStarted(SimplePoolGame game) {
+		GameEvent event = newGameStarted("gamestarted", game);
 		game.notify(event);
 	}
+
+	private void notifyGameStarted2(SimplePoolGame game) {
+		game.inPlay().onEvent(newGameStarted("aiming", game));
+		game.notInPlay().onEvent(newGameStarted("viewing", game));
+
+	}
+
 }
