@@ -39,8 +39,9 @@ public class Player implements GameEventCallback {
 
 	@Override
 	public void onEvent(GameEvent event) {
-		if (callbackDelegate != null)
+		if (callbackDelegate != null) {
 			callbackDelegate.onEvent(event);
+		}
 	}
 
 	@Override
