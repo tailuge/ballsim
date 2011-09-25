@@ -18,17 +18,11 @@ public class BilliardsModel extends GWTGameClient {
 
 	public Table table = new Table(false);
 
-	String playerId;
-
 	GWTGameEventHandler eventHandler;
 
 	// don't send all streaming messages
 
 	TimeFilter filter = new TimeFilter();
-
-	public BilliardsModel(String playerId) {
-		this.playerId = playerId;
-	}
 
 	public void setEventHandler(GWTGameEventHandler eventHandler) {
 		this.eventHandler = eventHandler;
@@ -43,8 +37,8 @@ public class BilliardsModel extends GWTGameClient {
 				UtilEvent.stationary(new Vector3D(Ball.R * 8, -Ball.R * 3, 0)));
 	}
 
-	public void login(final String user) {
-		login(user, eventHandler);
+	public void login(String playerId, String password) {
+		login(playerId, eventHandler);
 	}
 
 	public void sendAimUpdate(Aim aim) {
