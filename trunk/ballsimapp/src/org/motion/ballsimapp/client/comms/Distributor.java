@@ -60,6 +60,10 @@ public class Distributor {
 		return GameEventUtil.makeEvent("info", message);
 	}
 
+	public GameEvent confirmConnected()
+	{
+		return GameEventUtil.makeEvent(GameEventUtil.CHANNEL_CONNECTED);
+	}
 
 	public GameEvent target(String user,GameEvent event)
 	{
