@@ -45,11 +45,13 @@ public class LoginMode extends BilliardsMode {
 
 		if (Events.isState(event,"aiming"))
 		{			
+			view.appendMessage("game started (break)");
 			return new AimingMode(model,view);
 		}
 
 		if (Events.isState(event,"viewing"))
 		{			
+			view.appendMessage("game started (other player to break)");
 			return new ViewingMode(model,view);
 		}
 
