@@ -47,7 +47,6 @@ public class BilliardsModel extends GWTGameClient {
 	public void sendAimUpdate(Aim aim) {
 		if (filter.hasElapsed(2)) {
 			GameEvent aimEvent = BilliardsEventFactory.aimUpdate(aim);
-			aimEvent.addAttribute(new GameEventAttribute("target", "frank")); // remove
 			notify(aimEvent);
 		}
 	}
@@ -66,7 +65,6 @@ public class BilliardsModel extends GWTGameClient {
 
 		// TODO extract outcome of shot and include in event
 
-		hitEvent.addAttribute(new GameEventAttribute("target", "frank")); // remove
 		hitEvent.addAttribute(new GameEventAttribute("potted", "7ball")); // remove
 		hitEvent.addAttribute(new GameEventAttribute("firsthit", "1ball")); // remove
 		hitEvent.addAttribute(new GameEventAttribute("cushionsBeforeFirstBall",
@@ -98,7 +96,6 @@ public class BilliardsModel extends GWTGameClient {
 	public void sendPlaceBallUpdate(Vector3D pos) {
 		placeBall(pos);
 		GameEvent placeEvent = BilliardsEventFactory.placeBallUpdate(pos);
-		placeEvent.addAttribute(new GameEventAttribute("target", "frank")); // remove
 		notify(placeEvent);
 	}
 
