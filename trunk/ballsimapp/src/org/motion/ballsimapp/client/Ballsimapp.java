@@ -23,21 +23,17 @@ public class Ballsimapp implements EntryPoint {
 	public void onModuleLoad() {
 
 		int width = 400;
-		
+
 		// player 1
 		BilliardsModel gameModelP1 = new BilliardsModel();
-		BilliardsView gameViewP1 = new BilliardsViewImpl(width/2, "bob");
+		BilliardsView gameViewP1 = new BilliardsViewImpl(width / 2, "bob");
 		gamePresenterP1 = new BilliardsPresenter(gameModelP1, gameViewP1);
-		
-		
-		// player 2
-//		BilliardsModel gameModelP2 = new BilliardsModel();
-//		BilliardsView gameViewP2 = new BilliardsViewImpl(width/4, "frank");		
-//		gamePresenterP2 = new BilliardsPresenter(gameModelP2, gameViewP2);
-		
-		
-	}
-	
 
-	  
+		// player 2
+		BilliardsModel gameModelP2 = new BilliardsModel();
+		BilliardsView gameViewP2 = new BilliardsViewImpl(width / 2, "jim");
+		gamePresenterP2 = new BilliardsPresenter(gameModelP2, gameViewP2);
+
+	}
+
 }
