@@ -13,6 +13,7 @@ public class BilliardsEventFactory {
 	{
 		GameEvent aimUpdate = BilliardsMarshaller.eventFromAim(aim);
 		aimUpdate.addAttribute(new GameEventAttribute(AIM_UPDATE, ""));
+		aimUpdate.addAttribute(new GameEventAttribute(ACTION, "aim"));
 		return aimUpdate;
 	}
 	
@@ -20,6 +21,7 @@ public class BilliardsEventFactory {
 	{
 		GameEvent aimComplete = BilliardsMarshaller.eventFromAim(aim);
 		aimComplete.addAttribute(new GameEventAttribute(AIM_COMPLETE, ""));
+		aimComplete.addAttribute(new GameEventAttribute(ACTION, "aim"));
 		return aimComplete;
 	}
 
@@ -27,12 +29,14 @@ public class BilliardsEventFactory {
 	{
 		GameEvent placeBallUpdate = BilliardsMarshaller.eventFromPlace(pos);
 		placeBallUpdate.addAttribute(new GameEventAttribute(PLACEBALL_UPDATE, ""));
+		placeBallUpdate.addAttribute(new GameEventAttribute(ACTION, "aim"));
 		return placeBallUpdate;
 	}
 
 	public static GameEvent placeBallComplete(Vector3D pos) {
 		GameEvent placeBallComplete = BilliardsMarshaller.eventFromPlace(pos);
 		placeBallComplete.addAttribute(new GameEventAttribute(PLACEBALL_COMPLETE, ""));
+		placeBallComplete.addAttribute(new GameEventAttribute(ACTION, "aim"));
 		return placeBallComplete;
 	}
 

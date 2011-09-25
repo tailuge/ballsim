@@ -38,7 +38,6 @@ public class Events {
 
 	public static GameEvent login(String playerId, String password) {
 		GameEvent loginRequest = event(ACTION, LOGIN);
-		loginRequest.addAttribute(attr(PLAYER_ALIAS, playerId));
 		loginRequest.addAttribute(attr(PASSWORD, password));
 		return loginRequest;
 	}
