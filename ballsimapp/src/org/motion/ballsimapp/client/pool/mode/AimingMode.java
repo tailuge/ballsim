@@ -1,7 +1,7 @@
 package org.motion.ballsimapp.client.pool.mode;
 
-import static org.motion.ballsimapp.shared.GameEventUtil.AIM_COMPLETE;
-import static org.motion.ballsimapp.shared.GameEventUtil.AIM_UPDATE;
+import static org.motion.ballsimapp.shared.Events.AIM_COMPLETE;
+import static org.motion.ballsimapp.shared.Events.AIM_UPDATE;
 
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;

@@ -1,10 +1,10 @@
 package org.motion.ballsimapp.canvas;
 
-import static org.motion.ballsimapp.shared.GameEventUtil.ANIMATION_COMPLETE;
+import static org.motion.ballsimapp.shared.Events.ANIMATION_COMPLETE;
 
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
-import org.motion.ballsimapp.shared.GameEventUtil;
+import org.motion.ballsimapp.shared.Events;
 
 import com.google.gwt.user.client.Timer;
 
@@ -35,8 +35,8 @@ public class Animation {
 				tableCanvas.plotAtTime(table, time > maxt ? maxt : time);
 				if (time > maxt) {
 					this.cancel();
-					animationComplete.handleEvent(GameEventUtil
-							.makeEvent(ANIMATION_COMPLETE));
+					animationComplete.handleEvent(Events
+							.event(ANIMATION_COMPLETE,""));
 				}
 			}
 		};

@@ -20,8 +20,6 @@ public class BilliardsModel extends GWTGameClient {
 
 	GWTGameEventHandler eventHandler;
 
-	// don't send all streaming messages
-
 	TimeFilter filter = new TimeFilter();
 
 	public void setEventHandler(GWTGameEventHandler eventHandler) {

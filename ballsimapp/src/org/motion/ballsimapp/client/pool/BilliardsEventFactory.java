@@ -1,6 +1,6 @@
 package org.motion.ballsimapp.client.pool;
 
-import static org.motion.ballsimapp.shared.GameEventUtil.*;
+import static org.motion.ballsimapp.shared.Events.*;
 
 import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;

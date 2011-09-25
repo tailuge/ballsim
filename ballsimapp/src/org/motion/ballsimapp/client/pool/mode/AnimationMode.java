@@ -1,6 +1,6 @@
 package org.motion.ballsimapp.client.pool.mode;
 
-import static org.motion.ballsimapp.shared.GameEventUtil.ANIMATION_COMPLETE;
+import static org.motion.ballsimapp.shared.Events.ANIMATION_COMPLETE;
 
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;

@@ -22,19 +22,11 @@ public class BilliardsPresenter implements GWTGameEventHandler {
 	public BilliardsPresenter(BilliardsModel model, BilliardsView view) {
 		this.model = model;
 		this.view = view;
-
 		model.tempInitTable();
 		model.setEventHandler(this);
 		view.setEventHandler(this);
 		view.showTable(model.table);
 		mode = new LoginMode(model, view);
-		
-//		if (view.getPlayerId().equals("bobby")) {
-//			mode = new PlacingMode(model, view);
-//		} else {
-//			mode = new ViewingMode(model, view);
-//		}
-
 	}
 
 	@Override
