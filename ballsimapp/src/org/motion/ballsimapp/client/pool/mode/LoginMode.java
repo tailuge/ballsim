@@ -43,12 +43,12 @@ public class LoginMode extends BilliardsMode {
 			return this;
 		}
 
-		if (Events.isState(event,"todo begin aiming"))
+		if (Events.isState(event,"aiming"))
 		{			
 			return new AimingMode(model,view);
 		}
 
-		if (Events.isState(event,"todo begin watching"))
+		if (Events.isState(event,"viewing"))
 		{			
 			return new ViewingMode(model,view);
 		}
