@@ -16,7 +16,10 @@ public class GameEventHelper {
 	}
 
 	public String getString(String name) {
-		return event.getAttribute(name).getValue();
+		final String value = event.getAttribute(name).getValue();
+		if (value == null)
+			throw new IllegalArgumentException("no such value "+name);
+		return value;
 	}
 
 	public Integer getInt(String name) {
