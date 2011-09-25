@@ -1,5 +1,7 @@
 package org.motion.ballsimapp.client.pool;
 
+import static org.motion.ballsimapp.shared.Events.*;
+
 import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Ball;
@@ -22,6 +24,8 @@ public class BilliardsModel extends GWTGameClient {
 
 	TimeFilter filter = new TimeFilter();
 
+	private String playerId;
+	
 	public void setEventHandler(GWTGameEventHandler eventHandler) {
 		this.eventHandler = eventHandler;
 	}
@@ -36,11 +40,14 @@ public class BilliardsModel extends GWTGameClient {
 	}
 
 	public void connect(String playerId) {
+		this.playerId = playerId;
 		connect(playerId, eventHandler);
 	}
 
 	public void notify(GameEvent event)
 	{
+		// enrich with player Id
+		event.addAttribute(new GameEventAttribute(PLAYER_ALIAS,playerId));
 		super.notify(event);
 	}
 	
