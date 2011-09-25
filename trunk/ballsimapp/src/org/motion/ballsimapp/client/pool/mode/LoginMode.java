@@ -13,6 +13,7 @@ public class LoginMode extends BilliardsMode {
 
 	public LoginMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
+		view.appendMessage("connecting...");
 		model.connect(view.getPlayerId());
 	}
 
@@ -22,12 +23,16 @@ public class LoginMode extends BilliardsMode {
 		
 		if (event.hasAttribute(CHANNEL_CONNECTED))
 		{
+			view.appendMessage("connected to server.");
+			view.appendMessage("logging in as " + view.getPlayerId() + "...");
 			model.notify(GameEventUtil.getLoginEvent(view.getPlayerId(), view.getPassword()));
 			return this;
 		}
 
 		if (event.hasAttribute(LOGIN_SUCCESS))
 		{
+			view.appendMessage("login successfull.");
+			view.appendMessage("requesting game");
 			model.notify(GameEventUtil.requestGame(view.getPlayerId()));			
 		}
 
