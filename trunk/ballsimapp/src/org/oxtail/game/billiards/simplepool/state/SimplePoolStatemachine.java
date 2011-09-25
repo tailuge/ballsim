@@ -46,7 +46,7 @@ public class SimplePoolStatemachine implements GameStatemachine {
 		final GameEventHelper event = new GameEventHelper(gameEvent);
 		Player player = gameHome.findPlayer(event.getString("player.alias"));
 		String action = event.getString("action");
-		GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable> context = newContext(gameEvent);
+		GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable> context = newContext(gameEvent,player);
 		//
 		if (event.hasValue("game.id")) {
 
@@ -73,10 +73,11 @@ public class SimplePoolStatemachine implements GameStatemachine {
 	}
 
 	private GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable> newContext(
-			GameEvent gameEvent) {
+			GameEvent gameEvent, Player player) {
 		GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable> context = new GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable>();
 		context.setGameHome(gameHome);
 		context.setGameEvent(gameEvent);
+		context.setInPlay(player);
 		return context;
 	}
 
