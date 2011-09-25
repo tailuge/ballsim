@@ -1,11 +1,13 @@
 package org.motion.ballsimapp.client.comms;
 
+import static org.motion.ballsimapp.shared.Events.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.motion.ballsimapp.shared.GameEvent;
 import org.motion.ballsimapp.shared.GameEventAttribute;
-import org.motion.ballsimapp.shared.GameEventUtil;
+import org.motion.ballsimapp.shared.Events;
 
 public class Distributor {
 
@@ -16,7 +18,7 @@ public class Distributor {
 	 */
 	public void distribute(GameEvent event)
 	{
-		GameEventAttribute attribute = event.getAttribute("target");		
+		GameEventAttribute attribute = event.getAttribute(TARGET);		
 		if (attribute != null)
 		{
 			GWTGameEventHandler targetHandler = handlers.get(attribute.getValue());
@@ -37,38 +39,12 @@ public class Distributor {
 	
 	public void sendError(String user,String message)
 	{
-		handlers.get(user).handleEvent(error(message));
-	}
-
-	public void sendInfo(String user,String message)
-	{
-		handlers.get(user).handleEvent(info(message));
+		handlers.get(user).handleEvent(Events.event(CLIENT_ERROR, message));
 	}
 
 	public void addGameEventListener(String user,GWTGameEventHandler handler)
 	{
 		handlers.put(user, handler);		
-	}
-	
-	public GameEvent error(String message)
-	{
-		return GameEventUtil.makeEvent("error", message);
-	}
-
-	public GameEvent info(String message)
-	{
-		return GameEventUtil.makeEvent("info", message);
-	}
-
-	public GameEvent confirmConnected()
-	{
-		return GameEventUtil.makeEvent(GameEventUtil.CHANNEL_CONNECTED);
-	}
-
-	public GameEvent target(String user,GameEvent event)
-	{
-		event.addAttribute(new GameEventAttribute("target",user));
-		return event;
 	}
 
 }

@@ -8,7 +8,7 @@ import org.motion.ballsimapp.client.GWTGameServer;
 import org.motion.ballsimapp.proxy.GameServerProxy;
 import org.motion.ballsimapp.shared.GameEvent;
 import org.motion.ballsimapp.shared.GameEventCallback;
-import org.motion.ballsimapp.shared.GameEventUtil;
+import org.motion.ballsimapp.shared.Events;
 
 import com.google.appengine.api.channel.ChannelFailureException;
 import com.google.appengine.api.channel.ChannelMessage;
@@ -93,7 +93,7 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 		if (event.hasAttribute("synonym"))
 		{
 			channelMap.put(user,event.getAttribute("synonym").getValue());
-			return GameEventUtil.makeEvent("channelName","alreadyConnected");
+			return Events.event("channelName","alreadyConnected");
 		}
 		else
 		{
@@ -101,7 +101,7 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 		}
 		
 		String channelName = createChannel(user);
-		GameEvent connectEvent = GameEventUtil.makeEvent("channelName",
+		GameEvent connectEvent = Events.event("channelName",
 				channelName);
 		
 		return connectEvent;

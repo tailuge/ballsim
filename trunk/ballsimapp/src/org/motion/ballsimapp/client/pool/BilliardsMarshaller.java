@@ -3,7 +3,7 @@ package org.motion.ballsimapp.client.pool;
 import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsimapp.shared.GameEvent;
-import org.motion.ballsimapp.shared.GameEventUtil;
+import org.motion.ballsimapp.shared.Events;
 
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
@@ -18,12 +18,12 @@ public class BilliardsMarshaller {
 		jsonAim.put("dir", marshal(aim.dir));
 		jsonAim.put("spin", marshal(aim.spin));
 		jsonAim.put("speed", new JSONNumber(aim.speed));		
-		return GameEventUtil.makeEvent("aim", jsonAim.toString());
+		return Events.event("aim", jsonAim.toString());
 	}
 
 	public final static GameEvent eventFromPlace(Vector3D place)
 	{
-		return GameEventUtil.makeEvent("place", marshal(place).toString());
+		return Events.event("place", marshal(place).toString());
 	}
 	
 	private static JSONObject marshal(Vector3D v) {

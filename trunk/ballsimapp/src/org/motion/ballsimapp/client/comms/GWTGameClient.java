@@ -1,11 +1,13 @@
 package org.motion.ballsimapp.client.comms;
 
+import static org.motion.ballsimapp.shared.Events.*;
+
 import org.motion.ballsimapp.client.GWTGameServer;
 import org.motion.ballsimapp.client.GWTGameServerAsync;
 import org.motion.ballsimapp.client.comms.ChannelFactory.ChannelCreatedCallback;
 import org.motion.ballsimapp.shared.GameEvent;
 import org.motion.ballsimapp.shared.GameEventAttribute;
-import org.motion.ballsimapp.shared.GameEventUtil;
+import org.motion.ballsimapp.shared.Events;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -48,14 +50,13 @@ public class GWTGameClient {
 
 			public void onSuccess(String jsonEvent) {
 				GameEvent event = GameEventMarshaller.deMarshal(jsonEvent);
-				distributor.distribute(distributor.target(user,event));
 				if (!connected)
 				{
 					createNamedChannelListener(user,event.getAttribute("channelName").getValue());
 				}
 				else
 				{
-					distributor.sendInfo(user,"browser already connected");					
+					distributor.sendError(user,"browser already connected");					
 				}
 			}
 		});
@@ -63,7 +64,7 @@ public class GWTGameClient {
 
 	private GameEvent connect(String user)
 	{
-		GameEvent loginEvent = GameEventUtil.makeEvent("user", user);
+		GameEvent loginEvent = Events.event("user", user);
 		if (!connectedUser.isEmpty())
 		{
 			loginEvent.addAttribute(new GameEventAttribute("synonym",connectedUser));
@@ -81,7 +82,7 @@ public class GWTGameClient {
 				channel.open(new SocketListener() {
 					@Override
 					public void onOpen() {
-						distributor.distributeAll(distributor.confirmConnected());
+						distributor.distributeAll(Events.channelConnected());
 					}
 
 					@Override
@@ -92,12 +93,12 @@ public class GWTGameClient {
 
 					@Override
 					public void onError(SocketError error) {
-						distributor.distributeAll(distributor.error(error.getDescription()));
+						distributor.distributeAll(Events.event(CLIENT_ERROR,error.getDescription()));
 					}
 
 					@Override
 					public void onClose() {
-						distributor.distributeAll(distributor.info("Channel closed"));
+						distributor.distributeAll(Events.event(CLIENT_ERROR,"Channel closed"));
 					}
 				});
 			}
@@ -116,7 +117,7 @@ public class GWTGameClient {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				distributor.distributeAll(distributor.error(caught.getMessage()));
+				distributor.distributeAll(Events.event(CLIENT_ERROR, caught.getMessage()));
 			}
 
 			@Override
