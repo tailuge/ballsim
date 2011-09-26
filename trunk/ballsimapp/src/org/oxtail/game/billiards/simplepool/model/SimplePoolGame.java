@@ -76,7 +76,7 @@ public class SimplePoolGame extends Game<SimplePoolTable> {
 				// whites down so foul
 				return SimplePoolGameState.Foul;
 			boolean anythingHit = false;
-			for (BilliardBall ball : shot.getBalls()) {
+			for (BilliardBall ball : shot.getPotted()) {
 				if (isPottedByShot(ball))
 					// something has been potted so we continue
 					return SimplePoolGameState.TurnContinued;
@@ -94,7 +94,7 @@ public class SimplePoolGame extends Game<SimplePoolTable> {
 	 * Update the table with the new game state
 	 */
 	private void applyShot(SimplePoolMove shot) {
-		for (BilliardBall ball : shot.getBalls())
+		for (BilliardBall ball : shot.getPotted())
 			previousBallState(ball).apply(ball);
 	}
 

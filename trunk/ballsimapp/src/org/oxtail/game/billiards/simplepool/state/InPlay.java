@@ -21,6 +21,9 @@ public class InPlay extends AbstractSimplePoolGameState {
 		super(context);
 	}
 
+	/**
+	 * Invoked when the player takes a shot
+	 */
 	@Action
 	public void shot() {
 		SimplePoolGame game = getGame();
@@ -29,6 +32,9 @@ public class InPlay extends AbstractSimplePoolGameState {
 		state.doMove(this);
 	}
 
+	/**
+	 * Invoked when the player is aiming
+	 */
 	@Action
 	public void aim() {
 		Player notInPlay = getGame().notInPlay();

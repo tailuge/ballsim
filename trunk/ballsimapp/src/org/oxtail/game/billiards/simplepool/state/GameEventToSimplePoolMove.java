@@ -3,6 +3,7 @@ package org.oxtail.game.billiards.simplepool.state;
 import org.motion.ballsimapp.shared.GameEvent;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolMove;
 import org.oxtail.game.model.Player;
+import org.oxtail.game.server.event.GameEventHelper;
 
 import com.google.common.base.Function;
 
@@ -20,7 +21,12 @@ public class GameEventToSimplePoolMove implements
 
 	@Override
 	public SimplePoolMove apply(GameEvent event) {
+		GameEventHelper helper = new GameEventHelper(event);
 		SimplePoolMove move = new SimplePoolMove(player);
+		String ballsPotted = helper.getString("game.shot.ballspotted");
+		for (String ball : ballsPotted.split(",")) {
+			move.setBallAsPotted(Integer.valueOf(ball));
+		}
 		return move;
 	}
 
