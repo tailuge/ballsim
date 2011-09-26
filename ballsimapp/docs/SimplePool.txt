@@ -24,6 +24,16 @@ game.rack.seed             // seed used to generate the initial rack position [c
 game.player.inplay         // the inplay player alias [client]
 game.player.notinplay      // the other player alias  [client]
 game.shot.ballspotted      // list of balls potted    [client]
-game.shot.anyballhit       // is any ball hit         [client]
+game.shot.totalBallsHittingCushion // int usefull for break off validity test [client]
+game.shot.firstBallHit     // int - first ball hit by cue ball [client]
+game.shot.cushionBeforeSecondBall // used in 3-cushion billiards rules [client]
 game.shot.data             // shot vectors, for playing shots cross client [client]
 game.table.data            // table data [client]
+
+
+
+# example of the list format and empty list.
+
+[game.shot.ballspotted=[3]]
+[game.shot.ballspotted=[3,2]]
+[game.shot.ballspotted=[]]
