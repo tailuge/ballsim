@@ -72,7 +72,9 @@ public class Quadratic
 		
 		
 		double delta = Quadratic.nextSmallestDelta(last);
-				
+
+		int iter = 0;
+		
 		while(
 				(last>0) && (last<=rootCandidate) && 
 				(Math.signum(func.apply(last)) != sign)
@@ -80,8 +82,10 @@ public class Quadratic
 		{
 			last -=delta;
 			delta *= 2;
+			iter++;
 		}
 
+		if (iter>8) System.out.println("Quadratic optimise.Iterations " + iter);
 		return last;
 	}
 	
@@ -91,10 +95,16 @@ public class Quadratic
 	{
 
 		// Condition must be good at t = 0
-		assert(onTable.apply(0.0) == true);
-
+		//assert(onTable.apply(0.0) == true);
+		if (onTable.apply(0.0)==false)
+		{
+			System.out.println("Problem: not on table");
+		}
+		
 		double last = rootCandidate;
 		double delta = Quadratic.nextSmallestDelta(last);
+
+		int iter = 0;
 		
 		while(
 				(last>0) && (last<=rootCandidate) && 
@@ -103,7 +113,10 @@ public class Quadratic
 		{
 			last -=delta;
 			delta *= 2;
+			iter++;
 		}
+
+		if (iter>8) System.out.println("Quadratic optimise.latestTrueTime " + iter);
 
 		return last;
 	}
