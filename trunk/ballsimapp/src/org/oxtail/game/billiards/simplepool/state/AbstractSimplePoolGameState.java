@@ -58,4 +58,18 @@ public abstract class AbstractSimplePoolGameState extends
 		return gameEvent;
 	}
 
+	protected GameEvent newGameEvent(String state) {
+		SimplePoolGame game = getGame();
+		GameEvent event = event("state=" + state);
+		event.addAttribute(new GameEventAttribute("player.inplay", game
+				.inPlay().getAlias()));
+		event.addAttribute(new GameEventAttribute("player.notinplay", game
+				.notInPlay().getAlias()));
+		event.addAttribute(new GameEventAttribute("game.id", game.getVersion()
+				.getId()));
+		event.addAttribute(new GameEventAttribute("game.table", game
+				.getCurrentPlayingSpace().toString()));
+		return event;
+	}
+
 }
