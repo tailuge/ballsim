@@ -19,6 +19,7 @@ public class LoggedIn extends AbstractSimplePoolGameState {
 		super(context);
 	}
 
+
 	@Action
 	public void logout() {
 		Player player = getInPlay();
