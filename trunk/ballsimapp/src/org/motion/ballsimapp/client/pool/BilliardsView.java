@@ -12,6 +12,7 @@ public interface BilliardsView {
 
 	void aim(int timeout);
 	void place(int timeout);
+	void watch();
 	void appendMessage(String message);
 
 	void showTable(Table table);

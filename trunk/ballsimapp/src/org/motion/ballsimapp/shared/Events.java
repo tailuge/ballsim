@@ -18,6 +18,8 @@ public class Events {
 
 	// billiards specific (move to another class?)
 
+	public final static String BEGIN_AIMING = "aiming";
+	public final static String BEGIN_VIEWING = "viewing";
 	public final static String AIM_UPDATE = "aimUpdate";
 	public final static String AIM_COMPLETE = "aimComplete";
 	public final static String PLACEBALL_UPDATE = "placeUpdate";

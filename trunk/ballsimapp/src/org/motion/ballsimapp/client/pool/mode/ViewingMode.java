@@ -16,6 +16,7 @@ public class ViewingMode extends BilliardsMode {
 
 	public ViewingMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
+		view.watch();
 	}
 
 	@Override
@@ -27,13 +28,13 @@ public class ViewingMode extends BilliardsMode {
 		}
 
 		if (event.hasAttribute(AIM_COMPLETE)) {
-			model.updateWithHit(BilliardsMarshaller.aimFromEvent(event));
+			model.table.generateSequence(BilliardsMarshaller.aimFromEvent(event));
 			return new AnimationMode(model, view,false);
 		}
 
 		if (event.hasAttribute(PLACEBALL_UPDATE)) {
 			Vector3D pos = BilliardsMarshaller.placeFromEvent(event);
-			model.placeBall(pos);
+			model.table.placeBall(pos);
 			view.showTable(model.table);
 			view.setPlacer(pos);
 			return this;

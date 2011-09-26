@@ -23,7 +23,7 @@ public class AnimationMode extends BilliardsMode {
 	public BilliardsMode handle(GameEvent event) {
 
 		if (event.hasAttribute(ANIMATION_COMPLETE)) {
-			model.resetForNextShot();
+			model.table.beginNewShot();
 			view.showTable(model.table);
 			return aimNotView ? new AimingMode(model,view) : new ViewingMode(model,view);
 		}

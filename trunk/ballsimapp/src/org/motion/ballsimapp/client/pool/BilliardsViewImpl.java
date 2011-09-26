@@ -79,4 +79,9 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 		return password.getText();
 	}
 
+	@Override
+	public void watch() {
+		actionButton.setEnabled(false);
+	}
+
 }
