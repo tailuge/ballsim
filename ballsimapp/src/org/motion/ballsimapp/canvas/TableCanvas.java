@@ -78,10 +78,12 @@ public class TableCanvas extends TableRenderer implements
 
 	public void place() {
 		aiming = false;
+		placer.plotPlacer(context);
 	}
 
 	public void aim() {
 		aiming = true;
+		aim.plotAim(context);
 	}
 
 }

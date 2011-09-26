@@ -22,7 +22,7 @@ public class BilliardsPresenter implements GWTGameEventHandler {
 	public BilliardsPresenter(BilliardsModel model, BilliardsView view) {
 		this.model = model;
 		this.view = view;
-		model.tempInitTable();
+		model.table.rack();
 		model.setEventHandler(this);
 		view.setEventHandler(this);
 		view.showTable(model.table);
