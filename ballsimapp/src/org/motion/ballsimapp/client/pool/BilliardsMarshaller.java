@@ -2,6 +2,7 @@ package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.Table;
 import org.motion.ballsimapp.shared.GameEvent;
 import org.motion.ballsimapp.shared.Events;
 
@@ -24,6 +25,11 @@ public class BilliardsMarshaller {
 	public final static GameEvent eventFromPlace(Vector3D place)
 	{
 		return Events.event("place", marshal(place).toString());
+	}
+
+	public final static GameEvent eventFromTable(Table table)
+	{
+		return null;
 	}
 	
 	private static JSONObject marshal(Vector3D v) {
@@ -60,4 +66,8 @@ public class BilliardsMarshaller {
 				v.get("z").isNumber().doubleValue());				
 	}
 	
+	public static Table tableFromEvent()
+	{
+		return null;
+	}
 }
