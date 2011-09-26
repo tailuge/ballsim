@@ -22,7 +22,7 @@ public class UtilEvent
 				dir.scalarMultiply(speed*Table.maxVel),
 				Vector3D.PLUS_K,
 				Vector3D.PLUS_J,
-				UtilVector3D.crossUp(dir.scalarMultiply(speed/Ball.R)).scalarMultiply(cueHeight*Table.maxAngVel),
+				UtilVector3D.crossUp(dir.scalarMultiply(speed/Ball.R)).scalarMultiply(-cueHeight*Table.maxAngVel),
 				zero,
 				State.Sliding,
 				0,
