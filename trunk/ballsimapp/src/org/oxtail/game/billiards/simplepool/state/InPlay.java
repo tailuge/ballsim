@@ -6,6 +6,7 @@ import org.oxtail.game.billiards.simplepool.model.SimplePoolGame;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolGameState;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolMove;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolTable;
+import org.oxtail.game.model.Player;
 import org.oxtail.game.state.Action;
 import org.oxtail.game.state.GameEventContext;
 
@@ -30,7 +31,8 @@ public class InPlay extends AbstractSimplePoolGameState {
 
 	@Action
 	public void aim() {
-		// TODO
+		Player notInPlay = getGame().notInPlay();
+		notInPlay.onEvent(getGameEvent());
 	}
 
 	public void notifyMove() {

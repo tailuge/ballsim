@@ -1,5 +1,6 @@
 package org.oxtail.game.state;
 
+import org.motion.ballsimapp.shared.GameEvent;
 import org.oxtail.game.home.GameHome;
 import org.oxtail.game.model.Game;
 import org.oxtail.game.model.Move;
@@ -49,5 +50,8 @@ public abstract class AbstractGameState<G extends Game<S>, M extends Move, S ext
 		return context.getGameHome();
 	}
 
+	protected GameEvent getGameEvent() {
+		return context.getGameEvent();
+	}
 	
 }
