@@ -27,11 +27,18 @@ public class InPlay extends AbstractSimplePoolGameState {
 	@Action
 	public void shot() {
 		SimplePoolGame game = getGame();
+		notifyNonPlayerWatching(game, getGameEvent().copy());
 		SimplePoolMove shot = getMove();
 		SimplePoolGameState state = game.evaluateShot(shot);
 		state.doMove(this);
 	}
 
+	private void notifyNonPlayerWatching(SimplePoolGame game, GameEvent event) {
+		Player notInPlay = game.notInPlay();
+		event.addAttribute(new GameEventAttribute("state", "watching"));
+		notInPlay.onEvent(event);
+	}
+	
 	/**
 	 * Invoked when the player is aiming
 	 */
@@ -40,38 +47,16 @@ public class InPlay extends AbstractSimplePoolGameState {
 		Player notInPlay = getGame().notInPlay();
 		notInPlay.onEvent(getGameEvent());
 	}
-
+	
 	public void notifyMove() {
 		SimplePoolGame game = getGame();
-		GameEvent event = new GameEvent();
-		event.addAttribute(new GameEventAttribute("state", "inplay"));
-		event.addAttribute(new GameEventAttribute("player.inplay", game
-				.inPlay().getAlias()));
-		event.addAttribute(new GameEventAttribute("player.notinplay", game
-				.notInPlay().getAlias()));
-		event.addAttribute(new GameEventAttribute("game.id", game.getVersion()
-				.getId()));
-		event.addAttribute(new GameEventAttribute("game.board", game
-				.getCurrentPlayingSpace().toString()));
-		game.notify(event);
+		game.inPlay().onEvent(newGameEvent("aiming"));
+		game.notInPlay().onEvent(newGameEvent("viewing"));
 	}
 
 	public void notifyGameOver() {
-		SimplePoolGame game = getGame();
-		GameEvent event = new GameEvent();
-		event.addAttribute(new GameEventAttribute("state", "gameover"));
-		event.addAttribute(new GameEventAttribute("player.winner", game
-				.inPlay().getAlias()));
-		event.addAttribute(new GameEventAttribute("player.loser", game
-				.notInPlay().getAlias()));
-		event.addAttribute(new GameEventAttribute("game.id", game.getVersion()
-				.getId()));
-		event.addAttribute(new GameEventAttribute("game.board", game
-				.getCurrentPlayingSpace().toString()));
-		game.inPlay().setState(PlayerState.LoggedIn.name());
-		game.notInPlay().setState(PlayerState.LoggedIn.name());
-		game.notify(event);
-		getGameHome().deleteGame(game.getId());
+		// TODO
+		getGameHome().deleteGame(getGame().getId());
 	}
 
 	public void turnOver() {
@@ -81,18 +66,6 @@ public class InPlay extends AbstractSimplePoolGameState {
 
 	@Action
 	public void chat() {
-		GameEvent event = context.getGameEvent();
-		String chatTo = getGame().notInPlay().getAlias();
-		String chatFrom = getGame().inPlay().getAlias();
-		event.addAttribute(new GameEventAttribute("state", "inplay"));
-		event.addAttribute(new GameEventAttribute("player.inplay", getGame()
-				.inPlay().getAlias()));
-		event.addAttribute(new GameEventAttribute("player.notinplay", getGame()
-				.notInPlay().getAlias()));
-		event.addAttribute(new GameEventAttribute("chat.from", chatFrom));
-		event.addAttribute(new GameEventAttribute("chat.to", chatTo));
-		event.addAttribute(new GameEventAttribute("game.id", getGame()
-				.getVersion().getId()));
-		getGame().notInPlay().onEvent(event);
+		// TODO
 	}
 }
