@@ -6,10 +6,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
 
 import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.Logger;
+import org.motion.ballsim.util.UtilEvent;
 
 
 /**
@@ -30,7 +32,7 @@ public class Table implements Serializable
 	private final static Logger logger = new Logger("Table",false);
 	
 	public static double maxVel = 60.0;
-	public static double maxAngVel = 2.0;
+	public static double maxAngVel = 220.0;
 	public static double accelRoll = -0.8;
 	public static double accelSlide = -15.0;
 
@@ -109,6 +111,14 @@ public class Table implements Serializable
 		while (generateNext())
 			count++;
 		return count;
+	}
+	
+	public int generateSequence(Aim aim) {
+		Event cueBall = Interpolator.interpolate(ball(1), 0);
+		Event hit = UtilEvent.hit(cueBall.pos, aim.dir, aim.speed,
+				aim.spin.getY());
+		ball(1).setFirstEvent(hit);
+		return generateSequence();
 	}
 	
 	/**
@@ -194,11 +204,11 @@ public class Table implements Serializable
 		}
 	}
 
-	public void resetToCurrent(double t)
+	public void beginNewShot()
 	{
 		for(Ball ball : balls())
 		{
-			Event e = Interpolator.interpolate(ball, t);
+			Event e = Interpolator.interpolate(ball, getMaxTime());
 			
 			e.t=0;
 			e.vel=Vector3D.ZERO;
@@ -232,5 +242,21 @@ public class Table implements Serializable
 			ballMap.put(id, new Ball(id));
 			
 		return ballMap.get(id);
+	}
+	
+	public void placeBall(Vector3D pos)
+	{
+		ball(1).setFirstEvent(UtilEvent.stationary(pos));
+	}
+	
+	// temp move out.
+	public void rack()
+	{
+		ball(1).setFirstEvent(UtilEvent.stationary(Vector3D.ZERO));
+		ball(2).setFirstEvent(
+				UtilEvent.stationary(new Vector3D(-Ball.R * 0.46, +Ball.R * 18,
+						0)));
+		ball(3).setFirstEvent(
+				UtilEvent.stationary(new Vector3D(Ball.R * 8, -Ball.R * 3, 0)));		
 	}
 }

@@ -2,8 +2,6 @@ package org.motion.ballsim;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.PolynomialFunction;
 import org.motion.ballsim.gwtsafe.Quadratic;
@@ -29,14 +27,10 @@ public class CubicTest {
 
 		if (cubicCoeffs.length > 2) 
 		{
-			// swap a and d
-			//double d = cubicCoeffs[0];
-			//cubicCoeffs[0] = cubicCoeffs[3];
-			//cubicCoeffs[3] = d;
 			Quadratic.solveCubic(cubicCoeffs, res);
 		}
 
-		System.out.println("Cubic results : "+Arrays.toString(res));
+//		System.out.println("Cubic results : "+Arrays.toString(res));
 		assertEquals("3 roots",3,res.length);
 	}
 	
