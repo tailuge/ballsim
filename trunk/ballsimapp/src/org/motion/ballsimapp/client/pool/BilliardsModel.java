@@ -15,7 +15,7 @@ public class BilliardsModel extends GWTGameClient {
 
 	// billiards table and balls model (physics model)
 
-	public Table table = new Table(false);
+	public Table table = new Table(true);
 
 	GWTGameEventHandler eventHandler;
 
@@ -49,11 +49,7 @@ public class BilliardsModel extends GWTGameClient {
 
 	public void sendHit(Aim aim) {
 		table.generateSequence(aim);
-//		Outcome outcome = new Outcome(table);
-		GameEvent hitEvent = BilliardsEventFactory.aimComplete(aim);
-		hitEvent.addAttribute(new GameEventAttribute("game.shot.ballspotted", "")); // temp
-		hitEvent.addAttribute(new GameEventAttribute("game.shot.anyballhit", "true")); // temp
-		notify(hitEvent);
+		notify(BilliardsEventFactory.hitOutcome(table,aim));
 	}
 
 	public void sendLimitedPlaceBallUpdate(Vector3D pos) {

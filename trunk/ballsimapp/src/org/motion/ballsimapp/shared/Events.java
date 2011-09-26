@@ -27,6 +27,12 @@ public class Events {
 	public final static String PLACEBALL_COMPLETE = "placeComplete";
 	public final static String ANIMATION_COMPLETE = "animationComplete";
 
+	public static final String GAME_SHOT_ANYBALLHIT = "game.shot.anyballhit";
+	public static final String GAME_SHOT_CUSHION_BEFORE_SECOND_BALL = "game.shot.cushionBeforeSecondBall";
+	public static final String GAME_SHOT_TOTAL_BALLS_HITTING_CUSHION = "game.shot.totalBallsHittingCushion";
+	public static final String GAME_SHOT_FIRST_BALL_HIT = "game.shot.firstBallHit";
+	public static final String GAME_SHOT_BALLSPOTTED = "game.shot.ballspotted";
+
 	// static factories for event creation
 
 	public static GameEvent event(String name, String value) {
