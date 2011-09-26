@@ -38,6 +38,7 @@ public class LoggedIn extends AbstractSimplePoolGameState {
 			SimplePoolGame game = new SimplePoolGame(player, opponent);
 			game.setInPlay(player);
 			game.setGameState(InPlay.class);
+			getGameHome().store(game);
 			notifyGameStarted2(game);
 		} else {
 			// no one is available

@@ -33,9 +33,6 @@ public class SimplePoolStatemachine implements GameStatemachine {
 	public void execute(GameEvent gameEvent) {
 		try {
 			doExecute(gameEvent);
-		} catch (GameNotFoundException e) {
-			System.err.println("warning, failed to execute : " + gameEvent
-					+ " " + e.getMessage());
 		} catch (Exception e) {
 			System.err.println("failed to execute : " + gameEvent);
 			e.printStackTrace(System.err);
