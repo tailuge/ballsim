@@ -10,6 +10,7 @@ public class Events {
 	public final static String LOGIN = "login";
 	public final static String REQUEST_GAME = "requestGame";
 	public final static String PLAYER_ALIAS = "player.alias";
+	public final static String GAME_ID = "game.id";
 	public final static String PASSWORD = "password";
 	public final static String CLIENT_ERROR = "error";
 	public final static String CHANNEL_CONNECTED = "connected";
