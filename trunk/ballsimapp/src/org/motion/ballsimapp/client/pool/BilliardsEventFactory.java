@@ -21,7 +21,7 @@ public class BilliardsEventFactory {
 	{
 		GameEvent aimComplete = BilliardsMarshaller.eventFromAim(aim);
 		aimComplete.addAttribute(new GameEventAttribute(AIM_COMPLETE, ""));
-		aimComplete.addAttribute(new GameEventAttribute(ACTION, "aim"));
+		aimComplete.addAttribute(new GameEventAttribute(ACTION, "shot"));
 		return aimComplete;
 	}
 
