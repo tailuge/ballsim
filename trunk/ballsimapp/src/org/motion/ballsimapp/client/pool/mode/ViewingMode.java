@@ -29,7 +29,7 @@ public class ViewingMode extends BilliardsMode {
 
 		if (event.hasAttribute(AIM_COMPLETE)) {
 			model.table.generateSequence(BilliardsMarshaller.aimFromEvent(event));
-			return new AnimationMode(model, view,false);
+			return new AnimationMode(model, view);
 		}
 
 		if (event.hasAttribute(PLACEBALL_UPDATE)) {
