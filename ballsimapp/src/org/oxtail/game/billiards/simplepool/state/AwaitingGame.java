@@ -1,5 +1,7 @@
 package org.oxtail.game.billiards.simplepool.state;
 
+import org.motion.ballsimapp.shared.GameEvent;
+import org.motion.ballsimapp.shared.GameEventAttribute;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolGame;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolMove;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolTable;
@@ -43,8 +45,15 @@ public class AwaitingGame extends AbstractSimplePoolGameState {
 	}
 
 	private void notifyGameStarted() {
-		getGame().inPlay().onEvent(newGameEvent("aiming"));
-		getGame().notInPlay().onEvent(newGameEvent("viewing"));
+		getGame().inPlay().onEvent(gameStartedAnd("aiming"));
+		getGame().notInPlay().onEvent(gameStartedAnd("viewing"));
 	}
 
+	private GameEvent gameStartedAnd(String state) {
+		GameEvent event = newGameEvent(state);
+		event.addAttribute(new GameEventAttribute("game.rack.type",
+				"SimplePool"));
+		event.addAttribute(new GameEventAttribute("game.rack.seed", "1"));
+		return event;
+	}
 }
