@@ -1,11 +1,12 @@
 package org.oxtail.game.billiards.simplepool.state;
 
+import java.util.logging.Logger;
+
 import org.motion.ballsimapp.shared.GameEvent;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolGame;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolMove;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolTable;
 import org.oxtail.game.home.GameHome;
-import org.oxtail.game.home.GameNotFoundException;
 import org.oxtail.game.model.Player;
 import org.oxtail.game.model.StateId;
 import org.oxtail.game.server.event.GameEventHelper;
@@ -16,6 +17,8 @@ import org.oxtail.game.state.StateFactory;
 
 public class SimplePoolStatemachine implements GameStatemachine {
 
+	private static final Logger log = Logger.getLogger(SimplePoolStatemachine.class.getName());
+	
 	private GameHome gameHome;
 
 	private StateFactory stateFactory;
@@ -31,7 +34,9 @@ public class SimplePoolStatemachine implements GameStatemachine {
 
 	@Override
 	public void execute(GameEvent gameEvent) {
+		
 		try {
+			log.warning("Statemachine: Received Event "+gameEvent);
 			doExecute(gameEvent);
 		} catch (Exception e) {
 			System.err.println("failed to execute : " + gameEvent);

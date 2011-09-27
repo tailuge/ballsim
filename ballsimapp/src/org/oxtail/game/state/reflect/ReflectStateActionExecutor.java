@@ -19,11 +19,15 @@ public class ReflectStateActionExecutor implements StateActionExecutor {
 			Method method = state.getClass().getMethod(action);
 			method.invoke(state);
 		} catch (InvocationTargetException e) {
-			throw new RuntimeException("failed to invoke " + action,
+			throw new RuntimeException("failed during invocation of action "
+					+ action + " on state " + state.getClass(),
 					e.getTargetException());
-
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException("action " + action
+					+ " is not supported on state " + state.getClass(), e);
 		} catch (Exception e) {
-			throw new RuntimeException("failed to invoke " + action, e);
+			throw new RuntimeException("failed to invoke action " + action
+					+ " on state " + state.getClass(), e);
 		}
 	}
 }
