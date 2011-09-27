@@ -30,7 +30,7 @@ public abstract class AbstractSimplePoolGameState extends
 					@Override
 					public boolean apply(Player other) {
 						return !other.equals(getInPlay())
-								&& (PlayerState.valueOf(other.getState()) == PlayerState.LoggedIn);
+								&& (PlayerState.valueOf(other.getState()) == PlayerState.AwaitingGame);
 					}
 				});
 		// no one to play

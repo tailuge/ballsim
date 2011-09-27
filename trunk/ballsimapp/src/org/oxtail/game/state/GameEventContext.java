@@ -79,7 +79,7 @@ public class GameEventContext<G extends Game<S>, M extends Move, S extends Playi
 		return statemachine;
 	}
 
-	protected void setStatemachine(GameStatemachine statemachine) {
+	public void setStatemachine(GameStatemachine statemachine) {
 		this.statemachine = statemachine;
 	}
 
