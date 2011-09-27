@@ -11,8 +11,8 @@ public class SpinInputCanvas {
 
 	private Canvas canvas;
 	private Context2d context;
-	private final CssColor redColor = CssColor.make("rgba(255,0,0,0.6)");
-	private final CssColor whiteColor = CssColor.make("rgba(170,200,200,0.8)");
+	private final CssColor redColor = CssColor.make("rgba(0,0,255,0.6)");
+	private final CssColor whiteColor = CssColor.make("rgba(255,255,255,0.8)");
 
 	private final int width, height;
 

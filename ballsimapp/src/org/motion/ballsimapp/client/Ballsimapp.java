@@ -16,6 +16,8 @@ public class Ballsimapp implements EntryPoint {
 	private BilliardsPresenter gamePresenterP1;
 	@SuppressWarnings("unused")
 	private BilliardsPresenter gamePresenterP2;
+	@SuppressWarnings("unused")
+	private BilliardsPresenter gamePresenterP3;
 
 	/**
 	 * This is the entry point method.
@@ -33,6 +35,11 @@ public class Ballsimapp implements EntryPoint {
 		BilliardsModel gameModelP2 = new BilliardsModel();
 		BilliardsView gameViewP2 = new BilliardsViewImpl(width / 2, "jim");
 		gamePresenterP2 = new BilliardsPresenter(gameModelP2, gameViewP2);
+
+		// player 2
+		BilliardsModel gameModelP3 = new BilliardsModel();
+		BilliardsView gameViewP3 = new BilliardsViewImpl(width / 4, "tom");
+		gamePresenterP3 = new BilliardsPresenter(gameModelP3, gameViewP3);
 
 	}
 
