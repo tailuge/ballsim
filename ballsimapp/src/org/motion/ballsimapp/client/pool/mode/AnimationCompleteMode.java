@@ -3,7 +3,7 @@ package org.motion.ballsimapp.client.pool.mode;
 import static org.motion.ballsimapp.shared.Events.BEGIN_AIMING;
 import static org.motion.ballsimapp.shared.Events.BEGIN_VIEWING;
 import static org.motion.ballsimapp.shared.Events.LOSER;
-import static org.motion.ballsimapp.shared.Events.WINNER;
+import static org.motion.ballsimapp.shared.Events.*;
 
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
@@ -22,7 +22,7 @@ public class AnimationCompleteMode  extends BilliardsMode {
 	public BilliardsMode handle(GameEvent event) {
 
 		if (Events.isState(event, BEGIN_AIMING)) {
-			return new AimingMode(model, view);
+			return selectAimingMode(event);
 		}
 
 		if (Events.isState(event, BEGIN_VIEWING)) {

@@ -35,7 +35,7 @@ public class RequestGameMode extends BilliardsMode {
 			processRack(event);
 			model.gameId = event.getAttribute(GAME_ID).getValue();
 			view.appendMessage("game started (break)");
-			return new AimingMode(model,view);
+			return selectAimingMode(event);
 		}
 
 		if (Events.isState(event,BEGIN_VIEWING))
