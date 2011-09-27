@@ -80,6 +80,7 @@ public class SimplePoolStatemachine implements GameStatemachine {
 		context.setGameHome(gameHome);
 		context.setGameEvent(gameEvent);
 		context.setInPlay(player);
+		context.setStatemachine(this);
 		return context;
 	}
 
