@@ -61,8 +61,10 @@ public class InPlay extends AbstractSimplePoolGameState {
 	public void notifyGameOver() {
 		SimplePoolGame game = getGame();
 		PlayerState.LoggedIn.set(game.inPlay(),game.notInPlay());
+		getGameHome().deleteGame(game.getId());
 		game.inPlay().onEvent(newGameEvent("winner"));
 		game.notInPlay().onEvent(newGameEvent("loser"));
+	
 	}
 
 	public void turnOver() {
