@@ -1,6 +1,6 @@
 package org.motion.ballsimapp.client.pool.mode;
 
-import static org.motion.ballsimapp.shared.Events.ANIMATION_COMPLETE;
+import static org.motion.ballsimapp.shared.Events.*;
 import static org.motion.ballsimapp.shared.Events.BEGIN_AIMING;
 import static org.motion.ballsimapp.shared.Events.BEGIN_VIEWING;
 
@@ -29,32 +29,39 @@ public class AnimationMode extends BilliardsMode {
 			view.showTable(model.table);
 			animationComplete = true;
 			if (aimNotView != null)
-				return aimNotView ? new AimingMode(model,view) : new ViewingMode(model,view);
+				return aimNotView ? new AimingMode(model, view)
+						: new ViewingMode(model, view);
 		}
 
-		if (Events.isState(event,BEGIN_AIMING))
-		{			
+		if (Events.isState(event, BEGIN_AIMING)) {
 			aimNotView = new Boolean(true);
 			if (animationComplete)
-				return new AimingMode(model,view);
+				return new AimingMode(model, view);
 			else
 				return this;
 		}
 
-		if (Events.isState(event,BEGIN_VIEWING))
-		{			
+		if (Events.isState(event, BEGIN_VIEWING)) {
 			aimNotView = new Boolean(false);
 			if (animationComplete)
-				return new ViewingMode(model,view);
+				return new ViewingMode(model, view);
 			else
 				return this;
 		}
-		
+
+		if (Events.isState(event, WINNER)) {
+			view.appendMessage("winner");
+			return this;
+		}
+
+		if (Events.isState(event, LOSER)) {
+			view.appendMessage("loser");
+			return this;
+		}
+
 		GWT.log("AnimationMode handled unexpected event:" + event);
 
 		return this;
 	}
-	
-
 
 }
