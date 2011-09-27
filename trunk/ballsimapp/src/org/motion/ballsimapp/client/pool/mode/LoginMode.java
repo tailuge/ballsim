@@ -32,29 +32,7 @@ public class LoginMode extends BilliardsMode {
 		if (Events.isState(event,LOGIN_SUCCESS))
 		{			
 			view.appendMessage("login successfull.");
-			view.appendMessage("requesting game");
-			model.notify(Events.requestGame(view.getPlayerId()));			
-			return this;
-		}
-
-		if (Events.isState(event,AWAITING_GAME))
-		{			
-			view.appendMessage("awaiting game...");
-			return this;
-		}
-
-		if (Events.isState(event,BEGIN_AIMING))
-		{			
-			model.gameId = event.getAttribute(GAME_ID).getValue();
-			view.appendMessage("game started (break)");
-			return new AimingMode(model,view);
-		}
-
-		if (Events.isState(event,BEGIN_VIEWING))
-		{			
-			model.gameId = event.getAttribute(GAME_ID).getValue();
-			view.appendMessage("game started (other player to break)");
-			return new ViewingMode(model,view);
+			return new RequestGameMode(model, view);
 		}
 
 		GWT.log("LoginMode handled unexpected event:" + event);
