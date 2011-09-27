@@ -33,8 +33,9 @@ public class BilliardsViewLayout implements AimChange {
 	public BilliardsViewLayout(int width, String playerId) {
 		
 		int height = width * 15 / 10;
-		spin = new SpinInputCanvas(width / 6, width / 6, this);
-		power = new PowerInputCanvas(width - width / 3, width / 7, this);
+		int inputHeight = height/8;
+		spin = new SpinInputCanvas(inputHeight, inputHeight, this);
+		power = new PowerInputCanvas(width - 2*inputHeight, inputHeight, this);
 		tableCanvas = new TableCanvas(width, height, this);
 		messageArea.setWidth(width * 3  + "px");
 		messageArea.setHeight(width  + "px");
@@ -42,7 +43,8 @@ public class BilliardsViewLayout implements AimChange {
 		this.password.setWidth(width/3  + "px");
 		this.playerId.setText(playerId);
 		this.password.setText("secret");
-		actionButton.setHeight(width/8+"px");
+		actionButton.setWidth(inputHeight+"px");
+		actionButton.setHeight(inputHeight+"px");
 
 		addElementsToRoot();
 		

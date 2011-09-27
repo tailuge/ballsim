@@ -17,7 +17,7 @@ public class TableRenderer {
 	protected final PlotPlacer placer;
 	protected final int width;
 	protected final int height;
-	private final CssColor redrawColor = CssColor.make("rgba(95,95,205,0.5)");
+	private final CssColor redrawColor = CssColor.make("rgba(95,95,205,0.7)");
 
 	public TableRenderer(int w, int h) {
 		width = w;

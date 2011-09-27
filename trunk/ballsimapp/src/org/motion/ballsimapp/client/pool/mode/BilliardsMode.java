@@ -1,5 +1,7 @@
 package org.motion.ballsimapp.client.pool.mode;
 
+import static org.motion.ballsimapp.shared.Events.BALL_IN_HAND;
+
 import java.util.List;
 
 import org.motion.ballsimapp.client.pool.BilliardsModel;
@@ -23,4 +25,10 @@ public abstract class BilliardsMode {
 			model.sendToEventLoop(event);
 		}
 	}
+
+	protected BilliardsMode selectAimingMode(GameEvent event) {
+		return event.hasAttribute(BALL_IN_HAND) ? new PlacingMode(model, view)
+				: new AimingMode(model, view);
+	}
+
 }
