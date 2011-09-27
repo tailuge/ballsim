@@ -2,6 +2,9 @@ package org.motion.ballsimapp.client.pool;
 
 import static org.motion.ballsimapp.shared.Events.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.game.Outcome;
 import org.motion.ballsim.gwtsafe.Vector3D;
@@ -43,13 +46,20 @@ public class BilliardsEventFactory {
 
 	public static GameEvent hitOutcome(Table table, Aim aim) {
 		Outcome outcome = Outcome.evaluate(table);
+
+		// modified for cue ball to be 0, refactor
+		List<Integer> potted = new ArrayList<Integer>();
+
+		for(int i:outcome.ballsPotted)
+			potted.add(i-1);
+		
 		GameEvent hitEvent = BilliardsMarshaller.eventFromAim(aim);
 		hitEvent.addAttribute(new GameEventAttribute(AIM_COMPLETE, ""));
 		hitEvent.addAttribute(new GameEventAttribute(ACTION, "shot"));
 		hitEvent.addAttribute(new GameEventAttribute(GAME_SHOT_BALLSPOTTED,
-				outcome.ballsPotted.toString()));
+				potted.toString()));
 		hitEvent.addAttribute(new GameEventAttribute(GAME_SHOT_FIRST_BALL_HIT,
-				"" + outcome.firstBallHit));
+				"" + (outcome.firstBallHit - 1)));
 		hitEvent.addAttribute(new GameEventAttribute(
 				GAME_SHOT_TOTAL_BALLS_HITTING_CUSHION, ""
 						+ outcome.totalBallsHittingCushion));
