@@ -35,6 +35,9 @@ public class Events {
 	public static final String GAME_SHOT_FIRST_BALL_HIT = "game.shot.firstBallHit";
 	public static final String GAME_SHOT_BALLSPOTTED = "game.shot.ballspotted";
 
+	public static final String GAME_RACK_TYPE = "game.rack.type";
+	public static final String GAME_RACK_SEED = "game.rack.seed";
+	
 	// static factories for event creation
 
 	public static GameEvent event(String name, String value) {
