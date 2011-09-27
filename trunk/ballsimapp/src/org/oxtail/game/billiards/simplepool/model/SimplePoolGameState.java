@@ -14,7 +14,7 @@ public enum SimplePoolGameState {
 		@Override
 		public void doMove(InPlay inplay) {
 			inplay.turnOver();
-			inplay.notifyMove();
+			inplay.notifyFoul();
 		}
 
 	},

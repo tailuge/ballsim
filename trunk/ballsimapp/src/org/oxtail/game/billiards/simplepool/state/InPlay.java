@@ -52,6 +52,12 @@ public class InPlay extends AbstractSimplePoolGameState {
 		notInPlay.onEvent(getGameEvent());
 	}
 
+	public void notifyFoul() {
+		SimplePoolGame game = getGame();
+		game.inPlay().onEvent(newGameFoulEvent("aiming"));
+		game.notInPlay().onEvent(newGameFoulEvent("viewing"));
+	}
+
 	public void notifyMove() {
 		SimplePoolGame game = getGame();
 		game.inPlay().onEvent(newGameEvent("aiming"));
@@ -60,11 +66,11 @@ public class InPlay extends AbstractSimplePoolGameState {
 
 	public void notifyGameOver() {
 		SimplePoolGame game = getGame();
-		PlayerState.LoggedIn.set(game.inPlay(),game.notInPlay());
+		PlayerState.LoggedIn.set(game.inPlay(), game.notInPlay());
 		getGameHome().deleteGame(game.getId());
 		game.inPlay().onEvent(newGameEvent("winner"));
 		game.notInPlay().onEvent(newGameEvent("loser"));
-	
+
 	}
 
 	public void turnOver() {

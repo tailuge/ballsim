@@ -38,6 +38,10 @@ public class SimplePoolMove extends Move {
 		potted.add(ball);
 	}
 
+	public boolean somethingPotted() {
+		return potted.size() > 0;
+	}
+
 	@Override
 	public String toString() {
 		return "SimplePoolMove [potted=" + potted + ", cueBall=" + cueBall

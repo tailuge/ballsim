@@ -3,6 +3,7 @@ package org.oxtail.game.billiards.simplepool.model;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.oxtail.game.billiards.simplepool.model.SimplePoolGameState.*;
 import org.oxtail.game.billiards.model.BilliardBall;
 import org.oxtail.game.model.Game;
 import org.oxtail.game.model.GameVersion;
@@ -63,30 +64,28 @@ public class SimplePoolGame extends Game<SimplePoolTable> {
 		return table().getBall(ball.getCategory());
 	}
 
-	private boolean isPottedByShot(BilliardBall ball) {
-		return ball.isPotted() && !previousBallState(ball).isPotted();
-	}
-
 	/**
 	 * Evaluate the shot against the table and decided how the game proceeds
 	 */
 	public SimplePoolGameState evaluateShot(SimplePoolMove shot) {
 		try {
-			if (shot.cueBall().isPotted())
-				// whites down so foul
-				return SimplePoolGameState.Foul;
-			if (!shot.getPotted().isEmpty()) {
+			// whites down so foul
+			if (shot.cueBall().isPotted()) {
+				return Foul;
+			}
+			if (!shot.somethingPotted()) {
 				for (BilliardBall potted : shot.getPotted()) {
 					previousBallState(potted).apply(potted);
 				}
+				// we will win if all are potted anything
 				if (table().isBallsLeftOnTable()) {
-					return SimplePoolGameState.TurnContinued;
+					return TurnContinued;
 				} else {
-					return SimplePoolGameState.GameOver;
+					return GameOver;
 				}
 			} else {
 				// else turn over
-				return SimplePoolGameState.TurnOver;
+				return TurnOver;
 			}
 		} finally {
 			// applyShot(shot);
