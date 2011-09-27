@@ -31,8 +31,9 @@ public class AimingMode extends BilliardsMode {
 
 		if (event.hasAttribute(AIM_COMPLETE))
 		{			
-			model.sendHit(BilliardsMarshaller.aimFromEvent(event));
-			return new AnimationMode(model,view);
+			return new CalculationMode(model,view,BilliardsMarshaller.aimFromEvent(event),true);
+//			model.sendHit(BilliardsMarshaller.aimFromEvent(event));
+//			return new AnimationMode(model,view);
 		}
 		
 		GWT.log("AimingMode handled unexpected event:"+event);

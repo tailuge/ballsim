@@ -48,7 +48,7 @@ public class BilliardsModel extends GWTGameClient {
 	}
 
 	public void sendHit(Aim aim) {
-		table.generateSequence(aim);
+//		table.generateSequence(aim);
 		notify(BilliardsEventFactory.hitOutcome(table,aim));
 	}
 
@@ -63,4 +63,10 @@ public class BilliardsModel extends GWTGameClient {
 		notify(BilliardsEventFactory.placeBallUpdate(pos));
 	}
 
+	// experimental
+	
+	public void sendToEventLoop(GameEvent event)
+	{
+		eventHandler.handleEvent(event);
+	}
 }
