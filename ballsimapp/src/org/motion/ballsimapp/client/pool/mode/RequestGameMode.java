@@ -3,7 +3,7 @@ package org.motion.ballsimapp.client.pool.mode;
 import static org.motion.ballsimapp.shared.Events.AWAITING_GAME;
 import static org.motion.ballsimapp.shared.Events.BEGIN_AIMING;
 import static org.motion.ballsimapp.shared.Events.BEGIN_VIEWING;
-import static org.motion.ballsimapp.shared.Events.GAME_ID;
+import static org.motion.ballsimapp.shared.Events.*;
 
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
@@ -32,6 +32,7 @@ public class RequestGameMode extends BilliardsMode {
 
 		if (Events.isState(event,BEGIN_AIMING))
 		{			
+			processRack(event);
 			model.gameId = event.getAttribute(GAME_ID).getValue();
 			view.appendMessage("game started (break)");
 			return new AimingMode(model,view);
@@ -39,6 +40,7 @@ public class RequestGameMode extends BilliardsMode {
 
 		if (Events.isState(event,BEGIN_VIEWING))
 		{			
+			processRack(event);
 			model.gameId = event.getAttribute(GAME_ID).getValue();
 			view.appendMessage("game started (other player to break)");
 			return new ViewingMode(model,view);
@@ -49,4 +51,9 @@ public class RequestGameMode extends BilliardsMode {
 		return this;
 	}
 
+	private void processRack(GameEvent event)
+	{
+		if (event.hasAttribute(GAME_RACK_TYPE))
+			model.table.rack(event.getAttribute(GAME_RACK_TYPE).getValue(),event.getAttribute(GAME_RACK_SEED).getValue());		
+	}
 }
