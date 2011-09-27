@@ -20,6 +20,7 @@ public class BilliardsViewLayout implements AimChange {
 	protected final SpinInputCanvas spin;
 	protected final PowerInputCanvas power;
 	protected final Button actionButton = new Button("Hit");
+	protected final Button loginButton = new Button("Login");
 	protected final TableCanvas tableCanvas;
 	protected final TextArea messageArea = new TextArea();
 	protected final TextBox playerId = new TextBox();
@@ -37,15 +38,15 @@ public class BilliardsViewLayout implements AimChange {
 		spin = new SpinInputCanvas(inputHeight, inputHeight, this);
 		power = new PowerInputCanvas(width - 2*inputHeight, inputHeight, this);
 		tableCanvas = new TableCanvas(width, height, this);
-		messageArea.setWidth(width * 3  + "px");
-		messageArea.setHeight(width  + "px");
+		messageArea.setWidth(width * 2  + "px");
+		messageArea.setHeight(width/2  + "px");
 		this.playerId.setWidth(width/3  + "px");
 		this.password.setWidth(width/3  + "px");
 		this.playerId.setText(playerId);
 		this.password.setText("secret");
 		actionButton.setWidth(inputHeight+"px");
 		actionButton.setHeight(inputHeight+"px");
-
+		loginButton.setEnabled(false);
 		addElementsToRoot();
 		
 		actionButton.addClickHandler(new ClickHandler() {
@@ -67,6 +68,7 @@ public class BilliardsViewLayout implements AimChange {
 		String base = playerId.getText() + ".";
 		RootPanel.get(base+"login").add(playerId);
 		RootPanel.get(base+"login").add(password);
+		RootPanel.get(base+"login").add(loginButton);
 		RootPanel.get(base+"table").add(tableCanvas.getInitialisedCanvas());
 		RootPanel.get(base+"inputs").add(spin.getInitialisedCanvas());
 		RootPanel.get(base+"inputs").add(power.getInitialisedCanvas());

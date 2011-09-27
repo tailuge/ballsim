@@ -26,6 +26,6 @@ h1 {
 }
 
 /** Set ids using widget.getElement().setId("idOfElement") */
-.activityButton {
-  margin: 15px 6px 6px;
+.actionButton {
+  margin: 1px 1px 1px;
 }

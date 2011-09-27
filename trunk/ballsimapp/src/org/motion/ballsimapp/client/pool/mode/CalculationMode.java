@@ -35,7 +35,7 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 	public boolean execute() {
 		
 		// do two iterations per call
-		boolean busy = model.table.generateNext() && model.table.generateNext();
+		boolean busy = model.table.generateNext();// && model.table.generateNext();
 		
 		if (!busy) {
 			if (sendResult) {

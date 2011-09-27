@@ -10,8 +10,8 @@ public class PowerInputCanvas {
 
 	private Canvas canvas;
 	private Context2d context;
-	private final CssColor barColor = CssColor.make("rgba(255,0,0,0.6)");
-	private final CssColor scaleColor = CssColor.make("rgba(170,200,200,0.8)");
+	private final CssColor barColor = CssColor.make("rgba(50,200,80,0.8)");
+	private final CssColor scaleColor = CssColor.make("rgba(100,100,100,0.8)");
 
 	private final int width, height;
 
