@@ -17,8 +17,10 @@ public class GameEventToSimplePoolMove implements
 		GameEventHelper helper = new GameEventHelper(event);
 		SimplePoolMove move = new SimplePoolMove();
 		String ballsPotted = helper.getString("game.shot.ballspotted");
-		for (String ball : ballsPotted.split(",")) {
-			move.setBallAsPotted(Integer.valueOf(ball));
+		if (!ballsPotted.isEmpty()) {
+			for (String ball : ballsPotted.split(",")) {
+				move.setBallAsPotted(Integer.valueOf(ball));
+			}
 		}
 		return move;
 	}
