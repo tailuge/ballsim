@@ -149,11 +149,11 @@ public class Pocket {
 	}
 	
 	
-	public final static double sep = Ball.R * 3.5;
+	public final static double sep = Ball.R * 4.0;
 	public final static double depth = Ball.R * 1.5;
 
-	public final static double midSep = Ball.R * 2.5;
-	public final static double midDepth = Ball.R * 3;
+	public final static double midSep = Ball.R * 3.0;
+	public final static double midDepth = Ball.R * 3.5;
 
 	// bottom left
 	public final static Vector3D p1k1 = new Vector3D(Cushion.xn - 2*Ball.R, Cushion.yp + 2*Ball.R - sep,0);
