@@ -16,6 +16,8 @@ import org.oxtail.game.state.GameEventContext;
  */
 public class InPlay extends AbstractSimplePoolGameState {
 
+	private GameEventToSimplePoolMove eventToSimplePoolMove = new GameEventToSimplePoolMove();
+
 	public InPlay(
 			GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable> context) {
 		super(context);
@@ -28,8 +30,10 @@ public class InPlay extends AbstractSimplePoolGameState {
 	public void shot() {
 		SimplePoolGame game = getGame();
 		notifyNonPlayerWatching(game, getGameEvent().copy());
-		SimplePoolMove shot = getMove();
+		SimplePoolMove shot = eventToSimplePoolMove.apply(getGameEvent());
+		log.info("Shot: " + shot);
 		SimplePoolGameState state = game.evaluateShot(shot);
+		log.info("Game State evaluated as " + state.name());
 		state.doMove(this);
 	}
 
@@ -38,7 +42,7 @@ public class InPlay extends AbstractSimplePoolGameState {
 		event.addAttribute(new GameEventAttribute("state", "watching"));
 		notInPlay.onEvent(event);
 	}
-	
+
 	/**
 	 * Invoked when the player is aiming
 	 */
@@ -47,7 +51,7 @@ public class InPlay extends AbstractSimplePoolGameState {
 		Player notInPlay = getGame().notInPlay();
 		notInPlay.onEvent(getGameEvent());
 	}
-	
+
 	public void notifyMove() {
 		SimplePoolGame game = getGame();
 		game.inPlay().onEvent(newGameEvent("aiming"));
@@ -55,8 +59,10 @@ public class InPlay extends AbstractSimplePoolGameState {
 	}
 
 	public void notifyGameOver() {
-		// TODO
-		getGameHome().deleteGame(getGame().getId());
+		SimplePoolGame game = getGame();
+		PlayerState.LoggedIn.set(game.inPlay(),game.notInPlay());
+		game.inPlay().onEvent(newGameEvent("winner"));
+		game.notInPlay().onEvent(newGameEvent("loser"));
 	}
 
 	public void turnOver() {

@@ -1,5 +1,7 @@
 package org.oxtail.game.state;
 
+import java.util.logging.Logger;
+
 import org.motion.ballsimapp.shared.GameEvent;
 import org.oxtail.game.home.GameHome;
 import org.oxtail.game.model.Game;
@@ -16,6 +18,7 @@ import org.oxtail.game.model.StateId;
 public abstract class AbstractGameState<G extends Game<S>, M extends Move, S extends PlayingSpace> {
 
 	protected final GameEventContext<G, M, S> context;
+	protected final Logger log = Logger.getLogger(getClass().getName());
 	
 	public AbstractGameState(GameEventContext<G, M, S> context) {
 		this.context = context;

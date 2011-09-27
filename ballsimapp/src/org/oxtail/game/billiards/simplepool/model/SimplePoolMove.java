@@ -6,7 +6,6 @@ import org.oxtail.game.billiards.model.BilliardBall;
 import org.oxtail.game.billiards.model.BilliardBallCategory;
 import org.oxtail.game.billiards.model.BilliardBallTableState;
 import org.oxtail.game.model.Move;
-import org.oxtail.game.model.Player;
 
 import com.google.common.collect.Lists;
 
@@ -15,8 +14,7 @@ public class SimplePoolMove extends Move {
 	private List<BilliardBall> potted = Lists.newArrayList();
 	private BilliardBall cueBall;
 
-	public SimplePoolMove(Player player) {
-		super(player);
+	public SimplePoolMove() {
 		cueBall = new BilliardBall(SimplePoolBallCategory.CUE_BALL);
 		cueBall.setTableState(BilliardBallTableState.OnTable);
 	}
@@ -30,9 +28,20 @@ public class SimplePoolMove extends Move {
 	}
 
 	public void setBallAsPotted(int ballId) {
+		if (ballId == 0) {
+			cueBall.setTableState(BilliardBallTableState.Potted);
+			return;
+		}
 		BilliardBallCategory ballCategory = SimplePoolBallCategory.values()[ballId];
 		BilliardBall ball = new BilliardBall(ballCategory);
 		ball.setTableState(BilliardBallTableState.Potted);
 		potted.add(ball);
 	}
+
+	@Override
+	public String toString() {
+		return "SimplePoolMove [potted=" + potted + ", cueBall=" + cueBall
+				+ "]";
+	}
+
 }
