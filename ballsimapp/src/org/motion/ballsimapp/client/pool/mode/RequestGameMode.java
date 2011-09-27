@@ -17,6 +17,7 @@ public class RequestGameMode extends BilliardsMode {
 	public RequestGameMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
 		view.appendMessage("requesting game");
+		model.gameId = "";
 		model.notify(Events.requestGame(view.getPlayerId()));			
 	}
 
