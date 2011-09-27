@@ -33,8 +33,11 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 
 	@Override
 	public boolean execute() {
-		boolean working = model.table.generateNext();
-		if (!working) {
+		
+		// do two iterations per call
+		boolean busy = model.table.generateNext() && model.table.generateNext();
+		
+		if (!busy) {
 			if (sendResult) {
 				model.sendHit(aim);
 			}
@@ -46,7 +49,7 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 				}
 			});
 		}
-		return working;
+		return busy;
 	}
 
 	@Override
