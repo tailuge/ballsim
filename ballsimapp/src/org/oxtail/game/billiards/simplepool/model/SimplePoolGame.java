@@ -63,9 +63,9 @@ public class SimplePoolGame extends Game<SimplePoolTable> {
 		return table().getBall(ball.getCategory());
 	}
 
-//	private boolean isPottedByShot(BilliardBall ball) {
-//		return ball.isPotted() && !previousBallState(ball).isPotted();
-//	}
+	private boolean isPottedByShot(BilliardBall ball) {
+		return ball.isPotted() && !previousBallState(ball).isPotted();
+	}
 
 	/**
 	 * Evaluate the shot against the table and decided how the game proceeds
@@ -76,13 +76,20 @@ public class SimplePoolGame extends Game<SimplePoolTable> {
 				// whites down so foul
 				return SimplePoolGameState.Foul;
 			if (!shot.getPotted().isEmpty()) {
-				// ball down, win
-				return SimplePoolGameState.GameOver;
+				for (BilliardBall potted : shot.getPotted()) {
+					previousBallState(potted).apply(potted);
+				}
+				if (table().isBallsLeftOnTable()) {
+					return SimplePoolGameState.TurnContinued;
+				} else {
+					return SimplePoolGameState.GameOver;
+				}
+			} else {
+				// else turn over
+				return SimplePoolGameState.TurnOver;
 			}
-			// else turn over
-			return SimplePoolGameState.TurnOver;
 		} finally {
-			applyShot(shot);
+			// applyShot(shot);
 		}
 	}
 
