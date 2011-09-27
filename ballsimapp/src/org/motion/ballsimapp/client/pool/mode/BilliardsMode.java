@@ -1,5 +1,7 @@
 package org.motion.ballsimapp.client.pool.mode;
 
+import java.util.List;
+
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
 import org.motion.ballsimapp.shared.GameEvent;
@@ -16,4 +18,9 @@ public abstract class BilliardsMode {
 
 	public abstract BilliardsMode handle(GameEvent event);
 
+	protected void replayPendingEvents(List<GameEvent> pending) {
+		for (GameEvent event : pending) {
+			model.sendToEventLoop(event);
+		}
+	}
 }

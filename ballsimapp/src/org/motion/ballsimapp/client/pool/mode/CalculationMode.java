@@ -31,7 +31,6 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 		Scheduler.get().scheduleIncremental(this);
 	}
 
-
 	@Override
 	public boolean execute() {
 		boolean working = model.table.generateNext();
@@ -43,18 +42,11 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 			Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
 				@Override
 				public void execute() {
-					replayPendingEvents();
+					replayPendingEvents(pending);
 				}
 			});
 		}
 		return working;
-	}
-
-	private void replayPendingEvents() {
-		for (GameEvent event : pending) {
-			model.sendToEventLoop(event);
-		}
-
 	}
 
 	@Override

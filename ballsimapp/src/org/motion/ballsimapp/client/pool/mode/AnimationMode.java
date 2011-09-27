@@ -1,20 +1,20 @@
 package org.motion.ballsimapp.client.pool.mode;
 
-import static org.motion.ballsimapp.shared.Events.*;
-import static org.motion.ballsimapp.shared.Events.BEGIN_AIMING;
-import static org.motion.ballsimapp.shared.Events.BEGIN_VIEWING;
+import static org.motion.ballsimapp.shared.Events.ANIMATION_COMPLETE;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
-import org.motion.ballsimapp.shared.Events;
 import org.motion.ballsimapp.shared.GameEvent;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
 
 public class AnimationMode extends BilliardsMode {
 
-	private boolean animationComplete = false;
-	private Boolean aimNotView;
+	final List<GameEvent> pending = new ArrayList<GameEvent>();
 
 	public AnimationMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
@@ -27,40 +27,19 @@ public class AnimationMode extends BilliardsMode {
 		if (event.hasAttribute(ANIMATION_COMPLETE)) {
 			model.table.beginNewShot();
 			view.showTable(model.table);
-			animationComplete = true;
-			if (aimNotView != null)
-				return aimNotView ? new AimingMode(model, view)
-						: new ViewingMode(model, view);
+			Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+				@Override
+				public void execute() {
+					replayPendingEvents(pending);
+				}
+			});
+			return new AnimationCompleteMode(model,view);
 		}
 
-		if (Events.isState(event, BEGIN_AIMING)) {
-			aimNotView = new Boolean(true);
-			if (animationComplete)
-				return new AimingMode(model, view);
-			else
-				return this;
-		}
 
-		if (Events.isState(event, BEGIN_VIEWING)) {
-			aimNotView = new Boolean(false);
-			if (animationComplete)
-				return new ViewingMode(model, view);
-			else
-				return this;
-		}
+		pending.add(event);
 
-		if (Events.isState(event, WINNER)) {
-			view.appendMessage("winner");
-			return this;
-		}
-
-		if (Events.isState(event, LOSER)) {
-			view.appendMessage("loser");
-			return this;
-		}
-
-		GWT.log("AnimationMode handled unexpected event:" + event);
-
+		GWT.log("AnimationMode added pending event:" + event);
 		return this;
 	}
 
