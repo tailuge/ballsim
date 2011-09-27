@@ -7,7 +7,6 @@ public enum SimplePoolGameState {
 	GameOver() {
 		@Override
 		public void doMove(InPlay inplay) {
-			inplay.turnOver();
 			inplay.notifyGameOver();
 		}
 	},
