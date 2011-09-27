@@ -58,7 +58,7 @@ public abstract class AbstractSimplePoolGameState extends
 		return gameEvent;
 	}
 
-	protected GameEvent newGameEvent(String state) {
+	protected GameEvent newGameEvent(String state, boolean ballInHand) {
 		SimplePoolGame game = getGame();
 		GameEvent event = event("state=" + state);
 		event.addAttribute(new GameEventAttribute("player.inplay", game
@@ -69,8 +69,17 @@ public abstract class AbstractSimplePoolGameState extends
 				.getId()));
 		event.addAttribute(new GameEventAttribute("game.table", game
 				.getCurrentPlayingSpace().toString()));
+		event.addAttribute(new GameEventAttribute("ballinhand", String
+				.valueOf(ballInHand)));
 		return event;
 	}
 
-	
+	protected GameEvent newGameEvent(String state) {
+		return newGameEvent(state, false);
+	}
+
+	protected GameEvent newGameFoulEvent(String state) {
+		return newGameEvent(state, true);
+	}
+
 }
