@@ -113,12 +113,12 @@ public class Table implements Serializable
 		return count;
 	}
 	
-	public int generateSequence(Aim aim) {
+	public void setAim(Aim aim)
+	{
 		Event cueBall = Interpolator.interpolate(ball(1), 0);
 		Event hit = UtilEvent.hit(cueBall.pos, aim.dir, aim.speed,
 				aim.spin.getY());
-		ball(1).setFirstEvent(hit);
-		return generateSequence();
+		ball(1).setFirstEvent(hit);		
 	}
 	
 	/**
