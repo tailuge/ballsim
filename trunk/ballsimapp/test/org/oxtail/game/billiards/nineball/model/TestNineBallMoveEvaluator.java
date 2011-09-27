@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.oxtail.game.billiards.model.BilliardBallNotFoundException;
 import org.oxtail.game.billiards.model.BilliardBallTableState;
-import org.oxtail.game.model.Player;
 
 public class TestNineBallMoveEvaluator {
 
@@ -19,7 +18,7 @@ public class TestNineBallMoveEvaluator {
 	@Before
 	public void setUp() throws Exception {
 		table = new NineBallTable();
-		move = new NineBallMove(new Player("bob"));
+		move = new NineBallMove();
 		evaluator = new NineBallMoveEvaluator(table, move);
 	}
 

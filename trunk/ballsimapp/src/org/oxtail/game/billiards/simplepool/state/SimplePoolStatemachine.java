@@ -55,9 +55,8 @@ public class SimplePoolStatemachine implements GameStatemachine {
 			// assume we are in a game
 			SimplePoolGame game = (SimplePoolGame) gameHome.findGame(event
 					.getString("game.id"));
-			SimplePoolMove move = new SimplePoolMove(player);
+			
 			context.setGame(game);
-			context.setMove(move);
 			// execute for game state
 			executor.execute(
 					stateFactory.createState(game.getStateId(), context),

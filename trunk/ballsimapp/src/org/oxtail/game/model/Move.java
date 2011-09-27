@@ -1,7 +1,5 @@
 package org.oxtail.game.model;
 
-//import org.springframework.util.Assert;
-
 /**
  * Some move made in the Game
  * 
@@ -9,12 +7,13 @@ package org.oxtail.game.model;
  */
 public abstract class Move {
 
-	protected final Player player;
+	protected Player player;
 
 	public Move(Player player) {
-		//Assert.notNull(player);
-
 		this.player = player;
+	}
+
+	public Move() {
 	}
 
 	public Player getPlayer() {

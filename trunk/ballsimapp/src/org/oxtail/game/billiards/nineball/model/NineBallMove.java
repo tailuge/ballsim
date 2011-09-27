@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.oxtail.game.billiards.model.BilliardBall;
 import org.oxtail.game.model.Move;
-import org.oxtail.game.model.Player;
 
 /**
  * A Move in Nine Ball, in this case mostly taking a Shot
@@ -20,8 +19,8 @@ public class NineBallMove extends Move {
 	private List<BilliardBall> ballsPottedInOrder;
 	private List<BilliardBall> ballsWhichCollidedWithCushions;
 
-	public NineBallMove(Player player) {
-		super(player);
+	public NineBallMove() {
+		super();
 	}
 
 	public BilliardBall getFirstBallStruckWithCue() {
