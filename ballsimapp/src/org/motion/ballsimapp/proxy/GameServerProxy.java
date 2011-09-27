@@ -24,7 +24,7 @@ public class GameServerProxy implements GameServer {
 	public GameServerProxy(GameEventCallback callback) {
 		this.gameHome = newGameHome(callback);
 		this.statemachine = newStatemachine();
-		setUpPlayerInState("jim", PlayerState.LoggedIn);
+		setUpPlayerInState("jim", PlayerState.LoggedOut);
 		setUpPlayerInState("bob", PlayerState.LoggedOut);
 	}
 
