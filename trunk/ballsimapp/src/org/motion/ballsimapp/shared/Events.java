@@ -16,6 +16,8 @@ public class Events {
 	public final static String CHANNEL_CONNECTED = "connected";
 	public final static String LOGIN_SUCCESS = "loggedin";
 	public final static String AWAITING_GAME = "awaitinggame";
+	public final static String WINNER = "winner";
+	public final static String LOSER = "loser";
 
 	// billiards specific (move to another class?)
 
