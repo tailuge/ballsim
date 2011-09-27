@@ -16,6 +16,7 @@ public class ViewingMode extends BilliardsMode {
 
 	public ViewingMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
+		view.showTable(model.table);
 		view.watch();
 	}
 
@@ -29,8 +30,6 @@ public class ViewingMode extends BilliardsMode {
 
 		if (event.hasAttribute(AIM_COMPLETE)) {
 			return new CalculationMode(model,view,BilliardsMarshaller.aimFromEvent(event),false);
-//			model.table.generateSequence(BilliardsMarshaller.aimFromEvent(event));
-//			return new AnimationMode(model, view);
 		}
 
 		if (event.hasAttribute(PLACEBALL_UPDATE)) {
