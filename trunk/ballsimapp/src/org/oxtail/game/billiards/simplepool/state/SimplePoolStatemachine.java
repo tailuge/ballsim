@@ -16,14 +16,15 @@ import org.oxtail.game.state.StateActionExecutor;
 import org.oxtail.game.state.StateFactory;
 
 /**
- * <b>Simple Pool Statemachine</b><p>
- * 
- * Protocol<p>
+ * <b>Simple Pool Statemachine</b>
+ * <p>
+ * Protocol
+ * <p>
  * 
  * Event Attribute definitions
  * <p>
- * 
- * game.shot.ballspotted // balls potted, empty indicates none, commar separated
+ * game.id // string id of the game<br>
+ * game.shot.ballspotted // balls potted, empty indicates none, comma separated
  * indicates which<br>
  * 
  */
@@ -32,11 +33,9 @@ public class SimplePoolStatemachine implements GameStatemachine {
 	private static final Logger log = Logger
 			.getLogger(SimplePoolStatemachine.class.getName());
 
-	private GameHome gameHome;
-
-	private StateFactory stateFactory;
-
-	private StateActionExecutor executor;
+	private final GameHome gameHome;
+	private final StateFactory stateFactory;
+	private final StateActionExecutor executor;
 
 	public SimplePoolStatemachine(GameHome gameHome, StateFactory stateFactory,
 			StateActionExecutor executor) {
@@ -47,14 +46,8 @@ public class SimplePoolStatemachine implements GameStatemachine {
 
 	@Override
 	public void execute(GameEvent gameEvent) {
-
-		try {
-			log.warning("Statemachine: Received Event " + gameEvent);
-			doExecute(gameEvent);
-		} catch (Exception e) {
-			System.err.println("failed to execute : " + gameEvent);
-			e.printStackTrace(System.err);
-		}
+		log.info("Statemachine: Received Event " + gameEvent);
+		doExecute(gameEvent);
 	}
 
 	private void doExecute(GameEvent gameEvent) {
@@ -63,23 +56,30 @@ public class SimplePoolStatemachine implements GameStatemachine {
 		String action = event.getString("action");
 		GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable> context = newContext(
 				gameEvent, player);
-		//
-		if (event.hasValue("game.id")) {
+		if (event.hasValue("game.id"))
+			executeForGame(event.getString("game.id"), context, action);
+		else
+			executeForPlayer(player, context, action);
+	}
 
-			// assume we are in a game
-			SimplePoolGame game = (SimplePoolGame) gameHome.findGame(event
-					.getString("game.id"));
+	private void executeForPlayer(
+			Player player,
+			GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable> context,
+			String action) {
+		executor.execute(
+				stateFactory.createState(getStateIdForPlayer(player), context),
+				action);
+	}
 
-			context.setGame(game);
-			// execute for game state
-			executor.execute(
-					stateFactory.createState(game.getStateId(), context),
-					action);
-		} else { // execute off the player state
-			executor.execute(stateFactory.createState(
-					getStateIdForPlayer(player), context), action);
+	private void executeForGame(
+			String gameId,
+			GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable> context,
+			String action) {
+		SimplePoolGame game = (SimplePoolGame) gameHome.findGame(gameId);
+		context.setGame(game);
+		executor.execute(stateFactory.createState(game.getStateId(), context),
+				action);
 
-		}
 	}
 
 	private StateId getStateIdForPlayer(Player player) {
@@ -96,5 +96,4 @@ public class SimplePoolStatemachine implements GameStatemachine {
 		context.setStatemachine(this);
 		return context;
 	}
-
 }

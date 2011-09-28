@@ -48,4 +48,7 @@ public class SimplePoolMove extends Move {
 				+ "]";
 	}
 
+	public boolean isFoul() {
+		return cueBall.isPotted();
+	}
 }
