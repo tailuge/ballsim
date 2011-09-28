@@ -1,9 +1,12 @@
 package org.oxtail.game.billiards.simplepool.model;
 
+import static org.oxtail.game.billiards.simplepool.model.SimplePoolGameState.GameOver;
+import static org.oxtail.game.billiards.simplepool.model.SimplePoolGameState.TurnContinued;
+import static org.oxtail.game.billiards.simplepool.model.SimplePoolGameState.TurnOver;
+
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.oxtail.game.billiards.simplepool.model.SimplePoolGameState.*;
 import org.oxtail.game.billiards.model.BilliardBall;
 import org.oxtail.game.model.Game;
 import org.oxtail.game.model.GameVersion;
@@ -60,44 +63,20 @@ public class SimplePoolGame extends Game<SimplePoolTable> {
 		return getCurrentPlayingSpace();
 	}
 
-	private BilliardBall previousBallState(BilliardBall ball) {
-		return table().getBall(ball.getCategory());
+	private void applyShot(SimplePoolMove shot) {
+		for (BilliardBall potted : shot.getPotted())
+			table().pot(potted);
 	}
 
 	/**
 	 * Evaluate the shot against the table and decided how the game proceeds
 	 */
 	public SimplePoolGameState evaluateShot(SimplePoolMove shot) {
-		try {
-			// whites down so foul
-			if (shot.cueBall().isPotted()) {
-				return Foul;
-			}
-			if (shot.somethingPotted()) {
-				for (BilliardBall potted : shot.getPotted()) {
-					previousBallState(potted).apply(potted);
-				}
-				// we will win if all are potted anything
-				if (table().isBallsLeftOnTable()) {
-					return TurnContinued;
-				} else {
-					return GameOver;
-				}
-			} else {
-				// else turn over
-				return TurnOver;
-			}
-		} finally {
-			// applyShot(shot);
-		}
-	}
-
-	/**
-	 * Update the table with the new game state
-	 */
-	private void applyShot(SimplePoolMove shot) {
-		for (BilliardBall ball : shot.getPotted())
-			previousBallState(ball).apply(ball);
+		applyShot(shot);
+		SimplePoolGameState gameState = TurnOver;
+		if (shot.somethingPotted())
+			gameState = table().isBallsLeftOnTable() ? TurnContinued : GameOver;
+		return shot.isFoul() ? gameState.forFoul() : gameState;
 	}
 
 }

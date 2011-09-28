@@ -19,7 +19,7 @@ public class BilliardBall {
 		rack();
 	}
 	
-	public void apply(BilliardBall ball) {
+	public void updateState(BilliardBall ball) {
 		this.pottedIn = ball.pottedIn;
 		this.tableState = ball.tableState;
 	}

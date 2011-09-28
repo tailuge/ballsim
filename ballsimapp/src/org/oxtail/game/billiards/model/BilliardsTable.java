@@ -36,6 +36,15 @@ public abstract class BilliardsTable extends PlayingSpace {
 		return balls;
 	}
 
+	public void updateBallState(BilliardBall ball) {
+		getBall(ball.getCategory()).updateState(ball);
+	}
+	
+	public void pot(BilliardBall ball) {
+		ball.pot(null);
+		updateBallState(ball);
+	}
+	
 	@Override
 	public String toString() {
 		return "BilliardsTable [category=" + category + ", balls=" + balls
