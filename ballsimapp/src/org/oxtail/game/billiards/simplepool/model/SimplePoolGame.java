@@ -73,7 +73,7 @@ public class SimplePoolGame extends Game<SimplePoolTable> {
 			if (shot.cueBall().isPotted()) {
 				return Foul;
 			}
-			if (!shot.somethingPotted()) {
+			if (shot.somethingPotted()) {
 				for (BilliardBall potted : shot.getPotted()) {
 					previousBallState(potted).apply(potted);
 				}
