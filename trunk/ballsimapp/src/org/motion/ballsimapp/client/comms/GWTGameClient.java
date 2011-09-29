@@ -105,7 +105,7 @@ public class GWTGameClient {
 		});
 	}
 	
-	public void notify(GameEvent event) {		
+	public void notify(GameEvent event) {	
 		gameServer.notify(GameEventMarshaller.marshal(event),ackHandler());		
 	}
 	
