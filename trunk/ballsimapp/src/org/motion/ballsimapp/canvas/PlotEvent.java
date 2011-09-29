@@ -93,7 +93,7 @@ public class PlotEvent {
 		for (Vector3D spot : spots) {
 			int x = scale.screenX(spot.getX());
 			int y = scale.screenY(spot.getY());
-			context.rect(x, y, 1, 1);
+			context.rect(x, y, 1.5, 1.5);
 		}
 
 		context.closePath();
