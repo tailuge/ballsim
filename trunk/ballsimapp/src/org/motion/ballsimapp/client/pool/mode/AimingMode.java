@@ -23,7 +23,6 @@ public class AimingMode extends BilliardsMode {
 	@Override
 	public BilliardsMode handle(GameEvent event) {
 
-
 		if (event.hasAttribute(CURSOR_INPUT))
 		{
 			// update view with aim
@@ -32,17 +31,14 @@ public class AimingMode extends BilliardsMode {
 			view.showAim();
 			
 			// send aim update to server
-			//model.sendAimUpdate(input);
+			model.sendAimUpdate(input);
 			return this;
 		}
 
 
 		if (event.hasAttribute(CURSOR_INPUT_COMPLETE))
 		{			
-			//FIX
 			return new CalculationMode(model,view,BilliardsMarshaller.aimFromEvent(event),true);
-//			model.sendHit(BilliardsMarshaller.aimFromEvent(event));
-//			return new AnimationMode(model,view);
 		}
 		
 		GWT.log("AimingMode handled unexpected event:"+event);

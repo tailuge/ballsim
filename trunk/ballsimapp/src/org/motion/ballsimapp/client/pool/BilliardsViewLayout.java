@@ -53,17 +53,7 @@ public class BilliardsViewLayout implements AimChange {
 		addElementsToRoot();
 
 		RootPanel.get(playerId+".tablefg").setSize(width+"px", height+"px");
-		RootPanel.get(playerId+".tablebg").setSize(width+"px", height+"px");
-
-		actionButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				actionButton.setEnabled(false);
-				eventHandler.handleEvent(BilliardsEventFactory
-							.inputComplete(new Aim(1,aim.getCueBallPosition(),aim.getAimDirection(),
-									spin.getSpin(), power.getPower())));
-			}
-		});
-		
+		RootPanel.get(playerId+".tablebg").setSize(width+"px", height+"px");	
 
 	}
 
