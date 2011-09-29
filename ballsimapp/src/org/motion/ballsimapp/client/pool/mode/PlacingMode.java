@@ -20,11 +20,10 @@ public class PlacingMode extends BilliardsMode {
 
 	@Override
 	public BilliardsMode handle(GameEvent event) {
-		
-		if (event.hasAttribute(CURSOR_INPUT))
-		{
+
+		if (event.hasAttribute(CURSOR_INPUT)) {
 			Aim input = BilliardsMarshaller.aimFromEvent(event);
-			model.table.placeBall(input.ballId,input.pos);
+			model.table.placeBall(input.ballId, input.pos);
 			model.sendLimitedPlaceBallUpdate(input);
 			view.setAim(input);
 			view.showPlacer();
@@ -32,16 +31,15 @@ public class PlacingMode extends BilliardsMode {
 			return this;
 		}
 
-		if (event.hasAttribute(CURSOR_INPUT_COMPLETE))
-		{
+		if (event.hasAttribute(CURSOR_INPUT_COMPLETE)) {
 			Aim input = BilliardsMarshaller.aimFromEvent(event);
-			model.table.placeBall(input.ballId,input.pos);
+			model.table.placeBall(input.ballId, input.pos);
 			model.sendPlaceBallUpdate(input);
-			return new AimingMode(model,view);
+			return new AimingMode(model, view);
 		}
 
-		GWT.log("PlacingMode handled unexpected event:"+event);
-		
+		GWT.log("PlacingMode handled unexpected event:" + event);
+
 		return this;
 	}
 

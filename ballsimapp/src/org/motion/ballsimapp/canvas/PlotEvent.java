@@ -58,7 +58,7 @@ public class PlotEvent {
 		context.setLineWidth(1);
 		context.setStrokeStyle(white);
 		context.setFillStyle(white);
-		context.arc(x-scale.scaled(Ball.R/2), y-scale.scaled(Ball.R/2), scale.scaled(Ball.R/3), 0, Math.PI * 2.0, true);
+		context.arc(x-scale.scaled(Ball.R/2), y-scale.scaled(Ball.R/2), scale.scaled(Ball.R/4), 0, Math.PI * 2.0, true);
 		context.closePath();
 		context.stroke();
 		context.fill();
