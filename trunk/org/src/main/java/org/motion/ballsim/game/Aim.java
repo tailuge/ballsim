@@ -4,7 +4,7 @@ import org.motion.ballsim.gwtsafe.Vector3D;
 
 public class Aim {
 	
-	final int ballId;
+	final public int ballId;
 	final public Vector3D pos;
 	final public Vector3D dir;
 	final public Vector3D spin;

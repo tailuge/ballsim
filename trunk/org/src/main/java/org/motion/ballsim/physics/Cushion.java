@@ -17,7 +17,7 @@ public class Cushion
 
 	public final static double yp = 30*Ball.R;
 	public final static double yn = -yp;
-	public final static double xp = 15*Ball.R;
+	public final static double xp = 14.55*Ball.R;
 	public final static double xn = -xp;
 
 	/**
