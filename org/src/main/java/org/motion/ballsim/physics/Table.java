@@ -210,8 +210,8 @@ public class Table implements Serializable {
 		return ballMap.get(id);
 	}
 
-	public void placeBall(Vector3D pos) {
-		ball(1).setFirstEvent(UtilEvent.stationary(pos));
+	public void placeBall(int ballId,Vector3D pos) {
+		ball(ballId).setFirstEvent(UtilEvent.stationary(pos));
 	}
 
 	// temp move out.
