@@ -12,12 +12,13 @@ public class TableCanvas extends TableRenderer {
 	}
 
 	public void plotAtTime(Table table, double t) {
-		clearBackBuffer();
+
+		context.clearRect(0, 0, width, height);
+
 		for (Ball ball : table.balls()) {
 			Event e = Interpolator.interpolate(ball, t);
-			PlotEvent.plotEvent(e, backBufferContext, scale);
+			PlotEvent.plotEvent(e, context, scale);
 		}
-		moveBackBufferToFront(backBufferContext, context);
 	}
 
 
