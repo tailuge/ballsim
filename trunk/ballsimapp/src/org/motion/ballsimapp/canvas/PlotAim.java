@@ -26,11 +26,6 @@ public class PlotAim {
 		this.aimDirection = aimDirection;
  	}
 
-	public Vector3D getAimDirection()
-	{
-		return aimDirection;
-	}
-
 	public void setCueBallPosition(Vector3D cueBallPosition_)
  	{
 		cueBallPosition = cueBallPosition_;
@@ -40,6 +35,12 @@ public class PlotAim {
 	{
 		aimDirection = target.subtract(cueBallPosition).normalize();
 	}
+
+	public Vector3D getAimDirection()
+	{
+		return aimDirection;
+	}
+	
 
 	
 	public void plotAim(Context2d context)
@@ -83,8 +84,8 @@ public class PlotAim {
 
 	private void plotAimDirection(double start, double end,Context2d context)
  	{
-	    double dirX = getAimDirection().getX();
-	    double dirY = getAimDirection().getY();	
+	    double dirX = aimDirection.getX();
+	    double dirY = aimDirection.getY();	
 	    double x = scale.screenX(cueBallPosition.getX());
 	    double y = scale.screenY(cueBallPosition.getY());
 	    

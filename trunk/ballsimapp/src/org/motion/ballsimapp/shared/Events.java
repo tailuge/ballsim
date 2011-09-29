@@ -28,6 +28,8 @@ public class Events {
 	public final static String PLACEBALL_UPDATE = "placeUpdate";
 	public final static String PLACEBALL_COMPLETE = "placeComplete";
 	public final static String ANIMATION_COMPLETE = "animationComplete";
+	public final static String CURSOR_INPUT = "cursorInput";
+	public final static String CURSOR_INPUT_COMPLETE = "cursorInputComplete";
 	public final static String BALL_IN_HAND = "ballinhand";
 
 	public static final String GAME_SHOT_ANYBALLHIT = "game.shot.anyballhit";

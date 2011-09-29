@@ -1,8 +1,9 @@
 package org.motion.ballsimapp.client.pool.mode;
 
-import static org.motion.ballsimapp.shared.Events.AIM_COMPLETE;
-import static org.motion.ballsimapp.shared.Events.AIM_UPDATE;
+import static org.motion.ballsimapp.shared.Events.CURSOR_INPUT;
+import static org.motion.ballsimapp.shared.Events.CURSOR_INPUT_COMPLETE;
 
+import org.motion.ballsim.game.Aim;
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
@@ -23,14 +24,22 @@ public class AimingMode extends BilliardsMode {
 	public BilliardsMode handle(GameEvent event) {
 
 
-		if (event.hasAttribute(AIM_UPDATE))
+		if (event.hasAttribute(CURSOR_INPUT))
 		{
-			model.sendAimUpdate(BilliardsMarshaller.aimFromEvent(event));
+			// update view with aim
+			Aim input = BilliardsMarshaller.aimFromEvent(event);
+			view.setAim(input);
+			view.showAim();
+			
+			// send aim update to server
+			//model.sendAimUpdate(input);
 			return this;
 		}
 
-		if (event.hasAttribute(AIM_COMPLETE))
+
+		if (event.hasAttribute(CURSOR_INPUT_COMPLETE))
 		{			
+			//FIX
 			return new CalculationMode(model,view,BilliardsMarshaller.aimFromEvent(event),true);
 //			model.sendHit(BilliardsMarshaller.aimFromEvent(event));
 //			return new AnimationMode(model,view);

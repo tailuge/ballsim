@@ -16,6 +16,7 @@ public class BilliardsMarshaller {
 	public final static GameEvent eventFromAim(Aim aim)
 	{
 		JSONObject jsonAim = new JSONObject();
+		jsonAim.put("pos", marshal(aim.pos));
 		jsonAim.put("dir", marshal(aim.dir));
 		jsonAim.put("spin", marshal(aim.spin));
 		jsonAim.put("speed", new JSONNumber(aim.speed));		
@@ -44,18 +45,12 @@ public class BilliardsMarshaller {
 	{
 		String data = event.getAttribute("aim").getValue();
 		JSONValue jsonAim = JSONParser.parseStrict(data);
+		JSONObject jpos = jsonAim.isObject().get("pos").isObject();
 		JSONObject jdir = jsonAim.isObject().get("dir").isObject();
 		JSONObject jspin = jsonAim.isObject().get("spin").isObject();
 		
-		return new Aim(deMarshal(jdir),deMarshal(jspin),jsonAim.isObject().get("speed").isNumber().doubleValue());
+		return new Aim(1,deMarshal(jpos),deMarshal(jdir),deMarshal(jspin),jsonAim.isObject().get("speed").isNumber().doubleValue());
 		
-	}
-
-	public static Vector3D placeFromEvent(GameEvent event)
-	{
-		String data = event.getAttribute("place").getValue();
-		JSONValue jsonAim = JSONParser.parseStrict(data);		
-		return deMarshal(jsonAim.isObject());
 	}
 	
 	private static Vector3D deMarshal(JSONObject v)
