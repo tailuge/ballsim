@@ -40,8 +40,8 @@ public class BilliardsEventFactory {
 		return aimComplete;
 	}
 
-	public static GameEvent placeBallUpdate(Vector3D pos) {
-		GameEvent placeBallUpdate = BilliardsMarshaller.eventFromPlace(pos);
+	public static GameEvent placeBallUpdate(Aim aim) {
+		GameEvent placeBallUpdate = BilliardsMarshaller.eventFromAim(aim);
 		placeBallUpdate.addAttribute(new GameEventAttribute(PLACEBALL_UPDATE,
 				""));
 		placeBallUpdate.addAttribute(new GameEventAttribute(ACTION, "aim"));

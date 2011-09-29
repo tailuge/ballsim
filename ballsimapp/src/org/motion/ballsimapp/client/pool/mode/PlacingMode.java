@@ -24,18 +24,19 @@ public class PlacingMode extends BilliardsMode {
 		if (event.hasAttribute(CURSOR_INPUT))
 		{
 			Aim input = BilliardsMarshaller.aimFromEvent(event);
-//			model.sendLimitedPlaceBallUpdate(pos);
+			model.table.placeBall(input.ballId,input.pos);
+			model.sendLimitedPlaceBallUpdate(input);
+			view.setAim(input);
+			view.showPlacer();
 			view.showTable(model.table);
-			//view.setPlacer(input.pos);
 			return this;
 		}
 
 		if (event.hasAttribute(CURSOR_INPUT_COMPLETE))
 		{
 			Aim input = BilliardsMarshaller.aimFromEvent(event);
-//			model.sendPlaceBallUpdate(pos);
-			model.table.beginNewShot();
-			view.showTable(model.table);
+			model.table.placeBall(input.ballId,input.pos);
+			model.sendPlaceBallUpdate(input);
 			return new AimingMode(model,view);
 		}
 

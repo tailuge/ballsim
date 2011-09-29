@@ -21,7 +21,7 @@ public class BilliardsModel extends GWTGameClient {
 
 	TimeFilter filter = new TimeFilter();
 
-	private String playerId;
+	private String playerId = "";
 	public String gameId = "";
 	
 	public void setEventHandler(GWTGameEventHandler eventHandler) {
@@ -35,7 +35,8 @@ public class BilliardsModel extends GWTGameClient {
 
 	public void notify(GameEvent event)
 	{
-		event.addAttribute(new GameEventAttribute(PLAYER_ALIAS,playerId));
+		if (!playerId.isEmpty())
+			event.addAttribute(new GameEventAttribute(PLAYER_ALIAS,playerId));
 		if (!gameId.isEmpty())
 			event.addAttribute(new GameEventAttribute(GAME_ID,gameId));			
 		super.notify(event);
@@ -48,23 +49,18 @@ public class BilliardsModel extends GWTGameClient {
 	}
 
 	public void sendHit(Aim aim) {
-//		table.generateSequence(aim);
 		notify(BilliardsEventFactory.hitOutcome(table,aim));
 	}
 
-	public void sendLimitedPlaceBallUpdate(Vector3D pos) {
-		table.placeBall(pos);
+	public void sendLimitedPlaceBallUpdate(Aim input) {
 		if (filter.hasElapsed(2)) 
-			sendPlaceBallUpdate(pos);
+			sendPlaceBallUpdate(input);
 	}
 
-	public void sendPlaceBallUpdate(Vector3D pos) {
-		table.placeBall(pos);
-		notify(BilliardsEventFactory.placeBallUpdate(pos));
+	public void sendPlaceBallUpdate(Aim input) {
+		notify(BilliardsEventFactory.placeBallUpdate(input));
 	}
 
-	// experimental
-	
 	public void sendToEventLoop(GameEvent event)
 	{
 		eventHandler.handleEvent(event);

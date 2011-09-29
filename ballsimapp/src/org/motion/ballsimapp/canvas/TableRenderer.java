@@ -63,8 +63,9 @@ public class TableRenderer {
 
 	protected void clearBackBuffer() {
 		
-		backBufferContext.drawImage(backgroundContext.getCanvas(), 0, 0);
-//		backgroundContext.clearRect(0, 0, width, height);
+//		backBufferContext.drawImage(backgroundContext.getCanvas(), 0, 0);
+		backBufferContext.clearRect(0, 0, width, height);
+		context.clearRect(0, 0, width, height);
 	}
 
 	public void moveBackBufferToFront(Context2d back, Context2d front) {
