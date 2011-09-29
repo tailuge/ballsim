@@ -1,19 +1,30 @@
 package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsim.game.Aim;
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.Interpolator;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsimapp.canvas.Animation;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+
 public class BilliardsViewImpl extends BilliardsViewLayout implements
 		BilliardsView {
 
 	public BilliardsViewImpl(int width, String playerId) {
 		super(width, playerId);
+		actionButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				actionButton.setEnabled(false);
+				eventHandler.handleEvent(BilliardsEventFactory
+							.inputComplete(new Aim(1,aim.getCueBallPosition(),aim.getAimDirection(),
+									spin.getSpin(), power.getPower())));
+			}
+		});
 	}
+
 
 	@Override
 	public void appendMessage(String message) {
@@ -28,7 +39,7 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 	@Override
 	public void showTable(Table table) {
 		Event cueBall = Interpolator.interpolate(table.ball(1), 0);
-		tableCanvas.setCueBallPosition(cueBall.pos);
+		aim.setCueBallPosition(cueBall.pos);
 		tableCanvas.plotAtTime(table, 0);
 	}
 
@@ -37,7 +48,7 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 		aiming = true;
 		actionButton.setText("Hit");
 		actionButton.setEnabled(true);
-		tableCanvas.aim();
+		aim.aim();
 	}
 
 	@Override
@@ -45,7 +56,7 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 		aiming = false;
 		actionButton.setText("Place");
 		actionButton.setEnabled(true);
-		tableCanvas.place();
+		aim.place();
 	}
 
 	@Override
@@ -58,15 +69,21 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 	}
 
 	@Override
-	public void setAim(Aim aim) {
+	public void setAim(Aim aim) {		
 		spin.setSpin(aim.spin);
 		power.setPower(aim.speed);
-		tableCanvas.setAimDirection(aim.dir);
+		this.aim.setAim(aim);
 	}
 
 	@Override
-	public void setPlacer(Vector3D pos) {
-		tableCanvas.setPlacer(pos);
+	public void showAim() 
+	{
+		aim.showAim();
+	}
+
+	@Override
+	public void showPlacer() {
+		aim.showPlacer();
 	}
 
 	@Override

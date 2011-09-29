@@ -17,7 +17,7 @@ public class BilliardsMarshallerTest extends GWTTestCase {
 	@Test
 	public void testMarshalAim() {
 		
-		Aim aim = new Aim(new Vector3D(1,2.2,0),new Vector3D(-1,-3.000000001,0),0.89);
+		Aim aim = new Aim(1,new Vector3D(1,2.2,0),new Vector3D(1,2.2,0),new Vector3D(-1,-3.000000001,0),0.89);
 		
 		GameEvent event = BilliardsMarshaller.eventFromAim(aim);
 		Aim testAim = BilliardsMarshaller.aimFromEvent(event);

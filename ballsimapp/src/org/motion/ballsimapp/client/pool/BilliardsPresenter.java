@@ -1,8 +1,8 @@
 package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
+import org.motion.ballsimapp.client.pool.mode.AimingMode;
 import org.motion.ballsimapp.client.pool.mode.BilliardsMode;
-import org.motion.ballsimapp.client.pool.mode.LoginMode;
 import org.motion.ballsimapp.shared.GameEvent;
 
 public class BilliardsPresenter implements GWTGameEventHandler {
@@ -26,7 +26,8 @@ public class BilliardsPresenter implements GWTGameEventHandler {
 		model.setEventHandler(this);
 		view.setEventHandler(this);
 		view.showTable(model.table);
-		mode = new LoginMode(model, view);
+//		mode = new LoginMode(model, view);
+		mode = new AimingMode(model,view);
 	}
 
 	@Override

@@ -33,10 +33,10 @@ public class ViewingMode extends BilliardsMode {
 		}
 
 		if (event.hasAttribute(PLACEBALL_UPDATE)) {
-			Vector3D pos = BilliardsMarshaller.placeFromEvent(event);
-			model.table.placeBall(pos);
+		//	Vector3D pos = BilliardsMarshaller.placeFromEvent(event);
+		//	model.table.placeBall(pos);
 			view.showTable(model.table);
-			view.setPlacer(pos);
+		//	view.setPlacer(pos);
 			return this;
 		}
 

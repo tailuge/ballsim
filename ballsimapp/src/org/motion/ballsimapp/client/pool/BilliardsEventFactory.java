@@ -1,6 +1,17 @@
 package org.motion.ballsimapp.client.pool;
 
-import static org.motion.ballsimapp.shared.Events.*;
+import static org.motion.ballsimapp.shared.Events.ACTION;
+import static org.motion.ballsimapp.shared.Events.AIM_COMPLETE;
+import static org.motion.ballsimapp.shared.Events.AIM_UPDATE;
+import static org.motion.ballsimapp.shared.Events.CURSOR_INPUT;
+import static org.motion.ballsimapp.shared.Events.CURSOR_INPUT_COMPLETE;
+import static org.motion.ballsimapp.shared.Events.GAME_SHOT_ANYBALLHIT;
+import static org.motion.ballsimapp.shared.Events.GAME_SHOT_BALLSPOTTED;
+import static org.motion.ballsimapp.shared.Events.GAME_SHOT_CUSHION_BEFORE_SECOND_BALL;
+import static org.motion.ballsimapp.shared.Events.GAME_SHOT_FIRST_BALL_HIT;
+import static org.motion.ballsimapp.shared.Events.GAME_SHOT_TOTAL_BALLS_HITTING_CUSHION;
+import static org.motion.ballsimapp.shared.Events.PLACEBALL_COMPLETE;
+import static org.motion.ballsimapp.shared.Events.PLACEBALL_UPDATE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +33,9 @@ public class BilliardsEventFactory {
 		return aimUpdate;
 	}
 
-	public static GameEvent aimComplete(Aim aim) {
+	public static GameEvent inputComplete(Aim aim) {
 		GameEvent aimComplete = BilliardsMarshaller.eventFromAim(aim);
-		aimComplete.addAttribute(new GameEventAttribute(AIM_COMPLETE, ""));
+		aimComplete.addAttribute(new GameEventAttribute(CURSOR_INPUT_COMPLETE, ""));
 		aimComplete.addAttribute(new GameEventAttribute(ACTION, "shot"));
 		return aimComplete;
 	}
@@ -43,6 +54,12 @@ public class BilliardsEventFactory {
 				PLACEBALL_COMPLETE, ""));
 		placeBallComplete.addAttribute(new GameEventAttribute(ACTION, "aim"));
 		return placeBallComplete;
+	}
+
+	public static GameEvent cursorInput(Aim aim) {
+		GameEvent cursorInput = BilliardsMarshaller.eventFromAim(aim);
+		cursorInput.addAttribute(new GameEventAttribute(CURSOR_INPUT, ""));
+		return cursorInput;
 	}
 
 	public static GameEvent hitOutcome(Table table, Aim aim) {

@@ -1,9 +1,9 @@
 package org.motion.ballsimapp.client.pool.mode;
 
-import static org.motion.ballsimapp.shared.Events.PLACEBALL_COMPLETE;
-import static org.motion.ballsimapp.shared.Events.PLACEBALL_UPDATE;
+import static org.motion.ballsimapp.shared.Events.CURSOR_INPUT;
+import static org.motion.ballsimapp.shared.Events.CURSOR_INPUT_COMPLETE;
 
-import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.game.Aim;
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
@@ -21,19 +21,19 @@ public class PlacingMode extends BilliardsMode {
 	@Override
 	public BilliardsMode handle(GameEvent event) {
 		
-		if (event.hasAttribute(PLACEBALL_UPDATE))
+		if (event.hasAttribute(CURSOR_INPUT))
 		{
-			Vector3D pos = BilliardsMarshaller.placeFromEvent(event);
-			model.sendLimitedPlaceBallUpdate(pos);
+			Aim input = BilliardsMarshaller.aimFromEvent(event);
+//			model.sendLimitedPlaceBallUpdate(pos);
 			view.showTable(model.table);
-			view.setPlacer(pos);
+			//view.setPlacer(input.pos);
 			return this;
 		}
 
-		if (event.hasAttribute(PLACEBALL_COMPLETE))
+		if (event.hasAttribute(CURSOR_INPUT_COMPLETE))
 		{
-			Vector3D pos = BilliardsMarshaller.placeFromEvent(event);
-			model.sendPlaceBallUpdate(pos);
+			Aim input = BilliardsMarshaller.aimFromEvent(event);
+//			model.sendPlaceBallUpdate(pos);
 			model.table.beginNewShot();
 			view.showTable(model.table);
 			return new AimingMode(model,view);

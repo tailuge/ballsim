@@ -13,8 +13,6 @@ public class TableRenderer {
 	protected Context2d context;
 	protected Context2d backBufferContext;
 	private Context2d backgroundContext;
-	protected final PlotAim aim;
-	protected final PlotPlacer placer;
 	protected final int width;
 	protected final int height;
 	private final CssColor redrawColor = CssColor.make("rgba(95,95,205,0.7)");
@@ -23,16 +21,13 @@ public class TableRenderer {
 		width = w;
 		height = h;
 		scale.setWindowInfo(width, height);
-		aim = new PlotAim(scale);
-		placer = new PlotPlacer(scale);
 		initialiseCanvas();
 		initialiseBackground();
 		clearBackBuffer();
 		moveBackBufferToFront(backBufferContext, context);
 	}
 
-	private void initialiseCanvas()
-	{
+	private void initialiseCanvas() {
 		canvas = Canvas.createIfSupported();
 		backBuffer = Canvas.createIfSupported();
 
@@ -47,9 +42,9 @@ public class TableRenderer {
 		backBuffer.setCoordinateSpaceHeight(height);
 
 		context = canvas.getContext2d();
-		backBufferContext = backBuffer.getContext2d();		
+		backBufferContext = backBuffer.getContext2d();
 	}
-	
+
 	private void initialiseBackground() {
 		background = Canvas.createIfSupported();
 		background.setWidth(width + "px");
@@ -58,7 +53,7 @@ public class TableRenderer {
 		background.setCoordinateSpaceHeight(height);
 		backgroundContext = background.getContext2d();
 		backgroundContext.setFillStyle(redrawColor);
-		backgroundContext.fillRect(0, 0, width, height);
+
 		PlotCushion.plot(backgroundContext, scale);
 	}
 
@@ -67,7 +62,9 @@ public class TableRenderer {
 	}
 
 	protected void clearBackBuffer() {
+		
 		backBufferContext.drawImage(backgroundContext.getCanvas(), 0, 0);
+//		backgroundContext.clearRect(0, 0, width, height);
 	}
 
 	public void moveBackBufferToFront(Context2d back, Context2d front) {
