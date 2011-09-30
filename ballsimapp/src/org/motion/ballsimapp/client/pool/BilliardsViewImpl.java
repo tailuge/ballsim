@@ -28,7 +28,7 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 
 	@Override
 	public void appendMessage(String message) {
-		messageArea.setText(messageArea.getText() + newline + message);
+		messageArea.setText(message + newline + messageArea.getText());
 	}
 
 	@Override

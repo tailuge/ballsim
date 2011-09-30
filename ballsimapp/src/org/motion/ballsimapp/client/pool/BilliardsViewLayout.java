@@ -41,8 +41,8 @@ public class BilliardsViewLayout implements AimChange {
 		power = new PowerInputCanvas(width - 2*inputHeight, inputHeight, this);
 		aim = new AimInputCanvas(width, height, this);
 		tableCanvas = new TableCanvas(width, height);
-		messageArea.setWidth(width * 2  + "px");
-		messageArea.setHeight(width/2  + "px");
+		messageArea.setWidth(width  + "px");
+		messageArea.setHeight(width/4  + "px");
 		this.playerId.setWidth(width/3  + "px");
 		this.password.setWidth(width/3  + "px");
 		this.playerId.setText(playerId);
@@ -56,6 +56,7 @@ public class BilliardsViewLayout implements AimChange {
 		RootPanel.get(playerId+".tablefg").setVisible(true);
 		RootPanel.get(playerId+".tablebg").setSize(width+"px", height+"px");	
 		RootPanel.get(playerId+".tablebg").setVisible(true);
+		RootPanel.get(playerId+".pad").setSize(width+"px", height+"px");	
 
 	}
 
@@ -69,7 +70,7 @@ public class BilliardsViewLayout implements AimChange {
 		RootPanel.get(base+"inputspin").add(spin.getInitialisedCanvas());
 		RootPanel.get(base+"inputpower").add(power.getInitialisedCanvas());
 		RootPanel.get(base+"inputhit").add(actionButton);
-		RootPanel.get(base+"message").add(messageArea);
+		//RootPanel.get(base+"message").add(messageArea);
 	}
 
 	@Override
