@@ -56,7 +56,7 @@ public class GWTGameClient {
 				}
 				else
 				{
-					distributor.sendError(user,"browser already connected");					
+					distributor.sendInfo(user,"browser already connected");					
 				}
 			}
 		});

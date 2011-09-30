@@ -5,7 +5,6 @@ import static org.motion.ballsimapp.shared.Events.AIM_UPDATE;
 import static org.motion.ballsimapp.shared.Events.PLACEBALL_UPDATE;
 
 import org.motion.ballsim.game.Aim;
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;

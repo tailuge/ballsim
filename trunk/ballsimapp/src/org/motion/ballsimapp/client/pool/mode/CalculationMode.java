@@ -11,7 +11,6 @@ import org.motion.ballsimapp.client.pool.BilliardsView;
 import org.motion.ballsimapp.shared.Events;
 import org.motion.ballsimapp.shared.GameEvent;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 
@@ -64,7 +63,7 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 
 		pending.add(event);
 
-		GWT.log("CalculationMode added pending event:" + event);
+		//GWT.log("CalculationMode added pending event:" + event);
 		return this;
 	}
 
