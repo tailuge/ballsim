@@ -4,7 +4,6 @@ import static org.motion.ballsimapp.shared.Events.GAME_ID;
 import static org.motion.ballsimapp.shared.Events.PLAYER_ALIAS;
 
 import org.motion.ballsim.game.Aim;
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsimapp.client.comms.GWTGameClient;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;

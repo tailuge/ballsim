@@ -61,6 +61,7 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 
 	@Override
 	public void animate(Table table) {
+		aim.hide();
 		actionButton.setEnabled(false);
 		@SuppressWarnings("unused")
 		Animation showAnimation = new Animation(table, tableCanvas,

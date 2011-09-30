@@ -4,6 +4,7 @@ import static org.motion.ballsimapp.shared.Events.AIM_COMPLETE;
 import static org.motion.ballsimapp.shared.Events.AIM_UPDATE;
 import static org.motion.ballsimapp.shared.Events.PLACEBALL_UPDATE;
 
+import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
@@ -25,6 +26,8 @@ public class ViewingMode extends BilliardsMode {
 
 		if (event.hasAttribute(AIM_UPDATE)) {
 			view.setAim(BilliardsMarshaller.aimFromEvent(event));
+			view.showAim();
+			
 			return this;
 		}
 
@@ -33,10 +36,10 @@ public class ViewingMode extends BilliardsMode {
 		}
 
 		if (event.hasAttribute(PLACEBALL_UPDATE)) {
-		//	Vector3D pos = BilliardsMarshaller.placeFromEvent(event);
-		//	model.table.placeBall(pos);
+			Aim input = BilliardsMarshaller.aimFromEvent(event);
+			model.table.placeBall(input.ballId,input.pos);
 			view.showTable(model.table);
-		//	view.setPlacer(pos);
+			view.showPlacer();
 			return this;
 		}
 

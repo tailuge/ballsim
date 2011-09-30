@@ -110,4 +110,10 @@ public class AimInputCanvas implements ActiveMouseMoveHandler.MouseEvent {
 		canvas.setVisible(true);
 		aim.plotAim(context);
 	}
+	
+	public void hide() {
+		context.clearRect(0, 0, scale.w, scale.h);
+		canvas.setVisible(false);
+	}
+
 }
