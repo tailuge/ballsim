@@ -42,6 +42,11 @@ public class Distributor {
 		handlers.get(user).handleEvent(Events.event(CLIENT_ERROR, message));
 	}
 
+	public void sendInfo(String user,String message)
+	{
+		handlers.get(user).handleEvent(Events.event(ALREADY_CONNECTED,message));
+	}
+
 	public void addGameEventListener(String user,GWTGameEventHandler handler)
 	{
 		handlers.put(user, handler);		

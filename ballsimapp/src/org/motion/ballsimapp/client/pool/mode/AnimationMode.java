@@ -9,7 +9,6 @@ import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
 import org.motion.ballsimapp.shared.GameEvent;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 
 public class AnimationMode extends BilliardsMode {
@@ -39,7 +38,7 @@ public class AnimationMode extends BilliardsMode {
 
 		pending.add(event);
 
-		GWT.log("AnimationMode added pending event:" + event);
+		//GWT.log("AnimationMode added pending event:" + event);
 		return this;
 	}
 

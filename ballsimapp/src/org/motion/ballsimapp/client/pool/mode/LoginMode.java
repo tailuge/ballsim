@@ -29,6 +29,12 @@ public class LoginMode extends BilliardsMode {
 			return this;
 		}
 
+		if (event.hasAttribute(ALREADY_CONNECTED))
+		{
+			// only used in debug mode
+			return this;
+		}
+		
 		if (Events.isState(event,LOGIN_SUCCESS))
 		{			
 			view.appendMessage("login successfull.");
