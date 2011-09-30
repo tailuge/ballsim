@@ -8,8 +8,6 @@ import org.motion.ballsimapp.canvas.TableCanvas;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
 import org.motion.ballsimapp.client.pool.handlers.AimChange;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
