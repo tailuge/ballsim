@@ -12,14 +12,13 @@ public class GameEventHelper {
 	private final GameEvent event;
 
 	public GameEventHelper(GameEvent event) {
-		super();
 		this.event = event;
 	}
 
 	public String getString(String name) {
 		GameEventAttribute attribute = event.getAttribute(name);
 		if (attribute == null)
-			throw new IllegalArgumentException("no such attribute "+name);
+			throw new IllegalArgumentException("no such attribute " + name);
 		return attribute.getValue();
 	}
 
@@ -29,5 +28,20 @@ public class GameEventHelper {
 
 	public boolean hasValue(String name) {
 		return event.hasAttribute(name);
+	}
+
+	public void setValue(String name, String value) {
+		event.addAttribute(new GameEventAttribute(name, value));
+	}
+
+	public void setValue(String name, String value, String... rest) {
+		StringBuilder sb = new StringBuilder(value);
+		for (String s : rest)
+			sb.append(",").append(s);
+		setValue(name, sb.toString());
+	}
+
+	public GameEvent getEvent() {
+		return event;
 	}
 }
