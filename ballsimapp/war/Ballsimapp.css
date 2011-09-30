@@ -11,23 +11,3 @@ h1 {
 
 
 
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
-}
-
-.dialogVPanel {
-  margin: 5px;
-}
-
-/** Set ids using widget.getElement().setId("idOfElement") */
-.actionButton {
-  margin: 1px 1px 1px;
-}
-
-* {
-margin: 0;
-}
-html, body {
-height: 100%;
-}
