@@ -13,13 +13,20 @@ public class LoginMode extends BilliardsMode {
 
 	public LoginMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
-		view.appendMessage("connecting...");
-		model.connect(view.getPlayerId());
+		view.setVisibility(false);
+//		view.appendMessage("connecting...");
+//		model.connect(view.getPlayerId());
 	}
 
 	@Override
 	public BilliardsMode handle(GameEvent event) {
 		
+		if (event.hasAttribute(CONNECT))
+		{
+			view.setVisibility(true);
+			view.appendMessage("connecting...");
+			model.connect(view.getPlayerId());
+		}
 		
 		if (event.hasAttribute(CHANNEL_CONNECTED))
 		{

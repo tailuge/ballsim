@@ -47,13 +47,11 @@ public class BilliardsViewLayout implements AimChange {
 		this.password.setText("secret");
 		actionButton.setWidth(inputHeight+"px");
 		actionButton.setHeight(inputHeight+"px");
-		loginButton.setEnabled(false);
+		loginButton.setEnabled(true);
 		addElementsToRoot();
 
 		RootPanel.get(playerId+".tablefg").setSize(width+"px", height+"px");
-		RootPanel.get(playerId+".tablefg").setVisible(true);
 		RootPanel.get(playerId+".tablebg").setSize(width+"px", height+"px");	
-		RootPanel.get(playerId+".tablebg").setVisible(true);
 		RootPanel.get(playerId+".pad").setSize(width+"px", height+"px");	
 
 	}
@@ -84,4 +82,6 @@ public class BilliardsViewLayout implements AimChange {
 		eventHandler.handleEvent(BilliardsEventFactory.cursorInput(input));
 	
 	}
+	
+
 }
