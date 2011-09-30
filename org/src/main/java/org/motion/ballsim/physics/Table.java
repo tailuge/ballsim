@@ -210,7 +210,7 @@ public class Table implements Serializable {
 		return ballMap.get(id);
 	}
 
-	public void placeBall(int ballId,Vector3D pos) {
+	public void placeBall(int ballId, Vector3D pos) {
 		ball(ballId).setFirstEvent(UtilEvent.stationary(pos));
 	}
 
@@ -226,6 +226,15 @@ public class Table implements Serializable {
 			ball(3).setFirstEvent(
 					UtilEvent.stationary(new Vector3D(Ball.R * 8,
 							-Ball.R * 0.5, 0)));
+		}
+
+		if (type.equals("9Ball")) {
+			for (int b = 2; b < 11; b++) {
+				ball(b).setFirstEvent(
+						UtilEvent.stationary(new Vector3D(-Ball.R * 0.5 * b,
+								+Ball.R * 2.5 * b, 0)));
+
+			}
 		}
 		/*
 		 * double x = Ball.R * 0.46; double y = Ball.R * 14;
