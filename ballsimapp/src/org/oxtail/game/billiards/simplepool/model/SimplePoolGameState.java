@@ -63,7 +63,7 @@ public enum SimplePoolGameState {
 
 		@Override
 		public SimplePoolGameState forFoul() {
-			return TurnOver;
+			return Foul;
 		}
 
 	};
