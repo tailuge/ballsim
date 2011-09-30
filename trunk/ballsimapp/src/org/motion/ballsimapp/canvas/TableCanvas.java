@@ -7,6 +7,7 @@ import org.motion.ballsim.physics.Table;
 
 public class TableCanvas extends TableRenderer {
 
+	
 	public TableCanvas(int w, int h) {
 		super(w, h);
 	}
@@ -14,7 +15,8 @@ public class TableCanvas extends TableRenderer {
 	public void plotAtTime(Table table, double t) {
 
 		context.clearRect(0, 0, width, height);
-
+		//PlotCushion.plot(context, scale);
+		
 		for (Ball ball : table.balls()) {
 			Event e = Interpolator.interpolate(ball, t);
 			PlotEvent.plotEvent(e, context, scale);
