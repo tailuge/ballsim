@@ -19,6 +19,7 @@ public interface BilliardsView {
 	void setAim(Aim aim);
 	void showAim();
 	void showPlacer();
+	void setVisibility(boolean visible);
 	
 	String getPlayerId();
 	String getPassword();

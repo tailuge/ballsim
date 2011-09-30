@@ -13,6 +13,7 @@ public class Events {
 	public final static String GAME_ID = "game.id";
 	public final static String PASSWORD = "password";
 	public final static String CLIENT_ERROR = "error";
+	public final static String CONNECT = "connect";
 	public final static String ALREADY_CONNECTED = "alreadyConnected";
 	public final static String CHANNEL_CONNECTED = "connected";
 	public final static String LOGIN_SUCCESS = "loggedin";

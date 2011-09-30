@@ -9,6 +9,7 @@ import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.RootPanel;
 
 public class BilliardsViewImpl extends BilliardsViewLayout implements
 		BilliardsView {
@@ -21,6 +22,13 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 				eventHandler.handleEvent(BilliardsEventFactory
 							.inputComplete(new Aim(1,aim.getCueBallPosition(),aim.getAimDirection(),
 									spin.getSpin(), power.getPower())));
+			}
+		});
+		
+		loginButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				actionButton.setEnabled(false);
+				eventHandler.handleEvent(BilliardsEventFactory.beginLogin());
 			}
 		});
 	}
@@ -100,6 +108,21 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 	@Override
 	public void watch() {
 		actionButton.setEnabled(false);
+	}
+
+
+	@Override
+	public void setVisibility(boolean visibility) {
+		actionButton.setVisible(visibility);
+		String base = playerId.getText()+".";
+		System.out.println(playerId.getText());
+		RootPanel.get(base+"table").setVisible(visibility);
+		RootPanel.get(base+"tableactive").setVisible(visibility);
+		RootPanel.get(base+"inputspin").setVisible(visibility);
+		RootPanel.get(base+"inputpower").setVisible(visibility);
+		RootPanel.get(base+"tablefg").setVisible(visibility);
+		RootPanel.get(base+"tablebg").setVisible(visibility);
+
 	}
 
 }

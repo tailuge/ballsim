@@ -1,17 +1,6 @@
 package org.motion.ballsimapp.client.pool;
 
-import static org.motion.ballsimapp.shared.Events.ACTION;
-import static org.motion.ballsimapp.shared.Events.AIM_COMPLETE;
-import static org.motion.ballsimapp.shared.Events.AIM_UPDATE;
-import static org.motion.ballsimapp.shared.Events.CURSOR_INPUT;
-import static org.motion.ballsimapp.shared.Events.CURSOR_INPUT_COMPLETE;
-import static org.motion.ballsimapp.shared.Events.GAME_SHOT_ANYBALLHIT;
-import static org.motion.ballsimapp.shared.Events.GAME_SHOT_BALLSPOTTED;
-import static org.motion.ballsimapp.shared.Events.GAME_SHOT_CUSHION_BEFORE_SECOND_BALL;
-import static org.motion.ballsimapp.shared.Events.GAME_SHOT_FIRST_BALL_HIT;
-import static org.motion.ballsimapp.shared.Events.GAME_SHOT_TOTAL_BALLS_HITTING_CUSHION;
-import static org.motion.ballsimapp.shared.Events.PLACEBALL_COMPLETE;
-import static org.motion.ballsimapp.shared.Events.PLACEBALL_UPDATE;
+import static org.motion.ballsimapp.shared.Events.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +10,7 @@ import org.motion.ballsim.game.Outcome;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsimapp.client.util.StringUtil;
+import org.motion.ballsimapp.shared.Events;
 import org.motion.ballsimapp.shared.GameEvent;
 import org.motion.ballsimapp.shared.GameEventAttribute;
 
@@ -35,7 +25,8 @@ public class BilliardsEventFactory {
 
 	public static GameEvent inputComplete(Aim aim) {
 		GameEvent aimComplete = BilliardsMarshaller.eventFromAim(aim);
-		aimComplete.addAttribute(new GameEventAttribute(CURSOR_INPUT_COMPLETE, ""));
+		aimComplete.addAttribute(new GameEventAttribute(CURSOR_INPUT_COMPLETE,
+				""));
 		aimComplete.addAttribute(new GameEventAttribute(ACTION, "shot"));
 		return aimComplete;
 	}
@@ -62,15 +53,19 @@ public class BilliardsEventFactory {
 		return cursorInput;
 	}
 
+	public static GameEvent beginLogin() {
+		return Events.event(CONNECT, "");
+	}
+
 	public static GameEvent hitOutcome(Table table, Aim aim) {
 		Outcome outcome = Outcome.evaluate(table);
 
 		// modified for cue ball to be 0, refactor
 		List<String> potted = new ArrayList<String>();
 
-		for(int i:outcome.ballsPotted)
-			potted.add(""+(i-1));
-		
+		for (int i : outcome.ballsPotted)
+			potted.add("" + (i - 1));
+
 		GameEvent hitEvent = BilliardsMarshaller.eventFromAim(aim);
 		hitEvent.addAttribute(new GameEventAttribute(AIM_COMPLETE, ""));
 		hitEvent.addAttribute(new GameEventAttribute(ACTION, "shot"));
