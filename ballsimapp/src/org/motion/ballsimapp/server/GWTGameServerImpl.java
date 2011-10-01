@@ -2,6 +2,7 @@ package org.motion.ballsimapp.server;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.motion.ballsimapp.client.GWTGameServer;
@@ -24,17 +25,16 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 	private static final Logger log = Logger.getLogger(GWTGameServerImpl.class
 			.getName());
 
-	private static final Map<String,String> channelMap = new HashMap<String, String>();
-	
+	private static final Map<String, String> channelMap = new HashMap<String, String>();
+
 	private GameServerProxy proxy;
-	
+
 	public GWTGameServerImpl() {
 		proxy = new GameServerProxy(this);
 	}
 
 	public GWTGameServerImpl(Object delegate) {
 		super(delegate);
-		// TODO Auto-generated constructor stub
 	}
 
 	/** Called by Server via callback */
@@ -44,16 +44,22 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 		try {
 			ChannelService channelService = ChannelServiceFactory
 					.getChannelService();
-			
+
 			String target = event.getAttribute("target").getValue();
-			log.warning("Sending message for "+target+" on channel for "+channelMap.get(target));
+			log.warning("Sending message for " + target + " on channel for "
+					+ channelMap.get(target));
 			target = channelMap.get(target);
-			
-			channelService.sendMessage(new ChannelMessage(target,GameEventMarshaller.marshal(event)));				
-		} catch (ChannelFailureException channelFailureException) {
-			channelFailureException.printStackTrace();
-		} catch (Exception otherException) {
-			otherException.printStackTrace();
+
+			channelService.sendMessage(new ChannelMessage(target,
+					GameEventMarshaller.marshal(event)));
+		} catch (ChannelFailureException e) {
+			log.log(Level.SEVERE,
+					"GWTGameServer failed to communicate on channel, channel failure execption ",
+					e);
+		} catch (Exception e) {
+			log.log(Level.SEVERE,
+					"GWTGameServer failed to communicate on channel, unknown execption ",
+					e);
 		}
 	}
 
@@ -64,13 +70,10 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 	public void notify(String data) throws IllegalArgumentException {
 		notify(GameEventMarshaller.deMarshal(data));
 	}
-	
+
 	public void notify(GameEvent event) {
-		log.warning("notify:"+event);
-		// game server will be called here
+		log.info("GWTGameServer.notify: " + event);
 		proxy.notify(event);
-		//onEvent(event);		
-		return;
 	}
 
 	/**
@@ -83,27 +86,22 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 		return GameEventMarshaller.marshal(connect(event));
 	}
 
-	
 	public GameEvent connect(GameEvent event) throws IllegalArgumentException {
 
-		log.warning("connect:"+event);
+		log.info("GWTGameServer.Connecting: " + event);
 		String user = event.getAttribute("user").getValue();
 		// when debugging 2 clients in one browser we need to route messages
 		// down a single channel connection.
-		if (event.hasAttribute("synonym"))
-		{
-			channelMap.put(user,event.getAttribute("synonym").getValue());
-			return Events.event("channelName","alreadyConnected");
+		if (event.hasAttribute("synonym")) {
+			channelMap.put(user, event.getAttribute("synonym").getValue());
+			return Events.event("channelName", "alreadyConnected");
+		} else {
+			channelMap.put(user, user);
 		}
-		else
-		{
-			channelMap.put(user,user);
-		}
-		
+
 		String channelName = createChannel(user);
-		GameEvent connectEvent = Events.event("channelName",
-				channelName);
-		
+		GameEvent connectEvent = Events.event("channelName", channelName);
+
 		return connectEvent;
 	}
 
@@ -112,13 +110,17 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 			ChannelService channelService = ChannelServiceFactory
 					.getChannelService();
 			return channelService.createChannel(userId);
-		} catch (ChannelFailureException channelFailureException) {
+		} catch (ChannelFailureException e) {
+			log.log(Level.SEVERE,
+					"GWTGameServer. failed to create channel, channel failure execption ",
+					e);
 			return null;
-		} catch (Exception otherException) {
-			otherException.printStackTrace();
+		} catch (Exception e) {
+			log.log(Level.SEVERE,
+					"GWTGameServer. failed to create channel, unknown execption ",
+					e);
 			return null;
 		}
 	}
-
 
 }
