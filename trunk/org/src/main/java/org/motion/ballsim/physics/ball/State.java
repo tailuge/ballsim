@@ -1,4 +1,4 @@
-package org.motion.ballsim.physics;
+package org.motion.ballsim.physics.ball;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
 

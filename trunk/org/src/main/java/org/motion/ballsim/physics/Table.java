@@ -8,6 +8,12 @@ import java.util.Map;
 
 import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.ball.State;
+import org.motion.ballsim.physics.util.EventPair;
+import org.motion.ballsim.physics.util.Interpolate;
+import org.motion.ballsim.physics.util.Position;
 import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
@@ -93,7 +99,7 @@ public final class Table implements Serializable {
 	}
 
 	public void setAim(Aim aim) {
-		Event cueBall = Interpolator.interpolate(ball(1), 0);
+		Event cueBall = Interpolate.toTime(ball(1), 0);
 		Event hit = UtilEvent.hit(cueBall.pos, aim.dir, aim.speed,
 				aim.spin.getY());
 		ball(1).setFirstEvent(hit);
@@ -147,7 +153,7 @@ public final class Table implements Serializable {
 				logger.info("Ball {} : {}", next.ballId, next.format());
 				logger.info("nextCollision {}", nextCollision);
 			}
-			Assert.isTrue(Cushion.onTable(next));
+			Assert.isTrue(Position.onTable(next));
 			this.ball(next.ballId).add(next);
 		} else {
 			if (logger.isEnabled()) {
@@ -158,15 +164,15 @@ public final class Table implements Serializable {
 				logger.info("Collision 1: {}", nextCollision.first.format());
 				logger.info("Collision 2: {}", nextCollision.second.format());
 			}
-			Assert.isTrue(Cushion.onTable(nextCollision.first));
-			Assert.isTrue(Cushion.onTable(nextCollision.second));
+			Assert.isTrue(Position.onTable(nextCollision.first));
+			Assert.isTrue(Position.onTable(nextCollision.second));
 			this.ball(nextCollision.first.ballId).add(nextCollision.first);
 			this.ball(nextCollision.second.ballId).add(nextCollision.second);
 		}
 		if (logger.isEnabled()) {
 			logger.info("Table:{}", this);
 		}
-		Assert.isTrue(Cushion.validPosition(this));
+		Assert.isTrue(Position.validPosition(this));
 		return true;
 	}
 
@@ -178,7 +184,7 @@ public final class Table implements Serializable {
 
 	public void beginNewShot() {
 		for (Ball ball : balls()) {
-			Event e = Interpolator.interpolate(ball, getMaxTime());
+			Event e = Interpolate.toTime(ball, getMaxTime());
 
 			e.t = 0;
 			e.vel = Vector3D.ZERO;
@@ -213,35 +219,5 @@ public final class Table implements Serializable {
 		ball(ballId).setFirstEvent(UtilEvent.stationary(pos));
 	}
 
-	// temp move out.
-	public void rack(String type, String seed) {
 
-		ball(1).setFirstEvent(UtilEvent.stationary(Vector3D.ZERO));
-
-		if (type.equals("SimplePool")) {
-			ball(2).setFirstEvent(
-					UtilEvent.stationary(new Vector3D(-Ball.R * 0.46,
-							+Ball.R * 18, 0)));
-			ball(3).setFirstEvent(
-					UtilEvent.stationary(new Vector3D(Ball.R * 8,
-							-Ball.R * 0.5, 0)));
-		}
-
-		else if (type.equals("9Ball")) {
-			for (int b = 2; b < 11; b++) {
-				ball(b).setFirstEvent(
-						UtilEvent.stationary(new Vector3D(-Ball.R * 0.5 * b,
-								+Ball.R * 2.5 * b, 0)));
-
-			}
-
-		}
-		
-		
-		/*
-		 * double x = Ball.R * 0.46; double y = Ball.R * 14;
-		 * 
-		 * ball(4).setFirstEvent( UtilEvent.stationary(new Vector3D(x, y, 0)));
-		 */
-	}
 }

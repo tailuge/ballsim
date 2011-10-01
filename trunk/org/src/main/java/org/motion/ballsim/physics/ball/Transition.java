@@ -1,6 +1,6 @@
-package org.motion.ballsim.physics;
+package org.motion.ballsim.physics.ball;
 
-public enum EventType 
+public enum Transition 
 {
 
 	InitialHit, Cushion, KnuckleCushion, Collision, RollEquilibrium, FinishedRoll, Potting, Potted, Interpolated

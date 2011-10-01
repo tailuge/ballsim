@@ -1,4 +1,4 @@
-package org.motion.ballsim.physics;
+package org.motion.ballsim.physics.ball;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
 
@@ -30,7 +30,7 @@ public final class PottingMotion {
 	public static Event next(Event e) {
 		Event offTable = e.advanceDelta(timeToFinishPotting(e));
 		offTable.state = State.InPocket;
-		offTable.type = EventType.Potted;
+		offTable.type = Transition.Potted;
 		return offTable;
 	}
 

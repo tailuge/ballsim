@@ -6,6 +6,11 @@ import java.util.HashSet;
 
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.ball.State;
+import org.motion.ballsim.physics.ball.Transition;
+import org.motion.ballsim.physics.util.EventPair;
 import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.Logger;
 
@@ -100,8 +105,8 @@ public final class Collision {
 		ca.state = State.deriveStateOf(ca);
 		cb.state = State.deriveStateOf(cb);
 
-		ca.type = EventType.Collision;
-		cb.type = EventType.Collision;
+		ca.type = Transition.Collision;
+		cb.type = Transition.Collision;
 
 		return result;
 	}

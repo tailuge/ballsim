@@ -6,15 +6,14 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Collection;
 
-
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Collision;
-import org.motion.ballsim.physics.Cushion;
-import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.Pocket;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.util.Position;
 import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsim.util.UtilVector3D;
@@ -93,7 +92,7 @@ public class SequenceTest {
 		for(Event e:t.getAllEvents())
 		{
 			assertTrue("All times positive",e.t>=0);
-			assertTrue("On table",Cushion.onTable(e));
+			assertTrue("On table",Position.onTable(e));
 		}
 	}
 	
@@ -114,7 +113,7 @@ public class SequenceTest {
 		for(Event e:t.getAllEvents())
 		{
 			assertTrue("All times positive",e.t>=0);
-			assertTrue("On table",Cushion.onTable(e));
+			assertTrue("On table",Position.onTable(e));
 		}
 	}
 	
@@ -135,7 +134,7 @@ public class SequenceTest {
 			
 			logger.info("+");
 			
-			if (!Cushion.validPosition(t))
+			if (!Position.validPosition(t))
 				continue;
 
 			if (!Collision.validPosition(t))
@@ -148,7 +147,7 @@ public class SequenceTest {
 			
 			for (Event e : t.getAllEvents()) {
 				assertTrue("All times positive", e.t >= 0);
-				assertTrue("On table", Cushion.onTable(e));
+				assertTrue("On table", Position.onTable(e));
 			}
 			v++;
 		}
@@ -165,7 +164,7 @@ public class SequenceTest {
 		for(Event e:t.getAllEvents())
 		{
 			assertTrue("All times positive",e.t>=0);
-			assertTrue("On table",Cushion.onTable(e));
+			assertTrue("On table",Position.onTable(e));
 		}
 	}
 	

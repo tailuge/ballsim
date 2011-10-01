@@ -3,12 +3,12 @@ package org.motion.ballsim;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Cushion;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.physics.EventType;
 import org.motion.ballsim.physics.Pocket;
-import org.motion.ballsim.physics.State;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.ball.State;
+import org.motion.ballsim.physics.ball.Transition;
 import org.motion.ballsim.util.UtilEvent;
 
 
@@ -29,7 +29,7 @@ public class PocketTest {
 		assertTrue("velocity is reflected",c1.vel.getX() < 0);
 		assertTrue("velocity is reflected partially downward",c1.vel.getY() > 0);
 		assertTrue("ball is sliding",c1.state == State.Sliding);
-		assertTrue("event type is knuckle collision",c1.type == EventType.KnuckleCushion);
+		assertTrue("event type is knuckle collision",c1.type == Transition.KnuckleCushion);
 		
 		System.out.println(e);
 		System.out.println(c1);
@@ -48,7 +48,7 @@ public class PocketTest {
 		assertNotNull("Collides",c1);
 		assertTrue("event is after time zero",c1.t > 0);
 		assertTrue("ball is potted",c1.state == State.FallingInPocket);
-		assertTrue("event type is knuckle collision",c1.type == EventType.Potting);
+		assertTrue("event type is knuckle collision",c1.type == Transition.Potting);
 		
 		System.out.println(e);
 		System.out.println(c1);

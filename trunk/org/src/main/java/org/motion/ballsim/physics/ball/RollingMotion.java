@@ -1,6 +1,7 @@
-package org.motion.ballsim.physics;
+package org.motion.ballsim.physics.ball;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.util.UtilVector3D;
 
 /**
@@ -39,7 +40,7 @@ public final class RollingMotion {
 	public static Event next(Event e) {
 		Event stationary = e.advanceDelta(timeToNext(e));
 		stationary.state = State.Stationary;
-		stationary.type = EventType.FinishedRoll;
+		stationary.type = Transition.FinishedRoll;
 		return stationary;
 	}
 
