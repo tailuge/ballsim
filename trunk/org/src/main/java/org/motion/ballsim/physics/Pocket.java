@@ -5,7 +5,7 @@ import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.ball.State;
 import org.motion.ballsim.physics.ball.Transition;
 import org.motion.ballsim.physics.util.Position;
-import org.motion.ballsim.util.Assert;
+import org.motion.ballsim.util.Guard;
 import org.motion.ballsim.util.UtilVector3D;
 
 /**
@@ -28,8 +28,8 @@ public final class Pocket {
 
 			if ((next == null) || (eKnuckle.t < next.t)) {
 				next = eKnuckle;
-				Assert.isTrue(Assert.active && next.t > e.t);
-				Assert.isTrue(Assert.active && Position.onTable(next));
+				Guard.isTrue(Guard.active && next.t > e.t);
+				Guard.isTrue(Guard.active && Position.onTable(next));
 			}
 		}
 
@@ -85,8 +85,8 @@ public final class Pocket {
 
 			if ((next == null) || (ePot.t < next.t)) {
 				next = ePot;
-				Assert.isTrue(Assert.active && next.t > e.t);
-				Assert.isTrue(Assert.active && Position.onTable(next));
+				Guard.isTrue(Guard.active && next.t > e.t);
+				Guard.isTrue(Guard.active && Position.onTable(next));
 			}
 		}
 

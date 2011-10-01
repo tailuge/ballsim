@@ -2,7 +2,7 @@ package org.motion.ballsim.gwtsafe;
 
 import java.util.Arrays;
 
-import org.motion.ballsim.util.Assert;
+import org.motion.ballsim.util.Guard;
 
 public final class Quadratic {
 
@@ -56,7 +56,7 @@ public final class Quadratic {
 
 		double sign = Math.signum(func.apply(0.0));
 
-		Assert.isTrue(sign != 0);
+		Guard.isTrue(sign != 0);
 
 		double last = rootCandidate;
 
@@ -76,7 +76,7 @@ public final class Quadratic {
 			double rootCandidate) {
 
 		// Condition must be good at t = 0
-		Assert.isTrue(onTable.apply(0.0) == true);
+		Guard.isTrue(onTable.apply(0.0) == true);
 		//if (onTable.apply(0.0) == false) {
 		//	System.err.println("Problem: not on table");
 		//}

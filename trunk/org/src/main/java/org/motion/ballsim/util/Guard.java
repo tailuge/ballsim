@@ -1,6 +1,6 @@
 package org.motion.ballsim.util;
 
-public final class Assert {
+public final class Guard {
 
 	static public boolean active = false;
 	
