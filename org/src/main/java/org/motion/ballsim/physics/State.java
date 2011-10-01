@@ -2,87 +2,70 @@ package org.motion.ballsim.physics;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
 
-
-
 public enum State {
 
-
-	Stationary 
-	{
+	Stationary {
 		@Override
-		public Vector3D acceleration(Event e) 
-		{
-			return Vector3D.ZERO;
-		}
-		
-		@Override
-		public Vector3D angularAcceleration(Event e) 
-		{
+		public Vector3D acceleration(Event e) {
 			return Vector3D.ZERO;
 		}
 
 		@Override
-		public Vector3D sidespinAcceleration(Event e) 
-		{
+		public Vector3D angularAcceleration(Event e) {
 			return Vector3D.ZERO;
 		}
 
 		@Override
-		public Event next(Event e) 
-		{
+		public Vector3D sidespinAcceleration(Event e) {
+			return Vector3D.ZERO;
+		}
+
+		@Override
+		public Event next(Event e) {
 			return e;
 		}
 
 	},
-	Sliding 
-	{
+	Sliding {
 		@Override
-		public Vector3D acceleration(Event e) 
-		{
+		public Vector3D acceleration(Event e) {
 			return SlidingMotion.acceleration(e);
 		}
-		
+
 		@Override
-		public Vector3D angularAcceleration(Event e) 
-		{
+		public Vector3D angularAcceleration(Event e) {
 			return SlidingMotion.angularAcceleration(e);
 		}
 
 		@Override
-		public Vector3D sidespinAcceleration(Event e) 
-		{
+		public Vector3D sidespinAcceleration(Event e) {
 			return SlidingMotion.sidespinAcceleration(e);
 		}
 
 		@Override
-		public Event next(Event e) 
-		{
+		public Event next(Event e) {
 			return SlidingMotion.next(e);
 		}
 
 	},
 	Rolling {
 		@Override
-		public Vector3D acceleration(Event e) 
-		{
+		public Vector3D acceleration(Event e) {
 			return RollingMotion.acceleration(e);
 		}
 
 		@Override
-		public Vector3D angularAcceleration(Event e) 
-		{
+		public Vector3D angularAcceleration(Event e) {
 			return RollingMotion.angularAcceleration(e);
 		}
 
 		@Override
-		public Vector3D sidespinAcceleration(Event e) 
-		{
+		public Vector3D sidespinAcceleration(Event e) {
 			return RollingMotion.sidespinAcceleration(e);
 		}
 
 		@Override
-		public Event next(Event e) 
-		{
+		public Event next(Event e) {
 			return RollingMotion.next(e);
 		}
 
@@ -90,75 +73,66 @@ public enum State {
 
 	InPocket {
 		@Override
-		public Vector3D acceleration(Event e) 
-		{
+		public Vector3D acceleration(Event e) {
 			return Vector3D.ZERO;
 		}
 
 		@Override
-		public Vector3D angularAcceleration(Event e) 
-		{
+		public Vector3D angularAcceleration(Event e) {
 			return Vector3D.ZERO;
 		}
 
 		@Override
-		public Vector3D sidespinAcceleration(Event e) 
-		{
+		public Vector3D sidespinAcceleration(Event e) {
 			return Vector3D.ZERO;
 		}
 
 		@Override
-		public Event next(Event e) 
-		{
+		public Event next(Event e) {
 			return e;
 		}
 
 	},
-	
+
 	FallingInPocket {
 		@Override
-		public Vector3D acceleration(Event e) 
-		{
+		public Vector3D acceleration(Event e) {
 			return PottingMotion.acceleration(e);
 		}
 
 		@Override
-		public Vector3D angularAcceleration(Event e) 
-		{
+		public Vector3D angularAcceleration(Event e) {
 			return Vector3D.ZERO;
 		}
 
 		@Override
-		public Vector3D sidespinAcceleration(Event e) 
-		{
+		public Vector3D sidespinAcceleration(Event e) {
 			return Vector3D.ZERO;
 		}
 
 		@Override
-		public Event next(Event e) 
-		{
+		public Event next(Event e) {
 			return PottingMotion.next(e);
 		}
 
 	};
-	
+
 	public abstract Vector3D acceleration(Event e);
+
 	public abstract Vector3D angularAcceleration(Event e);
+
 	public abstract Vector3D sidespinAcceleration(Event e);
+
 	public abstract Event next(Event e);
 
-
-
 	/**
-	 * Given an event on indeterminate state compare 
-	 * velocity and angular velocity to determine if 
-	 * its sliding, rolling or stationary.
+	 * Given an event on indeterminate state compare velocity and angular
+	 * velocity to determine if its sliding, rolling or stationary.
 	 * 
 	 * @param event
 	 * @return
 	 */
-	public static State deriveStateOf(Event e) 
-	{
+	public static State deriveStateOf(Event e) {
 		if ((e.vel.getNorm() < Ball.stationaryTolerance)
 				&& (e.angularVel.getNorm() < Ball.stationaryAngularTolerance))
 			return State.Stationary;
@@ -169,13 +143,11 @@ public enum State {
 		return State.Sliding;
 	}
 
-	public boolean canCollideWithCushions()
-	{
+	public boolean canCollideWithCushions() {
 		return this == State.Sliding || this == State.Rolling;
 	}
 
-	public boolean isMotionlessEndState()
-	{
+	public boolean isMotionlessEndState() {
 		return this == State.Stationary || this == State.InPocket;
 	}
 }

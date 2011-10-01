@@ -88,7 +88,7 @@ import java.io.Serializable;
  * @since 1.2
  */
 
-public class Rotation implements Serializable {
+public final class Rotation implements Serializable {
 
   /** Identity rotation. */
   public static final Rotation IDENTITY = new Rotation(1.0, 0.0, 0.0, 0.0);

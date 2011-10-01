@@ -3,13 +3,12 @@ package org.motion.ballsim.physics;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.util.UtilVector3D;
 
+/**
+ * 
+ */
+public final class RollingMotion {
 
-
-public class RollingMotion 
-{
-
-	public static boolean isState(Event e)
-	{
+	public static boolean isState(Event e) {
 		return (e.vel.add(UtilVector3D.crossUp(e.angularVel)).getNorm() < Ball.equilibriumTolerance);
 	}
 
@@ -19,58 +18,51 @@ public class RollingMotion
 	 * 
 	 * @return acceleration vector when rolling
 	 */
-	public static Vector3D acceleration(Event e) 
-	{
-		try 
-		{
+	public static Vector3D acceleration(Event e) {
+		try {
 			return e.vel.normalize().scalarMultiply(Table.accelRoll);
-		} 
-		catch (ArithmeticException ae) 
-		{
+		} catch (ArithmeticException ae) {
 			return Vector3D.ZERO;
 		}
 	}
-	
-	
+
 	public static Vector3D angularAcceleration(Event e) {
-		return UtilVector3D.crossUp(acceleration(e)).scalarMultiply(1.0 * Ball.R);
+		return UtilVector3D.crossUp(acceleration(e)).scalarMultiply(
+				1.0 * Ball.R);
 	}
+
 	/**
 	 * When a ball is rolling the next state it will achieve is stationary
 	 * 
 	 * @return event when stationary
 	 */
-	public static Event next(Event e) 
-	{
+	public static Event next(Event e) {
 		Event stationary = e.advanceDelta(timeToNext(e));
 		stationary.state = State.Stationary;
 		stationary.type = EventType.FinishedRoll;
 		return stationary;
 	}
-	
-	
+
 	/**
-	 * When a ball is rolling the time it takes to stop can be found from
-	 * simple equation of motion
+	 * When a ball is rolling the time it takes to stop can be found from simple
+	 * equation of motion
 	 * 
-	 * solve v = v0 + a * t when v = 0
-	 * where acceleration is rolling friction
+	 * solve v = v0 + a * t when v = 0 where acceleration is rolling friction
 	 * gives t = -v0/a
 	 * 
 	 * @return
 	 */
-	private static double timeToNext(Event e) 
-	{
+	private static double timeToNext(Event e) {
 		return -e.vel.getNorm() / Table.accelRoll;
 	}
 
 	/**
-	 * When ball is rolling, side spin decays to zero at stationary point(simplest model)
+	 * When ball is rolling, side spin decays to zero at stationary
+	 * point(simplest model)
 	 * 
 	 * @return vector of acceleration
 	 */
-	public static Vector3D sidespinAcceleration(Event e) 
-	{
-		return e.sidespin.scalarMultiply(-1.0/timeToNext(e));		
+	public static Vector3D sidespinAcceleration(Event e) {
+		return e.sidespin.scalarMultiply(-1.0 / timeToNext(e));
 	}
 }

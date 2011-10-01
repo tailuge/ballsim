@@ -52,7 +52,7 @@ public class AwaitingGame extends AbstractSimplePoolGameState {
 	private GameEvent gameStartedAnd(String state) {
 		GameEvent event = newGameEvent(state);
 		event.addAttribute(new GameEventAttribute("game.rack.type",
-				"SimplePool"));
+				"9Ball"));
 		event.addAttribute(new GameEventAttribute("game.rack.seed", "1"));
 		return event;
 	}

@@ -1,27 +1,22 @@
 package org.motion.ballsim.physics;
 
-
 /**
  * @author luke
- *
- * Given a list of events construct interpolated events useful for
- * plotting. Interface will be to return the event at arbitrary time
+ * 
+ *         Given a list of events construct interpolated events useful for
+ *         plotting. Interface will be to return the event at arbitrary time
  */
-public class Interpolator 
-{
-
+public final class Interpolator {
 
 	/**
-	 * Given a ball construct event at t interpolated between precomputed events.
-     *
+	 * Given a ball construct event at t interpolated between precomputed
+	 * events.
 	 */
-	public static Event interpolate(Ball ball, double t)
-	{
+	public static Event interpolate(Ball ball, double t) {
 		Event previous = null;
-		for(Event e : ball.getAllEvents())
-		{
-			if(previous != null && t > previous.t && t<e.t)
-				return previous.advanceDelta(t-previous.t);
+		for (Event e : ball.getAllEvents()) {
+			if (previous != null && t > previous.t && t < e.t)
+				return previous.advanceDelta(t - previous.t);
 			previous = e;
 		}
 		return previous;
