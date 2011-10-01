@@ -12,8 +12,7 @@ public class CalculationPerformanceTestDelegate {
 
 	public final void testTableEvaluationCorrectness() {
 		int numberOfEvents = doTest();
-		System.err.println(numberOfEvents);
-		Assert.assertTrue(numberOfEvents > 150);
+		Assert.assertTrue("expected > 150 events got "+numberOfEvents,numberOfEvents>150);
 	}
 
 	public final void testTableEvaluationPerfomance() {
@@ -42,5 +41,9 @@ public class CalculationPerformanceTestDelegate {
 				UtilEvent.hit(Vector3D.ZERO, Vector3D.PLUS_J, 2.6, 0.1));
 		t.generateSequence();
 		return t.getAllEvents().size();
+	}
+	
+	public static void main(String[] args) { 
+		new CalculationPerformanceTestDelegate().testTableEvaluationCorrectness();
 	}
 }
