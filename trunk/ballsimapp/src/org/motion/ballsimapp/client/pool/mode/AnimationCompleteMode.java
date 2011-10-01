@@ -30,12 +30,12 @@ public class AnimationCompleteMode  extends BilliardsMode {
 		}
 
 		if (Events.isState(event, WINNER)) {
-			view.appendMessage("winner");
+			view.appendMessage("winner!");
 			return new RequestGameMode(model, view);
 		}
 
 		if (Events.isState(event, LOSER)) {
-			view.appendMessage("loser");
+			view.appendMessage("loser!");
 			return new RequestGameMode(model, view);
 		}
 

@@ -54,7 +54,7 @@ public class BilliardsEventFactory {
 	}
 
 	public static GameEvent beginLogin() {
-		return Events.event(CONNECT, "");
+		return Events.event(INITIATE_CONNECT, "");
 	}
 
 	public static GameEvent hitOutcome(Table table, Aim aim) {

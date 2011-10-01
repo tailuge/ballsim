@@ -115,7 +115,6 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 	public void setVisibility(boolean visibility) {
 		actionButton.setVisible(visibility);
 		String base = playerId.getText()+".";
-		System.out.println(playerId.getText());
 		RootPanel.get(base+"table").setVisible(visibility);
 		RootPanel.get(base+"tableactive").setVisible(visibility);
 		RootPanel.get(base+"inputspin").setVisible(visibility);
