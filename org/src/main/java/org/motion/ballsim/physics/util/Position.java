@@ -1,7 +1,7 @@
 package org.motion.ballsim.physics.util;
 
 import static org.motion.ballsim.physics.Cushion.*;
-import static org.motion.ballsim.physics.Pocket.*;
+import static org.motion.ballsim.physics.PocketGeometry.*;
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.physics.ball.Ball;

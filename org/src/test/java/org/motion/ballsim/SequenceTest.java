@@ -9,7 +9,7 @@ import java.util.Collection;
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Collision;
-import org.motion.ballsim.physics.Pocket;
+import org.motion.ballsim.physics.PocketGeometry;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
@@ -186,7 +186,7 @@ public class SequenceTest {
 		Table t = new Table(true);		
 		
 		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(50));
-		e.pos = Pocket.p6.add(new Vector3D(-6*Ball.R,+0.2,0));
+		e.pos = PocketGeometry.p6.add(new Vector3D(-6*Ball.R,+0.2,0));
 
 		t.ball(1).setFirstEvent(e);
 
@@ -201,7 +201,7 @@ public class SequenceTest {
 		Table t = new Table(true);		
 		
 		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(2500));
-		e.pos = Pocket.p6k1.add(new Vector3D(-3*Ball.R,+0.2,0));
+		e.pos = PocketGeometry.p6k1.add(new Vector3D(-3*Ball.R,+0.2,0));
 
 		t.ball(1).setFirstEvent(e);
 
