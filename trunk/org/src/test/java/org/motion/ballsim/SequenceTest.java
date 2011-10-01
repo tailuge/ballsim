@@ -174,7 +174,7 @@ public class SequenceTest {
 	public final void hitSequenceOk() 
 	{
 		Table t = new Table();
-		t.ball(1).setFirstEvent(UtilEvent.hit(Vector3D.ZERO, Vector3D.MINUS_J, 100,0.9999999999999999));			
+		t.ball(1).setFirstEvent(UtilEvent.hit(Vector3D.ZERO, Vector3D.MINUS_J, 1,0.9999999999999999));			
 		t.ball(2).setFirstEvent(Utilities.getStationary(new Vector3D(Ball.R,-Ball.R * 6, 0)));
 		
 		

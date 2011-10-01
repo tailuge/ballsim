@@ -2,6 +2,8 @@ package org.motion.ballsim.gwtsafe;
 
 import java.util.Arrays;
 
+import org.motion.ballsim.util.Assert;
+
 public final class Quadratic {
 
 	static double evaluateAt(double a, double b, double c, double t) {
@@ -54,23 +56,19 @@ public final class Quadratic {
 
 		double sign = Math.signum(func.apply(0.0));
 
-		assert (sign != 0);
+		Assert.isTrue(sign != 0);
 
 		double last = rootCandidate;
 
 		double delta = Quadratic.nextSmallestDelta(last);
 
-		// int iter = 0;
 
 		while ((last > 0) && (last <= rootCandidate)
 				&& (Math.signum(func.apply(last)) != sign)) {
 			last -= delta;
 			delta *= 2;
-			// iter++;
 		}
 
-		// if (iter > 8)
-		// System.out.println("Quadratic optimise.Iterations " + iter);
 		return last;
 	}
 
@@ -78,24 +76,19 @@ public final class Quadratic {
 			double rootCandidate) {
 
 		// Condition must be good at t = 0
-		// assert(onTable.apply(0.0) == true);
-		if (onTable.apply(0.0) == false) {
-			System.err.println("Problem: not on table");
-		}
+		Assert.isTrue(onTable.apply(0.0) == true);
+		//if (onTable.apply(0.0) == false) {
+		//	System.err.println("Problem: not on table");
+		//}
 
 		double last = rootCandidate;
 		double delta = Quadratic.nextSmallestDelta(last);
-
-		// int iter = 0;
 
 		while ((last > 0) && (last <= rootCandidate)
 				&& (onTable.apply(last) != true)) {
 			last -= delta;
 			delta *= 2;
-			// iter++;
 		}
-		// if (iter>8) System.out.println("Quadratic optimise.latestTrueTime " +
-		// iter);
 
 		return last;
 	}
