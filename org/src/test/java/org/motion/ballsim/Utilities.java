@@ -2,10 +2,10 @@ package org.motion.ballsim;
 
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.Ball;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.physics.EventType;
-import org.motion.ballsim.physics.State;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.ball.State;
+import org.motion.ballsim.physics.ball.Transition;
 import org.motion.ballsim.util.UtilVector3D;
 
 public class Utilities {
@@ -14,7 +14,7 @@ public class Utilities {
 	{
 		return new Event(Vector3D.ZERO, Vector3D.ZERO, Vector3D.PLUS_K,Vector3D.PLUS_J,
 				Vector3D.ZERO, Vector3D.ZERO, State.Stationary, 0,
-				EventType.InitialHit,0,0);
+				Transition.InitialHit,0,0);
 	}
 	
 	public static Event getRolling(Vector3D vel)

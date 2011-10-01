@@ -11,9 +11,9 @@ import java.io.ObjectOutputStream;
 
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.Ball;
-import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.util.UtilEvent;
 
 

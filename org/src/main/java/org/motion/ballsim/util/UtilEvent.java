@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.Ball;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.physics.EventType;
-import org.motion.ballsim.physics.State;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.ball.State;
+import org.motion.ballsim.physics.ball.Transition;
 
 public class UtilEvent 
 {
@@ -26,7 +26,7 @@ public class UtilEvent
 				zero,
 				State.Sliding,
 				0,
-				EventType.InitialHit,
+				Transition.InitialHit,
 				0,
 				0
 				);
@@ -38,7 +38,7 @@ public class UtilEvent
 	{
 		return new Event(pos, Vector3D.ZERO, Vector3D.PLUS_K,Vector3D.PLUS_J,
 				Vector3D.ZERO, Vector3D.ZERO, State.Stationary, 0,
-				EventType.FinishedRoll,0,0);
+				Transition.FinishedRoll,0,0);
 	}
 	public static Collection<Event> generateRadialEvents(Vector3D  pos, int segments, double speed, double height)
 	{

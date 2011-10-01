@@ -4,7 +4,7 @@ package org.motion.ballsim.gwtsafe;
  * GWT safe version imported from external library apache-commons-math
  */
 
-public class MathRuntimeException extends RuntimeException {
+public final class MathRuntimeException extends RuntimeException {
 
 	/**
 	 * 

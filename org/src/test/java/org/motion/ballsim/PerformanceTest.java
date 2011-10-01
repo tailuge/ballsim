@@ -3,6 +3,7 @@ package org.motion.ballsim;
 import org.junit.Before;
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.util.Rack;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.UtilEvent;
@@ -42,7 +43,7 @@ public class PerformanceTest {
 	
 	private int doTest() {
 		Table t = new Table(true);
-		t.rack("9Ball", "");
+		Rack.rack(t,"9Ball", "");
 		t.ball(1).setFirstEvent(UtilEvent.hit(Vector3D.ZERO, Vector3D.PLUS_J, 2.6,0.1));
 		t.generateSequence();
 		return t.getAllEvents().size();

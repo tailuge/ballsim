@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.ball.State;
+import org.motion.ballsim.physics.ball.Transition;
+import org.motion.ballsim.physics.util.Position;
 import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.UtilEvent;
 import org.motion.ballsim.util.UtilVector3D;
@@ -29,7 +34,7 @@ public final class Pocket {
 			if ((next == null) || (eKnuckle.t < next.t)) {
 				next = eKnuckle;
 				Assert.isTrue(next.t > e.t);
-				Assert.isTrue(Cushion.onTable(next));
+				Assert.isTrue(Position.onTable(next));
 			}
 		}
 
@@ -67,7 +72,7 @@ public final class Pocket {
 		reflected.vel = UtilVector3D.reflectAlongAxis(e1.vel, knuckle.pos
 				.subtract(e1.pos).normalize());
 		reflected.state = State.deriveStateOf(reflected);
-		reflected.type = EventType.KnuckleCushion;
+		reflected.type = Transition.KnuckleCushion;
 		return reflected;
 	}
 
@@ -86,7 +91,7 @@ public final class Pocket {
 			if ((next == null) || (ePot.t < next.t)) {
 				next = ePot;
 				Assert.isTrue(next.t > e.t);
-				Assert.isTrue(Cushion.onTable(next));
+				Assert.isTrue(Position.onTable(next));
 			}
 		}
 
@@ -115,7 +120,7 @@ public final class Pocket {
 			// progress ball to point of impact, set state as in pocket
 			Event pot = e1.advanceDelta(soonest);
 			pot.state = State.FallingInPocket;
-			pot.type = EventType.Potting;
+			pot.type = Transition.Potting;
 
 			pot.vel = soonestPocket.pos.subtract(pot.pos).normalize()
 					.scalarMultiply(15);

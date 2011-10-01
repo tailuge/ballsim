@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.motion.ballsim.physics.Ball;
-import org.motion.ballsim.physics.Event;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
 

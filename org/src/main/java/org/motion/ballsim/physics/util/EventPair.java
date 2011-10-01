@@ -1,4 +1,6 @@
-package org.motion.ballsim.physics;
+package org.motion.ballsim.physics.util;
+
+import org.motion.ballsim.physics.ball.Event;
 
 public final class EventPair {
 

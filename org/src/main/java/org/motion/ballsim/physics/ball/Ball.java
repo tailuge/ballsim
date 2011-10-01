@@ -1,4 +1,4 @@
-package org.motion.ballsim.physics;
+package org.motion.ballsim.physics.ball;
 
 import java.io.Serializable;
 import java.util.Collection;

@@ -9,10 +9,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Quadratic;
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Cushion;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.physics.State;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.ball.State;
+import org.motion.ballsim.physics.util.Position;
 import org.motion.ballsim.util.UtilVector3D;
 
 public class CushionTest {
@@ -119,10 +120,10 @@ public class CushionTest {
 		Event s = e.next();
 		Event c1 = Cushion.hit(e, s.t,false);
 		assertNotNull("Hits cushion",c1);	
-		assertTrue("On table",Cushion.onTable(c1));	
+		assertTrue("On table",Position.onTable(c1));	
 		c1 = Cushion.hit(c1, Double.MAX_VALUE,false);
 		assertNotNull("Hits cushion",c1);	
-		assertTrue("On table",Cushion.onTable(c1));	
+		assertTrue("On table",Position.onTable(c1));	
 		assertTrue("Collision befor stop",c1.t<s.t);	
 	}
 
@@ -137,11 +138,11 @@ public class CushionTest {
 		Event s = e.next();
 		Event c1 = Cushion.hit(e, s.t,false);
 		assertNotNull("Hits cushion",c1);	
-		assertTrue("On table",Cushion.onTable(c1));	
+		assertTrue("On table",Position.onTable(c1));	
 		System.out.println("------------------------------------");
 		c1 = Cushion.hit(c1, Double.MAX_VALUE,false);
 		assertNotNull("Hits cushion",c1);	
-		assertTrue("On table",Cushion.onTable(c1));	
+		assertTrue("On table",Position.onTable(c1));	
 		assertTrue("Collision befor stop",c1.t<s.t);	
 	}
 
@@ -154,7 +155,7 @@ public class CushionTest {
 	
 		Event c1 = Cushion.hit(e, Double.MAX_VALUE,false);
 		assertNotNull("Hits cushion",c1);	
-		assertTrue("On table",Cushion.onTable(c1));	
+		assertTrue("On table",Position.onTable(c1));	
 	}
 
 	@Test
@@ -166,7 +167,7 @@ public class CushionTest {
 	
 		Event c1 = Cushion.hit(e, Double.MAX_VALUE,false);
 		assertNotNull("Hits cushion",c1);	
-		assertTrue("On table",Cushion.onTable(c1));	
+		assertTrue("On table",Position.onTable(c1));	
 	}
 	
 	@Test
@@ -180,7 +181,7 @@ public class CushionTest {
 		{
 			Event e = Utilities.getSliding(UtilVector3D.rnd().scalarMultiply(500),Vector3D.PLUS_I);
 			Event s = e.next();
-			if (Cushion.onTable(s.next()))
+			if (Position.onTable(s.next()))
 				continue;
 			
 			Event c = Cushion.hit(e, s.t,false);
@@ -192,11 +193,11 @@ public class CushionTest {
 	@Test
 	public final void testOnTable() 
 	{
-		assertTrue(Cushion.onTable(Utilities.getStationary()));
-		assertTrue(!Cushion.onTable(Utilities.getStationary(new Vector3D(Cushion.xp,0,0))));
-		assertTrue(!Cushion.onTable(Utilities.getStationary(new Vector3D(Cushion.xn,0,0))));
-		assertTrue(!Cushion.onTable(Utilities.getStationary(new Vector3D(0,Cushion.yp,0))));
-		assertTrue(!Cushion.onTable(Utilities.getStationary(new Vector3D(0,Cushion.yn,0))));
-		assertTrue(Cushion.onTable(Utilities.getStationary(new Vector3D(Cushion.xp-Ball.R,0,0))));
+		assertTrue(Position.onTable(Utilities.getStationary()));
+		assertTrue(!Position.onTable(Utilities.getStationary(new Vector3D(Cushion.xp,0,0))));
+		assertTrue(!Position.onTable(Utilities.getStationary(new Vector3D(Cushion.xn,0,0))));
+		assertTrue(!Position.onTable(Utilities.getStationary(new Vector3D(0,Cushion.yp,0))));
+		assertTrue(!Position.onTable(Utilities.getStationary(new Vector3D(0,Cushion.yn,0))));
+		assertTrue(Position.onTable(Utilities.getStationary(new Vector3D(Cushion.xp-Ball.R,0,0))));
 	}	
 }

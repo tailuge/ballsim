@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.motion.ballsim.physics.Ball;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.physics.EventType;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.ball.Transition;
 
 public class Outcome {
 
@@ -35,7 +35,7 @@ public class Outcome {
 
 	private static int getFirstBallHit(Ball ball) {
 		for (Event e : ball.getAllEvents()) {
-			if (e.type == EventType.Collision) {
+			if (e.type == Transition.Collision) {
 				return e.otherBallId;
 			}
 		}
@@ -46,7 +46,7 @@ public class Outcome {
 		final List<Integer> ballsPotted = new ArrayList<Integer>();
 		for (Ball ball : table.balls()) {
 			for (Event e : ball.getAllEvents()) {
-				if (e.type == EventType.Potting) {
+				if (e.type == Transition.Potting) {
 					ballsPotted.add(ball.id);
 					break;
 				}
@@ -59,7 +59,7 @@ public class Outcome {
 		int totalBallsHittingCushion = 0;
 		for (Ball ball : table.balls()) {
 			for (Event e : ball.getAllEvents()) {
-				if (e.type == EventType.Cushion || e.type == EventType.KnuckleCushion) {
+				if (e.type == Transition.Cushion || e.type == Transition.KnuckleCushion) {
 					totalBallsHittingCushion++;
 					break;	
 				}
@@ -75,10 +75,10 @@ public class Outcome {
 		
 		for(Event e : ball.getAllEvents())
 		{
-			if (e.type == EventType.Cushion)
+			if (e.type == Transition.Cushion)
 				cushions++;
 			
-			if (e.type == EventType.Collision)
+			if (e.type == Transition.Collision)
 			{	
 				cannons.put(e.otherBallId, 1);
 				if (cannons.size() == 2)

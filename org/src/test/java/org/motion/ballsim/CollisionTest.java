@@ -7,13 +7,13 @@ import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.Vector3D;
 
-import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Collision;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.physics.EventPair;
-import org.motion.ballsim.physics.EventType;
-import org.motion.ballsim.physics.State;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.ball.State;
+import org.motion.ballsim.physics.ball.Transition;
+import org.motion.ballsim.physics.util.EventPair;
 import org.motion.ballsim.util.UtilVector3D;
 
 
@@ -130,7 +130,7 @@ public class CollisionTest {
 				new Vector3D(0,0,0),
 				State.Sliding,
 				0.567154439135523,
-				EventType.Interpolated,0,0);
+				Transition.Interpolated,0,0);
 		Event e3 = new Event(
 				new Vector3D(-6.07824220980257750, 15.02632144823587300,0),
 				new Vector3D(42.04694426339171000, 79.12242811508793000,0),
@@ -140,7 +140,7 @@ public class CollisionTest {
 				new Vector3D(0,0,0),
 				State.Sliding,
 				0.567154439135523,
-				EventType.Interpolated,0,0);
+				Transition.Interpolated,0,0);
 
 		Table t= new Table();
 

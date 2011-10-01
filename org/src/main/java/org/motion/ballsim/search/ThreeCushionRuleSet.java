@@ -3,18 +3,18 @@ package org.motion.ballsim.search;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.motion.ballsim.physics.Ball;
 import org.motion.ballsim.physics.Collision;
-import org.motion.ballsim.physics.Cushion;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.physics.EventType;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.ball.Transition;
+import org.motion.ballsim.physics.util.Position;
 
 
 public class ThreeCushionRuleSet implements IRuleSet {
 
 	public boolean valid(Table table) {
-		return Cushion.validPosition(table)  && (Collision.validPosition(table));
+		return Position.validPosition(table)  && (Collision.validPosition(table));
 	}
 
 	public boolean scores(Table table, Ball ball) {
@@ -24,10 +24,10 @@ public class ThreeCushionRuleSet implements IRuleSet {
 		
 		for(Event e : ball.getAllEvents())
 		{
-			if (e.type == EventType.Cushion)
+			if (e.type == Transition.Cushion)
 				cushions++;
 			
-			if (e.type == EventType.Collision)
+			if (e.type == Transition.Collision)
 			{	
 				cannons.put(e.otherBallId, 1);
 				
@@ -47,10 +47,10 @@ public class ThreeCushionRuleSet implements IRuleSet {
 
 		for(Event e : ball.getAllEvents())
 		{
-			if (e.type == EventType.Cushion)
+			if (e.type == Transition.Cushion)
 				cushions++;
 			
-			if (e.type == EventType.Collision)
+			if (e.type == Transition.Collision)
 			{	
 				cannons.put(e.otherBallId, 1);		
 				if (cannons.size() == 2) 

@@ -1,8 +1,9 @@
-package org.motion.ballsim.physics;
+package org.motion.ballsim.physics.ball;
 
 import java.io.Serializable;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.BallSpot;
 
 
 
@@ -42,14 +43,14 @@ public final class Event implements Serializable{
 	public Vector3D sidespin;
 	public State state;
 	public double t;
-	public EventType type;
+	public Transition type;
 	public int ballId;
 	public int otherBallId;
 	
 	public Event(Vector3D pos, Vector3D vel, 
 			Vector3D angularPos, Vector3D angularPosPerp,
 			Vector3D angularVel, Vector3D sidespin, State state, double t,
-			EventType type, int ballId, int otherBallId) {
+			Transition type, int ballId, int otherBallId) {
 		this.pos = pos;
 		this.vel = vel;
 		this.angularPos = angularPos;
@@ -152,7 +153,7 @@ public final class Event implements Serializable{
 		
 		Vector3D sidespin_ = sidespin.add(sidespinAcceleration().scalarMultiply(delta));
 		
-		return new Event(pos_,vel_,angularPos_,angularPosPerp_,angularVel_,sidespin_,state,t+delta,EventType.Interpolated,ballId,otherBallId);
+		return new Event(pos_,vel_,angularPos_,angularPosPerp_,angularVel_,sidespin_,state,t+delta,Transition.Interpolated,ballId,otherBallId);
 	}
 
 

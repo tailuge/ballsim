@@ -2,6 +2,11 @@ package org.motion.ballsim.physics;
 
 import org.motion.ballsim.gwtsafe.Function;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.ball.State;
+import org.motion.ballsim.physics.ball.Transition;
+import org.motion.ballsim.physics.util.Position;
 import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.UtilVector3D;
 
@@ -72,9 +77,9 @@ public final class Cushion {
 	private static Event reflect(Event e, Vector3D axis) {
 		Event reflected = new Event(e);
 		reflected.vel = UtilVector3D.reflectAlongAxis(e.vel, axis);
-		reflected.angularVel = e.angularVel.scalarMultiply(0.3); // until done
+		reflected.angularVel = e.angularVel.scalarMultiply(0.4); // until done
 		reflected.state = State.deriveStateOf(reflected);
-		reflected.type = EventType.Cushion;
+		reflected.type = Transition.Cushion;
 
 		// Vector3D sideSpinAffectOnVel =
 		// Vector3D.crossProduct(axis,e.sidespin);
@@ -91,17 +96,17 @@ public final class Cushion {
 	 * @return
 	 */
 	public static Event hit(Event e, double maxt, boolean hasPockets) {
-		Assert.isTrue(Cushion.onTable(e));
+		Assert.isTrue(Position.onTable(e));
 		Event next = null;
 		next = sooner(next,
-				hits(e, Vector3D.PLUS_I, onX(e), xp, maxt, hasPockets));
+				hits(e, Vector3D.PLUS_I, Position.onX(e), xp, maxt, hasPockets));
 		next = sooner(next,
-				hits(e, Vector3D.PLUS_I, onX(e), xn, maxt, hasPockets));
+				hits(e, Vector3D.PLUS_I, Position.onX(e), xn, maxt, hasPockets));
 		next = sooner(next,
-				hits(e, Vector3D.PLUS_J, onY(e), yp, maxt, hasPockets));
+				hits(e, Vector3D.PLUS_J, Position.onY(e), yp, maxt, hasPockets));
 		next = sooner(next,
-				hits(e, Vector3D.PLUS_J, onY(e), yn, maxt, hasPockets));
-		Assert.isTrue((next == null) || Cushion.onTable(next));
+				hits(e, Vector3D.PLUS_J, Position.onY(e), yn, maxt, hasPockets));
+		Assert.isTrue((next == null) || Position.onTable(next));
 		return next;
 	}
 
@@ -114,34 +119,6 @@ public final class Cushion {
 			return proposed;
 
 		return current;
-	}
-
-	public static boolean onTable(Event e) {
-		return onTableX(e) && onTableY(e);
-	}
-
-	private static boolean onTableX(Event e) {
-		return (e.pos.getX() < xp) && (e.pos.getX() > xn);
-	}
-
-	private static boolean onTableY(Event e) {
-		return (e.pos.getY() < yp) && (e.pos.getY() > yn);
-	}
-
-	private static Function<Double, Boolean> onY(final Event e) {
-		return new Function<Double, Boolean>() {
-			public Boolean apply(Double arg) {
-				return onTableY(e.advanceDelta(arg));
-			}
-		};
-	}
-
-	private static Function<Double, Boolean> onX(final Event e) {
-		return new Function<Double, Boolean>() {
-			public Boolean apply(Double arg) {
-				return onTableX(e.advanceDelta(arg));
-			}
-		};
 	}
 
 	public static Event nextCushionHit(Table table, double maxt) {
@@ -160,7 +137,7 @@ public final class Cushion {
 			if ((next == null) || (eCushion.t < next.t)) {
 				next = eCushion;
 				Assert.isTrue(next.t > e.t);
-				Assert.isTrue(Cushion.onTable(next));
+				Assert.isTrue(Position.onTable(next));
 			}
 		}
 
@@ -169,12 +146,5 @@ public final class Cushion {
 		return null;
 	}
 
-	public static boolean validPosition(Table table) {
-		for (Ball a : table.balls()) {
-			if (!Cushion.onTable(a.lastEvent()))
-				return false;
-		}
-		return true;
-	}
 
 }

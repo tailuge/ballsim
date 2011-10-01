@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.motion.ballsim.gwtsafe.Rotation;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
 /**
  * @author luke
  * 
