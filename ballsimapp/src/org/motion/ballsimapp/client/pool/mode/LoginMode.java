@@ -28,19 +28,13 @@ public class LoginMode extends BilliardsMode {
 			model.connect(view.getPlayerId());
 		}
 		
-		if (event.hasAttribute(CHANNEL_CONNECTED) || event.hasAttribute(ALREADY_CONNECTED))
+		if (event.hasAttribute(CHANNEL_CONNECTED))
 		{
 			view.appendMessage("connected to server.");
 			view.appendMessage("logging in as " + view.getPlayerId() + "...");
 			model.notify(Events.login(view.getPlayerId(), view.getPassword()));
 			return this;
 		}
-
-//		
-//		{
-			// only used in debug mode
-//			return this;
-//		}
 		
 		if (Events.isState(event,LOGIN_SUCCESS))
 		{			
