@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
 
@@ -58,7 +59,7 @@ public final class Table implements Serializable {
 			Event eNext = e.next();
 			if ((next == null) || (eNext.t < next.t)) {
 				next = eNext;
-				assert next.t > e.t;
+				Assert.isTrue(next.t > e.t);
 			}
 		}
 
@@ -146,7 +147,7 @@ public final class Table implements Serializable {
 				logger.info("Ball {} : {}", next.ballId, next.format());
 				logger.info("nextCollision {}", nextCollision);
 			}
-			assert Cushion.onTable(next);
+			Assert.isTrue(Cushion.onTable(next));
 			this.ball(next.ballId).add(next);
 		} else {
 			if (logger.isEnabled()) {
@@ -157,15 +158,15 @@ public final class Table implements Serializable {
 				logger.info("Collision 1: {}", nextCollision.first.format());
 				logger.info("Collision 2: {}", nextCollision.second.format());
 			}
-			assert (Cushion.onTable(nextCollision.first));
-			assert (Cushion.onTable(nextCollision.second));
+			Assert.isTrue(Cushion.onTable(nextCollision.first));
+			Assert.isTrue(Cushion.onTable(nextCollision.second));
 			this.ball(nextCollision.first.ballId).add(nextCollision.first);
 			this.ball(nextCollision.second.ballId).add(nextCollision.second);
 		}
 		if (logger.isEnabled()) {
 			logger.info("Table:{}", this);
 		}
-		assert (Cushion.validPosition(this));
+		Assert.isTrue(Cushion.validPosition(this));
 		return true;
 	}
 

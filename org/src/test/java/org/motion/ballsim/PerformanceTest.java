@@ -20,7 +20,7 @@ import org.motion.ballsim.util.UtilEvent;
  */
 public class PerformanceTest {
 
-	private int numberOfIterations = 100;
+	private int numberOfIterations = 1;
 	
 	@Before
 	public void before() {
@@ -41,7 +41,7 @@ public class PerformanceTest {
 	}
 	
 	private int doTest() {
-		Table t = new Table();
+		Table t = new Table(true);
 		t.rack("9Ball", "");
 		t.ball(1).setFirstEvent(UtilEvent.hit(Vector3D.ZERO, Vector3D.PLUS_J, 2.6,0.1));
 		t.generateSequence();
