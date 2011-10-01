@@ -1,9 +1,9 @@
 package org.motion.ballsimapp.canvas;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.Cushion;
-import org.motion.ballsim.physics.Pocket;
+import org.motion.ballsim.physics.PocketGeometry;
+import org.motion.ballsim.physics.ball.Ball;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
@@ -19,12 +19,12 @@ public class PlotCushion
 
 	public static void plot(Context2d context, PlotScale scale)
 	{
-		for(Vector3D pos : Pocket.knuckleList)
+		for(Vector3D pos : PocketGeometry.knuckleList)
 		{
 			plotKnuckle(context,pos,scale);
 		}
 		
-		for(Vector3D pos : Pocket.holeList)
+		for(Vector3D pos : PocketGeometry.holeList)
 		{
 			plotHole(context,pos,scale);
 		}
@@ -39,14 +39,14 @@ public class PlotCushion
 		context.setFillStyle(knuckleColour);
 		context.setLineWidth(0.25);
 		
-		scaledLine(context,Cushion.xn-Ball.R, Pocket.p4k1.getY(), Cushion.xn-Ball.R, Pocket.p6k1.getY(),scale); 	
-		scaledLine(context,Cushion.xn-Ball.R, Pocket.p6k2.getY(), Cushion.xn-Ball.R, Pocket.p1k1.getY(),scale); 	
+		scaledLine(context,Cushion.xn-Ball.R, PocketGeometry.p4k1.getY(), Cushion.xn-Ball.R, PocketGeometry.p6k1.getY(),scale); 	
+		scaledLine(context,Cushion.xn-Ball.R, PocketGeometry.p6k2.getY(), Cushion.xn-Ball.R, PocketGeometry.p1k1.getY(),scale); 	
 
-		scaledLine(context,Cushion.xp+Ball.R, Pocket.p4k1.getY(), Cushion.xp+Ball.R, Pocket.p6k1.getY(),scale); 	
-		scaledLine(context,Cushion.xp+Ball.R, Pocket.p6k2.getY(), Cushion.xp+Ball.R, Pocket.p1k1.getY(),scale); 	
+		scaledLine(context,Cushion.xp+Ball.R, PocketGeometry.p4k1.getY(), Cushion.xp+Ball.R, PocketGeometry.p6k1.getY(),scale); 	
+		scaledLine(context,Cushion.xp+Ball.R, PocketGeometry.p6k2.getY(), Cushion.xp+Ball.R, PocketGeometry.p1k1.getY(),scale); 	
 
-		scaledLine(context,Pocket.p4k2.getX(),Cushion.yn-Ball.R, Pocket.p3k2.getX(), Cushion.yn-Ball.R,scale); 	
-		scaledLine(context,Pocket.p4k2.getX(),Cushion.yp+Ball.R, Pocket.p3k2.getX(), Cushion.yp+Ball.R,scale); 	
+		scaledLine(context,PocketGeometry.p4k2.getX(),Cushion.yn-Ball.R, PocketGeometry.p3k2.getX(), Cushion.yn-Ball.R,scale); 	
+		scaledLine(context,PocketGeometry.p4k2.getX(),Cushion.yp+Ball.R, PocketGeometry.p3k2.getX(), Cushion.yp+Ball.R,scale); 	
 
 		context.closePath();
 	    //context.fill();        	
