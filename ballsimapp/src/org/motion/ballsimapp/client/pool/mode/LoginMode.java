@@ -28,7 +28,7 @@ public class LoginMode extends BilliardsMode {
 			model.connect(view.getPlayerId());
 		}
 		
-		if (event.hasAttribute(CHANNEL_CONNECTED))
+		if (event.hasAttribute(CHANNEL_CONNECTED) || event.hasAttribute(ALREADY_CONNECTED))
 		{
 			view.appendMessage("connected to server.");
 			view.appendMessage("logging in as " + view.getPlayerId() + "...");
@@ -36,7 +36,7 @@ public class LoginMode extends BilliardsMode {
 			return this;
 		}
 
-//		if (event.hasAttribute(ALREADY_CONNECTED))
+//		
 //		{
 			// only used in debug mode
 //			return this;
