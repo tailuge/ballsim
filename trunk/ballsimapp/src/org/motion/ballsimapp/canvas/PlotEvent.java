@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.ball.Ball;
-import org.motion.ballsim.physics.BallSpot;
+import org.motion.ballsim.physics.ball.BallSpot;
 import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.ball.State;
 
