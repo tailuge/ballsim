@@ -14,7 +14,7 @@ import org.motion.ballsim.physics.ball.State;
 import org.motion.ballsim.physics.util.EventPair;
 import org.motion.ballsim.physics.util.Interpolate;
 import org.motion.ballsim.physics.util.Position;
-import org.motion.ballsim.util.Assert;
+import org.motion.ballsim.util.Guard;
 import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
 
@@ -65,7 +65,7 @@ public final class Table implements Serializable {
 			Event eNext = e.next();
 			if ((next == null) || (eNext.t < next.t)) {
 				next = eNext;
-				Assert.isTrue(Assert.active && (next.t > e.t));
+				Guard.isTrue(Guard.active && (next.t > e.t));
 			}
 		}
 
@@ -153,7 +153,7 @@ public final class Table implements Serializable {
 				logger.info("Ball {} : {}", next.ballId, next.format());
 				logger.info("nextCollision {}", nextCollision);
 			}
-			Assert.isTrue(Assert.active && Position.onTable(next));
+			Guard.isTrue(Guard.active && Position.onTable(next));
 			this.ball(next.ballId).add(next);
 		} else {
 			if (logger.isEnabled()) {
@@ -164,15 +164,15 @@ public final class Table implements Serializable {
 				logger.info("Collision 1: {}", nextCollision.first.format());
 				logger.info("Collision 2: {}", nextCollision.second.format());
 			}
-			Assert.isTrue(Assert.active && Position.onTable(nextCollision.first));
-			Assert.isTrue(Assert.active && Position.onTable(nextCollision.second));
+			Guard.isTrue(Guard.active && Position.onTable(nextCollision.first));
+			Guard.isTrue(Guard.active && Position.onTable(nextCollision.second));
 			this.ball(nextCollision.first.ballId).add(nextCollision.first);
 			this.ball(nextCollision.second.ballId).add(nextCollision.second);
 		}
 		if (logger.isEnabled()) {
 			logger.info("Table:{}", this);
 		}
-		Assert.isTrue(Assert.active && Position.validPosition(this));
+		Guard.isTrue(Guard.active && Position.validPosition(this));
 		return true;
 	}
 

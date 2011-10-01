@@ -11,7 +11,7 @@ import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.ball.State;
 import org.motion.ballsim.physics.ball.Transition;
 import org.motion.ballsim.physics.util.EventPair;
-import org.motion.ballsim.util.Assert;
+import org.motion.ballsim.util.Guard;
 import org.motion.ballsim.util.Logger;
 
 public final class Collision {
@@ -153,11 +153,11 @@ public final class Collision {
 			logger.info("Collision 2: {}", e2.format());
 			logger.info("Collision time: {}", tCol);
 		}
-		Assert.isTrue(Assert.active && Collision.startingSeperation(e1, e2) > 0);
+		Guard.isTrue(Guard.active && Collision.startingSeperation(e1, e2) > 0);
 
 		if (tCol > 0) {
 			EventPair col = collisionEvents(e1, e2, tCol);
-			Assert.isTrue(Assert.active && Collision.startingSeperation(col.first, col.second) > 0);
+			Guard.isTrue(Guard.active && Collision.startingSeperation(col.first, col.second) > 0);
 			return col;
 		}
 		return null;
@@ -183,8 +183,8 @@ public final class Collision {
 					collision.first.otherBallId = collision.second.ballId;
 					collision.second.otherBallId = collision.first.ballId;
 					next = new EventPair(collision.first, collision.second);
-					Assert.isTrue(Assert.active && (collision.first.otherBallId != 0));
-					Assert.isTrue(Assert.active && (collision.second.otherBallId != 0));
+					Guard.isTrue(Guard.active && (collision.first.otherBallId != 0));
+					Guard.isTrue(Guard.active && (collision.second.otherBallId != 0));
 				}
 			}
 		}

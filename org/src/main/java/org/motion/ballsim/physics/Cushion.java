@@ -6,7 +6,7 @@ import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.util.Events;
 import org.motion.ballsim.physics.util.Position;
-import org.motion.ballsim.util.Assert;
+import org.motion.ballsim.util.Guard;
 import org.motion.ballsim.util.UtilVector3D;
 
 /**
@@ -51,13 +51,13 @@ public final class Cushion {
 		if ((tCollision <= 0) || (tCollision > maxt))
 			return null;
 
-		Assert.isTrue(Assert.active && tCollision > 0);
+		Guard.isTrue(Guard.active && tCollision > 0);
 
 		tCollision = org.motion.ballsim.gwtsafe.Quadratic.latestTrueTime(
 				onTable, tCollision);
 
-		Assert.isTrue(Assert.active && tCollision > 0);
-		Assert.isTrue(Assert.active && tCollision < maxt);
+		Guard.isTrue(Guard.active && tCollision > 0);
+		Guard.isTrue(Guard.active && tCollision < maxt);
 
 		Event reflected = Events.reflect(e.advanceDelta(tCollision), axis);
 		if (hasPockets && Position.isCushionEventInPocketRegion(reflected))
@@ -76,7 +76,7 @@ public final class Cushion {
 	 * @return
 	 */
 	public static Event hit(Event e, double maxt, boolean hasPockets) {
-		Assert.isTrue(Assert.active && Position.onTable(e));
+		Guard.isTrue(Guard.active && Position.onTable(e));
 		Event next = null;
 		next = Events.first(next,
 				hits(e, Vector3D.PLUS_I, Position.onX(e), xp, maxt, hasPockets));
@@ -86,7 +86,7 @@ public final class Cushion {
 				hits(e, Vector3D.PLUS_J, Position.onY(e), yp, maxt, hasPockets));
 		next = Events.first(next,
 				hits(e, Vector3D.PLUS_J, Position.onY(e), yn, maxt, hasPockets));
-		Assert.isTrue(Assert.active && ((next == null) || Position.onTable(next)));
+		Guard.isTrue(Guard.active && ((next == null) || Position.onTable(next)));
 		return next;
 	}
 
@@ -107,8 +107,8 @@ public final class Cushion {
 
 			if ((next == null) || (eCushion.t < next.t)) {
 				next = eCushion;
-				Assert.isTrue(Assert.active && next.t > e.t);
-				Assert.isTrue(Assert.active && Position.onTable(next));
+				Guard.isTrue(Guard.active && next.t > e.t);
+				Guard.isTrue(Guard.active && Position.onTable(next));
 			}
 		}
 
