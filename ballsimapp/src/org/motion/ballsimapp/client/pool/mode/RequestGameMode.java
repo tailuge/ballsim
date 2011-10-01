@@ -5,6 +5,7 @@ import static org.motion.ballsimapp.shared.Events.BEGIN_AIMING;
 import static org.motion.ballsimapp.shared.Events.BEGIN_VIEWING;
 import static org.motion.ballsimapp.shared.Events.*;
 
+import org.motion.ballsim.physics.util.Rack;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
 import org.motion.ballsimapp.shared.Events;
@@ -54,6 +55,6 @@ public class RequestGameMode extends BilliardsMode {
 	private void processRack(GameEvent event)
 	{
 		if (event.hasAttribute(GAME_RACK_TYPE))
-			model.table.rack(event.getAttribute(GAME_RACK_TYPE).getValue(),event.getAttribute(GAME_RACK_SEED).getValue());		
+			Rack.rack(model.table,event.getAttribute(GAME_RACK_TYPE).getValue(),event.getAttribute(GAME_RACK_SEED).getValue());		
 	}
 }

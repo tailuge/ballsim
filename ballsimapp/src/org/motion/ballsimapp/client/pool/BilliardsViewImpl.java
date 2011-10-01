@@ -1,8 +1,8 @@
 package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsim.game.Aim;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.physics.Interpolator;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.util.Interpolate;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsimapp.canvas.Animation;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
@@ -46,7 +46,7 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 
 	@Override
 	public void showTable(Table table) {
-		Event cueBall = Interpolator.interpolate(table.ball(1), 0);
+		Event cueBall = Interpolate.toTime(table.ball(1), 0);
 		aim.setCueBallPosition(cueBall.pos);
 		tableCanvas.plotAtTime(table, 0);
 	}

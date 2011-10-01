@@ -3,10 +3,10 @@ package org.motion.ballsimapp.canvas;
 import java.util.List;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.BallSpot;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.physics.State;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.ball.State;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
