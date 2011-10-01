@@ -9,6 +9,12 @@ import org.motion.ballsimapp.shared.GameEvent;
 import org.motion.ballsimapp.shared.GameEventAttribute;
 import org.motion.ballsimapp.shared.Events;
 
+/**
+ * Only one channel can be opened per client therefore this class
+ * acts as a distributer of messages arriving at that channel to
+ * registered listeners based on the 'target' name in the message
+ * Only needed to support multiple clients per browser during development.
+ */
 public class Distributor {
 
 	private static Map<String,GWTGameEventHandler> handlers = new HashMap<String,GWTGameEventHandler>();
@@ -42,9 +48,10 @@ public class Distributor {
 		handlers.get(user).handleEvent(Events.event(CLIENT_ERROR, message));
 	}
 
-	public void sendInfo(String user,String message)
+	public void toUser(String user,GameEvent event)
 	{
-		handlers.get(user).handleEvent(Events.event(ALREADY_CONNECTED,message));
+		System.out.println("Sending info to"+user+" : "+event);
+		handlers.get(user).handleEvent(event);
 	}
 
 	public void addGameEventListener(String user,GWTGameEventHandler handler)

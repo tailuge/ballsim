@@ -94,7 +94,7 @@ public class GWTGameServerImpl extends RemoteServiceServlet implements
 		// down a single channel connection.
 		if (event.hasAttribute("synonym")) {
 			channelMap.put(user, event.getAttribute("synonym").getValue());
-			return Events.event("channelName", "alreadyConnected");
+			return Events.event(Events.ALREADY_CONNECTED, "");			
 		} else {
 			channelMap.put(user, user);
 		}

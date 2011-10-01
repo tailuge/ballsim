@@ -63,12 +63,14 @@ public class AimInputCanvas implements ActiveMouseMoveHandler.MouseEvent {
 
 	public void showAim()
 	{
+		canvas.setVisible(true);
 		context.clearRect(0, 0, scale.w, scale.h);
 		aim.plotAim(context);		
 	}
 	
 	public void showPlacer()
 	{
+		canvas.setVisible(true);
 		context.clearRect(0, 0, scale.w, scale.h);
 		placer.plotPlacer(context);
 	}
