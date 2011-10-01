@@ -153,11 +153,11 @@ public final class Collision {
 			logger.info("Collision 2: {}", e2.format());
 			logger.info("Collision time: {}", tCol);
 		}
-		Assert.isTrue(Collision.startingSeperation(e1, e2) > 0);
+		Assert.isTrue(Assert.active && Collision.startingSeperation(e1, e2) > 0);
 
 		if (tCol > 0) {
 			EventPair col = collisionEvents(e1, e2, tCol);
-			Assert.isTrue(Collision.startingSeperation(col.first, col.second) > 0);
+			Assert.isTrue(Assert.active && Collision.startingSeperation(col.first, col.second) > 0);
 			return col;
 		}
 		return null;
@@ -183,8 +183,8 @@ public final class Collision {
 					collision.first.otherBallId = collision.second.ballId;
 					collision.second.otherBallId = collision.first.ballId;
 					next = new EventPair(collision.first, collision.second);
-					Assert.isTrue(collision.first.otherBallId != 0);
-					Assert.isTrue(collision.second.otherBallId != 0);
+					Assert.isTrue(Assert.active && (collision.first.otherBallId != 0));
+					Assert.isTrue(Assert.active && (collision.second.otherBallId != 0));
 				}
 			}
 		}

@@ -6,14 +6,12 @@ import org.motion.ballsim.physics.ball.Event;
 /**
  * @author luke
  * 
- *         Given a list of events construct interpolated events useful for
- *         plotting. Interface will be to return the event at arbitrary time
+ *         Given a list of events construct interpolated event at arbitrary time
  */
 public final class Interpolate {
 
 	/**
-	 * Given a ball construct event at t interpolated between precomputed
-	 * events.
+	 * Interpolated event at time
 	 */
 	public static Event toTime(Ball ball, double t) {
 		Event previous = null;

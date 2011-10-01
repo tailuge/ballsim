@@ -2,12 +2,11 @@ package org.motion.ballsim.util;
 
 public final class Assert {
 
-	static private boolean ignore = true;
+	static public boolean active = false;
 	
-	static public void isTrue(boolean test)
+	static public void isTrue(boolean value)
 	{
-		if (!ignore && !test)
+		if (active && !value)
 			throw new IllegalArgumentException();
-		
 	}
 }
