@@ -3,7 +3,6 @@ package org.motion.ballsim.physics.ball;
 import java.io.Serializable;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.BallSpot;
 
 
 
@@ -142,10 +141,6 @@ public final class Event implements Serializable{
 
 		// ap = ap0 + av0*t + aa*t*t/2
 
-//		Vector3D angularPos_ = angularPos.add(angularVel.scalarMultiply(delta))
-//				.add(angularAcceleration().scalarMultiply(
-//						delta * delta / 2.0));
-
 		Vector3D angularPos_ = BallSpot.progressTo(angularPos,angularVel,angularAcceleration(),delta);
 		Vector3D angularPosPerp_ = BallSpot.progressTo(angularPosPerp,angularVel,angularAcceleration(),delta);
 
@@ -157,12 +152,6 @@ public final class Event implements Serializable{
 	}
 
 
-
-
-
-	
-	//private static final DecimalFormat SECONDS_FORMAT = new DecimalFormat("0.00");
-
 	public String toString() {
 		return state+" t:" + t + " "+type 
 		+ " p:" + pos + " v:" + vel
@@ -171,10 +160,6 @@ public final class Event implements Serializable{
 	
 	public String format()
 	{
-		//NumberFormat nf = NumberFormat.getInstance();
-		//nf.setRoundingMode(RoundingMode.UNNECESSARY);
-		//nf.setMinimumFractionDigits(17);
-		//Vector3DFormat f = new Vector3DFormat(nf);
 		return state+" t:" + t + " "+type 
 		+ " p:" + pos + " v:" +vel+ " av:" + angularVel;
 		

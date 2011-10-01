@@ -33,8 +33,8 @@ public final class Pocket {
 
 			if ((next == null) || (eKnuckle.t < next.t)) {
 				next = eKnuckle;
-				Assert.isTrue(next.t > e.t);
-				Assert.isTrue(Position.onTable(next));
+				Assert.isTrue(Assert.active && next.t > e.t);
+				Assert.isTrue(Assert.active && Position.onTable(next));
 			}
 		}
 
@@ -90,8 +90,8 @@ public final class Pocket {
 
 			if ((next == null) || (ePot.t < next.t)) {
 				next = ePot;
-				Assert.isTrue(next.t > e.t);
-				Assert.isTrue(Position.onTable(next));
+				Assert.isTrue(Assert.active && next.t > e.t);
+				Assert.isTrue(Assert.active && Position.onTable(next));
 			}
 		}
 
@@ -229,27 +229,5 @@ public final class Pocket {
 		}
 	}
 
-	public static boolean isCushionEventInPocketRegion(Event e) {
-		// bottom left
-		if ((e.pos.getX() < p1k2.getX()) && (e.pos.getY() > p1k1.getY()))
-			return true;
 
-		// bottom right
-		if ((e.pos.getX() > p2k2.getX()) && (e.pos.getY() > p2k1.getY()))
-			return true;
-
-		// top right
-		if ((e.pos.getX() > p3k2.getX()) && (e.pos.getY() < p3k1.getY()))
-			return true;
-
-		// top left
-		if ((e.pos.getX() < p4k2.getX()) && (e.pos.getY() < p4k1.getY()))
-			return true;
-
-		// middle pockets
-		if ((e.pos.getY() > p5k1.getY()) && (e.pos.getY() < p5k2.getY()))
-			return true;
-
-		return false;
-	}
 }

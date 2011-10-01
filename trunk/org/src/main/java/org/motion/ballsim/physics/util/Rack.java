@@ -5,16 +5,21 @@ import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.util.UtilEvent;
 
+/**
+ * @author august
+ * 
+ *         Helper class to rack/replace balls on table for given game rule
+ * 
+ */
 public final class Rack {
 
-	// temp move out.
 	public static void rack(Table table, String type, String seed) {
 
 		if (type.equals("WhiteOnly")) {
 			table.ball(1).setFirstEvent(UtilEvent.stationary(Vector3D.ZERO));
 			return;
 		}
-		
+
 		if (type.equals("SimplePool")) {
 			table.ball(1).setFirstEvent(UtilEvent.stationary(Vector3D.ZERO));
 			table.ball(2).setFirstEvent(
@@ -33,6 +38,6 @@ public final class Rack {
 								+Ball.R * 2.5 * b, 0)));
 
 			}
-		}		
+		}
 	}
 }

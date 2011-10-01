@@ -1,12 +1,10 @@
-package org.motion.ballsim.physics;
+package org.motion.ballsim.physics.ball;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.motion.ballsim.gwtsafe.Rotation;
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.ball.Ball;
-import org.motion.ballsim.physics.ball.Event;
 /**
  * @author luke
  * 
