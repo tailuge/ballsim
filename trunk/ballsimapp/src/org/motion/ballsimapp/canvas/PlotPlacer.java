@@ -1,7 +1,7 @@
 package org.motion.ballsimapp.canvas;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
-import org.motion.ballsim.physics.Ball;
+import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.Cushion;
 
 import com.google.gwt.canvas.dom.client.Context2d;

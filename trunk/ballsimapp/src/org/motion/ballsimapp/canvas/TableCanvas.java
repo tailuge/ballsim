@@ -1,8 +1,8 @@
 package org.motion.ballsimapp.canvas;
 
-import org.motion.ballsim.physics.Ball;
-import org.motion.ballsim.physics.Event;
-import org.motion.ballsim.physics.Interpolator;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.util.Interpolate;
 import org.motion.ballsim.physics.Table;
 
 public class TableCanvas extends TableRenderer {
@@ -18,7 +18,7 @@ public class TableCanvas extends TableRenderer {
 		//PlotCushion.plot(context, scale);
 		
 		for (Ball ball : table.balls()) {
-			Event e = Interpolator.interpolate(ball, t);
+			Event e = Interpolate.toTime(ball, t);
 			PlotEvent.plotEvent(e, context, scale);
 		}
 	}

@@ -1,5 +1,6 @@
 package org.motion.ballsimapp.client.pool;
 
+import org.motion.ballsim.physics.util.Rack;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
 import org.motion.ballsimapp.client.pool.mode.BilliardsMode;
 import org.motion.ballsimapp.client.pool.mode.LoginMode;
@@ -22,8 +23,8 @@ public class BilliardsPresenter implements GWTGameEventHandler {
 	public BilliardsPresenter(BilliardsModel model, BilliardsView view) {
 		this.model = model;
 		this.view = view;
-		model.table.rack("only cue ball","");
-		model.table.rack("SimplePool","");
+		Rack.rack(model.table,"WhiteOnly","");
+//		Rack.rack(model.table,"SimplePool","");
 		model.setEventHandler(this);
 		view.setEventHandler(this);
 		view.showTable(model.table);
