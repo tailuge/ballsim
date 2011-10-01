@@ -2,7 +2,7 @@ package org.motion.ballsim.util;
 
 public final class Assert {
 
-	static private boolean ignore = false;
+	static private boolean ignore = true;
 	
 	static public void isTrue(boolean test)
 	{
