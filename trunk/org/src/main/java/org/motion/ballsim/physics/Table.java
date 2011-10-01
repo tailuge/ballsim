@@ -8,8 +8,6 @@ import java.util.Map;
 
 import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
-
-import org.motion.ballsim.util.Assert;
 import org.motion.ballsim.util.Logger;
 import org.motion.ballsim.util.UtilEvent;
 
@@ -21,10 +19,8 @@ import org.motion.ballsim.util.UtilEvent;
  *         position to be evaluated to the point all balls are at rest.
  * 
  */
-public class Table implements Serializable {
-	/**
-	 * 
-	 */
+public final class Table implements Serializable {
+
 	private static final long serialVersionUID = -811803763165641433L;
 
 	private final static Logger logger = new Logger("Table", false);
@@ -34,7 +30,7 @@ public class Table implements Serializable {
 	public static double accelRoll = -0.8;
 	public static double accelSlide = -15.0;
 
-	private Map<Integer, Ball> ballMap = new HashMap<Integer, Ball>();
+	private final Map<Integer, Ball> ballMap = new HashMap<Integer, Ball>();
 
 	public boolean hasPockets;
 
@@ -62,7 +58,7 @@ public class Table implements Serializable {
 			Event eNext = e.next();
 			if ((next == null) || (eNext.t < next.t)) {
 				next = eNext;
-				Assert.isTrue(next.t > e.t);
+				assert next.t > e.t;
 			}
 		}
 
@@ -90,7 +86,6 @@ public class Table implements Serializable {
 	 */
 	public int generateSequence() {
 		int count = 0;
-
 		while (generateNext())
 			count++;
 		return count;
@@ -111,11 +106,12 @@ public class Table implements Serializable {
 	 */
 	public boolean generateNext() {
 		// next natural event
-		logger.info("Initial conditions for iteration:");
-		for (Ball ball : balls()) {
-			logger.info("Ball {} : {}", ball.id, ball.lastEvent().format());
+		if (logger.isEnabled()) {
+			logger.info("Initial conditions for iteration:");
+			for (Ball ball : balls()) {
+				logger.info("Ball {} : {}", ball.id, ball.lastEvent().format());
+			}
 		}
-
 		Event next = nextNatural();
 		if (next == null)
 			return false;
@@ -145,29 +141,31 @@ public class Table implements Serializable {
 		// add the soonest of these outcomes
 
 		if ((nextCollision == null) || (next.t < nextCollision.first.t)) {
-			logger.info("Single event");
-			logger.info("Ball {} : {}", next.ballId, next.format());
-			logger.info("nextCollision {}", nextCollision);
-			Assert.isTrue(Cushion.onTable(next));
+			if (logger.isEnabled()) {
+				logger.info("Single event");
+				logger.info("Ball {} : {}", next.ballId, next.format());
+				logger.info("nextCollision {}", nextCollision);
+			}
+			assert Cushion.onTable(next);
 			this.ball(next.ballId).add(next);
 		} else {
-			logger.info("Collision event: {}", nextCollision);
-			logger.info("Collision event time: {}", nextCollision.first.t);
-			logger.info("Discarded single event: {}", next);
-			logger.info("Discarded single event time: {}", next.t);
-			logger.info("Collision 1: {}", nextCollision.first.format());
-			logger.info("Collision 2: {}", nextCollision.second.format());
-			Assert.isTrue(Cushion.onTable(nextCollision.first));
-			Assert.isTrue(Cushion.onTable(nextCollision.second));
+			if (logger.isEnabled()) {
+				logger.info("Collision event: {}", nextCollision);
+				logger.info("Collision event time: {}", nextCollision.first.t);
+				logger.info("Discarded single event: {}", next);
+				logger.info("Discarded single event time: {}", next.t);
+				logger.info("Collision 1: {}", nextCollision.first.format());
+				logger.info("Collision 2: {}", nextCollision.second.format());
+			}
+			assert (Cushion.onTable(nextCollision.first));
+			assert (Cushion.onTable(nextCollision.second));
 			this.ball(nextCollision.first.ballId).add(nextCollision.first);
 			this.ball(nextCollision.second.ballId).add(nextCollision.second);
 		}
-
-		logger.info("Table:{}", this);
-
-		Assert.isTrue(Cushion.validPosition(this));
-		Assert.isTrue(Collision.validPosition(this));
-
+		if (logger.isEnabled()) {
+			logger.info("Table:{}", this);
+		}
+		assert (Cushion.validPosition(this));
 		return true;
 	}
 
@@ -228,14 +226,17 @@ public class Table implements Serializable {
 							-Ball.R * 0.5, 0)));
 		}
 
-		if (type.equals("9Ball")) {
+		else if (type.equals("9Ball")) {
 			for (int b = 2; b < 11; b++) {
 				ball(b).setFirstEvent(
 						UtilEvent.stationary(new Vector3D(-Ball.R * 0.5 * b,
 								+Ball.R * 2.5 * b, 0)));
 
 			}
+
 		}
+		
+		
 		/*
 		 * double x = Ball.R * 0.46; double y = Ball.R * 14;
 		 * 

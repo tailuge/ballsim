@@ -31,9 +31,7 @@ import java.util.Arrays;
  *
  * @version $Revision: 922714 $ $Date: 2010-03-13 20:35:14 -0500 (Sat, 13 Mar 2010) $
  */
-public class PolynomialFunction {
-
-
+public final class PolynomialFunction {
 
     /**
      * The coefficients of the polynomial, ordered by degree -- i.e.,

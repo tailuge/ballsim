@@ -1,6 +1,6 @@
 package org.motion.ballsim.util;
 
-public class Assert {
+public final class Assert {
 
 	static private boolean ignore = true;
 	

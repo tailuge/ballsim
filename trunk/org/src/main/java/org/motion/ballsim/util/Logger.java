@@ -1,35 +1,32 @@
 package org.motion.ballsim.util;
 
-public class Logger {
+public final class Logger {
 
-	  private final String name;
-	  private boolean enabled = true;
-	  
-	  public Logger(String class_, boolean enabled_)
-	  {
-		  name = class_;
-		  enabled = enabled_;
-	  }
+	private final String name;
+	private final boolean enabled;
 
-	  public void info(String format)
-	  {
-	  }
-	  
-	  public void info(String format, Object arg)
-	  {
-		  if (enabled)
-		  {
-			  System.out.println(name); // todo
-		  }
-	  }
+	public Logger(String name, boolean enabled) {
+		this.name = name;
+		this.enabled = enabled;
+	}
 
-	  public void info(String format, Object arg1, Object arg2)
-	  {
-	  }
-	  
-	  public void info(String format, Object[] argArray)
-	  {
-		  
-	  }
+	public void info(String format) {
+	}
 
+	public void info(String format, Object arg) {
+		if (enabled) {
+			System.out.println(name); // todo
+		}
+	}
+
+	public void info(String format, Object arg1, Object arg2) {
+	}
+
+	public void info(String format, Object[] argArray) {
+
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
 }

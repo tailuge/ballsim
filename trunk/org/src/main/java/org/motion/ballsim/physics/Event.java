@@ -21,7 +21,7 @@ import org.motion.ballsim.gwtsafe.Vector3D;
  *         interpolated using simple equations of motion.
  * 
  */
-public class Event implements Serializable{
+public final class Event implements Serializable{
 
 
 	/*

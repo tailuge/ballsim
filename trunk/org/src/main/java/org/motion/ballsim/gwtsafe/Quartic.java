@@ -6,7 +6,7 @@ import java.util.List;
 
 
 
-public class Quartic
+public final class Quartic
 {
 
 
