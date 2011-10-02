@@ -78,13 +78,7 @@ public class InPlay extends AbstractSimplePoolGameState {
 		getGame().setGameState(InPlay.class);
 	}
 
-	private void forceToLogin(Player player) {
-		if (player != null) {
-			PlayerState.LoggedIn.set(player);
-			player.onEvent(newGameEvent("loggedin"));
-		}
-	}
-
+	
 	/**
 	 * Handling an unexpected event of logging in, we will abort back to login
 	 * stage
@@ -101,7 +95,7 @@ public class InPlay extends AbstractSimplePoolGameState {
 			forceToLogin(getInPlay());
 		}
 	}
-
+	
 	@Action
 	public void login() {
 		log.warning("Invalid action login received moving back to loggedin and aborting Game");
