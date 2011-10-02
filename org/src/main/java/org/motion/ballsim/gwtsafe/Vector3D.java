@@ -260,6 +260,15 @@ public final class Vector3D implements Serializable {
 		return scalarMultiply(1 / s);
 	}
 
+	public Vector3D guardedNormaliseThenScale(double scale)
+	{
+		double s = getNorm();
+		if (s == 0) {
+			return Vector3D.ZERO;
+		}
+		return scalarMultiply(scale / s);		
+	}
+	
 	/**
 	 * Get a vector orthogonal to the instance.
 	 * <p>

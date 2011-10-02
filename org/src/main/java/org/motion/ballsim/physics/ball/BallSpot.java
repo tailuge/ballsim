@@ -21,7 +21,12 @@ public final class BallSpot
 		return rotationMatrixTo(velocity,acceleration,t).applyTo(position).normalize();
 	}
 	
-	static Rotation rotationMatrixTo(Vector3D velocity,
+	public static Vector3D progressTo(Rotation rotation,Vector3D position)
+	{
+		return rotation.applyTo(position).normalize();		
+	}
+	
+	public static Rotation rotationMatrixTo(Vector3D velocity,
 			Vector3D acceleration, double t)
 	{
 		Rotation rot = Rotation.IDENTITY;

@@ -20,11 +20,7 @@ public final class RollingMotion {
 	 * @return acceleration vector when rolling
 	 */
 	public static Vector3D acceleration(Event e) {
-		try {
-			return e.vel.normalize().scalarMultiply(Table.accelRoll);
-		} catch (ArithmeticException ae) {
-			return Vector3D.ZERO;
-		}
+		return e.vel.guardedNormaliseThenScale(Table.accelRoll);
 	}
 
 	public static Vector3D angularAcceleration(Event e) {

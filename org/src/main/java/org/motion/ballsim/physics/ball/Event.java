@@ -2,6 +2,7 @@ package org.motion.ballsim.physics.ball;
 
 import java.io.Serializable;
 
+import org.motion.ballsim.gwtsafe.Rotation;
 import org.motion.ballsim.gwtsafe.Vector3D;
 
 
@@ -150,8 +151,9 @@ public final class Event implements Serializable{
 
 		// ap = ap0 + av0*t + aa*t*t/2
 
-		Vector3D angularPos_ = BallSpot.progressTo(angularPos,angularVel,angularAcceleration(),delta);
-		Vector3D angularPosPerp_ = BallSpot.progressTo(angularPosPerp,angularVel,angularAcceleration(),delta);
+		Rotation matrix = BallSpot.rotationMatrixTo(angularVel,angularAcceleration(),delta);
+		Vector3D angularPos_ = BallSpot.progressTo(matrix,angularPos);
+		Vector3D angularPosPerp_ = BallSpot.progressTo(matrix,angularPosPerp);
 
 		// ss = ss0 + sa * t
 		

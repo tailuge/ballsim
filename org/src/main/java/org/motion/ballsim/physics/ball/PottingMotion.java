@@ -11,11 +11,7 @@ public final class PottingMotion {
 	 * @return acceleration vector when falling into pocket
 	 */
 	public static Vector3D acceleration(Event e) {
-		try {
-			return e.vel.normalize();
-		} catch (ArithmeticException ae) {
-			return Vector3D.ZERO;
-		}
+		return e.vel.guardedNormaliseThenScale(1);
 	}
 
 	private static double timeToFinishPotting(Event e) {
