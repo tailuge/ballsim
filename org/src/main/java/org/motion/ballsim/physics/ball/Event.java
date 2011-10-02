@@ -125,6 +125,11 @@ public final class Event implements Serializable{
 		return state.next(this).t - t;
 	}
 
+	public Vector3D advanceDeltaPosition(double delta)
+	{
+		return pos.add(delta,vel).add(delta * delta / 2.0,acceleration());		
+	}
+	
 	/**
 	 * Produces an event interpolated delta seconds into the future
 	 * 
@@ -137,17 +142,15 @@ public final class Event implements Serializable{
 
 		// v = v0 + a * t
 
-		Vector3D vel_ = vel.add(acceleration().scalarMultiply(delta));
+		Vector3D vel_ = vel.add(delta,acceleration());
 
 		// p = p0 + v0*t + a*t*t/2
 
-		Vector3D pos_ = pos.add(vel.scalarMultiply(delta)).add(
-				acceleration().scalarMultiply(delta * delta / 2.0));
+		Vector3D pos_ = advanceDeltaPosition(delta);//pos.add(delta,vel).add(delta * delta / 2.0,acceleration());
 
 		// av = av0 + aa * t
 
-		Vector3D angularVel_ = angularVel.add(angularAcceleration()
-				.scalarMultiply(delta));
+		Vector3D angularVel_ = angularVel.add(delta,angularAcceleration());
 
 		// ap = ap0 + av0*t + aa*t*t/2
 
@@ -157,7 +160,7 @@ public final class Event implements Serializable{
 
 		// ss = ss0 + sa * t
 		
-		Vector3D sidespin_ = sidespin.add(sidespinAcceleration().scalarMultiply(delta));
+		Vector3D sidespin_ = sidespin.add(delta,sidespinAcceleration());
 		
 		return new Event(pos_,vel_,angularPos_,angularPosPerp_,angularVel_,sidespin_,state,t+delta,Transition.Interpolated,ballId,otherBallId);
 	}

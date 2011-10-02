@@ -116,8 +116,8 @@ public final class Collision {
 	}
 
 	static double seperationAt(Event e1, Event e2, double t) {
-		return Vector3D.distance(e1.advanceDelta(t - e1.t).pos,
-				e2.advanceDelta(t - e2.t).pos)
+		return Vector3D.distance(e1.advanceDeltaPosition(t - e1.t),
+				e2.advanceDeltaPosition(t - e2.t))
 				- 2 * Ball.R;
 	}
 
@@ -125,8 +125,9 @@ public final class Collision {
 			final Event b, double tCollision) {
 		Function<Double, Double> func = new Function<Double, Double>() {
 			public Double apply(Double arg) {
-				return startingSeperation(a.advanceDelta(arg),
-						b.advanceDelta(arg));
+				return Vector3D.distance(a.advanceDeltaPosition(arg),
+						b.advanceDeltaPosition(arg))
+						- 2 * Ball.R;
 			}
 		};
 
@@ -157,7 +158,8 @@ public final class Collision {
 
 		if (tCol > 0) {
 			EventPair col = collisionEvents(e1, e2, tCol);
-			Guard.isTrue(Guard.active && Collision.startingSeperation(col.first, col.second) > 0);
+			Guard.isTrue(Guard.active
+					&& Collision.startingSeperation(col.first, col.second) > 0);
 			return col;
 		}
 		return null;
@@ -183,8 +185,10 @@ public final class Collision {
 					collision.first.otherBallId = collision.second.ballId;
 					collision.second.otherBallId = collision.first.ballId;
 					next = new EventPair(collision.first, collision.second);
-					Guard.isTrue(Guard.active && (collision.first.otherBallId != 0));
-					Guard.isTrue(Guard.active && (collision.second.otherBallId != 0));
+					Guard.isTrue(Guard.active
+							&& (collision.first.otherBallId != 0));
+					Guard.isTrue(Guard.active
+							&& (collision.second.otherBallId != 0));
 				}
 			}
 		}
