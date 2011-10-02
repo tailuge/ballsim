@@ -101,6 +101,12 @@ public class PerformanceTest {
 	 * 
 	 * vectors: 6
 	 * vectors: 6
+	 * 
+	 * combine some vector operations like scale and add
+	 * 
+	 * vectors: 3
+	 * vectors: 3
+	 * 
 	 */
 	@Test
 	public final void testCaching()

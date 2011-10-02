@@ -148,7 +148,7 @@ public final class Collision {
 			e2 = e2.advanceDelta(e1.t - e2.t);
 
 		double tCol = collisionTime(e1, e2, maxt);
-
+		
 		if (logger.isEnabled()) {
 			logger.info("Collision 1: {}", e1.format());
 			logger.info("Collision 2: {}", e2.format());
@@ -176,6 +176,9 @@ public final class Collision {
 				if (tested.contains(b))
 					continue;
 
+				if (a.lastEvent().state.isMotionlessEndState() && b.lastEvent().state.isMotionlessEndState())
+					continue;
+				
 				EventPair collision = Collision.get(a.lastEvent(),
 						b.lastEvent(), maxt);
 
