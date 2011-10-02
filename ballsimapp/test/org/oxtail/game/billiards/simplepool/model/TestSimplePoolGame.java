@@ -19,6 +19,7 @@ public class TestSimplePoolGame {
 		Player player1 = new Player("bob");
 		Player player2 = new Player("jim");
 		game = new SimplePoolGame(player1, player2);
+		game.setInPlay(player1);
 	}
 
 	private GameEventHelper newShot() {
@@ -59,4 +60,6 @@ public class TestSimplePoolGame {
 
 	}
 
+
+	
 }

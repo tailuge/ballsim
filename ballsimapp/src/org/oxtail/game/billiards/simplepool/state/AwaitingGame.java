@@ -41,7 +41,7 @@ public class AwaitingGame extends AbstractSimplePoolGameState {
 	}
 
 	private void notifyAwaitingGame(Player player) {
-		player.onEvent(event("state=awaitinggame"));
+		player.onEvent(newStateEvent("awaitinggame"));
 	}
 
 	private void notifyGameStarted() {
@@ -55,5 +55,15 @@ public class AwaitingGame extends AbstractSimplePoolGameState {
 				"SimplePool"));
 		event.addAttribute(new GameEventAttribute("game.rack.seed", "1"));
 		return event;
+	}
+
+	/**
+	 * Invalid login event, move back to be logged in
+	 */
+	@Action
+	public void login() {
+		log.warning("Invalid action login received moving back to loggedin");
+		Player player = getInPlay();
+		player.onEvent(newStateEvent("loggedin"));
 	}
 }
