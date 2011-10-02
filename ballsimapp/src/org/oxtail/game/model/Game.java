@@ -75,5 +75,9 @@ public abstract class Game<T extends PlayingSpace> {
 			player.onEvent(event.copy());
 		}
 	}
-
+	
+	public Player[] playersAsArray() {
+		return players.toArray(new Player[0]);
+	}
+	
 }

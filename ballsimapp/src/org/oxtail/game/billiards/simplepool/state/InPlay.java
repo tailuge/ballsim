@@ -78,16 +78,28 @@ public class InPlay extends AbstractSimplePoolGameState {
 		getGame().setGameState(InPlay.class);
 	}
 
+	private void forceToLogin(Player player) {
+		if (player != null) {
+			PlayerState.LoggedIn.set(player);
+			player.onEvent(newGameEvent("loggedin"));
+		}
+	}
+
 	/**
 	 * Handling an unexpected event of logging in, we will abort back to login
 	 * stage
 	 */
 	private void abortGame() {
 		SimplePoolGame game = getGame();
-		PlayerState.LoggedIn.set(game.inPlay(), game.notInPlay());
-		getGameHome().deleteGame(game.getId());
-		game.inPlay().onEvent(newGameEvent("loggedin"));
-		game.notInPlay().onEvent(newGameEvent("loggedin"));
+		if (game != null) {
+			getGameHome().deleteGame(game.getId());
+			forceToLogin(game.inPlay());
+			forceToLogin(game.notInPlay());
+		}
+		else {
+			// can happen due to browser refreshes etc.
+			forceToLogin(getInPlay());
+		}
 	}
 
 	@Action

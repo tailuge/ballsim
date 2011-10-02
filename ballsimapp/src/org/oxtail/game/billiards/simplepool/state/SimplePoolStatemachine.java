@@ -76,6 +76,7 @@ public class SimplePoolStatemachine implements GameStatemachine {
 			GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable> context,
 			String action) {
 		SimplePoolGame game = (SimplePoolGame) gameHome.findGame(gameId);
+		
 		context.setGame(game);
 		executor.execute(stateFactory.createState(game.getStateId(), context),
 				action);
