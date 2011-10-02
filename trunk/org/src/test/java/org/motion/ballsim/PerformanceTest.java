@@ -25,6 +25,9 @@ import org.motion.ballsim.util.UtilEvent;
  * Vector3D instanceCount = 1215056
  * events: 115
  * 
+ * with simple cache on Event.accelerate
+ * events: 115
+ * vectors: 531793
  */
 public class PerformanceTest {
 
@@ -63,6 +66,14 @@ public class PerformanceTest {
 		return t.getAllEvents().size();
 	}
 
+	/*
+	 * Unoptimised
+	 * 
+	 * vectors: 7
+     * vectors: 14
+     * 
+     * 
+	 */
 	@Test
 	public final void testCaching()
 	{
@@ -70,7 +81,7 @@ public class PerformanceTest {
 		Vector3D.instanceCount = 0;
 		e.acceleration().getX();		
 		System.err.println("vectors: " + Vector3D.instanceCount);
-		e.acceleration().getY();
+		e.acceleration().getX();
 		System.err.println("vectors: " + Vector3D.instanceCount);
 		Assert.assertTrue(Vector3D.instanceCount > 0);
 	}
