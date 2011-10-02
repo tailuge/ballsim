@@ -64,6 +64,7 @@ public class AwaitingGame extends AbstractSimplePoolGameState {
 	public void login() {
 		log.warning("Invalid action login received moving back to loggedin");
 		Player player = getInPlay();
+		PlayerState.LoggedIn.set(player);
 		player.onEvent(newStateEvent("loggedin"));
 	}
 }
