@@ -132,7 +132,7 @@ public final class Table implements Serializable {
 		// use bounds of this to look for pocket collisions
 
 		if (hasPockets) {
-			Event nextKnuckle = Pocket.nextKnuckleCollision(this, next.t);
+			Event nextKnuckle = Knuckle.nextKnuckleCollision(this, next.t);
 			if ((nextKnuckle != null) && (nextKnuckle.t < next.t))
 				next = nextKnuckle;
 

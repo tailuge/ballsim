@@ -15,6 +15,8 @@ import java.io.Serializable;
 
 public final class Vector3D implements Serializable {
 
+	public static long instanceCount = 0;
+	
 	/** Null vector (coordinates: 0, 0, 0). */
 	public static final Vector3D ZERO = new Vector3D(0, 0, 0);
 
@@ -85,6 +87,7 @@ public final class Vector3D implements Serializable {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		instanceCount++;
 	}
 
 	/**
