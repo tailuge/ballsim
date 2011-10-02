@@ -40,8 +40,7 @@ public final class SlidingMotion {
 	private static Vector3D getChangeToNr(Event e) {
 		return e.vel
 				.scalarMultiply(5.0 / 7.0)
-				.add(UtilVector3D.crossUp(e.angularVel).scalarMultiply(
-						-Ball.R * 2.0 / 7.0)).subtract(e.vel);
+				.add(-Ball.R * 2.0 / 7.0,UtilVector3D.crossUp(e.angularVel)).subtract(e.vel);
 	}
 
 	private static double timeToNaturalRollEquilibrium(Event e) {

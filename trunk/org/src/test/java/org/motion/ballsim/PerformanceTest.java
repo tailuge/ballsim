@@ -28,6 +28,15 @@ import org.motion.ballsim.util.UtilEvent;
  * with simple cache on Event.accelerate
  * events: 115
  * vectors: 531793
+ * 
+ * remove guard for arithmetic exception on normalise. 
+ * events: 115
+ * vectors: 525515
+ * 
+ * use scale and add, only calc position when finding collision (not rotation)
+ * events: 115
+ * vectors: 122042
+ * 
  */
 public class PerformanceTest {
 
@@ -72,7 +81,15 @@ public class PerformanceTest {
 	 * vectors: 7
      * vectors: 14
      * 
+     * caching
      * 
+	 * vectors: 7
+	 * vectors: 7
+	 * 
+	 * guarded normalise
+	 * 
+	 * vectors: 6
+	 * vectors: 6
 	 */
 	@Test
 	public final void testCaching()
