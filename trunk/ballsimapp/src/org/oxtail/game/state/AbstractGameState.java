@@ -57,4 +57,5 @@ public abstract class AbstractGameState<G extends Game<S>, M extends Move, S ext
 		return context.getGameEvent();
 	}
 	
+
 }

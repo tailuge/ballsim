@@ -86,4 +86,11 @@ public abstract class AbstractSimplePoolGameState extends
 		return newGameEvent(state, true);
 	}
 
+	protected void forceToLogin(Player player) {
+		if (player != null) {
+			PlayerState.LoggedIn.set(player);
+			player.onEvent(newStateEvent("loggedin"));
+		}
+	}
+
 }

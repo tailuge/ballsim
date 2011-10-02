@@ -79,4 +79,6 @@ public class SimplePoolGame extends Game<SimplePoolTable> {
 		return shot.isFoul() ? gameState.forFoul() : gameState;
 	}
 
+
+
 }
