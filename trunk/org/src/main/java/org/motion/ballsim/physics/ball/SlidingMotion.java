@@ -13,13 +13,7 @@ public final class SlidingMotion {
 	 * @return acceleration vector when sliding
 	 */
 	public static Vector3D acceleration(Event e) {
-		try {
-			return getChangeToNr(e).normalize().scalarMultiply(
-					-Table.accelSlide);
-		} catch (ArithmeticException ae) {
-			return Vector3D.ZERO;
-		}
-
+		return getChangeToNr(e).guardedNormaliseThenScale(-Table.accelSlide);
 	}
 
 	public static Vector3D angularAcceleration(Event e) {
