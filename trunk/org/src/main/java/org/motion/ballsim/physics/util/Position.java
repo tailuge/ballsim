@@ -3,6 +3,7 @@ package org.motion.ballsim.physics.util;
 import static org.motion.ballsim.physics.Cushion.*;
 import static org.motion.ballsim.physics.PocketGeometry.*;
 import org.motion.ballsim.gwtsafe.Function;
+import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
@@ -15,22 +16,22 @@ import org.motion.ballsim.physics.ball.Event;
  */
 public final class Position {
 
-	public static boolean onTable(Event e) {
-		return onTableX(e) && onTableY(e);
+	public static boolean onTable(Vector3D pos) {
+		return onTableX(pos) && onTableY(pos);
 	}
 
-	private static boolean onTableX(Event e) {
-		return (e.pos.getX() < xp) && (e.pos.getX() > xn);
+	private static boolean onTableX(Vector3D pos) {
+		return (pos.getX() < xp) && (pos.getX() > xn);
 	}
 
-	private static boolean onTableY(Event e) {
-		return (e.pos.getY() < yp) && (e.pos.getY() > yn);
+	private static boolean onTableY(Vector3D pos) {
+		return (pos.getY() < yp) && (pos.getY() > yn);
 	}
 
 	public static Function<Double, Boolean> onY(final Event e) {
 		return new Function<Double, Boolean>() {
 			public Boolean apply(Double arg) {
-				return onTableY(e.advanceDelta(arg));
+				return onTableY(e.advanceDeltaPosition(arg));
 			}
 		};
 	}
@@ -38,14 +39,14 @@ public final class Position {
 	public static Function<Double, Boolean> onX(final Event e) {
 		return new Function<Double, Boolean>() {
 			public Boolean apply(Double arg) {
-				return onTableX(e.advanceDelta(arg));
+				return onTableX(e.advanceDeltaPosition(arg));
 			}
 		};
 	}
 
 	public static boolean validPosition(Table table) {
 		for (Ball a : table.balls()) {
-			if (!onTable(a.lastEvent()))
+			if (!onTable(a.lastEvent().pos))
 				return false;
 		}
 		return true;

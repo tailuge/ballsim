@@ -37,6 +37,17 @@ import org.motion.ballsim.util.UtilEvent;
  * events: 115
  * vectors: 122042
  * 
+ * further position only calcs
+ * events: 115
+ * vectors: 117205
+ * 
+ * Use addScaledPair
+ * events: 115
+ * vectors: 81335
+ * 
+ * Use scaledCrossProduct
+ * events: 115
+ * vectors: 78837
  */
 public class PerformanceTest {
 

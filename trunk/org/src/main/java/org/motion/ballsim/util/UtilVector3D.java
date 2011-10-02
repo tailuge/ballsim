@@ -13,6 +13,11 @@ public class UtilVector3D
 		return Vector3D.crossProduct(vec, Vector3D.PLUS_K);
 	}
 
+	public static Vector3D crossUpScale(double scale, Vector3D vec)
+	{
+		return Vector3D.crossProduct(scale,vec, Vector3D.PLUS_K);
+	}
+
 	public static Vector3D rnd()
 	{
 		try {

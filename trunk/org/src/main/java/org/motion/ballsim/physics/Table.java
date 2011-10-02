@@ -153,7 +153,7 @@ public final class Table implements Serializable {
 				logger.info("Ball {} : {}", next.ballId, next.format());
 				logger.info("nextCollision {}", nextCollision);
 			}
-			Guard.isTrue(Guard.active && Position.onTable(next));
+			Guard.isTrue(Guard.active && Position.onTable(next.pos));
 			this.ball(next.ballId).add(next);
 		} else {
 			if (logger.isEnabled()) {
@@ -164,8 +164,8 @@ public final class Table implements Serializable {
 				logger.info("Collision 1: {}", nextCollision.first.format());
 				logger.info("Collision 2: {}", nextCollision.second.format());
 			}
-			Guard.isTrue(Guard.active && Position.onTable(nextCollision.first));
-			Guard.isTrue(Guard.active && Position.onTable(nextCollision.second));
+			Guard.isTrue(Guard.active && Position.onTable(nextCollision.first.pos));
+			Guard.isTrue(Guard.active && Position.onTable(nextCollision.second.pos));
 			this.ball(nextCollision.first.ballId).add(nextCollision.first);
 			this.ball(nextCollision.second.ballId).add(nextCollision.second);
 		}

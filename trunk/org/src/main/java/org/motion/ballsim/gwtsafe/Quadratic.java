@@ -56,7 +56,7 @@ public final class Quadratic {
 
 		double sign = Math.signum(func.apply(0.0));
 
-		Guard.isTrue(sign != 0);
+		Guard.isTrue(Guard.active && (sign != 0));
 
 		double last = rootCandidate;
 
@@ -76,7 +76,7 @@ public final class Quadratic {
 			double rootCandidate) {
 
 		// Condition must be good at t = 0
-		Guard.isTrue(onTable.apply(0.0) == true);
+		Guard.isTrue(Guard.active && (onTable.apply(0.0) == true));
 		//if (onTable.apply(0.0) == false) {
 		//	System.err.println("Problem: not on table");
 		//}

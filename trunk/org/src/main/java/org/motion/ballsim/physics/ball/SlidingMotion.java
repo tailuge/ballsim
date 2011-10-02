@@ -13,12 +13,11 @@ public final class SlidingMotion {
 	 * @return acceleration vector when sliding
 	 */
 	public static Vector3D acceleration(Event e) {
-		return getChangeToNr(e).guardedNormaliseThenScale(-Table.accelSlide);
+		return getChangeToNr(e).unitScale(-Table.accelSlide);
 	}
 
 	public static Vector3D angularAcceleration(Event e) {
-		return UtilVector3D.crossUp(acceleration(e)).scalarMultiply(
-				(-5.0 / 2.0) * Ball.R);
+		return UtilVector3D.crossUpScale((-5.0 / 2.0) * Ball.R,acceleration(e));
 	}
 
 	/**
@@ -38,9 +37,12 @@ public final class SlidingMotion {
 	 * @return
 	 */
 	private static Vector3D getChangeToNr(Event e) {
+		return e.vel.addScaledPair(-9.0/7.0, e.vel, -Ball.R * 2.0 / 7.0, UtilVector3D.crossUp(e.angularVel));
+		/*
 		return e.vel
 				.scalarMultiply(5.0 / 7.0)
 				.add(-Ball.R * 2.0 / 7.0,UtilVector3D.crossUp(e.angularVel)).subtract(e.vel);
+				*/
 	}
 
 	private static double timeToNaturalRollEquilibrium(Event e) {
