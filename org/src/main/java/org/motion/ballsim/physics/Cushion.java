@@ -76,7 +76,7 @@ public final class Cushion {
 	 * @return
 	 */
 	public static Event hit(Event e, double maxt, boolean hasPockets) {
-		Guard.isTrue(Guard.active && Position.onTable(e));
+		Guard.isTrue(Guard.active && Position.onTable(e.pos));
 		Event next = null;
 		next = Events.first(next,
 				hits(e, Vector3D.PLUS_I, Position.onX(e), xp, maxt, hasPockets));
@@ -86,7 +86,7 @@ public final class Cushion {
 				hits(e, Vector3D.PLUS_J, Position.onY(e), yp, maxt, hasPockets));
 		next = Events.first(next,
 				hits(e, Vector3D.PLUS_J, Position.onY(e), yn, maxt, hasPockets));
-		Guard.isTrue(Guard.active && ((next == null) || Position.onTable(next)));
+		Guard.isTrue(Guard.active && ((next == null) || Position.onTable(next.pos)));
 		return next;
 	}
 
@@ -108,7 +108,7 @@ public final class Cushion {
 			if ((next == null) || (eCushion.t < next.t)) {
 				next = eCushion;
 				Guard.isTrue(Guard.active && next.t > e.t);
-				Guard.isTrue(Guard.active && Position.onTable(next));
+				Guard.isTrue(Guard.active && Position.onTable(next.pos));
 			}
 		}
 

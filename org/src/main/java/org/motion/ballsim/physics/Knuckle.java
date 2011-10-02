@@ -25,7 +25,7 @@ public final class Knuckle {
 			if ((next == null) || (eKnuckle.t < next.t)) {
 				next = eKnuckle;
 				Guard.isTrue(Guard.active && next.t > e.t);
-				Guard.isTrue(Guard.active && Position.onTable(next));
+				Guard.isTrue(Guard.active && Position.onTable(next.pos));
 			}
 		}
 

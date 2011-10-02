@@ -31,8 +31,8 @@ public class SlidingEventTest
 	{
 		assertTrue("Sliding ball has acceleration",slide.acceleration().getNorm() > 0);
 		assertTrue("Sliding masse ball has acceleration",masse.acceleration().getNorm() > 0);
-		assertEquals("Sliding,masse have same magnitude of acceleration",slide.acceleration().getNorm() , masse.acceleration().getNorm(), 0.0);
-		assertEquals("Sliding acceleratoin opposes vel",slide.vel.normalize().negate(),slide.acceleration().normalize());
+		assertEquals("Sliding,masse have same magnitude of acceleration",slide.acceleration().getNorm() , masse.acceleration().getNorm(), 0.000001);
+		assertTrue("Sliding acceleratoin opposes vel",slide.vel.normalize().add(slide.acceleration().normalize()).getNormSq() < 0.00001);
 	}
 
 	@Test
@@ -40,7 +40,7 @@ public class SlidingEventTest
 	{
 		assertTrue("Sliding ball has angular acceleration",slide.angularAcceleration().getNorm() > 0);
 		assertTrue("Sliding masse ball has angular acceleration",masse.angularAcceleration().getNorm() > 0);
-		assertEquals("Sliding,masse have same magnitude of angular acceleration",slide.angularAcceleration().getNorm() , masse.angularAcceleration().getNorm(), 0.0);
+		assertEquals("Sliding,masse have same magnitude of angular acceleration",slide.angularAcceleration().getNorm() , masse.angularAcceleration().getNorm(), 0.000001);
 	}
 
 

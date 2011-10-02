@@ -127,7 +127,8 @@ public final class Event implements Serializable{
 
 	public Vector3D advanceDeltaPosition(double delta)
 	{
-		return pos.add(delta,vel).add(delta * delta / 2.0,acceleration());		
+		return pos.addScaledPair(delta,vel,delta * delta / 2.0,acceleration());
+		// return pos.add(delta,vel).add(delta * delta / 2.0,acceleration());		
 	}
 	
 	/**

@@ -120,10 +120,10 @@ public class CushionTest {
 		Event s = e.next();
 		Event c1 = Cushion.hit(e, s.t,false);
 		assertNotNull("Hits cushion",c1);	
-		assertTrue("On table",Position.onTable(c1));	
+		assertTrue("On table",Position.onTable(c1.pos));	
 		c1 = Cushion.hit(c1, Double.MAX_VALUE,false);
 		assertNotNull("Hits cushion",c1);	
-		assertTrue("On table",Position.onTable(c1));	
+		assertTrue("On table",Position.onTable(c1.pos));	
 		assertTrue("Collision befor stop",c1.t<s.t);	
 	}
 
@@ -138,11 +138,11 @@ public class CushionTest {
 		Event s = e.next();
 		Event c1 = Cushion.hit(e, s.t,false);
 		assertNotNull("Hits cushion",c1);	
-		assertTrue("On table",Position.onTable(c1));	
+		assertTrue("On table",Position.onTable(c1.pos));	
 		System.out.println("------------------------------------");
 		c1 = Cushion.hit(c1, Double.MAX_VALUE,false);
 		assertNotNull("Hits cushion",c1);	
-		assertTrue("On table",Position.onTable(c1));	
+		assertTrue("On table",Position.onTable(c1.pos));	
 		assertTrue("Collision befor stop",c1.t<s.t);	
 	}
 
@@ -155,7 +155,7 @@ public class CushionTest {
 	
 		Event c1 = Cushion.hit(e, Double.MAX_VALUE,false);
 		assertNotNull("Hits cushion",c1);	
-		assertTrue("On table",Position.onTable(c1));	
+		assertTrue("On table",Position.onTable(c1.pos));	
 	}
 
 	@Test
@@ -167,7 +167,7 @@ public class CushionTest {
 	
 		Event c1 = Cushion.hit(e, Double.MAX_VALUE,false);
 		assertNotNull("Hits cushion",c1);	
-		assertTrue("On table",Position.onTable(c1));	
+		assertTrue("On table",Position.onTable(c1.pos));	
 	}
 	
 	@Test
@@ -181,7 +181,7 @@ public class CushionTest {
 		{
 			Event e = Utilities.getSliding(UtilVector3D.rnd().scalarMultiply(500),Vector3D.PLUS_I);
 			Event s = e.next();
-			if (Position.onTable(s.next()))
+			if (Position.onTable(s.next().pos))
 				continue;
 			
 			Event c = Cushion.hit(e, s.t,false);
@@ -193,11 +193,11 @@ public class CushionTest {
 	@Test
 	public final void testOnTable() 
 	{
-		assertTrue(Position.onTable(Utilities.getStationary()));
-		assertTrue(!Position.onTable(Utilities.getStationary(new Vector3D(Cushion.xp,0,0))));
-		assertTrue(!Position.onTable(Utilities.getStationary(new Vector3D(Cushion.xn,0,0))));
-		assertTrue(!Position.onTable(Utilities.getStationary(new Vector3D(0,Cushion.yp,0))));
-		assertTrue(!Position.onTable(Utilities.getStationary(new Vector3D(0,Cushion.yn,0))));
-		assertTrue(Position.onTable(Utilities.getStationary(new Vector3D(Cushion.xp-Ball.R,0,0))));
+		assertTrue(Position.onTable(Utilities.getStationary().pos));
+		assertTrue(!Position.onTable(Utilities.getStationary(new Vector3D(Cushion.xp,0,0)).pos));
+		assertTrue(!Position.onTable(Utilities.getStationary(new Vector3D(Cushion.xn,0,0)).pos));
+		assertTrue(!Position.onTable(Utilities.getStationary(new Vector3D(0,Cushion.yp,0)).pos));
+		assertTrue(!Position.onTable(Utilities.getStationary(new Vector3D(0,Cushion.yn,0)).pos));
+		assertTrue(Position.onTable(Utilities.getStationary(new Vector3D(Cushion.xp-Ball.R,0,0)).pos));
 	}	
 }

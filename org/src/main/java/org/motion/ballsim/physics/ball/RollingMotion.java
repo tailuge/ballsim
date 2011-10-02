@@ -20,12 +20,11 @@ public final class RollingMotion {
 	 * @return acceleration vector when rolling
 	 */
 	public static Vector3D acceleration(Event e) {
-		return e.vel.guardedNormaliseThenScale(Table.accelRoll);
+		return e.vel.unitScale(Table.accelRoll);
 	}
 
 	public static Vector3D angularAcceleration(Event e) {
-		return UtilVector3D.crossUp(acceleration(e)).scalarMultiply(
-				1.0 * Ball.R);
+		return UtilVector3D.crossUpScale(1.0 * Ball.R,acceleration(e));
 	}
 
 	/**

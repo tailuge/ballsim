@@ -219,6 +219,11 @@ public final class Vector3D implements Serializable {
 				* v.z);
 	}
 
+	public Vector3D addScaledPair(double factor, Vector3D v,double factor2, Vector3D v2) {
+		return new Vector3D(x + factor * v.x + factor2 * v2.x, y + factor * v.y + factor2* v2.y, z + factor
+				* v.z + factor2 * v2.z);
+	}
+
 	/**
 	 * Subtract a vector from the instance.
 	 * 
@@ -260,7 +265,7 @@ public final class Vector3D implements Serializable {
 		return scalarMultiply(1 / s);
 	}
 
-	public Vector3D guardedNormaliseThenScale(double scale)
+	public Vector3D unitScale(double scale)
 	{
 		double s = getNorm();
 		if (s == 0) {
@@ -475,6 +480,11 @@ public final class Vector3D implements Serializable {
 	public static Vector3D crossProduct(Vector3D v1, Vector3D v2) {
 		return new Vector3D(v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x
 				* v2.z, v1.x * v2.y - v1.y * v2.x);
+	}
+
+	public static Vector3D crossProduct(double factor,Vector3D v1, Vector3D v2) {
+		return new Vector3D(factor*(v1.y * v2.z - v1.z * v2.y), factor*(v1.z * v2.x - v1.x
+				* v2.z), factor*(v1.x * v2.y - v1.y * v2.x));
 	}
 
 	/**

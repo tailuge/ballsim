@@ -92,7 +92,7 @@ public class SequenceTest {
 		for(Event e:t.getAllEvents())
 		{
 			assertTrue("All times positive",e.t>=0);
-			assertTrue("On table",Position.onTable(e));
+			assertTrue("On table",Position.onTable(e.pos));
 		}
 	}
 	
@@ -113,7 +113,7 @@ public class SequenceTest {
 		for(Event e:t.getAllEvents())
 		{
 			assertTrue("All times positive",e.t>=0);
-			assertTrue("On table",Position.onTable(e));
+			assertTrue("On table",Position.onTable(e.pos));
 		}
 	}
 	
@@ -147,7 +147,7 @@ public class SequenceTest {
 			
 			for (Event e : t.getAllEvents()) {
 				assertTrue("All times positive", e.t >= 0);
-				assertTrue("On table", Position.onTable(e));
+				assertTrue("On table", Position.onTable(e.pos));
 			}
 			v++;
 		}
@@ -164,7 +164,7 @@ public class SequenceTest {
 		for(Event e:t.getAllEvents())
 		{
 			assertTrue("All times positive",e.t>=0);
-			assertTrue("On table",Position.onTable(e));
+			assertTrue("On table",Position.onTable(e.pos));
 		}
 	}
 	

@@ -29,7 +29,7 @@ public final class Pocket {
 			if ((next == null) || (ePot.t < next.t)) {
 				next = ePot;
 				Guard.isTrue(Guard.active && next.t > e.t);
-				Guard.isTrue(Guard.active && Position.onTable(next));
+				Guard.isTrue(Guard.active && Position.onTable(next.pos));
 			}
 		}
 
