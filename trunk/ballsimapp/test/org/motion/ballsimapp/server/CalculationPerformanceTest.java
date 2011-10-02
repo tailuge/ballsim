@@ -8,14 +8,14 @@ import org.motion.ballsimapp.shared.CalculationPerformanceTestDelegate;
 
 public class CalculationPerformanceTest extends TestCase {
 
-	private CalculationPerformanceTestDelegate delegate = new CalculationPerformanceTestDelegate();
+	private CalculationPerformanceTestDelegate delegate = new CalculationPerformanceTestDelegate(getClass().getName());
 
+	@Ignore
 	@Test
 	public final void testTableEvaluationCorrectness() {
 		delegate.testTableEvaluationCorrectness();
 	}
 
-	@Ignore
 	@Test
 	public final void testTableEvaluationPerfomance() {
 		delegate.testTableEvaluationPerfomance();

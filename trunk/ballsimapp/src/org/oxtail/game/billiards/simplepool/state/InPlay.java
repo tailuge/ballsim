@@ -78,6 +78,30 @@ public class InPlay extends AbstractSimplePoolGameState {
 		getGame().setGameState(InPlay.class);
 	}
 
+	/**
+	 * Handling an unexpected event of logging in, we will abort back to login
+	 * stage
+	 */
+	private void abortGame() {
+		SimplePoolGame game = getGame();
+		PlayerState.LoggedIn.set(game.inPlay(), game.notInPlay());
+		getGameHome().deleteGame(game.getId());
+		game.inPlay().onEvent(newGameEvent("loggedin"));
+		game.notInPlay().onEvent(newGameEvent("loggedin"));
+	}
+
+	@Action
+	public void login() {
+		log.warning("Invalid action login received moving back to loggedin and aborting Game");
+		abortGame();
+	}
+
+	@Action
+	public void requestGame() {
+		log.warning("Invalid action requestGame received moving back to loggedin and aborting Game");
+		abortGame();
+	}
+
 	@Action
 	public void chat() {
 		// TODO

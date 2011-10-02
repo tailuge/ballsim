@@ -30,14 +30,15 @@ public class GameEventHelper {
 		return event.hasAttribute(name);
 	}
 
-	public void setValue(String name, String value) {
-		event.addAttribute(new GameEventAttribute(name, value));
+	public <T> void setValue(String name, T value) {
+		event.addAttribute(new GameEventAttribute(name, String.valueOf(value)));
 	}
 
-	public void setValue(String name, String value, String... rest) {
-		StringBuilder sb = new StringBuilder(value);
-		for (String s : rest)
-			sb.append(",").append(s);
+	public <T> void setValue(String name, T value, T... rest) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.valueOf(value));
+		for (T s : rest)
+			sb.append(",").append(String.valueOf(s));
 		setValue(name, sb.toString());
 	}
 
