@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Cushion;
+import org.motion.ballsim.physics.Knuckle;
 import org.motion.ballsim.physics.Pocket;
 import org.motion.ballsim.physics.PocketGeometry;
 import org.motion.ballsim.physics.ball.Ball;
@@ -23,7 +24,7 @@ public class PocketTest {
 		
 		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(50));
 		e.pos = PocketGeometry.p6k1.add(new Vector3D(-3*Ball.R,+0.2,0));
-		Event c1 = Pocket.nextKnuckleCollision(e, e.next().t);
+		Event c1 = Knuckle.nextKnuckleCollision(e, e.next().t);
 
 		assertNotNull("Collides",c1);
 		assertTrue("event is after time zero",c1.t > 0);
@@ -82,7 +83,7 @@ public class PocketTest {
 	{
 		Event e = Utilities.getRolling(Vector3D.PLUS_I.scalarMultiply(250));
 		e.pos = PocketGeometry.p6k1.add(new Vector3D(-3*Ball.R,+0.2,0));
-		Event c1 = Pocket.nextKnuckleCollision(e, e.next().t);
+		Event c1 = Knuckle.nextKnuckleCollision(e, e.next().t);
 		
 		return UtilEvent.stationary(c1.pos);
 	}

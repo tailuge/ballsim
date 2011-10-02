@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.util.Rack;
 import org.motion.ballsim.util.UtilEvent;
 
@@ -19,6 +20,10 @@ import org.motion.ballsim.util.UtilEvent;
  * 3. Other finalizations and log conditionals: 156703<br>
  * 4. Full finalization and assert replace, assertions enabled: 44437<br>
  * 5. Full finalization and assert replace, assertions disabled: 41907<br>
+ * 
+ * Notes for single iteration:
+ * Vector3D instanceCount = 1215056
+ * events: 115
  * 
  */
 public class PerformanceTest {
@@ -58,4 +63,16 @@ public class PerformanceTest {
 		return t.getAllEvents().size();
 	}
 
+	@Test
+	public final void testCaching()
+	{
+		Event e = UtilEvent.hit(Vector3D.ZERO, new Vector3D(0.5,0.5,0), 1, 0.1);
+		Vector3D.instanceCount = 0;
+		e.acceleration().getX();		
+		System.err.println("vectors: " + Vector3D.instanceCount);
+		e.acceleration().getY();
+		System.err.println("vectors: " + Vector3D.instanceCount);
+		Assert.assertTrue(Vector3D.instanceCount > 0);
+	}
+	
 }
