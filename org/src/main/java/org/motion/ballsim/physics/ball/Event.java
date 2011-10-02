@@ -81,7 +81,10 @@ public final class Event implements Serializable{
 	}
 
 
-
+	private Vector3D acceleration;
+	private Vector3D angularAcceleration;
+	private Vector3D sidespinAcceleration;
+	
 	/**
 	 * Acceleration magnitude is always independent speed / spin
 	 * but depends on state so we delegate.
@@ -89,15 +92,21 @@ public final class Event implements Serializable{
 	 * @return acceleration vector depending on state
 	 */
 	public Vector3D acceleration() {
-		return state.acceleration(this);
+		if (acceleration == null)
+			acceleration = state.acceleration(this);
+		return acceleration;
 	}
 
 	public Vector3D angularAcceleration() {
-		return state.angularAcceleration(this);
+		if (angularAcceleration == null)
+			angularAcceleration = state.angularAcceleration(this);
+		return angularAcceleration;
 	}
 
 	public Vector3D sidespinAcceleration() {
-		return state.sidespinAcceleration(this);
+		if (sidespinAcceleration == null)
+			sidespinAcceleration = state.sidespinAcceleration(this);
+		return sidespinAcceleration;
 	}
 
 	/**
