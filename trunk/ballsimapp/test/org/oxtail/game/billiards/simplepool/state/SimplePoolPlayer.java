@@ -100,6 +100,7 @@ public class SimplePoolPlayer extends Player {
 	}
 
 	public GameEvent lastEvent() {
+		Assert.assertTrue("No event received by "+getAlias(),!events.isEmpty());
 		return events.get(events.size() - 1);
 	}
 
@@ -133,12 +134,20 @@ public class SimplePoolPlayer extends Player {
 		return this;
 	}
 
-	public SimplePoolPlayer chat(Player to, String message) {
+	public SimplePoolPlayer chatTo(String to, String message) {
 		GameEvent event = newGameEvent("chat");
 		event.addAttribute(new GameEventAttribute("chat.from", getAlias()));
-		event.addAttribute(new GameEventAttribute("chat.to", to.getAlias()));
+		event.addAttribute(new GameEventAttribute("chat.to", to));
 		event.addAttribute(new GameEventAttribute("chat.message", message));
 		notify(event);
 		return this;
+	}
+
+	public SimplePoolPlayer chatToAll(String message) {
+		return chatTo("*", message);
+	}
+
+	public SimplePoolPlayer chat(Player to, String message) {
+		return chatTo(to.getAlias(), message);
 	}
 }

@@ -11,7 +11,7 @@ public class TestSimplePoolStatemachine {
 
 	private SimplePoolStatemachine statemachine;
 	private GameHome gameHome = new InMemoryGameHome();
-	private SimplePoolPlayer bob, jim;
+	private SimplePoolPlayer bob, jim, tom;
 
 	@Before
 	public void before() {
@@ -19,8 +19,9 @@ public class TestSimplePoolStatemachine {
 				new ReflectStateFactory(), new ReflectStateActionExecutor());
 		bob = new SimplePoolPlayer("bob", statemachine);
 		jim = new SimplePoolPlayer("jim", statemachine);
-		PlayerState.LoggedOut.set(bob, jim);
-		GameHome.Util.storePlayers(gameHome, bob, jim);
+		tom = new SimplePoolPlayer("tom", statemachine);
+		PlayerState.LoggedOut.set(bob, jim, tom);
+		GameHome.Util.storePlayers(gameHome, bob, jim, tom);
 	}
 
 	@Test
@@ -62,14 +63,15 @@ public class TestSimplePoolStatemachine {
 	@Test
 	public void testPlayerPotsAllBallsAndWins() {
 		bob.login().requestGame().assertAwaitingGame();
-		jim.login().requestGame().assertAiming().pot(1, 2).assertWinner();
+		jim.login().requestGame().assertAiming().pot(1, 2, 3, 4, 5, 6, 7, 8, 9)
+				.assertWinner();
 		bob.assertLoser();
 	}
 
 	@Test
 	public void testPlayerPotsAllInOffAndLoses() {
 		bob.login().requestGame().assertAwaitingGame();
-		jim.login().requestGame().assertAiming().pot(1, 2, 0).assertLoser();
+		jim.login().requestGame().assertAiming().pot(1, 2,3,4,5,6,7,8,9, 0).assertLoser();
 		bob.assertWinner();
 	}
 
@@ -92,6 +94,15 @@ public class TestSimplePoolStatemachine {
 		bob.login();
 		jim.login().chat(bob, "Gay");
 		bob.assertChatting("Gay");
+	}
+
+	@Test
+	public void testChattingToAll() {
+		bob.login().assertLoggedIn();
+		tom.login().assertLoggedIn();
+		jim.login().chatToAll("Gay");
+		bob.assertChatting("Gay");
+		tom.assertChatting("Gay");
 	}
 
 }

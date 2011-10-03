@@ -41,13 +41,33 @@ public abstract class AbstractSimplePoolGameState extends
 		return others.iterator().next();
 	}
 
+	private Iterable<Player> findAllLoggedIn() {
+		return getGameHome().findPlayers(new Predicate<Player>() {
+			@Override
+			public boolean apply(Player other) {
+				return !other.equals(getInPlay())
+						&& (PlayerState.valueOf(other.getState()) != PlayerState.LoggedOut);
+			}
+		});
+	}
+
 	@Action
 	public void chat() {
 		GameEventHelper helper = new GameEventHelper(getGameEvent());
 		String chatTo = helper.getString("chat.to");
 		helper.setValue("state", "chatting");
-		Player to = getGameHome().findPlayer(chatTo);
-		to.onEvent(getGameEvent());
+		if (chatTo.equals("*")) {
+			for (Player p : findAllLoggedIn())
+				chatTo(p, helper);
+		} else {
+			Player to = getGameHome().findPlayer(chatTo);
+			chatTo(to, helper);
+		}
+	}
+
+	private void chatTo(Player player, GameEventHelper helper) {
+		helper.setValue("chat.to", player.getAlias());
+		player.onEvent(helper.getEvent());
 	}
 
 	protected GameEvent event() {
