@@ -125,7 +125,7 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 		RootPanel.get(layoutId+".tableactive").setVisible(visibility);
 		RootPanel.get(layoutId+".inputspin").setVisible(visibility);
 		RootPanel.get(layoutId+".inputpower").setVisible(visibility);
-		RootPanel.get(layoutId+".tablefg").setVisible(visibility);
+//		RootPanel.get(layoutId+".tablefg").setVisible(visibility);
 		RootPanel.get(layoutId+".tablebg").setVisible(visibility);
 
 	}

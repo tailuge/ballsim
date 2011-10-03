@@ -33,7 +33,7 @@ public class BilliardsViewLayout implements AimChange {
 	public BilliardsViewLayout(int width, String layoutId) {
 		
 		int height = width * 2;
-		int inputHeight = height/8;
+		int inputHeight = height/10;
 		this.layoutId = layoutId;
 		
 		spin = new SpinInputCanvas(inputHeight, inputHeight, this);
@@ -46,9 +46,10 @@ public class BilliardsViewLayout implements AimChange {
 		actionButton.setWidth(inputHeight+"px");
 		actionButton.setHeight(inputHeight+"px");
 		loginButton.setEnabled(true);
+		
 		addElementsToRoot();
 
-		RootPanel.get(layoutId+".tablefg").setSize(width+"px", height+"px");
+//		RootPanel.get(layoutId+".tablefg").setSize(width+"px", height+"px");
 		RootPanel.get(layoutId+".tablebg").setSize(width+"px", height+"px");	
 		RootPanel.get(layoutId+".pad").setSize(width+"px", height+"px");	
 
