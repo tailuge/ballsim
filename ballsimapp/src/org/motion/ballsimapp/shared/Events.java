@@ -21,6 +21,12 @@ public class Events {
 	public final static String WINNER = "winner";
 	public final static String LOSER = "loser";
 
+	// chat 
+	
+	public final static String CHAT = "chat";
+	public final static String CHAT_TO = "chat.to";
+	public final static String CHAT_MESSAGE = "chat.message";
+
 	// billiards specific (move to another class?)
 
 	public final static String BEGIN_AIMING = "aiming";

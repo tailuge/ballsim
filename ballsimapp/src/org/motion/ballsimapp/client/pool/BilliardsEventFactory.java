@@ -57,6 +57,13 @@ public class BilliardsEventFactory {
 		return Events.event(INITIATE_CONNECT, "");
 	}
 
+	public static GameEvent sendChat(String message) {
+		GameEvent chat = Events.event(ACTION, CHAT);
+		chat.addAttribute(new GameEventAttribute(CHAT_TO, "*"));
+		chat.addAttribute(new GameEventAttribute(CHAT_MESSAGE, message));
+		return chat;
+	}
+
 	public static GameEvent hitOutcome(Table table, Aim aim) {
 		Outcome outcome = Outcome.evaluate(table);
 
