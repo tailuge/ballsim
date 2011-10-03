@@ -14,9 +14,13 @@ import com.google.gwt.user.client.ui.RootPanel;
 public class BilliardsViewImpl extends BilliardsViewLayout implements
 		BilliardsView {
 
+	private final ChatView chatView;
+	
 	public BilliardsViewImpl(int width, String layoutId, String defaultId) {
 		super(width, layoutId);
-	
+
+		chatView = new ChatView(width,layoutId);
+		
 		playerId.setText(defaultId);
 		actionButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -38,12 +42,13 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 
 	@Override
 	public void appendMessage(String message) {
-		messageArea.setText(message + newline + messageArea.getText());
+		chatView.appendMessage(message);
 	}
 
 	@Override
 	public void setEventHandler(GWTGameEventHandler eventHandler) {
 		this.eventHandler = eventHandler;
+		chatView.setEventHandler(eventHandler);
 	}
 
 	@Override

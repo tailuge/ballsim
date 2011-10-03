@@ -11,7 +11,6 @@ import org.motion.ballsimapp.client.pool.handlers.AimChange;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class BilliardsViewLayout implements AimChange {
@@ -22,10 +21,8 @@ public class BilliardsViewLayout implements AimChange {
 	protected final Button actionButton = new Button("Hit");
 	protected final Button loginButton = new Button("Login");
 	protected final TableCanvas tableCanvas;
-	protected final TextArea messageArea = new TextArea();
 	protected final TextBox playerId = new TextBox();
 	protected final PasswordTextBox password = new PasswordTextBox();
-	protected static final String newline = "\n";
 
 	protected GWTGameEventHandler eventHandler;
 
@@ -43,8 +40,6 @@ public class BilliardsViewLayout implements AimChange {
 		power = new PowerInputCanvas(width - 2*inputHeight, inputHeight, this);
 		aim = new AimInputCanvas(width, height, this);
 		tableCanvas = new TableCanvas(width, height);
-		messageArea.setWidth(width  + "px");
-		messageArea.setHeight(width/2  + "px");
 		this.playerId.setWidth(width/3  + "px");
 		this.password.setWidth(width/3  + "px");
 		this.password.setText("secret");
@@ -68,7 +63,6 @@ public class BilliardsViewLayout implements AimChange {
 		RootPanel.get(layoutId+".inputspin").add(spin.getInitialisedCanvas());
 		RootPanel.get(layoutId+".inputpower").add(power.getInitialisedCanvas());
 		RootPanel.get(layoutId+".inputhit").add(actionButton);
-		RootPanel.get(layoutId+".message").add(messageArea);
 	}
 
 	@Override
