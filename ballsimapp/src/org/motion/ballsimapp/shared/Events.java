@@ -24,6 +24,7 @@ public class Events {
 	// chat 
 	
 	public final static String CHAT = "chat";
+	public final static String CHATTING = "chatting";
 	public final static String CHAT_TO = "chat.to";
 	public final static String CHAT_MESSAGE = "chat.message";
 
@@ -82,6 +83,11 @@ public class Events {
 	public static boolean isState(GameEvent event, String value) {
 		return event.hasAttribute(STATE)
 				&& event.getAttribute(STATE).getValue().equals(value);
+	}
+
+	public static boolean isAction(GameEvent event, String value) {
+		return event.hasAttribute(ACTION)
+				&& event.getAttribute(ACTION).getValue().equals(value);
 	}
 
 }

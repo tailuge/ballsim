@@ -12,7 +12,7 @@ import org.motion.ballsimapp.shared.GameEvent;
 
 import com.google.gwt.core.client.GWT;
 
-public class ViewingMode extends BilliardsMode {
+public class ViewingMode extends ChatMode {
 
 	public ViewingMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
@@ -41,6 +41,9 @@ public class ViewingMode extends BilliardsMode {
 			view.showPlacer();
 			return this;
 		}
+
+		if (handleChat(event))
+			return this;
 
 		GWT.log("ViewingMode handled unexpected event:" + event);
 

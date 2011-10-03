@@ -130,4 +130,10 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 
 	}
 
+
+	@Override
+	public void setChatEnable(boolean enable) {
+		chatView.setChatEnable(enable);
+	}
+
 }
