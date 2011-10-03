@@ -11,7 +11,7 @@ import org.motion.ballsimapp.shared.GameEvent;
 
 import com.google.gwt.core.client.GWT;
 
-public class PlacingMode extends BilliardsMode {
+public class PlacingMode extends ChatMode {
 
 	public PlacingMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
@@ -37,6 +37,9 @@ public class PlacingMode extends BilliardsMode {
 			model.sendPlaceBallUpdate(input);
 			return new AimingMode(model, view);
 		}
+
+		if (handleChat(event))
+			return this;
 
 		GWT.log("PlacingMode handled unexpected event:" + event);
 

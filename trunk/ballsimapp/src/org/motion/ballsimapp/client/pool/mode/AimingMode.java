@@ -12,7 +12,7 @@ import org.motion.ballsimapp.shared.GameEvent;
 import com.google.gwt.core.client.GWT;
 
 
-public class AimingMode extends BilliardsMode {
+public class AimingMode extends ChatMode {
 
 	public AimingMode(BilliardsModel model,BilliardsView view) {
 		super(model,view);
@@ -40,6 +40,9 @@ public class AimingMode extends BilliardsMode {
 		{			
 			return new CalculationMode(model,view,BilliardsMarshaller.aimFromEvent(event),true);
 		}
+		
+		if (handleChat(event))
+			return this;
 		
 		GWT.log("AimingMode handled unexpected event:"+event);
 		

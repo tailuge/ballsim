@@ -33,4 +33,5 @@ public abstract class BilliardsMode {
 			return new AimingMode(model, view);
 	}
 
+
 }
