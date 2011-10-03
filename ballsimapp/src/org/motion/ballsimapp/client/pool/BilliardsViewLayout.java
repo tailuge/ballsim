@@ -29,12 +29,16 @@ public class BilliardsViewLayout implements AimChange {
 
 	protected GWTGameEventHandler eventHandler;
 
+	protected final String layoutId;
+	
 	protected boolean aiming;
 
-	public BilliardsViewLayout(int width, String playerId) {
+	public BilliardsViewLayout(int width, String layoutId) {
 		
 		int height = width * 2;
 		int inputHeight = height/8;
+		this.layoutId = layoutId;
+		
 		spin = new SpinInputCanvas(inputHeight, inputHeight, this);
 		power = new PowerInputCanvas(width - 2*inputHeight, inputHeight, this);
 		aim = new AimInputCanvas(width, height, this);
@@ -43,30 +47,28 @@ public class BilliardsViewLayout implements AimChange {
 		messageArea.setHeight(width/2  + "px");
 		this.playerId.setWidth(width/3  + "px");
 		this.password.setWidth(width/3  + "px");
-		this.playerId.setText(playerId);
 		this.password.setText("secret");
 		actionButton.setWidth(inputHeight+"px");
 		actionButton.setHeight(inputHeight+"px");
 		loginButton.setEnabled(true);
 		addElementsToRoot();
 
-		RootPanel.get(playerId+".tablefg").setSize(width+"px", height+"px");
-		RootPanel.get(playerId+".tablebg").setSize(width+"px", height+"px");	
-		RootPanel.get(playerId+".pad").setSize(width+"px", height+"px");	
+		RootPanel.get(layoutId+".tablefg").setSize(width+"px", height+"px");
+		RootPanel.get(layoutId+".tablebg").setSize(width+"px", height+"px");	
+		RootPanel.get(layoutId+".pad").setSize(width+"px", height+"px");	
 
 	}
 
 	protected void addElementsToRoot() {
-		final String base = playerId.getText() + ".";
-		RootPanel.get(base+"login").add(playerId);
-		RootPanel.get(base+"login").add(password);
-		RootPanel.get(base+"login").add(loginButton);
-		RootPanel.get(base+"table").add(tableCanvas.getInitialisedCanvas());
-		RootPanel.get(base+"tableactive").add(aim.canvas);
-		RootPanel.get(base+"inputspin").add(spin.getInitialisedCanvas());
-		RootPanel.get(base+"inputpower").add(power.getInitialisedCanvas());
-		RootPanel.get(base+"inputhit").add(actionButton);
-		RootPanel.get(base+"message").add(messageArea);
+		RootPanel.get(layoutId+".login").add(playerId);
+		RootPanel.get(layoutId+".login").add(password);
+		RootPanel.get(layoutId+".login").add(loginButton);
+		RootPanel.get(layoutId+".table").add(tableCanvas.getInitialisedCanvas());
+		RootPanel.get(layoutId+".tableactive").add(aim.canvas);
+		RootPanel.get(layoutId+".inputspin").add(spin.getInitialisedCanvas());
+		RootPanel.get(layoutId+".inputpower").add(power.getInitialisedCanvas());
+		RootPanel.get(layoutId+".inputhit").add(actionButton);
+		RootPanel.get(layoutId+".message").add(messageArea);
 	}
 
 	@Override
