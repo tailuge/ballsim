@@ -14,8 +14,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 public class BilliardsViewImpl extends BilliardsViewLayout implements
 		BilliardsView {
 
-	public BilliardsViewImpl(int width, String playerId) {
-		super(width, playerId);
+	public BilliardsViewImpl(int width, String layoutId, String defaultId) {
+		super(width, layoutId);
+	
+		playerId.setText(defaultId);
 		actionButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				actionButton.setEnabled(false);
@@ -114,13 +116,12 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 	@Override
 	public void setVisibility(boolean visibility) {
 		actionButton.setVisible(visibility);
-		String base = playerId.getText()+".";
-		RootPanel.get(base+"table").setVisible(visibility);
-		RootPanel.get(base+"tableactive").setVisible(visibility);
-		RootPanel.get(base+"inputspin").setVisible(visibility);
-		RootPanel.get(base+"inputpower").setVisible(visibility);
-		RootPanel.get(base+"tablefg").setVisible(visibility);
-		RootPanel.get(base+"tablebg").setVisible(visibility);
+		RootPanel.get(layoutId+".table").setVisible(visibility);
+		RootPanel.get(layoutId+".tableactive").setVisible(visibility);
+		RootPanel.get(layoutId+".inputspin").setVisible(visibility);
+		RootPanel.get(layoutId+".inputpower").setVisible(visibility);
+		RootPanel.get(layoutId+".tablefg").setVisible(visibility);
+		RootPanel.get(layoutId+".tablebg").setVisible(visibility);
 
 	}
 
