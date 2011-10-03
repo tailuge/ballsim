@@ -48,6 +48,10 @@ import org.motion.ballsim.util.UtilEvent;
  * Use scaledCrossProduct
  * events: 115
  * vectors: 78837
+ * 
+ * More chained vector combinations.
+ * events: 115
+ * vectors: 75645
  */
 public class PerformanceTest {
 

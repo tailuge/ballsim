@@ -1,7 +1,5 @@
 package org.motion.ballsim.physics.ball;
 
-import java.io.Serializable;
-
 import org.motion.ballsim.gwtsafe.Rotation;
 import org.motion.ballsim.gwtsafe.Vector3D;
 
@@ -22,18 +20,12 @@ import org.motion.ballsim.gwtsafe.Vector3D;
  *         interpolated using simple equations of motion.
  * 
  */
-public final class Event implements Serializable{
-
+public final class Event {
 
 	/*
 	 * Main characteristics of an event
 	 */
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5080397564947016351L;
-	
+		
 	public Vector3D pos;
 	public Vector3D vel;
 	public Vector3D angularPos;
@@ -141,6 +133,9 @@ public final class Event implements Serializable{
 	public Event advanceDelta(double delta) 
 	{
 
+//		if (state.isMotionlessEndState())
+//			return stationaryAdvanceDelta(delta);
+		
 		// v = v0 + a * t
 
 		Vector3D vel_ = vel.add(delta,acceleration());
@@ -166,7 +161,13 @@ public final class Event implements Serializable{
 		return new Event(pos_,vel_,angularPos_,angularPosPerp_,angularVel_,sidespin_,state,t+delta,Transition.Interpolated,ballId,otherBallId);
 	}
 
-
+/*
+ * TODO
+	private Event stationaryAdvanceDelta(double delta)
+	{
+		return new Event(pos,vel,angularPos,angularPosPerp,angularVel,sidespin,state,t+delta,Transition.Interpolated,ballId,otherBallId);
+	}
+	*/
 	public String toString() {
 		return state+" t:" + t + " "+type 
 		+ " p:" + pos + " v:" + vel

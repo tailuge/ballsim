@@ -1,6 +1,5 @@
 package org.motion.ballsim.physics;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -26,9 +25,7 @@ import org.motion.ballsim.util.UtilEvent;
  *         position to be evaluated to the point all balls are at rest.
  * 
  */
-public final class Table implements Serializable {
-
-	private static final long serialVersionUID = -811803763165641433L;
+public final class Table {
 
 	private final static Logger logger = new Logger("Table", false);
 
