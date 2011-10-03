@@ -52,30 +52,31 @@ public class TestSimplePoolStatemachine {
 		jim.login().requestGame().assertAiming().pot(1).assertAiming();
 		bob.assertViewing();
 	}
-	
+
 	@Test
 	public void testPlayerMissesABallAndTurnOver() {
 		bob.login().requestGame().assertAwaitingGame();
 		jim.login().requestGame().assertAiming().miss().assertViewing();
 	}
-	
+
 	@Test
 	public void testPlayerPotsAllBallsAndWins() {
 		bob.login().requestGame().assertAwaitingGame();
-		jim.login().requestGame().assertAiming().pot(1,2).assertWinner();
+		jim.login().requestGame().assertAiming().pot(1, 2).assertWinner();
 		bob.assertLoser();
 	}
-	
+
 	@Test
 	public void testPlayerPotsAllInOffAndLoses() {
 		bob.login().requestGame().assertAwaitingGame();
-		jim.login().requestGame().assertAiming().pot(1,2,0).assertLoser();
+		jim.login().requestGame().assertAiming().pot(1, 2, 0).assertLoser();
 		bob.assertWinner();
 	}
-	
+
 	@Test
 	public void testLoginOnAwaitingGame() {
-		bob.login().assertLoggedIn().requestGame().assertAwaitingGame().login().assertLoggedIn();
+		bob.login().assertLoggedIn().requestGame().assertAwaitingGame().login()
+				.assertLoggedIn();
 	}
 
 	@Test
@@ -84,6 +85,13 @@ public class TestSimplePoolStatemachine {
 		jim.login().requestGame().assertAiming();
 		jim.loginDuringPlay().assertLoggedIn();
 		bob.assertLoggedIn();
+	}
+
+	@Test
+	public void testChatting() {
+		bob.login();
+		jim.login().chat(bob, "Gay");
+		bob.assertChatting("Gay");
 	}
 
 }

@@ -1,8 +1,5 @@
 package org.motion.ballsimapp.shared;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 import junit.framework.Assert;
 
 import org.motion.ballsim.gwtsafe.Vector3D;
@@ -29,15 +26,16 @@ public class CalculationPerformanceTestDelegate extends AbstractTestDelegate {
 	}
 
 	public final void testTableEvaluationPerfomance() {
-		int numberOfEvents = doTest();
+		int numberOfEvents = 0;
 		Vector3D.instanceCount = 0;
 		long start = now();
 		for (int i = 0; i < numberOfIterations; ++i)
-			doTest();
-		System.err.println("events: " + numberOfEvents);
-		System.err.println("vectors: " + Vector3D.instanceCount);
-		System.err.println("time taken for " + numberOfIterations
+			numberOfEvents = doTest();
+		System.out.println("events: " + numberOfEvents);
+		System.out.println("vectors: " + Vector3D.instanceCount);
+		System.out.println("time taken for " + numberOfIterations
 				+ " iterations: " + (now() - start));
+
 	}
 
 	private int doTest() {
@@ -50,10 +48,12 @@ public class CalculationPerformanceTestDelegate extends AbstractTestDelegate {
 	}
 
 	public static void main(String[] args) throws Exception {
+		System.out.println("Hit Return to Start Test");
+		readLine();
 		new CalculationPerformanceTestDelegate(
 				CalculationPerformanceTestDelegate.class.getName())
 				.testTableEvaluationPerfomance();
 		System.out.println("Test Complete, Hit Return to Exit");
-		new BufferedReader(new InputStreamReader(System.in)).readLine();
+		readLine();
 	}
 }

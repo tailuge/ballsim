@@ -127,4 +127,18 @@ public class SimplePoolPlayer extends Player {
 		return assertLastStateWas("loser");
 	}
 
+	public SimplePoolPlayer assertChatting(String expectedMessage) {
+		assertLastStateWas("chatting");
+		Assert.assertEquals(expectedMessage, lastAttributeValue("chat.message"));
+		return this;
+	}
+
+	public SimplePoolPlayer chat(Player to, String message) {
+		GameEvent event = newGameEvent("chat");
+		event.addAttribute(new GameEventAttribute("chat.from", getAlias()));
+		event.addAttribute(new GameEventAttribute("chat.to", to.getAlias()));
+		event.addAttribute(new GameEventAttribute("chat.message", message));
+		notify(event);
+		return this;
+	}
 }

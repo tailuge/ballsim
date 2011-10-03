@@ -1,5 +1,8 @@
 package org.motion.ballsimapp.shared;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
 public abstract class AbstractTestDelegate {
@@ -21,4 +24,7 @@ public abstract class AbstractTestDelegate {
 		return System.currentTimeMillis();
 	}
 
+	protected static void readLine() throws IOException {
+		new BufferedReader(new InputStreamReader(System.in)).readLine();
+	}
 }

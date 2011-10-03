@@ -6,6 +6,7 @@ import org.oxtail.game.billiards.simplepool.model.SimplePoolGame;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolMove;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolTable;
 import org.oxtail.game.model.Player;
+import org.oxtail.game.server.event.GameEventHelper;
 import org.oxtail.game.state.AbstractGameState;
 import org.oxtail.game.state.Action;
 import org.oxtail.game.state.GameEventContext;
@@ -42,7 +43,11 @@ public abstract class AbstractSimplePoolGameState extends
 
 	@Action
 	public void chat() {
-		// do nothing by default
+		GameEventHelper helper = new GameEventHelper(getGameEvent());
+		String chatTo = helper.getString("chat.to");
+		helper.setValue("state", "chatting");
+		Player to = getGameHome().findPlayer(chatTo);
+		to.onEvent(getGameEvent());
 	}
 
 	protected GameEvent event() {
