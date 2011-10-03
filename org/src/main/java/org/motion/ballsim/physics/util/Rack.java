@@ -15,6 +15,39 @@ public final class Rack {
 
 	public static void rack(Table table, String type, String seed) {
 
+		double random = ((double)(seed.hashCode() & 31)) / 10000;
+		double triangleY = Math.cos(Math.PI/6) * 2.001 * Ball.R + random;
+		double triangleX = Math.cos(2*Math.PI/6) * 2.001 * Ball.R + random;
+		
+		Vector3D triangleDownLeft = new Vector3D(-triangleX,triangleY,0);
+		Vector3D across = new Vector3D(Ball.R * 2.001,0,0);
+		if (type.equals("SimplePool"))
+		{
+			table.ball(1).setFirstEvent(UtilEvent.stationary(new Vector3D(0,Ball.R * 15, 0)));
+			Vector3D pos = new Vector3D(0, - Ball.R * 15, 0);
+			int b = 2;
+			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			pos = pos.add(triangleDownLeft);
+			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			pos = pos.add(across);
+			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			pos = pos.add(triangleDownLeft);
+			pos = pos.add(-1,across);
+			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			pos = pos.add(across);
+			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			pos = pos.add(across);
+			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			pos = pos.add(triangleDownLeft);
+			pos = pos.add(-1,across);
+			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			pos = pos.add(across);
+			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			pos = pos.add(triangleDownLeft);
+			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			return;
+		}
+		
 		if (type.equals("WhiteOnly")) {
 			table.ball(1).setFirstEvent(UtilEvent.stationary(Vector3D.ZERO));
 			return;

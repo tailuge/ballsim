@@ -1,6 +1,5 @@
 package org.motion.ballsim.gwtsafe;
 
-import java.io.Serializable;
 
 /**
  * This class implements vectors in a three-dimensional space.
@@ -13,7 +12,7 @@ import java.io.Serializable;
  * @since 1.2
  */
 
-public final class Vector3D implements Serializable {
+public final class Vector3D {
 
 	public static long instanceCount = 0;
 	
@@ -57,9 +56,6 @@ public final class Vector3D implements Serializable {
 	/** Default format. */
 	// private static final Vector3DFormat DEFAULT_FORMAT =
 	// Vector3DFormat.getInstance();
-
-	/** Serializable version identifier. */
-	private static final long serialVersionUID = 5133268763396045979L;
 
 	/** Abscissa. */
 	private final double x;

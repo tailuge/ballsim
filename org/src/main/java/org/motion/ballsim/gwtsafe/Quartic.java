@@ -64,19 +64,9 @@ public final class Quartic
 			{
 				
 				double bi=0;
-				try 
-				{
-					bi = solve(p, last, s);
-					roots.add(bi);
-				} 
-				catch (Exception e) 
-				{
-					
-					// no root
-				}
-				
-				
-				
+				double root = solveOrInf(p, last, s); 
+				bi = (root == Double.POSITIVE_INFINITY) ? bi : root;
+				roots.add(bi);
 			}
 			last = s;
 		}
@@ -97,15 +87,10 @@ public final class Quartic
 	{
 		double smaller = Quadratic.nextSmallest(candidate);
 		PolynomialFunction p = new PolynomialFunction(coeffs);
-				
-		try {
-			double smallerRoot = solve(p, 0, smaller);
-			return smallerRoot;
-
-		} catch (MaxIterationsExceededException e) {
+		double smallerRoot = solveOrInf(p, 0, smaller);
+		if (smallerRoot == Double.POSITIVE_INFINITY)
 			return candidate;
-		}
-		
+		return smallerRoot;
 	}
 	
     public static double evalAt(double[] coeff,double t)
@@ -118,6 +103,43 @@ public final class Quartic
     	return new PolynomialFunction(coeff).toString();
     }
     
+    /*
+     *  Bisection method imported from apache-commons-math
+     *  WITH NO EXCEPTIONS - returns Double.POSITIVY_INFINITY if no root
+     */
+
+    public static double solveOrInf(final PolynomialFunction f, double min, double max){
+
+    double m;
+    double fm;
+    double fmin;
+    
+    if (f.value(min)*f.value(max) > 0)
+    	return Double.POSITIVE_INFINITY;
+    
+    int i = 0;
+    while (i < maximalIterationCount) {
+        m = midpoint(min, max);
+       fmin = f.value(min);
+       fm = f.value(m);
+
+        if (fm * fmin > 0.0) {
+            // max and m bracket the root.
+            min = m;
+        } else {
+            // min and m bracket the root.
+            max = m;
+        }
+
+        if (Math.abs(max - min) <= absoluteAccuracy) {
+            return midpoint(min, max);
+        }
+        ++i;
+    }
+
+    return Double.POSITIVE_INFINITY;
+    
+    }
 
     /*
      *  Bisection method imported from apache-commons-math
