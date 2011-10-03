@@ -27,6 +27,9 @@ import org.oxtail.game.state.StateFactory;
  * game.shot.ballspotted // balls potted, empty indicates none, comma separated
  * indicates which<br>
  * 
+ * chat.from // who a chat message is coming from
+ * chat.to // who a chat message is going to
+ * chat.message // the chat message 
  */
 public class SimplePoolStatemachine implements GameStatemachine {
 
