@@ -52,6 +52,10 @@ import org.motion.ballsim.util.UtilEvent;
  * More chained vector combinations.
  * events: 115
  * vectors: 75645
+ * 
+ * Dont collide with inpocket balls
+ * events: 115
+ * vectors: 66205
  */
 public class PerformanceTest {
 
