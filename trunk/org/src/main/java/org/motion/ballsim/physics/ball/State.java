@@ -143,6 +143,11 @@ public enum State {
 		return State.Sliding;
 	}
 
+	public boolean cannotCollide()
+	{
+		return this == State.FallingInPocket || this == State.InPocket;
+	}
+	
 	public boolean canCollideWithCushions() {
 		return this == State.Sliding || this == State.Rolling;
 	}

@@ -172,10 +172,17 @@ public final class Collision {
 
 		for (Ball a : table.balls()) {
 			tested.add(a);
+			
+			if (a.lastEvent().state.cannotCollide())
+				continue;
+			
 			for (Ball b : table.balls()) {
 				if (tested.contains(b))
 					continue;
 
+				if (b.lastEvent().state.cannotCollide())
+					continue;
+				
 				if (a.lastEvent().state.isMotionlessEndState() && b.lastEvent().state.isMotionlessEndState())
 					continue;
 				
