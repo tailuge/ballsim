@@ -9,7 +9,6 @@ import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
-import org.motion.ballsim.physics.ball.State;
 import org.motion.ballsim.physics.util.EventPair;
 import org.motion.ballsim.physics.util.Interpolate;
 import org.motion.ballsim.physics.util.Position;
@@ -186,8 +185,6 @@ public final class Table {
 			e.t = 0;
 			e.vel = Vector3D.ZERO;
 			e.angularVel = Vector3D.ZERO;
-			e.state = State.Stationary;
-
 			ball.setFirstEvent(e);
 		}
 	}

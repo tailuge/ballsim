@@ -70,5 +70,13 @@ public class UtilEvent
 		
 		return radialEvents;
 	}	
+	
+	public static void prettyPrint(Collection<Event> events)
+	{
+		for(Event event : events)
+		{
+			System.out.println(event.t + " ball:" +event.ballId + " state:" +event.state + " transition:" + event.type);
+		}
+	}
 
 }
