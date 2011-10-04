@@ -56,6 +56,11 @@ import org.motion.ballsim.util.UtilEvent;
  * Dont collide with inpocket balls
  * events: 115
  * vectors: 66205
+ * 
+ * Advance stationary balls in time requires no calc
+ * events: 115
+ * vectors: 62757
+ * 
  */
 public class PerformanceTest {
 

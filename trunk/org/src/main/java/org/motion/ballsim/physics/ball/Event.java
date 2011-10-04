@@ -120,7 +120,6 @@ public final class Event {
 	public Vector3D advanceDeltaPosition(double delta)
 	{
 		return pos.addScaledPair(delta,vel,delta * delta / 2.0,acceleration());
-		// return pos.add(delta,vel).add(delta * delta / 2.0,acceleration());		
 	}
 	
 	/**
@@ -133,8 +132,8 @@ public final class Event {
 	public Event advanceDelta(double delta) 
 	{
 
-//		if (state.isMotionlessEndState())
-//			return stationaryAdvanceDelta(delta);
+		if (state.isMotionlessEndState())
+			return stationaryAdvanceDelta(delta);
 		
 		// v = v0 + a * t
 
@@ -161,13 +160,11 @@ public final class Event {
 		return new Event(pos_,vel_,angularPos_,angularPosPerp_,angularVel_,sidespin_,state,t+delta,Transition.Interpolated,ballId,otherBallId);
 	}
 
-/*
- * TODO
 	private Event stationaryAdvanceDelta(double delta)
 	{
 		return new Event(pos,vel,angularPos,angularPosPerp,angularVel,sidespin,state,t+delta,Transition.Interpolated,ballId,otherBallId);
 	}
-	*/
+	
 	public String toString() {
 		return state+" t:" + t + " "+type 
 		+ " p:" + pos + " v:" + vel
