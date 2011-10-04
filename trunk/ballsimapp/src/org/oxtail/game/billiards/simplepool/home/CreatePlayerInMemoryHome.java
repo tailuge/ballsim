@@ -15,7 +15,7 @@ public class CreatePlayerInMemoryHome extends InMemoryGameHome {
 			return super.findPlayer(playerAlias);
 		} catch (PlayerNotFoundException e) {
 			Player player = new Player(playerAlias);
-			player.setState("LoggedIn");
+			player.setState("LoggedOut");
 			storePlayer(player);
 			return player;
 		}
