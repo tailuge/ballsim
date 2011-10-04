@@ -45,4 +45,11 @@ public class GameEventHelper {
 	public GameEvent getEvent() {
 		return event;
 	}
+
+	public void removeAttribute(String name) {
+		
+	}
+
+
 }
+

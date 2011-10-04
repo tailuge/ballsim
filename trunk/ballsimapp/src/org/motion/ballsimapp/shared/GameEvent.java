@@ -36,6 +36,17 @@ public class GameEvent implements Serializable {
 		return null;
 	}
 
+	public boolean removeAttribute(String attributeName) {
+		int index = 0;
+		for (GameEventAttribute a : attributes) {
+			if (a.getName().equals(attributeName))
+				attributes.remove(index);
+			index++;
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public String toString() {
 		return "GameEvent [attributes=" + attributes + "]";
