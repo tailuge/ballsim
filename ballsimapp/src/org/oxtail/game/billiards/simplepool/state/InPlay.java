@@ -108,8 +108,4 @@ public class InPlay extends AbstractSimplePoolGameState {
 		abortGame();
 	}
 
-	@Action
-	public void chat() {
-		// TODO
-	}
 }
