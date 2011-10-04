@@ -19,6 +19,12 @@ public abstract class ChatMode extends BilliardsMode {
 	protected boolean handleChat(GameEvent event)
 	{
 		
+		if(Events.isState(event,CHATTING))
+		{
+			view.appendMessage("opp:"+event.getAttribute(CHAT_MESSAGE).getValue());
+			return true;
+		}
+
 		if(Events.isAction(event,CHAT))
 		{
 			model.notify(event);
@@ -26,11 +32,6 @@ public abstract class ChatMode extends BilliardsMode {
 			return true;
 		}
 		
-		if(Events.isState(event,CHATTING))
-		{
-			view.appendMessage("opp:"+event.getAttribute(CHAT_MESSAGE).getValue());
-			return true;
-		}
 		
 		return false;
 	}
