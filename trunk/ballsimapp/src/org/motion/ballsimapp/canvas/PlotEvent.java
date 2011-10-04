@@ -36,6 +36,9 @@ public class PlotEvent {
 		double x = scale.screenX(e.pos.getX());
 		double y = scale.screenY(e.pos.getY());
 
+		if (e.state == State.InPocket)
+			return;
+		
 		context.beginPath();
 		context.setLineWidth(1);
 		context.setStrokeStyle(black);
