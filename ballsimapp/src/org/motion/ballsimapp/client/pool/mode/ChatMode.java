@@ -26,7 +26,7 @@ public abstract class ChatMode extends BilliardsMode {
 			return true;
 		}
 		
-		if(Events.isAction(event,CHATTING))
+		if(Events.isState(event,CHATTING))
 		{
 			view.appendMessage("opp:"+event.getAttribute(CHAT_MESSAGE).getValue());
 			return true;
