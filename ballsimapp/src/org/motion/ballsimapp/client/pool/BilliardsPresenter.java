@@ -38,4 +38,5 @@ public class BilliardsPresenter implements GWTGameEventHandler {
 	public void handleEvent(GameEvent event) {
 		mode = mode.handle(event);
 	}
+		
 }

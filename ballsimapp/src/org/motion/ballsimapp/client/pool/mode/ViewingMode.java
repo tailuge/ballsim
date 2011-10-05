@@ -44,7 +44,7 @@ public class ViewingMode extends ChatMode {
 
 		if (handleChat(event))
 			return this;
-
+		
 		GWT.log("ViewingMode handled unexpected event:" + event);
 
 		return this;

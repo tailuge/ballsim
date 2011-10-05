@@ -44,8 +44,7 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 	@Override
 	public boolean execute() {
 		
-		// do two iterations per call
-		boolean busy = model.table.generateNext();// && model.table.generateNext();
+		boolean busy = model.table.generateNext();
 		
 		if (!busy) {
 			if (sendResult) {
@@ -84,7 +83,6 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 
 		pending.add(event);
 
-		//GWT.log("CalculationMode added pending event:" + event);
 		return this;
 	}
 

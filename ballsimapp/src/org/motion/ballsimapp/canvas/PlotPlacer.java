@@ -30,10 +30,11 @@ public class PlotPlacer {
 	{
 		double x = pos.getX();
 		double y = pos.getY();
-		if (x>Cushion.xp) x=Cushion.xp;
-		if (x<Cushion.xn) x=Cushion.xn;
-		if (y>Cushion.yp) y=Cushion.yp;
-		if (y<Cushion.yn) y=Cushion.yn;
+		final double scaleInside = 0.999;
+		if (x>=Cushion.xp) x=Cushion.xp * scaleInside;
+		if (x<=Cushion.xn) x=Cushion.xn * scaleInside;
+		if (y>=Cushion.yp) y=Cushion.yp * scaleInside;
+		if (y<=Cushion.yn) y=Cushion.yn * scaleInside;
 		return new Vector3D(x,y,0);
 	}
 	
