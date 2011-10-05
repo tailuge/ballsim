@@ -32,13 +32,6 @@ public class Events {
 
 	public final static String BEGIN_AIMING = "aiming";
 	public final static String BEGIN_VIEWING = "viewing";
-	public final static String AIM_UPDATE = "aimUpdate";
-	public final static String AIM_COMPLETE = "aimComplete";
-	public final static String PLACEBALL_UPDATE = "placeUpdate";
-	public final static String PLACEBALL_COMPLETE = "placeComplete";
-	public final static String ANIMATION_COMPLETE = "animationComplete";
-	public final static String CURSOR_INPUT = "cursorInput";
-	public final static String CURSOR_INPUT_COMPLETE = "cursorInputComplete";
 	public final static String BALL_IN_HAND = "ballinhand";
 
 	public static final String GAME_SHOT_ANYBALLHIT = "game.shot.anyballhit";
@@ -49,7 +42,19 @@ public class Events {
 
 	public static final String GAME_RACK_TYPE = "game.rack.type";
 	public static final String GAME_RACK_SEED = "game.rack.seed";
+
+	// used within client
 	
+	public final static String AIM_UPDATE = "aimUpdate";
+	public final static String AIM_COMPLETE = "aimComplete";
+	public final static String PLACEBALL_UPDATE = "placeUpdate";
+	public final static String PLACEBALL_COMPLETE = "placeComplete";
+	public final static String ANIMATION_COMPLETE = "animationComplete";
+	public final static String CURSOR_INPUT = "cursorInput";
+	public final static String CURSOR_INPUT_COMPLETE = "cursorInputComplete";
+	public final static String CALCULATION_COMPLETE = "calculationComplete";
+	public final static String TABLE_CHECKSUM = "tablechecksum";
+
 	// static factories for event creation
 
 	public static GameEvent event(String name, String value) {
