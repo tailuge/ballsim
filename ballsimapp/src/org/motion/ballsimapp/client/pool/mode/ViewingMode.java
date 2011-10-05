@@ -30,8 +30,8 @@ public class ViewingMode extends ChatMode {
 		}
 
 		if (event.hasAttribute(AIM_COMPLETE)) {
-			return new CalculationMode(model, view,
-					BilliardsMarshaller.aimFromEvent(event), false);
+			
+			return new CalculationMode(model, view,event, false);
 		}
 
 		if (event.hasAttribute(PLACEBALL_UPDATE)) {

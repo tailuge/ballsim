@@ -38,7 +38,7 @@ public class AimingMode extends ChatMode {
 
 		if (event.hasAttribute(CURSOR_INPUT_COMPLETE))
 		{			
-			return new CalculationMode(model,view,BilliardsMarshaller.aimFromEvent(event),true);
+			return new CalculationMode(model,view,event,true);
 		}
 		
 		if (handleChat(event))

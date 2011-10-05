@@ -1,11 +1,13 @@
 package org.motion.ballsimapp.client.pool.mode;
 
-import static org.motion.ballsimapp.shared.Events.AIM_COMPLETE;
+import static org.motion.ballsimapp.shared.Events.CALCULATION_COMPLETE;
+import static org.motion.ballsimapp.shared.Events.TABLE_CHECKSUM;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.motion.ballsim.game.Aim;
+import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
 import org.motion.ballsimapp.shared.Events;
@@ -19,14 +21,23 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 	final List<GameEvent> pending = new ArrayList<GameEvent>();
 	final Aim aim;
 	final boolean sendResult;
-
-	public CalculationMode(BilliardsModel model, BilliardsView view, Aim aim,
+	private String remoteChecksum;
+	
+	public CalculationMode(BilliardsModel model, BilliardsView view, GameEvent event,
 			boolean sendResult) {
 		super(model, view);
+		
+		Aim aim = BilliardsMarshaller.aimFromEvent(event);
 		this.sendResult = sendResult;
 		this.aim = aim;
 		model.table.setAim(aim);
-		pending.add(Events.event(AIM_COMPLETE, ""));
+		
+		if (event.hasAttribute(TABLE_CHECKSUM))
+		{
+			remoteChecksum = event.getAttribute(TABLE_CHECKSUM).getValue();
+		}
+
+		pending.add(Events.event(CALCULATION_COMPLETE, ""));
 		Scheduler.get().scheduleIncremental(this);
 	}
 
@@ -54,7 +65,17 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 	@Override
 	public BilliardsMode handle(GameEvent event) {
 
-		if (event.hasAttribute(AIM_COMPLETE)) {
+		if (event.hasAttribute(CALCULATION_COMPLETE)) {
+			if (remoteChecksum != null)
+			{
+				String localChecksum = model.table.getChecksum();
+				if (!localChecksum.equals(remoteChecksum))
+				{
+					view.appendMessage("diverged:");
+					view.appendMessage("remote checksum:"+remoteChecksum);	
+					view.appendMessage("local  checksum:"+localChecksum);
+				}
+			}
 			return new AnimationMode(model, view);
 		}
 

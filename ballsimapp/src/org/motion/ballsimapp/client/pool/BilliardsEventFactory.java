@@ -88,6 +88,11 @@ public class BilliardsEventFactory {
 						+ outcome.cushionsBeforeSecondBall));
 		hitEvent.addAttribute(new GameEventAttribute(GAME_SHOT_ANYBALLHIT,
 				outcome.firstBallHit != 0 ? "true" : "false")); // remove
+		
+		// for debug
+		hitEvent.addAttribute(new GameEventAttribute(TABLE_CHECKSUM,table.getChecksum()));
+		
+		
 		return hitEvent;
 	}
 
