@@ -146,7 +146,7 @@ public final class Rotation implements Serializable {
 
     double norm = axis.getNorm();
     if (norm == 0) {
-      throw new MathRuntimeException();
+    	norm = 1;
     }
 
     double halfAngle = -0.5 * angle;

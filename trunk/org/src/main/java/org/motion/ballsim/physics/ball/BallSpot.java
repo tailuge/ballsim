@@ -32,21 +32,8 @@ public final class BallSpot
 		Rotation rot = Rotation.IDENTITY;
 		Rotation acc = Rotation.IDENTITY;
 
-		try 
-		{
 			rot = new Rotation(velocity, velocity.getNorm() * t);
-		}
-		catch (Exception e)
-		{
-		}
-		
-		try 
-		{
 			acc = new Rotation(acceleration, acceleration.getNorm()* t * t / 2.0);
-		}
-		catch (Exception e)
-		{
-		}
 				
 		return rot.applyTo(acc);		
 	}

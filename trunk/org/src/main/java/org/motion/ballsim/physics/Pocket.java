@@ -63,7 +63,7 @@ public final class Pocket {
 			pot.vel = soonestPocket.pos.subtract(pot.pos).normalize()
 					.scalarMultiply(15);
 			// store target position of pocket in side spin for now.
-			pot.sidespin = soonestPocket.pos;
+			// pot.sidespin = soonestPocket.pos;
 			return pot;
 		}
 

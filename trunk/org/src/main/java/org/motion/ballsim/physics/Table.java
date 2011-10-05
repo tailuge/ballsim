@@ -1,9 +1,9 @@
 package org.motion.ballsim.physics;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
@@ -33,7 +33,7 @@ public final class Table {
 	public static final double accelRoll = -0.8;
 	public static final double accelSlide = -15.0;
 
-	private final Map<Integer, Ball> ballMap = new HashMap<Integer, Ball>();
+	private final Map<Integer, Ball> ballMap = new TreeMap<Integer, Ball>();
 
 	public final boolean hasPockets;
 
@@ -222,13 +222,13 @@ public final class Table {
 		{
 			pre += ball.firstEvent().pos.getNormSq();
 			pre += ball.firstEvent().vel.getNormSq();
-			pre += ball.firstEvent().angularPos.getNormSq();
-			pre += ball.firstEvent().angularVel.getNormSq();
+//			pre += ball.firstEvent().angularPos.getNormSq();
+//			pre += ball.firstEvent().angularVel.getNormSq();
 			
 			post += ball.lastEvent().pos.getNormSq();
 			post += ball.lastEvent().vel.getNormSq();
-			post += ball.lastEvent().angularPos.getNormSq();
-			post += ball.lastEvent().angularVel.getNormSq();
+//			post += ball.lastEvent().angularPos.getNormSq();
+//			post += ball.lastEvent().angularVel.getNormSq();
 			
 		}
 		return "B-"+pre+" A-"+post;
