@@ -53,11 +53,19 @@ public final class Cushion {
 
 		Guard.isTrue(Guard.active && tCollision > 0);
 
+		// this one will produce bad data when starting point is in pocket jaws
+		// TODO: fix on table predicate
 		tCollision = org.motion.ballsim.gwtsafe.Quadratic.latestTrueTime(
 				onTable, tCollision);
 
 		Guard.isTrue(Guard.active && tCollision > 0);
 		Guard.isTrue(Guard.active && tCollision < maxt);
+		if(tCollision<=0 ||tCollision >= maxt)
+		{
+			//System.err.println("bad time in cushion collision: " +tCollision+" tmax="+maxt);
+			//System.err.println(e);
+			return null;
+		}
 
 		Event reflected = Events.reflect(e.advanceDelta(tCollision), axis);
 		if (hasPockets && Position.isCushionEventInPocketRegion(reflected))

@@ -17,6 +17,12 @@ public final class Ball {
 
 	public void add(Event e) {
 		e.ballId = id;
+
+		if (!events.isEmpty())
+		{
+			if (lastEvent().t > e.t)
+				System.err.println("time error "  + lastEvent().t + " > " + e.t);
+		}
 		events.addLast(e);
 	}
 
@@ -33,7 +39,12 @@ public final class Ball {
 	}
 
 	public String toString() {
-		return events.toString();
+		String result = "";
+		for(Event event:events)
+		{
+			result = result + event.toString() + "\n"; 
+		}
+		return result;
 	}
 
 	public Collection<Event> getAllEvents() {
