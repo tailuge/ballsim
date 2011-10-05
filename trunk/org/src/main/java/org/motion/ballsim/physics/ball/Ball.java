@@ -28,6 +28,10 @@ public final class Ball {
 		return events.getLast();
 	}
 
+	public Event firstEvent() {
+		return events.getFirst();
+	}
+
 	public String toString() {
 		return events.toString();
 	}
