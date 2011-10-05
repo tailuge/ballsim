@@ -43,7 +43,7 @@ public class AimingMode extends ChatMode {
 		
 		if (handleChat(event))
 			return this;
-		
+
 		GWT.log("AimingMode handled unexpected event:"+event);
 		
 		return this;

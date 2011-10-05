@@ -3,12 +3,16 @@ package org.motion.ballsimapp.client.pool;
 import org.motion.ballsim.game.Aim;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Table;
-import org.motion.ballsimapp.shared.GameEvent;
+import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsimapp.shared.Events;
+import org.motion.ballsimapp.shared.GameEvent;
 
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
 public class BilliardsMarshaller {
@@ -61,8 +65,26 @@ public class BilliardsMarshaller {
 				v.get("z").isNumber().doubleValue());				
 	}
 	
-	public static Table tableFromEvent()
+	public static JSONObject marshal(Ball ball) 
 	{
-		return null;
+		Event event = ball.firstEvent();		
+		JSONObject jball = new JSONObject();
+		jball.put("pos", marshal(event.pos));
+		jball.put("vel", marshal(event.vel));
+		jball.put("angularVel", marshal(event.angularVel));
+		jball.put("ballId", new JSONNumber(ball.id));		
+		jball.put("state", new JSONString(event.state.toString()));		
+		return jball;
+	}
+
+	public static String marshal(Table table) 
+	{
+		JSONArray ballArray = new JSONArray();
+		int index = 0;
+		for (Ball ball : table.balls())
+		{
+			ballArray.set(index++, marshal(ball));
+		}
+		return ballArray.toString();
 	}
 }

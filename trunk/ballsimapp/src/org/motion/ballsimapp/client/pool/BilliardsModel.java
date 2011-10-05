@@ -18,6 +18,9 @@ public class BilliardsModel extends GWTGameClient {
 
 	GWTGameEventHandler eventHandler;
 
+	public String lastTableShot = "";
+	public String lastTableShotOutcome = "";
+	
 	TimeFilter filter = new TimeFilter();
 
 	private String playerId = "";

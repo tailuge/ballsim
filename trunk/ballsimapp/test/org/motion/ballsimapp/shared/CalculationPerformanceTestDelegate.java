@@ -40,7 +40,7 @@ public class CalculationPerformanceTestDelegate extends AbstractTestDelegate {
 
 	private int doTest() {
 		Table t = new Table(true);
-		Rack.rack(t, "9Ball", "");
+		Rack.rack(t, "PerformanceTest", "");
 		t.ball(1).setFirstEvent(
 				UtilEvent.hit(Vector3D.ZERO, Vector3D.PLUS_J, 2.6, 0.1));
 		t.generateSequence();

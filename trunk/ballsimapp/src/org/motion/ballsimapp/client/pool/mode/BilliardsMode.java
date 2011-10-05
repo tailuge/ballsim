@@ -27,7 +27,8 @@ public abstract class BilliardsMode {
 	}
 
 	protected BilliardsMode selectAimingMode(GameEvent event) {
-		if (event.hasAttribute(BALL_IN_HAND) && event.getAttribute(BALL_IN_HAND).getValue().equals("true"))
+		if (event.hasAttribute(BALL_IN_HAND)
+				&& event.getAttribute(BALL_IN_HAND).getValue().equals("true"))
 			return new PlacingMode(model, view);
 		else
 			return new AimingMode(model, view);

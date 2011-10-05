@@ -49,10 +49,8 @@ public class BilliardsViewLayout implements AimChange {
 		
 		addElementsToRoot();
 
-//		RootPanel.get(layoutId+".tablefg").setSize(width+"px", height+"px");
 		RootPanel.get(layoutId+".tablebg").setSize(width+"px", height+"px");	
 		RootPanel.get(layoutId+".pad").setSize(width+"px", height+"px");	
-
 	}
 
 	protected void addElementsToRoot() {

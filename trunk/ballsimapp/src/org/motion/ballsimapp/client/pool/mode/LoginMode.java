@@ -47,6 +47,13 @@ public class LoginMode extends BilliardsMode {
 			return new RequestGameMode(model, view);
 		}
 
+		if (Events.isAction(event, CHAT)) {
+			String message = event.getAttribute(CHAT_MESSAGE).getValue();
+			if (message.equals("d")) {
+				return new DebugMode(model,view);
+			}
+		}
+		
 		GWT.log("LoginMode handled unexpected event:" + event);
 
 		return this;
