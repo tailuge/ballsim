@@ -1,11 +1,15 @@
 package org.motion.ballsim;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.util.Rack;
 import org.motion.ballsim.util.UtilEvent;
@@ -131,6 +135,41 @@ public class PerformanceTest {
 		e.acceleration().getX();
 		System.err.println("vectors: " + Vector3D.instanceCount);
 		Assert.assertTrue(Vector3D.instanceCount > 0);
+	}
+	
+
+	@Test
+	public final void testUniqueOutcome()
+	{
+		int count = 0;
+		List<Table> keep = new ArrayList<Table>();
+
+		String lastChecksum = "";
+		
+		while(count++ < 10)
+		{
+			Table t = new Table(true);
+			Rack.rack(t, "9Ball", "");
+			
+			t.ball(1).setFirstEvent(
+					UtilEvent.hit(Vector3D.ZERO, Vector3D.PLUS_J, 2.6, 0.9));
+			t.generateSequence();
+			keep.add(t);
+
+			for(Ball ball : t.balls())
+			{
+				System.out.print(ball.id);
+			}
+			
+			if (lastChecksum.isEmpty())
+				lastChecksum = t.getChecksum();
+			
+			System.out.println(lastChecksum);
+			
+			Assert.assertTrue(lastChecksum.equals(t.getChecksum()));
+		}
+		
+		
 	}
 	
 }

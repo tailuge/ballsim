@@ -10,10 +10,10 @@ import org.motion.ballsim.util.UtilEvent;
 
 public final class PocketGeometry {
 
-	public final static double sep = Ball.R * 4.0;
+	public final static double sep = Ball.R * 4.1;
 	public final static double depth = Ball.R * 1.5;
 
-	public final static double midSep = Ball.R * 3.0;
+	public final static double midSep = Ball.R * 3.1;
 	public final static double midDepth = Ball.R * 3.5;
 
 	// bottom left

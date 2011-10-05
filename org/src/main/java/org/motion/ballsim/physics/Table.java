@@ -1,8 +1,8 @@
 package org.motion.ballsim.physics;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.motion.ballsim.game.Aim;
@@ -28,14 +28,14 @@ public final class Table {
 
 	private final static Logger logger = new Logger("Table", false);
 
-	public static double maxVel = 60.0;
-	public static double maxAngVel = 220.0;
-	public static double accelRoll = -0.8;
-	public static double accelSlide = -15.0;
+	public static final double maxVel = 60.0;
+	public static final double maxAngVel = 220.0;
+	public static final double accelRoll = -0.8;
+	public static final double accelSlide = -15.0;
 
 	private final Map<Integer, Ball> ballMap = new HashMap<Integer, Ball>();
 
-	public boolean hasPockets;
+	public final boolean hasPockets;
 
 	public Table() {
 		hasPockets = false;
@@ -73,7 +73,7 @@ public final class Table {
 	}
 
 	public Collection<Event> getAllEvents() {
-		Collection<Event> all = new ArrayList<Event>();
+		Collection<Event> all = new LinkedList<Event>();
 
 		for (Ball ball : balls()) {
 			all.addAll(ball.getAllEvents());
@@ -95,8 +95,7 @@ public final class Table {
 	}
 
 	public void setAim(Aim aim) {
-		Event cueBall = Interpolate.toTime(ball(1), 0);
-		Event hit = UtilEvent.hit(cueBall.pos, aim.dir, aim.speed,
+		Event hit = UtilEvent.hit(aim.pos, aim.dir, aim.speed,
 				aim.spin.getY());
 		ball(1).setFirstEvent(hit);
 	}
@@ -214,4 +213,24 @@ public final class Table {
 	}
 
 
+	public String getChecksum()
+	{
+		double pre = 0;
+		double post = 0;
+		
+		for(Ball ball : balls())
+		{
+			pre += ball.firstEvent().pos.getNormSq();
+			pre += ball.firstEvent().vel.getNormSq();
+			pre += ball.firstEvent().angularPos.getNormSq();
+			pre += ball.firstEvent().angularVel.getNormSq();
+			
+			post += ball.lastEvent().pos.getNormSq();
+			post += ball.lastEvent().vel.getNormSq();
+			post += ball.lastEvent().angularPos.getNormSq();
+			post += ball.lastEvent().angularVel.getNormSq();
+			
+		}
+		return "B-"+pre+" A-"+post;
+	}
 }
