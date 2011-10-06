@@ -55,15 +55,14 @@ public abstract class AbstractSimplePoolGameState extends
 	public void chat() {
 		GameEventHelper helper = new GameEventHelper(getGameEvent());
 		String chatTo = helper.getString("chat.to");
-		
+
 		helper.setValue("state", "chatting");
-		if (chatTo.equals("*")) { 
-			for(Player p : findAllLoggedIn())
+		if (chatTo.equals("*")) {
+			for (Player p : findAllLoggedIn())
 				chatTo(p, helper);
-		}
-		else {
+		} else {
 			Player to = getGameHome().findPlayer(chatTo);
-			chatTo(to,helper);
+			chatTo(to, helper);
 		}
 	}
 
@@ -71,14 +70,13 @@ public abstract class AbstractSimplePoolGameState extends
 		helper.setValue("chat.to", player.getAlias());
 		player.onEvent(helper.getEvent());
 	}
-	
-	
-	protected GameEvent event() {
+
+	protected final GameEvent newGameEvent() {
 		return new GameEvent();
 	}
 
-	protected GameEvent event(String nameValues) {
-		final GameEvent gameEvent = event();
+	private GameEvent createEvent(String nameValues) {
+		final GameEvent gameEvent = newGameEvent();
 		for (String token : nameValues.split(",")) {
 			final String[] tuple = token.split("=");
 			gameEvent.addAttribute(new GameEventAttribute(tuple[0], tuple[1]));
@@ -87,12 +85,13 @@ public abstract class AbstractSimplePoolGameState extends
 	}
 
 	protected GameEvent newStateEvent(String state) {
-		return event("state=" + state);
+		return createEvent("state=" + state);
 	}
 
 	protected GameEvent newGameEvent(String state, boolean ballInHand) {
 		SimplePoolGame game = getGame();
 		GameEvent event = newStateEvent(state);
+
 		event.addAttribute(new GameEventAttribute("player.inplay", game
 				.inPlay().getAlias()));
 		event.addAttribute(new GameEventAttribute("player.notinplay", game
@@ -103,6 +102,10 @@ public abstract class AbstractSimplePoolGameState extends
 				.getCurrentPlayingSpace().toString()));
 		event.addAttribute(new GameEventAttribute("ballinhand", String
 				.valueOf(ballInHand)));
+		//
+		if (getGameEvent().hasAttribute("game.table.state")) {
+			event.addAttribute(getGameEvent().getAttribute("game.table.state"));
+		}
 		return event;
 	}
 
