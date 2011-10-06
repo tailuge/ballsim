@@ -58,7 +58,10 @@ public class SimplePoolPlayer extends Player {
 	private GameEvent newShotEvent() {
 		String gameId = lastGameId();
 		Assert.assertNotNull("no game id found !", gameId);
-		return newGameEvent("shot", gameId);
+		GameEvent gameEvent = newGameEvent("shot", gameId);
+		gameEvent.addAttribute(new GameEventAttribute("game.table.state",
+				getAlias() + ".table.state"));
+		return gameEvent;
 	}
 
 	public SimplePoolPlayer pot(Integer ball, Integer... rest) {
@@ -100,7 +103,8 @@ public class SimplePoolPlayer extends Player {
 	}
 
 	public GameEvent lastEvent() {
-		Assert.assertTrue("No event received by "+getAlias(),!events.isEmpty());
+		Assert.assertTrue("No event received by " + getAlias(),
+				!events.isEmpty());
 		return events.get(events.size() - 1);
 	}
 

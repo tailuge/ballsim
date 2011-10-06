@@ -1,5 +1,7 @@
 package org.oxtail.game.billiards.simplepool.state;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.oxtail.game.home.GameHome;
@@ -65,6 +67,8 @@ public class TestSimplePoolStatemachine {
 		bob.login().requestGame().assertAwaitingGame();
 		jim.login().requestGame().assertAiming().pot(1, 2, 3, 4, 5, 6, 7, 8, 9)
 				.assertWinner();
+		// assert table state is maintained over shots
+		Assert.assertEquals("jim.table.state",bob.lastAttributeValue("game.table.state"));
 		bob.assertLoser();
 	}
 

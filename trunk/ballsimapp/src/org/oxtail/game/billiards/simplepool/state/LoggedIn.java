@@ -32,7 +32,7 @@ public class LoggedIn extends AbstractSimplePoolGameState {
 	}
 
 	private void notifyLoggedOut(Player player) {
-		player.onEvent(event("state=loggedout"));
+		player.onEvent(newStateEvent("loggedout"));
 	}
 
 }
