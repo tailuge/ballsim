@@ -5,7 +5,6 @@ import static org.motion.ballsimapp.shared.Events.ANIMATION_COMPLETE;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
 import org.motion.ballsimapp.shared.GameEvent;
@@ -26,7 +25,6 @@ public class AnimationMode extends BilliardsMode {
 
 		if (event.hasAttribute(ANIMATION_COMPLETE)) {
 			model.table.beginNewShot();
-			model.lastTableShotOutcome = BilliardsMarshaller.marshal(model.table);
 			
 			view.showTable(model.table);
 			Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
