@@ -33,7 +33,8 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 		
 		loginButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				actionButton.setEnabled(false);
+				loginButton.setEnabled(false);
+				playerId.setEnabled(false);
 				eventHandler.handleEvent(BilliardsEventFactory.beginLogin());
 			}
 		});

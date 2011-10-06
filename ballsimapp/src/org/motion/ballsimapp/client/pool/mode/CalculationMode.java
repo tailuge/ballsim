@@ -32,6 +32,9 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 		this.aim = aim;
 		model.table.setAim(aim);
 		
+		// for debug, serialise last shot initial state
+		model.lastTableShot = BilliardsMarshaller.marshal(model.table);
+		
 		if (event.hasAttribute(TABLE_CHECKSUM))
 		{
 			remoteChecksum = event.getAttribute(TABLE_CHECKSUM).getValue();
