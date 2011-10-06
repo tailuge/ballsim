@@ -222,14 +222,9 @@ public final class Table {
 		{
 			pre += ball.firstEvent().pos.getNormSq();
 			pre += ball.firstEvent().vel.getNormSq();
-//			pre += ball.firstEvent().angularPos.getNormSq();
-//			pre += ball.firstEvent().angularVel.getNormSq();
 			
 			post += ball.lastEvent().pos.getNormSq();
-			post += ball.lastEvent().vel.getNormSq();
-//			post += ball.lastEvent().angularPos.getNormSq();
-//			post += ball.lastEvent().angularVel.getNormSq();
-			
+			post += ball.lastEvent().vel.getNormSq();			
 		}
 		return "B-"+pre+" A-"+post;
 	}
