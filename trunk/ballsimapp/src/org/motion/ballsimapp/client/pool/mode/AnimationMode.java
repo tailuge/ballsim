@@ -18,6 +18,7 @@ public class AnimationMode extends BilliardsMode {
 	public AnimationMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
 		view.animate(model.table);
+		view.appendMessage(model.table.getChecksum());
 	}
 
 	@Override
