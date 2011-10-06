@@ -74,6 +74,8 @@ public class BilliardsEventFactory {
 			potted.add("" + (i - 1));
 
 		GameEvent hitEvent = BilliardsMarshaller.eventFromAim(aim);
+		hitEvent.addAttribute(new GameEventAttribute(TABLE_STATE, BilliardsMarshaller.marshal(table)));
+		
 		hitEvent.addAttribute(new GameEventAttribute(AIM_COMPLETE, ""));
 		hitEvent.addAttribute(new GameEventAttribute(ACTION, "shot"));
 		hitEvent.addAttribute(new GameEventAttribute(GAME_SHOT_BALLSPOTTED,

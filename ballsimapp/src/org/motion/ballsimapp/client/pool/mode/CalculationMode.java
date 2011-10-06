@@ -2,6 +2,7 @@ package org.motion.ballsimapp.client.pool.mode;
 
 import static org.motion.ballsimapp.shared.Events.CALCULATION_COMPLETE;
 import static org.motion.ballsimapp.shared.Events.TABLE_CHECKSUM;
+import static org.motion.ballsimapp.shared.Events.TABLE_STATE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,15 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 		Aim aim = BilliardsMarshaller.aimFromEvent(event);
 		this.sendResult = sendResult;
 		this.aim = aim;
-		model.table.setAim(aim);
 		
+		// if this if from another machine, synchronise all balls position to begin the shot
+		if (event.hasAttribute(TABLE_STATE))
+		{
+			BilliardsMarshaller.unmarshalToTable(model.table,event.getAttribute(TABLE_STATE).getValue());
+		}
+		
+		model.table.setAim(aim);
+
 		// for debug, serialise last shot initial state
 		model.lastTableShot = BilliardsMarshaller.marshal(model.table);
 		

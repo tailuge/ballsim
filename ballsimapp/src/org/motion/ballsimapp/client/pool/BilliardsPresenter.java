@@ -2,6 +2,7 @@ package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsim.physics.util.Rack;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
+import org.motion.ballsimapp.client.pool.mode.AnimationMode;
 import org.motion.ballsimapp.client.pool.mode.BilliardsMode;
 import org.motion.ballsimapp.client.pool.mode.LoginMode;
 import org.motion.ballsimapp.shared.GameEvent;
@@ -24,7 +25,7 @@ public class BilliardsPresenter implements GWTGameEventHandler {
 		this.model = model;
 		this.view = view;
 		Rack.rack(model.table,"WhiteOnly","");
-//		Rack.rack(model.table,"SimplePool","");
+		Rack.rack(model.table,"2","");
 		model.setEventHandler(this);
 		view.setEventHandler(this);
 		view.showTable(model.table);
@@ -32,6 +33,13 @@ public class BilliardsPresenter implements GWTGameEventHandler {
 //		mode = new AimingMode(model,view);
 //		mode = new PlacingMode(model,view);
 		
+//		int iter=0;
+//		while(model.table.generateNext())
+//		{
+//			view.appendMessage(iter++ + " : " + model.table.getChecksum());
+//		}
+		
+//		mode = new AnimationMode(model,view);
 	}
 
 	@Override

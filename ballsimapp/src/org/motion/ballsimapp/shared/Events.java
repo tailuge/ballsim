@@ -54,6 +54,7 @@ public class Events {
 	public final static String CURSOR_INPUT_COMPLETE = "cursorInputComplete";
 	public final static String CALCULATION_COMPLETE = "calculationComplete";
 	public final static String TABLE_CHECKSUM = "tablechecksum";
+	public final static String TABLE_STATE = "game.table.state";
 
 	// static factories for event creation
 
