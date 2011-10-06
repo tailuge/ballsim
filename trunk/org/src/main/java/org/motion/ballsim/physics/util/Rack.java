@@ -72,7 +72,6 @@ public final class Rack {
 
 		// racks for debug
 
-		
 		// keep at profiling test case
 		if (type.equals("PerformanceTest")) {
 			table.ball(1).setFirstEvent(UtilEvent.stationary(Vector3D.ZERO));
@@ -86,6 +85,10 @@ public final class Rack {
 
 		if (type.equals("1")) {
 			getTestShot1();
+			return;
+		}
+		if (type.equals("2")) {
+			getTestShot2();
 			return;
 		}
 	}
@@ -107,5 +110,39 @@ public final class Rack {
 				anguarVel, Vector3D.ZERO, state, 0, Transition.Interpolated,
 				ballId, 0);
 		table.ball(ballId).setFirstEvent(e);
+	}
+
+	private static void getTestShot2() {
+		// break shot that diverges
+		tableSetup(new Vector3D(0, 15, 0), new Vector3D(0, -56.8, 0),
+				new Vector3D(41.653333333333336, 0, 0), 1, State.Sliding);
+		tableSetup(new Vector3D(0, -15, 0), new Vector3D(0, 0, 0),
+				new Vector3D(0, 0, 0), 2, State.Stationary);
+		tableSetup(new Vector3D(-1.0022000000000002, -13.265383167027338, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 3,
+				State.Stationary);
+		tableSetup(new Vector3D(0.9987999999999997, -13.265383167027338, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 4,
+				State.Stationary);
+		tableSetup(new Vector3D(-2.0044000000000004, -11.530766334054675, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 5,
+				State.Stationary);
+		tableSetup(
+				new Vector3D(-0.0034000000000005137, -11.530766334054675, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 6,
+				State.Stationary);
+		tableSetup(new Vector3D(1.9975999999999994, -11.530766334054675, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 7,
+				State.Stationary);
+		tableSetup(new Vector3D(-1.0056000000000007, -9.796149501082013, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 8,
+				State.Stationary);
+		tableSetup(new Vector3D(0.9953999999999992, -9.796149501082013, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 9,
+				State.Stationary);
+		tableSetup(new Vector3D(-0.0068000000000010274, -8.06153266810935, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 10,
+				State.Stationary);
+
 	}
 }
