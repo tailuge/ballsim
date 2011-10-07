@@ -25,10 +25,20 @@ public class RequestGamesMode extends BilliardsMode {
 		if (games.handle(event))
 		{			
 			view.appendMessage("active games" + games.active());
+			
+			// for now pick first and request to watch it
+			
+			for(String id : games.active())
+			{
+				model.notify(Events.requestWatchGame(id));
+				break;
+			}
+			
 			return this;
 		}
 
-		
+		// TODO: when game watching starts - enter spectator mode
+		// get viewMode, calcMode, animate, viewMode etc..
 		GWT.log("RequestGamesMode handled unexpected event:" + event);
 
 		return this;
