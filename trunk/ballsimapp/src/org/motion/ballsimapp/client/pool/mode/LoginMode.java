@@ -1,13 +1,13 @@
 package org.motion.ballsimapp.client.pool.mode;
 
-import static org.motion.ballsimapp.shared.Events.*;
+import static org.motion.ballsimapp.shared.Events.CHANNEL_CONNECTED;
+import static org.motion.ballsimapp.shared.Events.INITIATE_CONNECT;
+import static org.motion.ballsimapp.shared.Events.LOGIN_SUCCESS;
 
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
-import org.motion.ballsimapp.shared.GameEvent;
 import org.motion.ballsimapp.shared.Events;
-
-import com.google.gwt.core.client.GWT;
+import org.motion.ballsimapp.shared.GameEvent;
 
 public class LoginMode extends BilliardsMode {
 
@@ -44,19 +44,13 @@ public class LoginMode extends BilliardsMode {
 		if (Events.isState(event,LOGIN_SUCCESS))
 		{			
 			view.appendMessage("login successfull.");
+			if (view.getPlayerId().equals("tom"))
+				return new RequestSpectatorMode(model, view);
+			
 			return new RequestGameMode(model, view);
 		}
-
-		if (Events.isAction(event, CHAT)) {
-			String message = event.getAttribute(CHAT_MESSAGE).getValue();
-			if (message.equals("d")) {
-				return new DebugMode(model,view);
-			}
-		}
 		
-		GWT.log("LoginMode handled unexpected event:" + event);
-
-		return this;
+		return DebugMode.filter(this, event);
 	}
 
 }
