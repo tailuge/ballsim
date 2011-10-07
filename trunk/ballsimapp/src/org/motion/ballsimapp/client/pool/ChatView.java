@@ -29,7 +29,7 @@ public final class ChatView {
 
 	private void layout(int width, String layoutId) {
 		int height = width * 2;
-		width = width * 2;
+
 		messageArea.setWidth(width - 8 + "px");
 		messageArea.setHeight(height + "px");
 		chatText.setWidth(width - width / 8 - 10 + "px");

@@ -24,7 +24,7 @@ public class Ballsimapp implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 
-		int width = 350;
+		int width = 500;
 
 		// player 1
 		BilliardsModel gameModelP1 = new BilliardsModel();

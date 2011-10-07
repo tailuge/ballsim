@@ -2,8 +2,8 @@ package org.motion.ballsimapp.client.pool;
 
 import org.motion.ballsim.physics.util.Rack;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
-import org.motion.ballsimapp.client.pool.mode.BilliardsMode;
-import org.motion.ballsimapp.client.pool.mode.LoginMode;
+import org.motion.ballsimapp.client.mode.BilliardsMode;
+import org.motion.ballsimapp.client.mode.LoginMode;
 import org.motion.ballsimapp.shared.GameEvent;
 
 public class BilliardsPresenter implements GWTGameEventHandler {
