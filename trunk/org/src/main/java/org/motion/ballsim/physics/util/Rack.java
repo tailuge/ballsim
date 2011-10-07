@@ -91,6 +91,10 @@ public final class Rack {
 			getTestShot2();
 			return;
 		}
+		if (type.equals("3")) {
+			getTestShot3();
+			return;
+		}
 	}
 
 	private static void getTestShot1() {
@@ -145,4 +149,40 @@ public final class Rack {
 				State.Stationary);
 
 	}
+
+	private static void getTestShot3() {
+		// check contact with blue
+		tableSetup(new Vector3D(-6.434908112527509, 15, 0), new Vector3D(
+				12.964228794051609, -43.092096395690504, 0), new Vector3D(0, 0,
+				0), 1, State.Sliding);
+		tableSetup(new Vector3D(0, -15, 0), new Vector3D(0, 0, 0),
+				new Vector3D(0, 0, 0), 2, State.Stationary);
+		tableSetup(new Vector3D(-1.0022000000000002, -13.265383167027338, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 3,
+				State.Stationary);
+		tableSetup(new Vector3D(0.9987999999999997, -13.265383167027338, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 4,
+				State.Stationary);
+		tableSetup(new Vector3D(-2.0044000000000004, -11.530766334054675, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 5,
+				State.Stationary);
+		tableSetup(
+				new Vector3D(-0.0034000000000005137, -11.530766334054675, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 6,
+				State.Stationary);
+		tableSetup(new Vector3D(1.9975999999999994, -11.530766334054675, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 7,
+				State.Stationary);
+		tableSetup(new Vector3D(-1.0056000000000007, -9.796149501082013, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 8,
+				State.Stationary);
+		tableSetup(new Vector3D(0.9953999999999992, -9.796149501082013, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 9,
+				State.Stationary);
+		tableSetup(new Vector3D(-0.0068000000000010274, -8.06153266810935, 0),
+				new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), 10,
+				State.Stationary);
+
+	}
+
 }
