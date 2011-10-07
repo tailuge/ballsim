@@ -18,6 +18,7 @@ public class Events {
 	public final static String ALREADY_CONNECTED = "alreadyConnected";
 	public final static String CHANNEL_CONNECTED = "connected";
 	public final static String LOGIN_SUCCESS = "loggedin";
+	public final static String GAME_LIST = "games";
 	public final static String AWAITING_GAME = "awaitinggame";
 	public final static String WINNER = "winner";
 	public final static String LOSER = "loser";
@@ -81,7 +82,7 @@ public class Events {
 		return loginRequest;
 	}
 
-	public static GameEvent requestViewGame(String playerId) {
+	public static GameEvent requestGames(String playerId) {
 		GameEvent loginRequest = event(ACTION, REQUEST_VIEW_GAME);
 		loginRequest.addAttribute(attr(PLAYER_ALIAS, playerId));
 		return loginRequest;
