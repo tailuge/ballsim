@@ -18,7 +18,6 @@ public class AnimationMode extends BilliardsMode {
 	public AnimationMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
 		view.animate(model.table);
-		view.appendMessage(model.table.getChecksum());
 	}
 
 	@Override
@@ -26,7 +25,7 @@ public class AnimationMode extends BilliardsMode {
 
 		if (event.hasAttribute(ANIMATION_COMPLETE)) {
 			model.table.beginNewShot();
-			
+
 			view.showTable(model.table);
 			Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
 				@Override
@@ -34,13 +33,11 @@ public class AnimationMode extends BilliardsMode {
 					replayPendingEvents(pending);
 				}
 			});
-			return new AnimationCompleteMode(model,view);
+			return new AnimationCompleteMode(model, view);
 		}
-
 
 		pending.add(event);
 
-		//GWT.log("AnimationMode added pending event:" + event);
 		return this;
 	}
 

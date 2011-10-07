@@ -32,4 +32,16 @@ public class DebugMode extends BilliardsMode {
 		return this;
 	}
 
+	public static BilliardsMode filter(BilliardsMode mode, GameEvent event) {
+		
+		if (Events.isAction(event, CHAT)) {
+			String message = event.getAttribute(CHAT_MESSAGE).getValue();
+			if (message.equals("d")) {
+				return new DebugMode(mode.model, mode.view);
+			}
+		}
+		
+		return mode;
+	}
+
 }

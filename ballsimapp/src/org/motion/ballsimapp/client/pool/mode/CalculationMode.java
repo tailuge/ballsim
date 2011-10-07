@@ -20,6 +20,7 @@ import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 
 	final List<GameEvent> pending = new ArrayList<GameEvent>();
+	
 	final Aim aim;
 	final boolean sendResult;
 	private String remoteChecksum;
@@ -31,7 +32,7 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 		Aim aim = BilliardsMarshaller.aimFromEvent(event);
 		this.sendResult = sendResult;
 		this.aim = aim;
-		
+				
 		// if this if from another machine, synchronise all balls position to begin the shot
 		if (event.hasAttribute(TABLE_STATE))
 		{
@@ -48,6 +49,7 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 			remoteChecksum = event.getAttribute(TABLE_CHECKSUM).getValue();
 		}
 
+		
 		pending.add(Events.event(CALCULATION_COMPLETE, ""));
 		Scheduler.get().scheduleIncremental(this);
 	}
@@ -56,8 +58,9 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 	public boolean execute() {
 		
 		boolean busy = model.table.generateNext();
-		
+
 		if (!busy) {
+						
 			if (sendResult) {
 				model.sendHit(aim);
 			}

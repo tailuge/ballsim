@@ -9,6 +9,7 @@ public class Events {
 	public final static String TARGET = "target";
 	public final static String LOGIN = "login";
 	public final static String REQUEST_GAME = "requestGame";
+	public final static String REQUEST_VIEW_GAME = "requestView";
 	public final static String PLAYER_ALIAS = "player.alias";
 	public final static String GAME_ID = "game.id";
 	public final static String PASSWORD = "password";
@@ -76,6 +77,12 @@ public class Events {
 
 	public static GameEvent requestGame(String playerId) {
 		GameEvent loginRequest = event(ACTION, REQUEST_GAME);
+		loginRequest.addAttribute(attr(PLAYER_ALIAS, playerId));
+		return loginRequest;
+	}
+
+	public static GameEvent requestViewGame(String playerId) {
+		GameEvent loginRequest = event(ACTION, REQUEST_VIEW_GAME);
 		loginRequest.addAttribute(attr(PLAYER_ALIAS, playerId));
 		return loginRequest;
 	}
