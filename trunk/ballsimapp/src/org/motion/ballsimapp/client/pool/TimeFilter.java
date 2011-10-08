@@ -1,22 +1,46 @@
 package org.motion.ballsimapp.client.pool;
 
+import org.motion.ballsimapp.shared.GameEvent;
+
+import com.google.gwt.user.client.Timer;
+
 public class TimeFilter {
 
-	double startTime;
-	
-	public TimeFilter()
-	{
-		startTime = System.currentTimeMillis();
-	}
-	
-	public boolean hasElapsed(int i) {
+	final BilliardsModel model;
+	final Timer timer;
+	boolean timerActive;
+	GameEvent pendingEvent;
 
-		if (System.currentTimeMillis()-startTime > i*1000)
-		{
-			startTime = System.currentTimeMillis();			
-			return true;
+	public TimeFilter(BilliardsModel model_) {
+		this.model = model_;
+		timer = new Timer() {
+
+			@Override
+			public void run() {
+				if (pendingEvent != null)
+					model.notify(pendingEvent);
+				pendingEvent = null;
+				timerActive = false;
+			}
+		};
+	}
+
+	public void throttledSend(GameEvent event) {
+
+		if (timerActive) {
+			pendingEvent = event;
+			return;
 		}
-		return false;
-	}
 
+		model.notify(event);
+		timerActive = true;
+		timer.schedule(2000);
+	}
+	
+	public void cancel()
+	{
+		timer.cancel();
+		timerActive = false;
+		pendingEvent = null;
+	}
 }

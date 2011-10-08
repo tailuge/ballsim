@@ -21,8 +21,8 @@ public class BilliardsModel extends GWTGameClient {
 	public String lastTableShot = "";
 	public String lastTableShotOutcome = "";
 	
-	TimeFilter filter = new TimeFilter();
-
+	final TimeFilter filter = new TimeFilter(this);
+	
 	public String playerId = "";
 	public String opponentId = "";
 	public String gameId = "";
@@ -46,21 +46,20 @@ public class BilliardsModel extends GWTGameClient {
 	}
 	
 	public void sendAimUpdate(Aim aim) {
-		if (filter.hasElapsed(2)) {
-			notify(BilliardsEventFactory.aimUpdate(aim));
-		}
+		filter.throttledSend(BilliardsEventFactory.aimUpdate(aim));
 	}
 
 	public void sendHit(Aim aim) {
+		filter.cancel();
 		notify(BilliardsEventFactory.hitOutcome(table,aim));
 	}
 
-	public void sendLimitedPlaceBallUpdate(Aim input) {
-		if (filter.hasElapsed(2)) 
-			sendPlaceBallUpdate(input);
+	public void sendPlaceBallUpdate(Aim input) {
+		filter.throttledSend(BilliardsEventFactory.placeBallUpdate(input));
 	}
 
-	public void sendPlaceBallUpdate(Aim input) {
+	public void sendPlaceBall(Aim input) {
+		filter.cancel();
 		notify(BilliardsEventFactory.placeBallUpdate(input));
 	}
 

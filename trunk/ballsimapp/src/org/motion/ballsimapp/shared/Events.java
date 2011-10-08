@@ -24,6 +24,7 @@ public class Events {
 	public final static String WATCHING = "watching";
 	public final static String GAME_WATCH = "watchGame";
 	public final static String GAMES_IDS = "games.ids";
+	public final static String GAMES_DESCRIPTIONS = "games.descriptions";
 	public final static String GAME_WATCH_ID = "game.watch.id";
 	public final static String AWAITING_GAME = "awaitinggame";
 	public final static String WINNER = "winner";
