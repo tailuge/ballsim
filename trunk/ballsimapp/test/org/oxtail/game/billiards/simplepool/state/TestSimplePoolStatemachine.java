@@ -10,22 +10,27 @@ import org.oxtail.game.state.reflect.ReflectStateFactory;
 
 public class TestSimplePoolStatemachine {
 
+	private final GameHome gameHome = new InMemoryGameHome();
 	private SimplePoolStatemachine statemachine;
-	private GameHome gameHome = new InMemoryGameHome();
-	private SimplePoolPlayer bob, jim, tom;
+	private SimplePoolPlayer bob, jim, tom, rob;
+
+	private SimplePoolPlayer setUpPlayer(String alias) {
+		SimplePoolPlayer player = new SimplePoolPlayer(alias, statemachine);
+		PlayerState.LoggedOut.set(player);
+		gameHome.storePlayer(player);
+		return player;
+	}
 
 	@Before
 	public void before() {
 		SimplePoolGame.resetGameCount();
 		SimplePoolPlayer.resetShotCount();
-
 		statemachine = new SimplePoolStatemachine(gameHome,
 				new ReflectStateFactory(), new ReflectStateActionExecutor());
-		bob = new SimplePoolPlayer("bob", statemachine);
-		jim = new SimplePoolPlayer("jim", statemachine);
-		tom = new SimplePoolPlayer("tom", statemachine);
-		PlayerState.LoggedOut.set(bob, jim, tom);
-		GameHome.Util.storePlayers(gameHome, bob, jim, tom);
+		bob = setUpPlayer("bob");
+		jim = setUpPlayer("jim");
+		tom = setUpPlayer("tom");
+		rob = setUpPlayer("rob");
 	}
 
 	@Test
@@ -147,9 +152,16 @@ public class TestSimplePoolStatemachine {
 	public void testWatchInPlayGameNotifiedOfCurrentTableState() {
 		tom.login();
 		tom.requestWatchGames().assertRequestWatchGames();
+
+		rob.login();
+		rob.requestWatchGames().assertRequestWatchGames();
+
 		bob.login().requestGame().assertAwaitingGame();
 		jim.login().requestGame().assertAiming();
-		jim.pot(1).pot(2);
+		jim.pot(1);
+		rob.watchGame("1");
+		rob.assertTableState("1");
+		jim.pot(2);
 		tom.watchGame("1");
 		tom.assertTableState("2");
 	}
@@ -163,7 +175,7 @@ public class TestSimplePoolStatemachine {
 	public void testIllegalPlayOrder() {
 		bob.login().requestGame().assertAwaitingGame();
 		jim.login().requestGame().assertAiming();
-		// bob can't pot he's not playing !
+		// bob can't pot he's not at the table !
 		bob.pot(1);
 	}
 }
