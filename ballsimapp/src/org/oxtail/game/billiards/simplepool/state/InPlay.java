@@ -67,14 +67,14 @@ public class InPlay extends AbstractSimplePoolGameState {
 
 	private void notifyNonPlayerWatching(Player notInPlay, GameEvent event) {
 		GameEvent copy = event.copy();
-		copy.addAttribute(new GameEventAttribute("state", "watchinggame"));
+		copy.addAttribute(new GameEventAttribute("state", "watching"));
 		notInPlay.onEvent(copy);
 	}
 
 	private void notifyWatchers(GameEvent event) {
 		for (Player player : getGameHome().findPlayers(watching())) {
 			GameEvent copy = event.copy();
-			copy.addAttribute(new GameEventAttribute("state", "watchinggame"));
+			copy.addAttribute(new GameEventAttribute("state", "watching"));
 			player.onEvent(copy);
 		}
 	}
