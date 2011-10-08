@@ -1,7 +1,7 @@
 package org.motion.ballsimapp.client.mode;
 
-import static org.motion.ballsimapp.shared.Events.GAME_LIST;
-import static org.motion.ballsimapp.shared.Events.GAME_LIST_IDS;
+import static org.motion.ballsimapp.shared.Events.REQUESTED_WATCH_GAMES;
+import static org.motion.ballsimapp.shared.Events.GAMES_IDS;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -16,8 +16,8 @@ public class Games {
 
 	public boolean handle(GameEvent event) {
 
-		if (Events.isState(event, GAME_LIST)) {
-			for (String id : event.getAttribute(GAME_LIST_IDS).getValue()
+		if (Events.isState(event, REQUESTED_WATCH_GAMES)) {
+			for (String id : event.getAttribute(GAMES_IDS).getValue()
 					.split(",")) {
 				games.add(id);
 			}

@@ -18,9 +18,12 @@ public class Events {
 	public final static String ALREADY_CONNECTED = "alreadyConnected";
 	public final static String CHANNEL_CONNECTED = "connected";
 	public final static String LOGIN_SUCCESS = "loggedin";
-	public final static String GAME_LIST = "games";
-	public final static String GAME_WATCH = "watch";
-	public final static String GAME_LIST_IDS = "games.list";
+	public final static String REQUEST_WATCH_GAMES = "requestWatchGames";
+	public final static String REQUESTED_WATCH_GAMES = "requestedwatchgames";
+	public final static String WATCHING_GAME = "watchinggame";
+	public final static String GAME_WATCH = "watchGame";
+	public final static String GAMES_IDS = "games.ids";
+	public final static String GAME_WATCH_ID = "game.watch.id";
 	public final static String AWAITING_GAME = "awaitinggame";
 	public final static String WINNER = "winner";
 	public final static String LOSER = "loser";
@@ -85,14 +88,14 @@ public class Events {
 	}
 
 	public static GameEvent requestGames(String playerId) {
-		GameEvent loginRequest = event(ACTION, GAME_LIST);
+		GameEvent loginRequest = event(ACTION, REQUEST_WATCH_GAMES);
 		loginRequest.addAttribute(attr(PLAYER_ALIAS, playerId));
 		return loginRequest;
 	}
 
 	public static GameEvent requestWatchGame(String gameId) {
 		GameEvent loginRequest = event(ACTION, GAME_WATCH);
-		loginRequest.addAttribute(attr(GAME_ID, gameId));
+		loginRequest.addAttribute(attr(GAME_WATCH_ID, gameId));
 		return loginRequest;
 	}
 
