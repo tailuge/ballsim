@@ -55,8 +55,9 @@ public class InPlay extends AbstractSimplePoolGameState {
 		GameEvent gameEvent = getGameEvent();
 		game.setGameEvent(gameEvent.copy());
 		//
-		notifyNonPlayerWatching(game.notInPlay(), getGameEvent());
-		notifyWatchers(getGameEvent());
+		
+		notifyNonPlayerWatching(game.notInPlay(), gameEvent);
+		notifyWatchersWatching(gameEvent);
 
 		SimplePoolMove shot = eventToSimplePoolMove.apply(getGameEvent());
 		log.info("Shot: " + shot);
@@ -71,14 +72,22 @@ public class InPlay extends AbstractSimplePoolGameState {
 		notInPlay.onEvent(copy);
 	}
 
-	private void notifyWatchers(GameEvent event) {
+	private void notifyWatchersWatching(GameEvent event) {
 		for (Player player : getGameHome().findPlayers(watching())) {
 			GameEvent copy = event.copy();
-			copy.addAttribute(new GameEventAttribute("state", "watching"));
+			copy.addAttribute(new GameEventAttribute("state","watching"));
 			player.onEvent(copy);
 		}
 	}
 
+	private void notifyWatchersViewing(GameEvent event) {
+		for (Player player : getGameHome().findPlayers(watching())) {
+			GameEvent copy = event.copy();
+			player.onEvent(copy);
+		}
+	}
+
+	
 	private Iterable<Player> watchingThisGame() {
 		return getGameHome().findPlayers(watching());
 	}
@@ -109,12 +118,14 @@ public class InPlay extends AbstractSimplePoolGameState {
 		SimplePoolGame game = getGame();
 		game.inPlay().onEvent(newGameFoulEvent("aiming"));
 		game.notInPlay().onEvent(newGameFoulEvent("viewing"));
+		notifyWatchersViewing(newGameFoulEvent("viewing"));
 	}
 
 	public void notifyMove() {
 		SimplePoolGame game = getGame();
 		game.inPlay().onEvent(newGameEvent("aiming"));
 		game.notInPlay().onEvent(newGameEvent("viewing"));
+		notifyWatchersViewing(newGameFoulEvent("viewing"));
 	}
 
 	public void notifyGameOver() {
