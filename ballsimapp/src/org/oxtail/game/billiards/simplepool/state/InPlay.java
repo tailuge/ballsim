@@ -51,6 +51,10 @@ public class InPlay extends AbstractSimplePoolGameState {
 			throw new IllegalArgumentException(
 					"player inPlay is not the same as Game expects");
 		}
+		// update the game event
+		GameEvent gameEvent = getGameEvent();
+		game.setGameEvent(gameEvent.copy());
+		//
 		notifyNonPlayerWatching(game.notInPlay(), getGameEvent());
 		notifyWatchers(getGameEvent());
 

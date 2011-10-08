@@ -28,6 +28,7 @@ public class RequestedWatchGames extends AbstractSimplePoolGameState {
 		
 		Game<?> game = getGameHome().findGame(watchId);
 		GameEventHelper gameEvent = new GameEventHelper(game.getGameEvent());
+		
 		//
 		GameEventHelper outEvent = new GameEventHelper(newStateEvent("watchinggame"));
 		outEvent.setValue("game.watch.id", watchId);
