@@ -1,5 +1,8 @@
 package org.motion.ballsimapp.canvas;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.util.Interpolate;
@@ -17,10 +20,19 @@ public class TableCanvas extends TableRenderer {
 		context.clearRect(0, 0, width, height);
 		//PlotCushion.plot(context, scale);
 		
-		for (Ball ball : table.balls()) {
-			Event e = Interpolate.toTime(ball, t);
-			PlotEvent.plotEvent(e, context, scale);
-		}
+		List<Event> events = new ArrayList<Event>();
+		
+		for (Ball ball : table.balls()) 
+			events.add(Interpolate.toTime(ball, t));
+
+		PlotEvent.shadows(events, context, scale);
+
+		for (Event event: events)
+			PlotEvent.ball(event, context, scale);
+
+		PlotEvent.spots(events, context, scale);
+		
+		PlotEvent.shines(events, context, scale);
 	}
 
 
