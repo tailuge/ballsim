@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.motion.ballsimapp.client.mode.BilliardsMode;
+import org.motion.ballsimapp.client.mode.ChatMode;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
 import org.motion.ballsimapp.shared.GameEvent;
 
 import com.google.gwt.core.client.Scheduler;
 
-public class AnimationMode extends BilliardsMode {
+public class AnimationMode extends ChatMode {
 
 	final List<GameEvent> pending = new ArrayList<GameEvent>();
 
@@ -37,7 +38,8 @@ public class AnimationMode extends BilliardsMode {
 			return new AnimationCompleteMode(model, view);
 		}
 
-		pending.add(event);
+		if (!handleChat(event))
+			pending.add(event);
 
 		return this;
 	}

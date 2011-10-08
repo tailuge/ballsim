@@ -15,6 +15,7 @@ import com.google.gwt.core.client.GWT;
 public class RequestGamesMode extends BilliardsMode {
 
 	private Games games = new Games();
+	private String description = "";
 	
 	public RequestGamesMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
@@ -35,12 +36,10 @@ public class RequestGamesMode extends BilliardsMode {
 			
 			if (!games.active().isEmpty())
 			{
-				for(String id : games.active())
-				{
-					view.appendMessage("request to watch game " + id);
-					model.notify(Events.requestWatchGame(id));
-					break;
-				}
+				String id = games.getAnyGameId();
+				description = games.active().get(id);
+				view.appendMessage("request to watch game " + description);
+				model.notify(Events.requestWatchGame(id));
 			}
 			
 			return this;
@@ -48,7 +47,8 @@ public class RequestGamesMode extends BilliardsMode {
 
 		if (Events.isState(event, WATCHING))
 		{
-			view.appendMessage("begin watching");
+			view.clearMessage();
+			view.appendMessage("now watching " + description);
 			// if this if from another machine, synchronise all balls position to begin the shot
 			if (event.hasAttribute(TABLE_STATE))
 			{

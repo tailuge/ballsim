@@ -26,7 +26,7 @@ public class PlacingMode extends ChatMode {
 		if (event.hasAttribute(CURSOR_INPUT)) {
 			Aim input = BilliardsMarshaller.aimFromEvent(event);
 			model.table.placeBall(input.ballId, input.pos);
-			model.sendLimitedPlaceBallUpdate(input);
+			model.sendPlaceBallUpdate(input);
 			view.setAim(input);
 			view.showPlacer();
 			view.showTable(model.table);
@@ -36,7 +36,7 @@ public class PlacingMode extends ChatMode {
 		if (event.hasAttribute(CURSOR_INPUT_COMPLETE)) {
 			Aim input = BilliardsMarshaller.aimFromEvent(event);
 			model.table.placeBall(input.ballId, input.pos);
-			model.sendPlaceBallUpdate(input);
+			model.sendPlaceBall(input);
 			return new AimingMode(model, view);
 		}
 
