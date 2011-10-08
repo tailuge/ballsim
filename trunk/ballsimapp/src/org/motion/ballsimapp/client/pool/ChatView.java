@@ -68,7 +68,13 @@ public final class ChatView {
 	}
 
 	public void appendMessage(String message) {
-		messageArea.setText(message + newline + messageArea.getText());
+		int lines = 10;
+		String text = messageArea.getText() + newline + message;
+		if (text.split(newline).length > lines)
+		{
+			text = text.substring(text.indexOf(newline)+1);
+		}
+		messageArea.setText(text);
 	}
 
 	public void clearMessage() {

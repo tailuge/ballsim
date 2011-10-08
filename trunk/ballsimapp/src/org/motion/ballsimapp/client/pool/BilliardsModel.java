@@ -23,7 +23,8 @@ public class BilliardsModel extends GWTGameClient {
 	
 	TimeFilter filter = new TimeFilter();
 
-	private String playerId = "";
+	public String playerId = "";
+	public String opponentId = "";
 	public String gameId = "";
 	
 	public void setEventHandler(GWTGameEventHandler eventHandler) {
