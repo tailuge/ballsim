@@ -36,12 +36,15 @@ import org.oxtail.game.state.StateFactory;
  * chat.message // the chat message<br>
  * <p>
  * game.id // string id of the game<br>
+ * game.type // i.e. 9Ball etc.
  * game.shot.ballspotted // balls potted, empty indicates none, comma separated
  * indicates which<br>
  * games.ids // id's of games in progress<br>
  * games.descriptions // descriptions of games in progress<br>
  * game.watch.id // id of the game you want to watch<br>
  * game.table.state // the actual state of the table
+ * game.rack.type // the type of rack, sent on game start
+ * game.rack.seed // the seed for the rack for generation on the client
  */
 public class SimplePoolStatemachine implements GameStatemachine {
 

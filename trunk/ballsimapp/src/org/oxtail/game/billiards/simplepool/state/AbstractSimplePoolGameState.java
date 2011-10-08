@@ -93,7 +93,8 @@ public abstract class AbstractSimplePoolGameState extends
 	protected GameEvent newGameEvent(String state, boolean ballInHand) {
 		SimplePoolGame game = getGame();
 		GameEvent event = newStateEvent(state);
-
+		event.addAttribute(new GameEventAttribute("game.type", game.getGameType()));
+		
 		event.addAttribute(new GameEventAttribute("player.inplay", game
 				.inPlay().getAlias()));
 		event.addAttribute(new GameEventAttribute("player.notinplay", game

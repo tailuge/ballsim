@@ -60,4 +60,11 @@ public class NumberGuessGame extends Game<NumberGuessBoard> {
 		return "["+getId()+":"+winningNumber+"] "+player1().getAlias()+" vs. "+player2().getAlias();
 	}
 
+	@Override
+	public String getGameType() {
+		return "NumberGuess";
+	}
+
+	
+	
 }
