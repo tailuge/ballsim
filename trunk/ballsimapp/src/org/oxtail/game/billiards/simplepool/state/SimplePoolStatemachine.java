@@ -16,15 +16,21 @@ import org.oxtail.game.state.StateActionExecutor;
 import org.oxtail.game.state.StateFactory;
 
 /**
- * <b>Simple Pool Statemachine</b>
+ * <h3>Simple Pool Statemachine</h3>
  * <p>
- * Protocol
+ * <b>Protocol</b>
  * <p>
- * 
- * Event Attribute definitions
+ * <h4>Event Attribute definitions</h4>
  * <p>
- * action // action a player takes player.alias // player doing the action state
- * // game.id // string id of the game<br>
+ * action // action a player takes<br>
+ * <p>
+ * <h5>Available player actions:</h5> login, logout, requestWatchGames,
+ * requestGame<br>
+ * watchGame, shot<br>
+ * <p>
+ * player.alias // player doing the action <br>
+ * state // game or player state <br>
+ * game.id // string id of the game<br>
  * game.shot.ballspotted // balls potted, empty indicates none, comma separated
  * indicates which<br>
  * 
@@ -34,6 +40,7 @@ import org.oxtail.game.state.StateFactory;
  * 
  * games.ids // id's of games in progress<br>
  * games.descriptions // descriptions of games in progress<br>
+ * game.watch.id // id of the game you want to watch<br>
  */
 public class SimplePoolStatemachine implements GameStatemachine {
 
