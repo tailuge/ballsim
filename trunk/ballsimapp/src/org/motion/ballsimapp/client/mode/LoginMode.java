@@ -44,7 +44,7 @@ public class LoginMode extends BilliardsMode {
 		if (Events.isState(event,LOGIN_SUCCESS))
 		{			
 			view.appendMessage("login successfull.");
-			if (view.getPlayerId().equals("tom"))
+			if (view.getPlayerId().contains("spec"))
 				return new RequestGamesMode(model, view);
 			else
 				return new RequestGameMode(model, view);
