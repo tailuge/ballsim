@@ -79,6 +79,10 @@ public class SimplePoolPlayer extends Player {
 		return gameEvent;
 	}
 
+	public SimplePoolPlayer potAllBallsFromBreak() {
+		return pot(1,2,3,4,5,6,7,8,9);
+	}
+	
 	public SimplePoolPlayer pot(Integer ball, Integer... rest) {
 		GameEvent gameEvent = newShotEvent();
 		GameEventHelper helper = new GameEventHelper(gameEvent);

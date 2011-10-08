@@ -42,7 +42,7 @@ public class AwaitingGame extends AbstractSimplePoolGameState {
 		game.setInPlay(player);
 		game.setGameState(InPlay.class);
 		GameEvent event = getGameEvent().copy();
-		event.addAttribute(new GameEventAttribute("game.table.state","rack"));
+		event.addAttribute(new GameEventAttribute("game.table.state", "rack"));
 		game.setGameEvent(event);
 	}
 
@@ -53,6 +53,7 @@ public class AwaitingGame extends AbstractSimplePoolGameState {
 	private void notifyGameStarted() {
 		getGame().inPlay().onEvent(gameStartedAnd("aiming"));
 		getGame().notInPlay().onEvent(gameStartedAnd("viewing"));
+		notifyGamesInProgressUpdate();
 	}
 
 	private GameEvent gameStartedAnd(String state) {
