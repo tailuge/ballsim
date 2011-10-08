@@ -6,6 +6,7 @@ import static org.motion.ballsimapp.shared.Events.LOSER;
 import static org.motion.ballsimapp.shared.Events.*;
 
 import org.motion.ballsimapp.client.mode.BilliardsMode;
+import org.motion.ballsimapp.client.mode.ChatMode;
 import org.motion.ballsimapp.client.mode.RequestGameMode;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
 import org.motion.ballsimapp.client.pool.BilliardsView;
@@ -14,7 +15,7 @@ import org.motion.ballsimapp.shared.GameEvent;
 
 import com.google.gwt.core.client.GWT;
 
-public class AnimationCompleteMode  extends BilliardsMode {
+public class AnimationCompleteMode extends ChatMode {
 
 	public AnimationCompleteMode(BilliardsModel model, BilliardsView view) {
 		super(model, view);
@@ -40,6 +41,9 @@ public class AnimationCompleteMode  extends BilliardsMode {
 			view.appendMessage("loser!");
 			return new RequestGameMode(model, view);
 		}
+		
+		if (handleChat(event))
+			return this;
 
 		GWT.log("AnimationCompleteMode handled unexpected event:" + event);
 

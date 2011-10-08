@@ -71,6 +71,10 @@ public final class ChatView {
 		messageArea.setText(message + newline + messageArea.getText());
 	}
 
+	public void clearMessage() {
+		messageArea.setText("");
+	}
+
 	public void setChatEnable(boolean enable) {
 		chatButton.setEnabled(enable);
 	}

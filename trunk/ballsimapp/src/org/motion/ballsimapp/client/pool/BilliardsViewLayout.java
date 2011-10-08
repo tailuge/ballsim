@@ -67,6 +67,9 @@ public class BilliardsViewLayout implements AimChange {
 	@Override
 	public void handleAimChanged() {
 
+		if (!actionButton.isEnabled())
+			return;
+		
 		if (aiming)
 			aim.setAimFromCursor();
 		else

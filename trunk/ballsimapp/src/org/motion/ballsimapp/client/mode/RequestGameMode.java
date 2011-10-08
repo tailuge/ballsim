@@ -36,7 +36,8 @@ public class RequestGameMode extends BilliardsMode {
 		{			
 			processRack(event);
 			model.gameId = event.getAttribute(GAME_ID).getValue();
-			view.appendMessage("game started (break)");
+			view.clearMessage();
+			view.appendMessage("playing vs " + event.getAttribute("player.notinplay").getValue());
 			return selectAimingMode(event);
 		}
 
@@ -44,7 +45,8 @@ public class RequestGameMode extends BilliardsMode {
 		{			
 			processRack(event);
 			model.gameId = event.getAttribute(GAME_ID).getValue();
-			view.appendMessage("game started (other player to break)");
+			view.clearMessage();
+			view.appendMessage("playing vs " + event.getAttribute("player.inplay").getValue());
 			return new ViewingMode(model,view);
 		}
 
