@@ -137,4 +137,10 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 		chatView.setChatEnable(enable);
 	}
 
+
+	@Override
+	public void clearMessage() {
+		chatView.clearMessage();
+	}
+
 }
