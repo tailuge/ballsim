@@ -30,17 +30,18 @@ import org.oxtail.game.state.StateFactory;
  * <p>
  * player.alias // player doing the action <br>
  * state // game or player state <br>
- * game.id // string id of the game<br>
- * game.shot.ballspotted // balls potted, empty indicates none, comma separated
- * indicates which<br>
- * 
+ * <p>
  * chat.from // who a chat message is coming from<br>
  * chat.to // who a chat message is going to<br>
  * chat.message // the chat message<br>
- * 
+ * <p>
+ * game.id // string id of the game<br>
+ * game.shot.ballspotted // balls potted, empty indicates none, comma separated
+ * indicates which<br>
  * games.ids // id's of games in progress<br>
  * games.descriptions // descriptions of games in progress<br>
  * game.watch.id // id of the game you want to watch<br>
+ * game.table.state // the actual state of the table
  */
 public class SimplePoolStatemachine implements GameStatemachine {
 
