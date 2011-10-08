@@ -19,7 +19,8 @@ public class Games {
 		if (Events.isState(event, REQUESTED_WATCH_GAMES)) {
 			for (String id : event.getAttribute(GAMES_IDS).getValue()
 					.split(",")) {
-				games.add(id);
+				if (!id.isEmpty())
+					games.add(id);
 			}
 			return true;
 		}

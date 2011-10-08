@@ -82,6 +82,7 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 		if (event.hasAttribute(CALCULATION_COMPLETE)) {
 			if (remoteChecksum != null)
 			{
+				/*
 				String localChecksum = model.table.getChecksum();
 				if (!localChecksum.equals(remoteChecksum))
 				{
@@ -89,6 +90,7 @@ public class CalculationMode extends BilliardsMode implements RepeatingCommand {
 					view.appendMessage("remote checksum:"+remoteChecksum);	
 					view.appendMessage("local  checksum:"+localChecksum);
 				}
+				*/
 			}
 			return new AnimationMode(model, view);
 		}
