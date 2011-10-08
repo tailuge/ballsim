@@ -6,8 +6,6 @@ import org.motion.ballsimapp.shared.GameEventCallback;
 
 /**
  * An entity that participates in a Game
- * 
- * @author liam knox
  */
 public class Player implements GameEventCallback {
 
@@ -16,6 +14,11 @@ public class Player implements GameEventCallback {
 	private String alias;
 
 	private StateId stateId;
+
+	/**
+	 * Used to store player data
+	 */
+	private final GameEvent playerAttributes = new GameEvent();
 
 	public Player(String alias) {
 		setAlias(alias);
@@ -26,7 +29,7 @@ public class Player implements GameEventCallback {
 	}
 
 	public void setAlias(String alias) {
-//		Assert.notNull(alias);
+		// Assert.notNull(alias);
 		this.alias = alias;
 	}
 
@@ -40,7 +43,7 @@ public class Player implements GameEventCallback {
 
 	@Override
 	public void onEvent(GameEvent event) {
-		event.addAttribute(new GameEventAttribute("target",getAlias()));
+		event.addAttribute(new GameEventAttribute("target", getAlias()));
 		if (callbackDelegate != null) {
 			callbackDelegate.onEvent(event);
 		}
@@ -78,6 +81,10 @@ public class Player implements GameEventCallback {
 	@Override
 	public String toString() {
 		return "Player [alias=" + alias + ", stateId=" + stateId + "]";
+	}
+
+	public GameEvent getPlayerAttributes() {
+		return playerAttributes;
 	}
 
 }

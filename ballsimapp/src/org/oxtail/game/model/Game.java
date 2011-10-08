@@ -1,20 +1,31 @@
 package org.oxtail.game.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.motion.ballsimapp.shared.GameEvent;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 /**
  * Top level Game, A unique instance of game
  */
 public abstract class Game<T extends PlayingSpace> {
 
-	private List<Player> players = new ArrayList<Player>();
+	public static Function<Game<?>, String> toId = new Function<Game<?>, String>() {
+		@Override
+		public String apply(Game<?> game) {
+			return game.getId();
+		}
+
+	};
+
+	private final List<Player> players = Lists.newArrayList();
 	private GameVersion version;
 	private T currentPlayingSpace;
 	private StateId stateId;
 	private Player inPlay;
+	private GameEvent gameEvent;
 
 	public Game(Player... ps) {
 		for (Player p : ps)
@@ -31,7 +42,7 @@ public abstract class Game<T extends PlayingSpace> {
 		return currentPlayingSpace;
 	}
 
-	protected final Player getPlayer(int index) {
+	public final Player getPlayer(int index) {
 		return players.get(index);
 	}
 
@@ -75,9 +86,17 @@ public abstract class Game<T extends PlayingSpace> {
 			player.onEvent(event.copy());
 		}
 	}
-	
+
 	public Player[] playersAsArray() {
 		return players.toArray(new Player[0]);
 	}
-	
+
+	public GameEvent getGameEvent() {
+		return gameEvent;
+	}
+
+	public void setGameEvent(GameEvent gameEvent) {
+		this.gameEvent = gameEvent;
+	}
+
 }

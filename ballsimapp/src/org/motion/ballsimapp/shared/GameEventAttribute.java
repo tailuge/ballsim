@@ -70,5 +70,7 @@ public class GameEventAttribute implements Serializable {
 		return true;
 	}
 
-	
+	public GameEventAttribute copy() {
+		return new GameEventAttribute(name, value);
+	}
 }

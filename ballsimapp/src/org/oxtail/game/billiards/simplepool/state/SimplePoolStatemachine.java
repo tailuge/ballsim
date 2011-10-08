@@ -23,13 +23,17 @@ import org.oxtail.game.state.StateFactory;
  * 
  * Event Attribute definitions
  * <p>
- * game.id // string id of the game<br>
+ * action // action a player takes player.alias // player doing the action state
+ * // game.id // string id of the game<br>
  * game.shot.ballspotted // balls potted, empty indicates none, comma separated
  * indicates which<br>
  * 
- * chat.from // who a chat message is coming from
- * chat.to // who a chat message is going to
- * chat.message // the chat message 
+ * chat.from // who a chat message is coming from<br>
+ * chat.to // who a chat message is going to<br>
+ * chat.message // the chat message<br>
+ * 
+ * games.ids // id's of games in progress<br>
+ * games.descriptions // descriptions of games in progress<br>
  */
 public class SimplePoolStatemachine implements GameStatemachine {
 
@@ -57,10 +61,13 @@ public class SimplePoolStatemachine implements GameStatemachine {
 		final GameEventHelper event = new GameEventHelper(gameEvent);
 		Player player = gameHome.findPlayer(event.getString("player.alias"));
 		String action = event.getString("action");
+		//
 		GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable> context = newContext(
 				gameEvent, player);
+		//
+
 		if (event.hasValue("game.id"))
-			executeForGame(event.getString("game.id"), context, action);
+			executeForGame(event, context, action);
 		else
 			executeForPlayer(player, context, action);
 	}
@@ -75,11 +82,13 @@ public class SimplePoolStatemachine implements GameStatemachine {
 	}
 
 	private void executeForGame(
-			String gameId,
+			GameEventHelper event,
 			GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable> context,
 			String action) {
+		String gameId = event.getString("game.id");
 		SimplePoolGame game = (SimplePoolGame) gameHome.findGame(gameId);
-		
+		game.setGameEvent(event.getEvent());
+
 		context.setGame(game);
 		executor.execute(stateFactory.createState(game.getStateId(), context),
 				action);

@@ -35,4 +35,5 @@ public class LoggedIn extends AbstractSimplePoolGameState {
 		player.onEvent(newStateEvent("loggedout"));
 	}
 
+
 }
