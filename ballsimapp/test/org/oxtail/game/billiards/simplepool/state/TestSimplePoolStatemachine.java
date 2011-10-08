@@ -124,6 +124,7 @@ public class TestSimplePoolStatemachine {
 		tom.assertAttribute("games.ids", "1");
 		tom.assertAttribute("games.descriptions", "jim vs. bob");
 		tom.watchGame("1");
+		tom.assertGameType();
 		jim.pot(1);
 		assertTableState("1", bob, jim, tom);
 		jim.pot(2);
@@ -164,6 +165,7 @@ public class TestSimplePoolStatemachine {
 		jim.pot(2);
 		tom.watchGame("1");
 		tom.assertTableState("2");
+		
 	}
 
 	private void assertTableState(String state, SimplePoolPlayer... players) {

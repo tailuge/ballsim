@@ -30,8 +30,11 @@ public class NineBallGame extends Game<NineBallTable> {
 	 * We need to apply the move to the game at this point to update it
 	 */
 	public void applyMove(NineBallMove move) {
-		// TODO
 	}
 
-	
+	@Override
+	public String getGameType() {
+		return "9Ball";
+	}
+
 }

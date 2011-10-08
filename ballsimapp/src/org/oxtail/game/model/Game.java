@@ -99,4 +99,6 @@ public abstract class Game<T extends PlayingSpace> {
 		this.gameEvent = gameEvent;
 	}
 
+	public abstract String getGameType();
+	
 }

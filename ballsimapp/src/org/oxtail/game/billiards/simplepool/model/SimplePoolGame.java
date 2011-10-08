@@ -92,4 +92,11 @@ public class SimplePoolGame extends Game<SimplePoolTable> {
 	public static void resetGameCount() {
 		INSTANCE_COUNT.set(0);
 	}
+
+	@Override
+	public String getGameType() {
+		return "SimplePool";
+	}
+
+
 }

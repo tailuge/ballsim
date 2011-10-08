@@ -80,9 +80,9 @@ public class SimplePoolPlayer extends Player {
 	}
 
 	public SimplePoolPlayer potAllBallsFromBreak() {
-		return pot(1,2,3,4,5,6,7,8,9);
+		return pot(1, 2, 3, 4, 5, 6, 7, 8, 9);
 	}
-	
+
 	public SimplePoolPlayer pot(Integer ball, Integer... rest) {
 		GameEvent gameEvent = newShotEvent();
 		GameEventHelper helper = new GameEventHelper(gameEvent);
@@ -193,7 +193,11 @@ public class SimplePoolPlayer extends Player {
 	public void assertAttribute(String name, String value) {
 		Assert.assertEquals(value, lastAttributeValue(name));
 	}
-	
+
+	public void assertGameType() {
+		assertAttribute("game.type", "SimplePool");
+	}
+
 	public static void resetShotCount() {
 		shotCount = 0;
 	}
