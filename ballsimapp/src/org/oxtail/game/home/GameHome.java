@@ -27,11 +27,4 @@ public interface GameHome {
 
 	Iterable<Game<?>> findGames(Predicate<Game<?>> gameFilter);
 
-	static class Util {
-
-		public static void storePlayers(GameHome home, Player... players) {
-			for (Player player : players)
-				home.storePlayer(player);
-		}
-	}
 }
