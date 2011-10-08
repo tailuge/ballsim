@@ -15,7 +15,7 @@ public interface BilliardsView {
 	void setChatEnable(boolean enable);
 	void appendMessage(String message);
 	void clearMessage();
-
+	
 	void showTable(Table table);
 	void animate(Table shotSequence);
 	void setAim(Aim aim);
