@@ -7,8 +7,11 @@ import org.oxtail.game.billiards.simplepool.model.SimplePoolGameState;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolMove;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolTable;
 import org.oxtail.game.model.Player;
+import org.oxtail.game.server.event.GameEventHelper;
 import org.oxtail.game.state.Action;
 import org.oxtail.game.state.GameEventContext;
+
+import com.google.common.base.Predicate;
 
 /**
  * State representing the game in play, with one player to guess (generically
@@ -23,13 +26,33 @@ public class InPlay extends AbstractSimplePoolGameState {
 		super(context);
 	}
 
+	private Predicate<Player> watching() {
+		return new Predicate<Player>() {
+			@Override
+			public boolean apply(Player player) {
+				GameEventHelper playerAttributes = new GameEventHelper(
+						player.getPlayerAttributes());
+				//
+				return PlayerState.WatchingGame == PlayerState
+						.safeValueOf(player.getState())
+						&& getGame().getId().equals(
+								playerAttributes.getString("game.watch.id"));
+			}
+		};
+	}
+
 	/**
 	 * Invoked when the player takes a shot
 	 */
 	@Action
 	public void shot() {
 		SimplePoolGame game = getGame();
-		notifyNonPlayerWatching(game, getGameEvent().copy());
+		if (!game.inPlay().equals(getInPlay())) {
+			throw new IllegalArgumentException("player inPlay is not the same as Game expects");
+		}
+		notifyNonPlayerWatching(game.notInPlay(), getGameEvent());
+		notifyWatchers(getGameEvent());
+
 		SimplePoolMove shot = eventToSimplePoolMove.apply(getGameEvent());
 		log.info("Shot: " + shot);
 		SimplePoolGameState state = game.evaluateShot(shot);
@@ -37,12 +60,38 @@ public class InPlay extends AbstractSimplePoolGameState {
 		state.doMove(this);
 	}
 
-	private void notifyNonPlayerWatching(SimplePoolGame game, GameEvent event) {
-		Player notInPlay = game.notInPlay();
-		event.addAttribute(new GameEventAttribute("state", "watching"));
-		notInPlay.onEvent(event);
+	private void notifyNonPlayerWatching(Player notInPlay, GameEvent event) {
+		GameEvent copy = event.copy();
+		copy.addAttribute(new GameEventAttribute("state", "watching"));
+		notInPlay.onEvent(copy);
 	}
 
+	private void notifyWatchers(GameEvent event) {
+		for (Player player : getGameHome().findPlayers(watching())) {
+			GameEvent copy = event.copy();
+			copy.addAttribute(new GameEventAttribute("state", "watching"));
+			player.onEvent(copy);
+		}
+	}
+
+	private Iterable<Player> watchingThisGame() {
+		 return getGameHome().findPlayers(watching());
+	}
+	
+	/**
+	 * On stop watching we go back to request games
+	 */
+	private void notifyStopWatching() {
+		for (Player player : watchingThisGame()) {
+			GameEventHelper helper = new GameEventHelper(newGameEvent());
+			helper.setValue("action", "requestWatchGames");
+			helper.setValue("player.alias", player.getAlias());
+			player.getPlayerAttributes().removeAttribute("game.watch.id");
+			getStatemachine().execute(helper.getEvent());
+		}
+	}
+
+	
 	/**
 	 * Invoked when the player is aiming
 	 */
@@ -70,7 +119,8 @@ public class InPlay extends AbstractSimplePoolGameState {
 		getGameHome().deleteGame(game.getId());
 		game.inPlay().onEvent(newGameEvent("winner"));
 		game.notInPlay().onEvent(newGameEvent("loser"));
-
+		//
+		notifyStopWatching();
 	}
 
 	public void turnOver() {
@@ -78,7 +128,6 @@ public class InPlay extends AbstractSimplePoolGameState {
 		getGame().setGameState(InPlay.class);
 	}
 
-	
 	/**
 	 * Handling an unexpected event of logging in, we will abort back to login
 	 * stage
@@ -89,13 +138,12 @@ public class InPlay extends AbstractSimplePoolGameState {
 			getGameHome().deleteGame(game.getId());
 			forceToLogin(game.inPlay());
 			forceToLogin(game.notInPlay());
-		}
-		else {
+		} else {
 			// can happen due to browser refreshes etc.
 			forceToLogin(getInPlay());
 		}
 	}
-	
+
 	@Action
 	public void login() {
 		log.warning("Invalid action login received moving back to loggedin and aborting Game");

@@ -17,10 +17,6 @@ public class GameEvent implements Serializable {
 		return attributes;
 	}
 
-	public void setAttributes(List<GameEventAttribute> attributes) {
-		this.attributes = attributes;
-	}
-
 	public void addAttribute(GameEventAttribute attribute) {
 		this.attributes.add(attribute);
 	}

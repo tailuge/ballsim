@@ -3,6 +3,11 @@ package org.oxtail.game.server.event;
 import org.motion.ballsimapp.shared.GameEvent;
 import org.motion.ballsimapp.shared.GameEventAttribute;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
 /**
  * Server side helper for the {@link GameEvent}, to simplify access without
  * complicating the communication classes
@@ -35,21 +40,18 @@ public class GameEventHelper {
 	}
 
 	public <T> void setValue(String name, T value, T... rest) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(String.valueOf(value));
-		for (T s : rest)
-			sb.append(",").append(String.valueOf(s));
-		setValue(name, sb.toString());
+		Iterable<T> all = Lists.asList(value, rest);
+		setValue(name, Joiner.on(",").join(all));
+	}
+
+	public <T> void setValue(String name, Iterable<T> values,
+			Function<T, String> conversion) {
+		Iterable<String> all = Iterables.transform(values, conversion);
+		setValue(name, Joiner.on(",").join(all));
 	}
 
 	public GameEvent getEvent() {
 		return event;
 	}
 
-	public void removeAttribute(String name) {
-		
-	}
-
-
 }
-

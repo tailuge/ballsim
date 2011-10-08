@@ -5,6 +5,7 @@ import org.motion.ballsimapp.shared.GameEventAttribute;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolGame;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolMove;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolTable;
+import org.oxtail.game.model.Game;
 import org.oxtail.game.model.Player;
 import org.oxtail.game.server.event.GameEventHelper;
 import org.oxtail.game.state.AbstractGameState;
@@ -12,6 +13,7 @@ import org.oxtail.game.state.Action;
 import org.oxtail.game.state.GameEventContext;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 
 /**
@@ -98,8 +100,6 @@ public abstract class AbstractSimplePoolGameState extends
 				.notInPlay().getAlias()));
 		event.addAttribute(new GameEventAttribute("game.id", game.getVersion()
 				.getId()));
-		event.addAttribute(new GameEventAttribute("game.table", game
-				.getCurrentPlayingSpace().toString()));
 		event.addAttribute(new GameEventAttribute("ballinhand", String
 				.valueOf(ballInHand)));
 		//
@@ -122,6 +122,26 @@ public abstract class AbstractSimplePoolGameState extends
 			PlayerState.LoggedIn.set(player);
 			player.onEvent(newStateEvent("loggedin"));
 		}
+	}
+
+	@Action
+	public void requestWatchGames() {
+		Player player = getInPlay();
+		PlayerState.RequestedWatchGames.set(player);
+		player.onEvent(newRequestWatchingGamesEvent());
+	}
+
+	private GameEvent newRequestWatchingGamesEvent() {
+		GameEvent event = newStateEvent("requestedwatchgames");
+		GameEventHelper helper = new GameEventHelper(event);
+		Predicate<Game<?>> all = Predicates.alwaysTrue();
+		Iterable<Game<?>> allGames = getGameHome().findGames(all);
+
+		helper.setValue("games.ids", allGames, Game.toId);
+		helper.setValue("games.descriptions", allGames,
+				SimplePoolGame.toDescription);
+
+		return event;
 	}
 
 }

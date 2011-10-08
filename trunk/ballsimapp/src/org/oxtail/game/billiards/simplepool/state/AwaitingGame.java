@@ -9,9 +9,6 @@ import org.oxtail.game.model.Player;
 import org.oxtail.game.state.Action;
 import org.oxtail.game.state.GameEventContext;
 
-/**
- * State representing the player logged in
- */
 public class AwaitingGame extends AbstractSimplePoolGameState {
 
 	public AwaitingGame(
@@ -29,8 +26,9 @@ public class AwaitingGame extends AbstractSimplePoolGameState {
 			PlayerState.InPlay.set(opponent, player);
 			SimplePoolGame game = new SimplePoolGame(player, opponent);
 			context.setGame(game);
-			game.setInPlay(player);
-			game.setGameState(InPlay.class);
+			//
+			initializeGame(player, game);
+			//
 			getGameHome().store(game);
 			notifyGameStarted();
 		} else {
@@ -38,6 +36,14 @@ public class AwaitingGame extends AbstractSimplePoolGameState {
 			PlayerState.AwaitingGame.set(player);
 			notifyAwaitingGame(player);
 		}
+	}
+
+	private void initializeGame(Player player, SimplePoolGame game) {
+		game.setInPlay(player);
+		game.setGameState(InPlay.class);
+		GameEvent event = getGameEvent().copy();
+		event.addAttribute(new GameEventAttribute("game.table.state","rack"));
+		game.setGameEvent(event);
 	}
 
 	private void notifyAwaitingGame(Player player) {

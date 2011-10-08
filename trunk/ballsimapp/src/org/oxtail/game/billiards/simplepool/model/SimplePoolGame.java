@@ -12,9 +12,19 @@ import org.oxtail.game.model.Game;
 import org.oxtail.game.model.GameVersion;
 import org.oxtail.game.model.Player;
 
+import com.google.common.base.Function;
+
 public class SimplePoolGame extends Game<SimplePoolTable> {
 
-	private static final AtomicInteger INSTANCE_COUNT = new AtomicInteger();
+	private final static AtomicInteger INSTANCE_COUNT = new AtomicInteger();
+
+	public static Function<Game<?>, String> toDescription = new Function<Game<?>, String>() {
+		@Override
+		public String apply(Game<?> game) {
+			return game.getPlayer(0).getAlias() + " vs. " + game.getPlayer(1).getAlias();
+		}
+
+	};
 
 	public SimplePoolGame(Player player1, Player player2) {
 		super(new SimplePoolTable(), player1, player2);
@@ -79,6 +89,7 @@ public class SimplePoolGame extends Game<SimplePoolTable> {
 		return shot.isFoul() ? gameState.forFoul() : gameState;
 	}
 
-
-
+	public static void resetGameCount() {
+		INSTANCE_COUNT.set(0);
+	}
 }

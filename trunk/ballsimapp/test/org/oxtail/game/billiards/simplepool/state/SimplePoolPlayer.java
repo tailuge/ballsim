@@ -16,6 +16,8 @@ public class SimplePoolPlayer extends Player {
 	private final SimplePoolStatemachine statemachine;
 	private List<GameEvent> events = Lists.newArrayList();
 
+	private static int shotCount = 0;
+
 	public SimplePoolPlayer(String alias, SimplePoolStatemachine statemachine) {
 		super(alias);
 		this.statemachine = statemachine;
@@ -39,6 +41,13 @@ public class SimplePoolPlayer extends Player {
 		return this;
 	}
 
+	public SimplePoolPlayer watchGame(String id) {
+		GameEvent event = newGameEvent("watchGame");
+		event.addAttribute(new GameEventAttribute("game.watch.id", id));
+		notify(event);
+		return this;
+	}
+
 	public SimplePoolPlayer loginDuringPlay() {
 		notify(newGameEvent("login", lastGameId()));
 		return this;
@@ -49,18 +58,24 @@ public class SimplePoolPlayer extends Player {
 		return this;
 	}
 
+	public SimplePoolPlayer requestWatchGames() {
+		notify(newGameEvent("requestWatchGames"));
+		return this;
+	}
+
 	private GameEvent newGameEvent(String action, String gameId) {
 		GameEvent gameEvent = newGameEvent(action);
 		gameEvent.addAttribute(new GameEventAttribute("game.id", gameId));
+		gameEvent.addAttribute(new GameEventAttribute("game.table.state",
+				String.valueOf(shotCount)));
 		return gameEvent;
 	}
 
 	private GameEvent newShotEvent() {
+		++shotCount;
 		String gameId = lastGameId();
 		Assert.assertNotNull("no game id found !", gameId);
 		GameEvent gameEvent = newGameEvent("shot", gameId);
-		gameEvent.addAttribute(new GameEventAttribute("game.table.state",
-				getAlias() + ".table.state"));
 		return gameEvent;
 	}
 
@@ -94,6 +109,10 @@ public class SimplePoolPlayer extends Player {
 		return lastEvent().getAttribute(name).getValue();
 	}
 
+	public String tableState() {
+		return lastAttributeValue("game.table.state");
+	}
+
 	public String lastState() {
 		return lastAttributeValue("state");
 	}
@@ -122,6 +141,14 @@ public class SimplePoolPlayer extends Player {
 
 	public SimplePoolPlayer assertAwaitingGame() {
 		return assertLastStateWas("awaitinggame");
+	}
+
+	public SimplePoolPlayer assertRequestWatchGames() {
+		return assertLastStateWas("requestedwatchgames");
+	}
+
+	public SimplePoolPlayer assertWatchingGame() {
+		return assertLastStateWas("watchinggame");
 	}
 
 	public SimplePoolPlayer assertWinner() {
@@ -153,5 +180,17 @@ public class SimplePoolPlayer extends Player {
 
 	public SimplePoolPlayer chat(Player to, String message) {
 		return chatTo(to.getAlias(), message);
+	}
+
+	public void assertTableState(String state) {
+		assertAttribute("game.table.state", state);
+	}
+
+	public void assertAttribute(String name, String value) {
+		Assert.assertEquals(value, lastAttributeValue(name));
+	}
+	
+	public static void resetShotCount() {
+		shotCount = 0;
 	}
 }
