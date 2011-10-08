@@ -130,6 +130,20 @@ public class TestSimplePoolStatemachine {
 		tom.assertRequestWatchGames();
 	}
 
+	@Test
+	public void testRequestWatchingGamesNotifiedOfGameStartingAndEnding() {
+		tom.login();
+		tom.requestWatchGames().assertRequestWatchGames();
+		bob.login().requestGame().assertAwaitingGame();
+		jim.login().requestGame().assertAiming();
+		tom.assertAttribute("games.ids", "1");
+		tom.assertAttribute("games.descriptions", "jim vs. bob");
+		jim.potAllBallsFromBreak();
+		tom.assertAttribute("games.ids", "");
+		tom.assertAttribute("games.descriptions", "");
+
+	}
+
 	private void assertTableState(String state, SimplePoolPlayer... players) {
 		for (SimplePoolPlayer player : players)
 			player.assertTableState(state);

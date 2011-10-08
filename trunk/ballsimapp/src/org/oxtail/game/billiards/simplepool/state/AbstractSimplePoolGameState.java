@@ -131,7 +131,7 @@ public abstract class AbstractSimplePoolGameState extends
 		player.onEvent(newRequestWatchingGamesEvent());
 	}
 
-	private GameEvent newRequestWatchingGamesEvent() {
+	protected GameEvent newRequestWatchingGamesEvent() {
 		GameEvent event = newStateEvent("requestedwatchgames");
 		GameEventHelper helper = new GameEventHelper(event);
 		Predicate<Game<?>> all = Predicates.alwaysTrue();
@@ -144,4 +144,28 @@ public abstract class AbstractSimplePoolGameState extends
 		return event;
 	}
 
+	/**
+	 * Notifies all people requesting watching game of the current games in progress
+	 */
+	protected void notifyGamesInProgressUpdate() {
+		for (Player player : playersRequestingToWatch()) {
+			player.onEvent(newRequestWatchingGamesEvent());
+		}
+	}
+	
+	private Iterable<Player> playersRequestingToWatch() {
+		return getGameHome().findPlayers(requestWatching());
+	}
+	
+	private Predicate<Player> requestWatching() {
+		
+		return new Predicate<Player>() {
+			@Override
+			public boolean apply(Player player) {
+				return PlayerState.RequestedWatchGames == PlayerState
+						.safeValueOf(player.getState());
+			}
+		};
+	}
+	
 }

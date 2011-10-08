@@ -48,7 +48,8 @@ public class InPlay extends AbstractSimplePoolGameState {
 	public void shot() {
 		SimplePoolGame game = getGame();
 		if (!game.inPlay().equals(getInPlay())) {
-			throw new IllegalArgumentException("player inPlay is not the same as Game expects");
+			throw new IllegalArgumentException(
+					"player inPlay is not the same as Game expects");
 		}
 		notifyNonPlayerWatching(game.notInPlay(), getGameEvent());
 		notifyWatchers(getGameEvent());
@@ -75,9 +76,9 @@ public class InPlay extends AbstractSimplePoolGameState {
 	}
 
 	private Iterable<Player> watchingThisGame() {
-		 return getGameHome().findPlayers(watching());
+		return getGameHome().findPlayers(watching());
 	}
-	
+
 	/**
 	 * On stop watching we go back to request games
 	 */
@@ -91,7 +92,6 @@ public class InPlay extends AbstractSimplePoolGameState {
 		}
 	}
 
-	
 	/**
 	 * Invoked when the player is aiming
 	 */
@@ -121,6 +121,7 @@ public class InPlay extends AbstractSimplePoolGameState {
 		game.notInPlay().onEvent(newGameEvent("loser"));
 		//
 		notifyStopWatching();
+		notifyGamesInProgressUpdate();
 	}
 
 	public void turnOver() {
@@ -142,6 +143,7 @@ public class InPlay extends AbstractSimplePoolGameState {
 			// can happen due to browser refreshes etc.
 			forceToLogin(getInPlay());
 		}
+		notifyGamesInProgressUpdate();
 	}
 
 	@Action
