@@ -141,7 +141,17 @@ public class TestSimplePoolStatemachine {
 		jim.potAllBallsFromBreak();
 		tom.assertAttribute("games.ids", "");
 		tom.assertAttribute("games.descriptions", "");
+	}
 
+	@Test
+	public void testWatchInPlayGameNotifiedOfCurrentTableState() {
+		tom.login();
+		tom.requestWatchGames().assertRequestWatchGames();
+		bob.login().requestGame().assertAwaitingGame();
+		jim.login().requestGame().assertAiming();
+		jim.pot(1).pot(2);
+		tom.watchGame("1");
+		tom.assertTableState("2");
 	}
 
 	private void assertTableState(String state, SimplePoolPlayer... players) {
