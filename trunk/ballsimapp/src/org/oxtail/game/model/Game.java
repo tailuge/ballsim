@@ -27,6 +27,8 @@ public abstract class Game<T extends PlayingSpace> {
 	private Player inPlay;
 	private GameEvent gameEvent;
 
+	private final List<Player> watchers = Lists.newArrayList();
+
 	public Game(Player... ps) {
 		for (Player p : ps)
 			players.add(p);
@@ -100,5 +102,18 @@ public abstract class Game<T extends PlayingSpace> {
 	}
 
 	public abstract String getGameType();
-	
+
+	public void notifyWatchers(GameEvent event) {
+		for (Player player : watchers)
+			player.onEvent(event.copy());
+	}
+
+	public void addWatcher(Player player) {
+		watchers.add(player);
+	}
+
+	public Iterable<Player> getWatchers() {
+		return watchers;
+	}
+
 }

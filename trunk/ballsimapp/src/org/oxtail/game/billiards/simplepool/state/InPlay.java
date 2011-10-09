@@ -11,8 +11,6 @@ import org.oxtail.game.server.event.GameEventHelper;
 import org.oxtail.game.state.Action;
 import org.oxtail.game.state.GameEventContext;
 
-import com.google.common.base.Predicate;
-
 /**
  * State representing the game in play, with one player to guess (generically
  * 'move')
@@ -24,21 +22,6 @@ public class InPlay extends AbstractSimplePoolGameState {
 	public InPlay(
 			GameEventContext<SimplePoolGame, SimplePoolMove, SimplePoolTable> context) {
 		super(context);
-	}
-
-	private Predicate<Player> watching() {
-		return new Predicate<Player>() {
-			@Override
-			public boolean apply(Player player) {
-				GameEventHelper playerAttributes = new GameEventHelper(
-						player.getPlayerAttributes());
-				//
-				return PlayerState.WatchingGame == PlayerState
-						.safeValueOf(player.getState())
-						&& getGame().getId().equals(
-								playerAttributes.getString("game.watch.id"));
-			}
-		};
 	}
 
 	/**
@@ -73,30 +56,16 @@ public class InPlay extends AbstractSimplePoolGameState {
 	}
 
 	private void notifyWatchersWatching(GameEvent event) {
-		for (Player player : getGameHome().findPlayers(watching())) {
-			GameEvent copy = event.copy();
-			copy.addAttribute(new GameEventAttribute("state","watching"));
-			player.onEvent(copy);
-		}
-	}
-
-	private void notifyWatchersViewing(GameEvent event) {
-		for (Player player : getGameHome().findPlayers(watching())) {
-			GameEvent copy = event.copy();
-			player.onEvent(copy);
-		}
-	}
-
-	
-	private Iterable<Player> watchingThisGame() {
-		return getGameHome().findPlayers(watching());
+		GameEvent copy = event.copy();
+		copy.addAttribute(new GameEventAttribute("state","watching"));
+		getGame().notifyWatchers(event);
 	}
 
 	/**
 	 * On stop watching we go back to request games
 	 */
 	private void notifyStopWatching() {
-		for (Player player : watchingThisGame()) {
+		for (Player player : getGame().getWatchers()) {
 			GameEventHelper helper = new GameEventHelper(newGameEvent());
 			helper.setValue("action", "requestWatchGames");
 			helper.setValue("player.alias", player.getAlias());
@@ -118,14 +87,14 @@ public class InPlay extends AbstractSimplePoolGameState {
 		SimplePoolGame game = getGame();
 		game.inPlay().onEvent(newGameFoulEvent("aiming"));
 		game.notInPlay().onEvent(newGameFoulEvent("viewing"));
-		notifyWatchersViewing(newGameFoulEvent("viewing"));
+		notifyWatchersWatching(newGameFoulEvent("viewing"));
 	}
 
 	public void notifyMove() {
 		SimplePoolGame game = getGame();
 		game.inPlay().onEvent(newGameEvent("aiming"));
 		game.notInPlay().onEvent(newGameEvent("viewing"));
-		notifyWatchersViewing(newGameFoulEvent("viewing"));
+		notifyWatchersWatching(newGameFoulEvent("viewing"));
 	}
 
 	public void notifyGameOver() {
