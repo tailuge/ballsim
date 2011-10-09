@@ -93,8 +93,9 @@ public abstract class AbstractSimplePoolGameState extends
 	protected GameEvent newGameEvent(String state, boolean ballInHand) {
 		SimplePoolGame game = getGame();
 		GameEvent event = newStateEvent(state);
-		event.addAttribute(new GameEventAttribute("game.type", game.getGameType()));
-		
+		event.addAttribute(new GameEventAttribute("game.type", game
+				.getGameType()));
+
 		event.addAttribute(new GameEventAttribute("player.inplay", game
 				.inPlay().getAlias()));
 		event.addAttribute(new GameEventAttribute("player.notinplay", game
@@ -146,20 +147,21 @@ public abstract class AbstractSimplePoolGameState extends
 	}
 
 	/**
-	 * Notifies all people requesting watching game of the current games in progress
+	 * Notifies all people requesting watching game of the current games in
+	 * progress
 	 */
 	protected void notifyGamesInProgressUpdate() {
 		for (Player player : playersRequestingToWatch()) {
 			player.onEvent(newRequestWatchingGamesEvent());
 		}
 	}
-	
+
 	private Iterable<Player> playersRequestingToWatch() {
 		return getGameHome().findPlayers(requestWatching());
 	}
-	
+
 	private Predicate<Player> requestWatching() {
-		
+
 		return new Predicate<Player>() {
 			@Override
 			public boolean apply(Player player) {
@@ -168,5 +170,5 @@ public abstract class AbstractSimplePoolGameState extends
 			}
 		};
 	}
-	
+
 }

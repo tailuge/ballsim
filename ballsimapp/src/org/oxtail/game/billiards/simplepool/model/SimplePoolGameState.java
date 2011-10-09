@@ -33,7 +33,7 @@ public enum SimplePoolGameState {
 		@Override
 		public void doMove(InPlay inplay) {
 			inplay.turnOver();
-			inplay.notifyFoul();
+			inplay.notifyMove();
 		}
 
 		@Override
