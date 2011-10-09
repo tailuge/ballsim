@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.motion.ballsim.gwtsafe.Function;
+import org.motion.ballsim.gwtsafe.RealFunction;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
@@ -123,8 +123,8 @@ public final class Collision {
 
 	private static double latestInstantBeforeCollision(final Event a,
 			final Event b, double tCollision) {
-		Function<Double, Double> func = new Function<Double, Double>() {
-			public Double apply(Double arg) {
+		RealFunction func = new RealFunction() {
+			public double apply(double arg) {
 				return Vector3D.distance(a.advanceDeltaPosition(arg),
 						b.advanceDeltaPosition(arg))
 						- 2 * Ball.R;

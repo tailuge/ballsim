@@ -1,6 +1,6 @@
 package org.motion.ballsim.physics;
 
-import org.motion.ballsim.gwtsafe.Function;
+import org.motion.ballsim.gwtsafe.RealPredicate;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
@@ -39,7 +39,7 @@ public final class Cushion {
 	 * @return reflected cushion collision event if it occurs within maxt
 	 */
 	private static Event hits(final Event e, Vector3D axis,
-			Function<Double, Boolean> onTable, double cush, double maxt,
+			RealPredicate onTable, double cush, double maxt,
 			boolean hasPockets) {
 		double A = UtilVector3D.projectionOnAxis(e.acceleration(), axis) * 0.5;
 		double B = UtilVector3D.projectionOnAxis(e.vel, axis);

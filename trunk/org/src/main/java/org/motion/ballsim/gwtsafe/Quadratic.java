@@ -51,7 +51,7 @@ public final class Quadratic {
 	 * @param rootCandidate
 	 * @return double
 	 */
-	public static double optimise(Function<Double, Double> func,
+	public static double optimise(RealFunction func,
 			double rootCandidate) {
 
 		double sign = Math.signum(func.apply(0.0));
@@ -72,7 +72,7 @@ public final class Quadratic {
 		return last;
 	}
 
-	public static double latestTrueTime(Function<Double, Boolean> onTable,
+	public static double latestTrueTime(RealPredicate onTable,
 			double rootCandidate) {
 
 		// Condition must be good at t = 0
