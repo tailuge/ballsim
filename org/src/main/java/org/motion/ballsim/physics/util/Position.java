@@ -1,8 +1,21 @@
 package org.motion.ballsim.physics.util;
 
-import static org.motion.ballsim.physics.Cushion.*;
-import static org.motion.ballsim.physics.PocketGeometry.*;
-import org.motion.ballsim.gwtsafe.Function;
+import static org.motion.ballsim.physics.Cushion.xn;
+import static org.motion.ballsim.physics.Cushion.xp;
+import static org.motion.ballsim.physics.Cushion.yn;
+import static org.motion.ballsim.physics.Cushion.yp;
+import static org.motion.ballsim.physics.PocketGeometry.p1k1;
+import static org.motion.ballsim.physics.PocketGeometry.p1k2;
+import static org.motion.ballsim.physics.PocketGeometry.p2k1;
+import static org.motion.ballsim.physics.PocketGeometry.p2k2;
+import static org.motion.ballsim.physics.PocketGeometry.p3k1;
+import static org.motion.ballsim.physics.PocketGeometry.p3k2;
+import static org.motion.ballsim.physics.PocketGeometry.p4k1;
+import static org.motion.ballsim.physics.PocketGeometry.p4k2;
+import static org.motion.ballsim.physics.PocketGeometry.p5k1;
+import static org.motion.ballsim.physics.PocketGeometry.p5k2;
+
+import org.motion.ballsim.gwtsafe.RealPredicate;
 import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.physics.ball.Ball;
@@ -28,17 +41,17 @@ public final class Position {
 		return (pos.getY() < yp) && (pos.getY() > yn);
 	}
 
-	public static Function<Double, Boolean> onY(final Event e) {
-		return new Function<Double, Boolean>() {
-			public Boolean apply(Double arg) {
+	public static RealPredicate onY(final Event e) {
+		return new RealPredicate() {
+			public boolean apply(double arg) {
 				return onTableY(e.advanceDeltaPosition(arg));
 			}
 		};
 	}
 
-	public static Function<Double, Boolean> onX(final Event e) {
-		return new Function<Double, Boolean>() {
-			public Boolean apply(Double arg) {
+	public static RealPredicate onX(final Event e) {
+		return new RealPredicate() {
+			public boolean apply(double arg) {
 				return onTableX(e.advanceDeltaPosition(arg));
 			}
 		};
