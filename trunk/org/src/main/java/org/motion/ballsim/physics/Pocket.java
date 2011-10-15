@@ -4,8 +4,8 @@ import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.ball.State;
 import org.motion.ballsim.physics.ball.Transition;
+import org.motion.ballsim.physics.util.Guard;
 import org.motion.ballsim.physics.util.Position;
-import org.motion.ballsim.util.Guard;
 
 /**
  * Use ball collision logic to get knuckle events

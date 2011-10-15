@@ -1,6 +1,6 @@
 package org.motion.ballsim.physics.ball;
 
-import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
 
 public final class PottingMotion {
 

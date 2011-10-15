@@ -1,13 +1,13 @@
 package org.motion.ballsim.physics;
 
-import org.motion.ballsim.gwtsafe.RealPredicate;
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.gwtsafe.RealPredicate;
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.util.Events;
+import org.motion.ballsim.physics.util.Guard;
 import org.motion.ballsim.physics.util.Position;
-import org.motion.ballsim.util.Guard;
-import org.motion.ballsim.util.UtilVector3D;
+import org.motion.ballsim.physics.util.UtilVector3D;
 
 /**
  * @author luke
@@ -45,7 +45,7 @@ public final class Cushion {
 		double B = UtilVector3D.projectionOnAxis(e.vel, axis);
 		double C = UtilVector3D.projectionOnAxis(e.pos, axis) - cush;
 
-		double tCollision = org.motion.ballsim.gwtsafe.Quadratic
+		double tCollision = org.motion.ballsim.physics.gwtsafe.Quadratic
 				.leastPositiveRoot(A, B, C);
 
 		if ((tCollision <= 0) || (tCollision > maxt))
@@ -55,7 +55,7 @@ public final class Cushion {
 
 		// this one will produce bad data when starting point is in pocket jaws
 		// TODO: fix on table predicate
-		tCollision = org.motion.ballsim.gwtsafe.Quadratic.latestTrueTime(
+		tCollision = org.motion.ballsim.physics.gwtsafe.Quadratic.latestTrueTime(
 				onTable, tCollision);
 
 		Guard.isTrue(Guard.active && tCollision > 0);

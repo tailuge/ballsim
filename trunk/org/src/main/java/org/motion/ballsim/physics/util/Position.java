@@ -15,11 +15,11 @@ import static org.motion.ballsim.physics.PocketGeometry.p4k2;
 import static org.motion.ballsim.physics.PocketGeometry.p5k1;
 import static org.motion.ballsim.physics.PocketGeometry.p5k2;
 
-import org.motion.ballsim.gwtsafe.RealPredicate;
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.gwtsafe.RealPredicate;
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
 
 /**
  * @author luke
