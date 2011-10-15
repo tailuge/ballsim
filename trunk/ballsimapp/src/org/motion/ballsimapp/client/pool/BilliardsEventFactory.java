@@ -5,10 +5,10 @@ import static org.motion.ballsimapp.shared.Events.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.motion.ballsim.game.Aim;
-import org.motion.ballsim.game.Outcome;
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.physics.game.Aim;
+import org.motion.ballsim.physics.game.Outcome;
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
 import org.motion.ballsimapp.client.util.StringUtil;
 import org.motion.ballsimapp.shared.Events;
 import org.motion.ballsimapp.shared.GameEvent;

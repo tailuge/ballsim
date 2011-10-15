@@ -6,7 +6,7 @@ import static org.motion.ballsimapp.shared.Events.TABLE_STATE;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.motion.ballsim.game.Aim;
+import org.motion.ballsim.physics.game.Aim;
 import org.motion.ballsimapp.client.mode.BilliardsMode;
 import org.motion.ballsimapp.client.mode.ChatMode;
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;

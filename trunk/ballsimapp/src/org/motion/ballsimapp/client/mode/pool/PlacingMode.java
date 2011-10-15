@@ -3,7 +3,7 @@ package org.motion.ballsimapp.client.mode.pool;
 import static org.motion.ballsimapp.shared.Events.CURSOR_INPUT;
 import static org.motion.ballsimapp.shared.Events.CURSOR_INPUT_COMPLETE;
 
-import org.motion.ballsim.game.Aim;
+import org.motion.ballsim.physics.game.Aim;
 import org.motion.ballsimapp.client.mode.BilliardsMode;
 import org.motion.ballsimapp.client.mode.ChatMode;
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;

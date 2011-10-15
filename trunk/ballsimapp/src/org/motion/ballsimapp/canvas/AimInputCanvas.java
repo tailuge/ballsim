@@ -1,7 +1,7 @@
 package org.motion.ballsimapp.canvas;
 
-import org.motion.ballsim.game.Aim;
-import org.motion.ballsim.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.game.Aim;
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
 import org.motion.ballsimapp.client.pool.handlers.AimChange;
 
 import com.google.gwt.canvas.client.Canvas;

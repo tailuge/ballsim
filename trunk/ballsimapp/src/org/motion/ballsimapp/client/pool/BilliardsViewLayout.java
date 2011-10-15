@@ -1,6 +1,6 @@
 package org.motion.ballsimapp.client.pool;
 
-import org.motion.ballsim.game.Aim;
+import org.motion.ballsim.physics.game.Aim;
 import org.motion.ballsimapp.canvas.AimInputCanvas;
 import org.motion.ballsimapp.canvas.PowerInputCanvas;
 import org.motion.ballsimapp.canvas.SpinInputCanvas;

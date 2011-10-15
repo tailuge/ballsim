@@ -2,10 +2,10 @@ package org.motion.ballsimapp.shared;
 
 import junit.framework.Assert;
 
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.util.Rack;
-import org.motion.ballsim.util.UtilEvent;
+import org.motion.ballsim.physics.util.UtilEvent;
 
 /**
  * Delegate for Performances tests which is called by Java and GWT Unit Tests
