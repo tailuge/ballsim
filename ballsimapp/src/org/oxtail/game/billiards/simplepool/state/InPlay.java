@@ -8,8 +8,9 @@ import org.oxtail.game.billiards.simplepool.model.SimplePoolMove;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolTable;
 import org.oxtail.game.model.Player;
 import org.oxtail.game.server.event.GameEventHelper;
-import org.oxtail.game.state.Action;
 import org.oxtail.game.state.GameEventContext;
+import org.oxtail.game.state.InvalidCommandAction;
+import org.oxtail.game.state.PlayAction;
 
 /**
  * State representing the game in play, with one player to guess (generically
@@ -27,7 +28,7 @@ public class InPlay extends AbstractSimplePoolGameState {
 	/**
 	 * Invoked when the player takes a shot
 	 */
-	@Action
+	@PlayAction
 	public void shot() {
 		SimplePoolGame game = getGame();
 		if (!game.inPlay().equals(getInPlay())) {
@@ -73,7 +74,7 @@ public class InPlay extends AbstractSimplePoolGameState {
 	/**
 	 * Invoked when the player is aiming
 	 */
-	@Action
+	@PlayAction
 	public void aim() {
 		Player notInPlay = getGame().notInPlay();
 		notInPlay.onEvent(getGameEvent());
@@ -119,13 +120,13 @@ public class InPlay extends AbstractSimplePoolGameState {
 		notifyGamesInProgressUpdate();
 	}
 
-	@Action
+	@InvalidCommandAction
 	public void login() {
 		log.warning("Invalid action login received moving back to loggedin and aborting Game");
 		abortGame();
 	}
 
-	@Action
+	@InvalidCommandAction
 	public void requestGame() {
 		log.warning("Invalid action requestGame received moving back to loggedin and aborting Game");
 		abortGame();

@@ -6,7 +6,7 @@ import org.oxtail.game.billiards.simplepool.model.SimplePoolTable;
 import org.oxtail.game.model.Game;
 import org.oxtail.game.model.Player;
 import org.oxtail.game.server.event.GameEventHelper;
-import org.oxtail.game.state.Action;
+import org.oxtail.game.state.CommandAction;
 import org.oxtail.game.state.GameEventContext;
 
 public class RequestedWatchGames extends AbstractSimplePoolGameState {
@@ -16,7 +16,7 @@ public class RequestedWatchGames extends AbstractSimplePoolGameState {
 		super(context);
 	}
 
-	@Action
+	@CommandAction
 	public void watchGame() {
 		Player player = getInPlay();
 		PlayerState.WatchingGame.set(player);
@@ -43,7 +43,7 @@ public class RequestedWatchGames extends AbstractSimplePoolGameState {
 	/**
 	 * Invalid login event, move back to be logged in
 	 */
-	@Action
+	@CommandAction
 	public void login() {
 		log.warning("Invalid action login received moving back to loggedin");
 		forceToLogin(getInPlay());
