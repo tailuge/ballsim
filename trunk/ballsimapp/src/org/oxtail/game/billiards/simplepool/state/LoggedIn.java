@@ -4,7 +4,7 @@ import org.oxtail.game.billiards.simplepool.model.SimplePoolGame;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolMove;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolTable;
 import org.oxtail.game.model.Player;
-import org.oxtail.game.state.Action;
+import org.oxtail.game.state.CommandAction;
 import org.oxtail.game.state.GameEventContext;
 
 /**
@@ -17,14 +17,14 @@ public class LoggedIn extends AbstractSimplePoolGameState {
 		super(context);
 	}
 
-	@Action
+	@CommandAction
 	public void logout() {
 		Player player = getInPlay();
 		PlayerState.LoggedOut.set(player);
 		notifyLoggedOut(player);
 	}
 
-	@Action
+	@CommandAction
 	public void requestGame() {
 		Player player = getInPlay();
 		PlayerState.AwaitingGame.set(player);

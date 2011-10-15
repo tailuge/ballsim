@@ -9,7 +9,7 @@ import org.oxtail.game.model.Game;
 import org.oxtail.game.model.Player;
 import org.oxtail.game.server.event.GameEventHelper;
 import org.oxtail.game.state.AbstractGameState;
-import org.oxtail.game.state.Action;
+import org.oxtail.game.state.CommandAction;
 import org.oxtail.game.state.GameEventContext;
 
 import com.google.common.base.Predicate;
@@ -53,7 +53,7 @@ public abstract class AbstractSimplePoolGameState extends
 		});
 	}
 
-	@Action
+	@CommandAction
 	public void chat() {
 		GameEventHelper helper = new GameEventHelper(getGameEvent());
 		String chatTo = helper.getString("chat.to");
@@ -126,7 +126,7 @@ public abstract class AbstractSimplePoolGameState extends
 		}
 	}
 
-	@Action
+	@CommandAction
 	public void requestWatchGames() {
 		Player player = getInPlay();
 		PlayerState.RequestedWatchGames.set(player);

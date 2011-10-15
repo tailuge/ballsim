@@ -6,16 +6,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Marker for State action methods
- * 
- * @author liam knox
- * 
- */
 @Documented
-@Target({ElementType.METHOD,ElementType.ANNOTATION_TYPE})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Action {
+@Action(actionType = ActionType.Command)
+public @interface CommandAction {
 
-	ActionType actionType() default ActionType.Command;
 }
