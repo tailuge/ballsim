@@ -5,16 +5,16 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.motion.ballsim.game.Aim;
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.game.Aim;
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.util.EventPair;
+import org.motion.ballsim.physics.util.Guard;
 import org.motion.ballsim.physics.util.Interpolate;
+import org.motion.ballsim.physics.util.Logger;
 import org.motion.ballsim.physics.util.Position;
-import org.motion.ballsim.util.Guard;
-import org.motion.ballsim.util.Logger;
-import org.motion.ballsim.util.UtilEvent;
+import org.motion.ballsim.physics.util.UtilEvent;
 
 /**
  * @author luke

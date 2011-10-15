@@ -1,10 +1,9 @@
 package org.motion.ballsim.physics.util;
 
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.ball.State;
 import org.motion.ballsim.physics.ball.Transition;
-import org.motion.ballsim.util.UtilVector3D;
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
 
 public class Events {
 

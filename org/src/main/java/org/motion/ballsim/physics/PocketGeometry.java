@@ -3,10 +3,10 @@ package org.motion.ballsim.physics;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
-import org.motion.ballsim.util.UtilEvent;
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
+import org.motion.ballsim.physics.util.UtilEvent;
 
 public final class PocketGeometry {
 

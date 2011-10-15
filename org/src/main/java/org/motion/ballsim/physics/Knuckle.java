@@ -4,9 +4,9 @@ import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.ball.State;
 import org.motion.ballsim.physics.ball.Transition;
+import org.motion.ballsim.physics.util.Guard;
 import org.motion.ballsim.physics.util.Position;
-import org.motion.ballsim.util.Guard;
-import org.motion.ballsim.util.UtilVector3D;
+import org.motion.ballsim.physics.util.UtilVector3D;
 
 public final class Knuckle {
 
