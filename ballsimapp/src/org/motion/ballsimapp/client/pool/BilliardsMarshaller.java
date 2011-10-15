@@ -1,12 +1,12 @@
 package org.motion.ballsimapp.client.pool;
 
-import org.motion.ballsim.game.Aim;
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.ball.State;
 import org.motion.ballsim.physics.ball.Transition;
+import org.motion.ballsim.physics.game.Aim;
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
 import org.motion.ballsimapp.shared.Events;
 import org.motion.ballsimapp.shared.GameEvent;
 

@@ -1,9 +1,9 @@
 package org.motion.ballsimapp.canvas;
 
-import org.motion.ballsim.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.Cushion;
 import org.motion.ballsim.physics.PocketGeometry;
 import org.motion.ballsim.physics.ball.Ball;
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
