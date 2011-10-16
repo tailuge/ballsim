@@ -86,7 +86,7 @@ public class SimplePoolPlayer extends Player {
 	public SimplePoolPlayer pot(Integer ball, Integer... rest) {
 		GameEvent gameEvent = newShotEvent();
 		GameEventHelper helper = new GameEventHelper(gameEvent);
-		helper.setValue("game.shot.ballspotted", ball, rest);
+		helper.setValues("game.shot.ballspotted", ball, rest);
 		notify(gameEvent);
 		return this;
 	}
@@ -110,7 +110,11 @@ public class SimplePoolPlayer extends Player {
 	}
 
 	public String lastAttributeValue(String name) {
-		return lastEvent().getAttribute(name).getValue();
+		GameEventAttribute attribute = lastEvent().getAttribute(name);
+		if (attribute == null) {
+			throw new IllegalArgumentException(name+" not found int event, "+lastEvent());
+		}
+		return attribute.getValue();
 	}
 
 	public String tableState() {
@@ -188,6 +192,10 @@ public class SimplePoolPlayer extends Player {
 
 	public void assertTableState(String state) {
 		assertAttribute("game.table.state", state);
+	}
+
+	public void assertAvaliableActions(String value) {
+		assertAttribute("available.actions", value);
 	}
 
 	public void assertAttribute(String name, String value) {

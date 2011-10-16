@@ -47,7 +47,7 @@ public class AwaitingGame extends AbstractSimplePoolGameState {
 	}
 
 	private void notifyAwaitingGame(Player player) {
-		player.onEvent(newStateEvent("awaitinggame"));
+		player.onEvent(newStateEvent("awaitinggame",AwaitingGame.class));
 	}
 
 	private void notifyGameStarted() {
@@ -57,7 +57,7 @@ public class AwaitingGame extends AbstractSimplePoolGameState {
 	}
 
 	private GameEvent gameStartedAnd(String state) {
-		GameEvent event = newGameEvent(state);
+		GameEvent event = newGameEvent(state,InPlay.class);
 		event.addAttribute(new GameEventAttribute("game.rack.type",
 				"SimplePool"));
 		event.addAttribute(new GameEventAttribute("game.rack.seed", "1"));

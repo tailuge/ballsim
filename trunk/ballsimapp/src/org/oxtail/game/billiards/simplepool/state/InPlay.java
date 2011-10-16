@@ -56,7 +56,7 @@ public class InPlay extends AbstractSimplePoolGameState {
 	}
 
 	private void notifyStopWatching(Player watcher) {
-		GameEventHelper helper = new GameEventHelper(newGameEvent());
+		GameEventHelper helper = new GameEventHelper(newStateEvent("requestedwatchgames", RequestedWatchGames.class));
 		helper.setValue("action", "requestWatchGames");
 		helper.setValue("player.alias", watcher.getAlias());
 		watcher.getPlayerAttributes().removeAttribute("game.watch.id");
@@ -82,8 +82,9 @@ public class InPlay extends AbstractSimplePoolGameState {
 
 	public void notifyMove() {
 		SimplePoolGame game = getGame();
-		game.inPlay().onEvent(newGameEvent("aiming"));
-		notifyWatchersWatching(game.notInPlay(),newGameFoulEvent("viewing"));
+		game.inPlay().onEvent(newGameEvent("aiming", InPlay.class));
+		notifyWatchersWatching(game.notInPlay(),
+				newGameFoulEvent("viewing", InPlay.class));
 	}
 
 	public void notifyGameOver() {
@@ -91,8 +92,8 @@ public class InPlay extends AbstractSimplePoolGameState {
 		PlayerState.LoggedIn.set(game.inPlay(), game.notInPlay());
 		getGameHome().deleteGame(game.getId());
 		//
-		game.inPlay().onEvent(newGameEvent("winner"));
-		game.notInPlay().onEvent(newGameEvent("loser"));
+		game.inPlay().onEvent(newGameEvent("winner", LoggedIn.class));
+		game.notInPlay().onEvent(newGameEvent("loser", LoggedIn.class));
 		//
 		notifyStopWatching();
 		notifyGamesInProgressUpdate();

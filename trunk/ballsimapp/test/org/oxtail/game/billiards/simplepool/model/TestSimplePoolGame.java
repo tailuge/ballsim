@@ -32,7 +32,7 @@ public class TestSimplePoolGame {
 	private GameEventHelper newShotWithBallPotted(String pot1,
 			String... restPotted) {
 		GameEventHelper helper = newShot();
-		helper.setValue("game.shot.ballspotted", pot1, restPotted);
+		helper.setValues("game.shot.ballspotted", pot1, restPotted);
 		return helper;
 	}
 
