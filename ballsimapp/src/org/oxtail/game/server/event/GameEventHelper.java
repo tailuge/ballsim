@@ -39,15 +39,16 @@ public class GameEventHelper {
 		event.addAttribute(new GameEventAttribute(name, String.valueOf(value)));
 	}
 
-	public <T> void setValue(String name, T value, T... rest) {
+	public <T> void setValues(String name, T value, T... rest) {
 		Iterable<T> all = Lists.asList(value, rest);
-		setValue(name, Joiner.on(",").join(all));
+		setValue(name, Joiner.on(",").join(all).toString());
 	}
 
-	public <T> void setValue(String name, Iterable<T> values,
+	public <T> void setConvertedValues(String name, Iterable<T> values,
 			Function<T, String> conversion) {
 		Iterable<String> all = Iterables.transform(values, conversion);
-		setValue(name, Joiner.on(",").join(all));
+		String value = Joiner.on(",").join(all).toString();
+		setValue(name, value);
 	}
 
 	public GameEvent getEvent() {

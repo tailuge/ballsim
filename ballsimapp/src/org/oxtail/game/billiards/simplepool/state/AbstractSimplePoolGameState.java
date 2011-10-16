@@ -1,5 +1,9 @@
 package org.oxtail.game.billiards.simplepool.state;
 
+import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.List;
+
 import org.motion.ballsimapp.shared.GameEvent;
 import org.motion.ballsimapp.shared.GameEventAttribute;
 import org.oxtail.game.billiards.simplepool.model.SimplePoolGame;
@@ -12,9 +16,12 @@ import org.oxtail.game.state.AbstractGameState;
 import org.oxtail.game.state.CommandAction;
 import org.oxtail.game.state.GameEventContext;
 
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * Top level state for SimplePool
@@ -73,7 +80,7 @@ public abstract class AbstractSimplePoolGameState extends
 		player.onEvent(helper.getEvent());
 	}
 
-	protected final GameEvent newGameEvent() {
+	private final GameEvent newGameEvent() {
 		return new GameEvent();
 	}
 
@@ -86,13 +93,19 @@ public abstract class AbstractSimplePoolGameState extends
 		return gameEvent;
 	}
 
-	protected GameEvent newStateEvent(String state) {
-		return createEvent("state=" + state);
+	protected GameEvent newStateEvent(String state, Class<?> nextPlayerState) {
+		GameEvent event = createEvent("state=" + state);
+		GameEventHelper helper = new GameEventHelper(event);
+		Function<String,String> identity = Functions.identity();
+		helper.setConvertedValues("available.actions",
+				getAvaliableActions(nextPlayerState),identity);
+		return event;
 	}
 
-	protected GameEvent newGameEvent(String state, boolean ballInHand) {
+	protected GameEvent newGameEvent(String state, Class<?> nextPlayerState,
+			boolean ballInHand) {
 		SimplePoolGame game = getGame();
-		GameEvent event = newStateEvent(state);
+		GameEvent event = newStateEvent(state, nextPlayerState);
 		event.addAttribute(new GameEventAttribute("game.type", game
 				.getGameType()));
 
@@ -111,18 +124,18 @@ public abstract class AbstractSimplePoolGameState extends
 		return event;
 	}
 
-	protected GameEvent newGameEvent(String state) {
-		return newGameEvent(state, false);
+	protected GameEvent newGameEvent(String state, Class<?> nextPlayerState) {
+		return newGameEvent(state, nextPlayerState, false);
 	}
 
-	protected GameEvent newGameFoulEvent(String state) {
-		return newGameEvent(state, true);
+	protected GameEvent newGameFoulEvent(String state, Class<?> nextPlayerState) {
+		return newGameEvent(state, nextPlayerState, true);
 	}
 
 	protected void forceToLogin(Player player) {
 		if (player != null) {
 			PlayerState.LoggedIn.set(player);
-			player.onEvent(newStateEvent("loggedin"));
+			player.onEvent(newStateEvent("loggedin", LoggedIn.class));
 		}
 	}
 
@@ -134,13 +147,14 @@ public abstract class AbstractSimplePoolGameState extends
 	}
 
 	protected GameEvent newRequestWatchingGamesEvent() {
-		GameEvent event = newStateEvent("requestedwatchgames");
+		GameEvent event = newStateEvent("requestedwatchgames",
+				RequestedWatchGames.class);
 		GameEventHelper helper = new GameEventHelper(event);
 		Predicate<Game<?>> all = Predicates.alwaysTrue();
 		Iterable<Game<?>> allGames = getGameHome().findGames(all);
 
-		helper.setValue("games.ids", allGames, Game.toId);
-		helper.setValue("games.descriptions", allGames,
+		helper.setConvertedValues("games.ids", allGames, Game.toId);
+		helper.setConvertedValues("games.descriptions", allGames,
 				SimplePoolGame.toDescription);
 
 		return event;
@@ -169,6 +183,17 @@ public abstract class AbstractSimplePoolGameState extends
 						.safeValueOf(player.getState());
 			}
 		};
+	}
+
+	private List<String> getAvaliableActions(Class<?> stateClass) {
+		List<String> availableActions = Lists.newArrayList();
+		for (Method m : stateClass.getMethods()) {
+			if (m.getAnnotation(CommandAction.class) != null) {
+				availableActions.add(m.getName());
+			}
+		}
+		Collections.sort(availableActions);
+		return availableActions;
 	}
 
 }

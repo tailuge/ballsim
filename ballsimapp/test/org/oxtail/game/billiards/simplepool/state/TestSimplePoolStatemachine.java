@@ -36,6 +36,7 @@ public class TestSimplePoolStatemachine {
 	@Test
 	public void testPlayer1Login() {
 		bob.login().assertLoggedIn();
+		bob.assertAvaliableActions("chat,logout,requestGame,requestWatchGames");
 	}
 
 	@Test
