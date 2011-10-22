@@ -1,5 +1,8 @@
 package a.b.c.client;
 
+import org.motion.ballsim.physics.Table;
+import org.motion.ballsim.physics.util.Rack;
+
 import gwt.g2d.client.util.FpsTimer;
 import gwt.g3d.client.Surface3D;
 import gwt.g3d.client.gl2.GL2;
@@ -16,7 +19,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Test3D implements EntryPoint {
-	
+
 	private Surface3D surface = new Surface3D(500, 500,
 			new WebGLContextAttributes() {
 				{
@@ -24,15 +27,13 @@ public class Test3D implements EntryPoint {
 				}
 			});
 
-	private HoldingGL currentDemo;
-
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		WebGLContextAttributes contextAttribs = new WebGLContextAttributes();
-		contextAttribs.setStencilEnable(true);
-		surface = new Surface3D(500, 500, contextAttribs);
+
+		// BilliardsView view = new BilliardsViewImpl();
+
 		RootPanel.get().add(surface);
 
 		final GL2 gl = surface.getGL();
@@ -50,32 +51,35 @@ public class Test3D implements EntryPoint {
 		gl.clear(ClearBufferMask.COLOR_BUFFER_BIT,
 				ClearBufferMask.DEPTH_BUFFER_BIT);
 
+		Rack.rack(table, "2", "");
+		table.generateSequence();
+		
 		runDemo(gl);
 	}
 
-	
+	Table table = new Table(true);
+
 	/**
 	 * Initializes and runs the demo.
 	 */
 	private void runDemo(final GL2 gl) {
-		HoldingGL demo = new BilliardsViewImpl();
-		demo.setSurface(surface);
-		setCurrentDemo(demo);
-		currentDemo.init(gl);
+		final BilliardsViewImpl demo = new BilliardsViewImpl();
 		
-		FpsTimer timer = new FpsTimer(60) {
+		demo.init(gl);
+
+		FpsTimer timer = new FpsTimer(30) {
+			double startTime = System.currentTimeMillis();
 			@Override
 			public void update() {
-				currentDemo.update();
+				demo.plotAtTime(table, (System.currentTimeMillis() - startTime)/1000.0);
+				
+				if (((System.currentTimeMillis() - startTime)/1500.0)>10)
+				{
+					startTime = System.currentTimeMillis();
+				}
 			}
 		};
 		timer.start();
 	}
 
-	/**
-	 * Sets the currently selected demo.
-	 */
-	private void setCurrentDemo(HoldingGL demo) {
-		currentDemo = demo;
-	}
 }
