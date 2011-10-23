@@ -82,10 +82,10 @@ public class Assets implements GLDisposable {
 
 
 	
-	private Texture2D moonTexture, crateTexture;
+	private Texture2D moonTexture, crateTexture, shadowTexture;
 	private final Matrix3f nMatrix = new Matrix3f();
 
-	private StaticMesh cubeMesh, moonMesh;
+	private StaticMesh shadowMesh, ballMesh;
 
 	
 	protected Assets() {
@@ -93,8 +93,8 @@ public class Assets implements GLDisposable {
 
 	@Override
 	public void dispose() {
-		cubeMesh.dispose();
-		moonMesh.dispose();
+		shadowMesh.dispose();
+		ballMesh.dispose();
 		moonTexture.dispose();
 		crateTexture.dispose();
 		shader.dispose();
@@ -128,33 +128,48 @@ public class Assets implements GLDisposable {
 		MODELVIEW.translate(0, 0, 0.0f);
 		MODELVIEW.scale(1f, 1f, 1f);
 		setMatrixUniforms();
-		//cubeMesh.draw();
 		tableMesh.draw();
 		MODELVIEW.pop();
 	}
 
 	protected void placeBall(double x, double y,
 			double px,double py,double pz,
-			double ux,double uy,double uz
+			double ux,double uy,double uz,
+			double cx,double cy,double cz
 			) {
 		if (moonTexture != null) {
 			moonTexture.bind();
 		}
 		MODELVIEW.push();
-		MODELVIEW.translate((float) x, (float) y, 0);
+		MODELVIEW.translate((float) -x, (float) -y, 0);
 		MODELVIEW.lookAt(
 				0, 0, 0, 
-				(float)-px, (float)-py, (float)-pz,
+				(float)px, (float)py, (float)pz,
 				(float)ux, (float)uy, (float)uz
 				);
 		setMatrixUniforms();
-		moonMesh.draw();
+		ballMesh.draw();
 		MODELVIEW.pop();
-		
-	//	debugRoll(x,y,px,py,-pz);
-	//	debugRoll(x,y,ux,uy,-uz);
+
+		placeShadow(x,y);
+		//debugRoll(-x,-y,-px,-py,-pz);
+		//debugRoll(-x,-y,-ux,-uy,-uz);
 	}
 
+	protected void placeShadow(double x, double y)
+	{
+		if (shadowTexture != null) {
+			shadowTexture.bind();
+		}
+		MODELVIEW.push();
+		MODELVIEW.translate((float) -x, (float) -y, -0.99f);
+		MODELVIEW.scale(1, 1, 0.01f);
+		MODELVIEW.rotateX((float)Math.PI/2);
+		setMatrixUniforms();
+		shadowMesh.draw();
+		MODELVIEW.pop();		
+	}
+	
 	protected void debugRoll(double x, double y,
 			double px,double py,double pz
 			) {
@@ -166,7 +181,7 @@ public class Assets implements GLDisposable {
 		MODELVIEW.translate((float) x, (float) y, 0);
 		MODELVIEW.scale(0.2f, 0.2f, 0.2f);
 		setMatrixUniforms();
-		moonMesh.draw();
+		ballMesh.draw();
 		MODELVIEW.pop();
 	}
 	
@@ -186,7 +201,7 @@ public class Assets implements GLDisposable {
 		gl.activeTexture(TextureUnit.TEXTURE0);
 		gl.uniform1i(shader.getUniformLocation("uSampler"), 0);
 
-		Resources.INSTANCE.moon().getTexture(
+		Resources.INSTANCE.ball().getTexture(
 				new ResourceCallback<Texture2DResource>() {
 					@Override
 					public void onSuccess(Texture2DResource resource) {
@@ -212,19 +227,33 @@ public class Assets implements GLDisposable {
 					}
 				});
 
+		Resources.INSTANCE.shadow().getTexture(
+				new ResourceCallback<Texture2DResource>() {
+					@Override
+					public void onSuccess(Texture2DResource resource) {
+						shadowTexture = resource.createTexture(gl);
+					}
+
+					@Override
+					public void onError(ResourceException e) {
+						Window.alert("Fail to load crate image.");
+					}
+				});
+
+		
 		setView(0, 0);
 
-		moonMesh = new StaticMesh(gl, PrimitiveFactory.makeSphere(10, 10));
-		moonMesh.setPositionIndex(shader
+		
+		ballMesh = new StaticMesh(gl, PrimitiveFactory.makeSphere(10, 10));
+		ballMesh.setPositionIndex(shader
 				.getAttributeLocation("aVertexPosition"));
-		moonMesh.setNormalIndex(shader.getAttributeLocation("aVertexNormal"));
-		moonMesh.setTexCoordIndex(shader.getAttributeLocation("aTextureCoord"));
+		ballMesh.setNormalIndex(shader.getAttributeLocation("aVertexNormal"));
+		ballMesh.setTexCoordIndex(shader.getAttributeLocation("aTextureCoord"));
 
-		cubeMesh = new StaticMesh(gl, PrimitiveFactory.makeBox());
-		cubeMesh.setPositionIndex(shader
-				.getAttributeLocation("aVertexPosition"));
-		cubeMesh.setNormalIndex(shader.getAttributeLocation("aVertexNormal"));
-		cubeMesh.setTexCoordIndex(shader.getAttributeLocation("aTextureCoord"));
+		shadowMesh = new StaticMesh(gl, PrimitiveFactory.makeCone(1, 15));
+		shadowMesh.setPositionIndex(shader.getAttributeLocation("aVertexPosition"));
+		shadowMesh.setNormalIndex(shader.getAttributeLocation("aVertexNormal"));
+		shadowMesh.setTexCoordIndex(shader.getAttributeLocation("aTextureCoord"));
 
 		loadTable();
 	}
@@ -250,13 +279,19 @@ public class Assets implements GLDisposable {
 		@MagFilter(TextureMagFilter.LINEAR)
 		@MinFilter(TextureMinFilter.LINEAR)
 		@GenerateMipmap
-		ExternalTexture2DResource moon();
+		ExternalTexture2DResource ball();
 
 		@Source("images/table.png")
 		@MagFilter(TextureMagFilter.LINEAR)
 		@MinFilter(TextureMinFilter.LINEAR)
 		@WrapMode(TextureWrapMode.CLAMP_TO_EDGE)
 		ExternalTexture2DResource crate();
+
+		@Source("images/shadow.png")
+		@MagFilter(TextureMagFilter.LINEAR)
+		@MinFilter(TextureMinFilter.LINEAR)
+		ExternalTexture2DResource shadow();
+
 	}
 
 

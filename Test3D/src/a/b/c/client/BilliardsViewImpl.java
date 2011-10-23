@@ -8,6 +8,7 @@ import java.util.List;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.util.Interpolate;
 
 public class BilliardsViewImpl extends Assets {
@@ -41,8 +42,10 @@ public class BilliardsViewImpl extends Assets {
 	}
 
 	private void plotBall(Event event) {
+		Vector3D a = Vector3D.crossProduct(event.angularPos, event.angularPosPerp);
 		placeBall(event.pos.getX(), event.pos.getY(),
 				event.angularPos.getX(),event.angularPos.getY(),event.angularPos.getZ(),
-				event.angularPosPerp.getX(),event.angularPosPerp.getY(),event.angularPosPerp.getZ());
+				event.angularPosPerp.getX(),event.angularPosPerp.getY(),event.angularPosPerp.getZ(),
+				a.getX(),a.getY(),a.getZ());
 	}
 }
