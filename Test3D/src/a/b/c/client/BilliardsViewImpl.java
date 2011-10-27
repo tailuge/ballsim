@@ -33,6 +33,7 @@ public class BilliardsViewImpl extends Assets {
 			plotBall(event);
 
 		placeTable();
+				placeCue(0,0);
 
 		MODELVIEW.pop();
 
