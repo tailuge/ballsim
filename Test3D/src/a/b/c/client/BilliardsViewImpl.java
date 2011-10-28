@@ -11,7 +11,15 @@ import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.util.Interpolate;
 
-public class BilliardsViewImpl extends Assets {
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
+
+public class BilliardsViewImpl extends Render implements 
+MouseDownHandler, MouseUpHandler, MouseMoveHandler {
 
 
 	public void showTable(Table table) {
@@ -38,15 +46,33 @@ public class BilliardsViewImpl extends Assets {
 		MODELVIEW.pop();
 
 
-		setView((float) (Math.sin(t / 10) * 45.0),
-				(float) (Math.cos(t / 10) * 30.0));
+		setView((float) (Math.sin(t / 3) * 65.0),
+				(float) (Math.cos(t / 3) * 50.0));
 	}
 
 	private void plotBall(Event event) {
 		Vector3D a = Vector3D.crossProduct(event.angularPos, event.angularPosPerp);
-		placeBall(event.pos.getX(), event.pos.getY(),
+		placeBall(event.ballId-1,event.pos.getX(), event.pos.getY(),
 				event.angularPos.getX(),event.angularPos.getY(),event.angularPos.getZ(),
 				event.angularPosPerp.getX(),event.angularPosPerp.getY(),event.angularPosPerp.getZ(),
 				a.getX(),a.getY(),a.getZ());
+	}
+
+	@Override
+	public void onMouseMove(MouseMoveEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMouseUp(MouseUpEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMouseDown(MouseDownEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 }

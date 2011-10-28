@@ -32,8 +32,6 @@ public class Test3D implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 
-		// BilliardsView view = new BilliardsViewImpl();
-
 		RootPanel.get().add(surface);
 
 		final GL2 gl = surface.getGL();
