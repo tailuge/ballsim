@@ -61,7 +61,7 @@ public class Test3D implements EntryPoint {
 	 * Initializes and runs the demo.
 	 */
 	private void runDemo(final GL2 gl) {
-		final BilliardsViewImpl demo = new BilliardsViewImpl();
+		final BilliardsViewImpl demo = new BilliardsViewImpl(surface);
 		
 		demo.init(gl);
 

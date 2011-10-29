@@ -56,31 +56,34 @@ public class Render extends Assets {
 		MODELVIEW.pop();		
 	}
 
-	protected void placeCue(double x, double y)
+	protected void placeCue(double x, double y,double angle, double thrust)
 	{
 		if (cueTexture != null) {
 			cueTexture.bind();
 		}
 		MODELVIEW.push();
 		MODELVIEW.translate((float) -x, (float) -y, 0f);
+		MODELVIEW.rotateZ((float)(-angle + Math.PI));
+		MODELVIEW.translate(0f,(float)thrust,0f);		
 		MODELVIEW.scale(1, 1, 1);
-//		MODELVIEW.rotateX((float)Math.PI/2);
 		setMatrixUniforms();
 		cueMesh.draw();
 		MODELVIEW.pop();		
 		
-		placeCueShadow(x, y);
+		//placeCueShadow(x, y, angle);
 	}
 
-	protected void placeCueShadow(double x, double y)
+	protected void placeCueShadow(double x, double y, double angle)
 	{
 		if (shadowTexture != null) {
 			shadowTexture.bind();
 		}
 		MODELVIEW.push();
 		MODELVIEW.translate((float) -x, (float) -y - 24f, -0.99f);
+		MODELVIEW.rotateZ((float)(-angle + Math.PI));
 		MODELVIEW.scale(0.25f, 20, 1);
 		MODELVIEW.rotateX((float)Math.PI/2);
+
 		setMatrixUniforms();
 		cueShadowMesh.draw();
 		MODELVIEW.pop();		

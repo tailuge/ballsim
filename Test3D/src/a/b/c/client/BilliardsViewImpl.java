@@ -2,6 +2,8 @@ package a.b.c.client;
 
 import static gwt.g3d.client.math.MatrixStack.MODELVIEW;
 
+import gwt.g3d.client.Surface3D;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +19,25 @@ import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 public class BilliardsViewImpl extends Render implements 
 MouseDownHandler, MouseUpHandler, MouseMoveHandler {
 
+	/** Mouse handler registration */
+	private HandlerRegistration mouseDownRegistration, mouseUpRegistration,
+			mouseMoveRegistration;
 
+	double angle = 0;
+	
+	public BilliardsViewImpl(Surface3D surface)
+	{
+		mouseDownRegistration = surface.addMouseDownHandler(this);
+		mouseUpRegistration = surface.addMouseUpHandler(this);
+		mouseMoveRegistration = surface.addMouseMoveHandler(this);		
+	}
+
+	
 	public void showTable(Table table) {
 		plotAtTime(table, 0);
 	}
@@ -35,19 +51,22 @@ MouseDownHandler, MouseUpHandler, MouseMoveHandler {
 
 		prepareDraw();
 
+				setView((float) (Math.sin(angle) * 40.0),
+						(float) (Math.cos(angle) * 40.0));
+
 		MODELVIEW.push();
 
 		for (Event event : events)
 			plotBall(event);
 
 		placeTable();
-				placeCue(0,0);
+				
+		placeCue(0,0,angle,Math.sin(t*3));
+
 
 		MODELVIEW.pop();
 
 
-		setView((float) (Math.sin(t / 3) * 65.0),
-				(float) (Math.cos(t / 3) * 50.0));
 	}
 
 	private void plotBall(Event event) {
@@ -60,19 +79,18 @@ MouseDownHandler, MouseUpHandler, MouseMoveHandler {
 
 	@Override
 	public void onMouseMove(MouseMoveEvent event) {
-		// TODO Auto-generated method stub
+		angle = ((double)event.getX() / 500.0)*2.0*Math.PI;
 		
 	}
 
 	@Override
 	public void onMouseUp(MouseUpEvent event) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onMouseDown(MouseDownEvent event) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }

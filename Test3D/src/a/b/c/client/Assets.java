@@ -115,9 +115,9 @@ public class Assets implements GLDisposable {
 
 		gl.uniform1i(shader.getUniformLocation("uUseLighting"), 1);
 		gl.uniform(shader.getUniformLocation("uAmbientColor"), new Vector3f(
-				0.3f, 0.3f, 0.3f));
+				0.4f, 0.4f, 0.4f));
 		gl.uniform(shader.getUniformLocation("uPointLightingLocation"),
-				new Vector3f(0.1f, 1.0f, 30.0f));
+				new Vector3f(0.0f, 0.0f, 50.0f));
 		gl.uniform(shader.getUniformLocation("uPointLightingColor"),
 				new Vector3f(1.0f, 1.0f, 1.0f));
 
