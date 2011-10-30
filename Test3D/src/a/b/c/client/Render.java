@@ -57,7 +57,7 @@ public class Render extends Assets {
 		MODELVIEW.push();
 		MODELVIEW.translate((float) -inputPos.getX(), (float) -inputPos.getY(), 0f);
 		MODELVIEW.rotateZ((float) (-inputAngle + Math.PI));
-		MODELVIEW.translate((float)inputSpin.getX(), (float) thrust, 0.5f - (float)inputSpin.getY());
+		MODELVIEW.translate((float)inputSpin.getX(), (float) -thrust*2, 0.0f - (float)inputSpin.getY());
 		MODELVIEW.scale(1, 1, 1);
 		setMatrixUniforms();
 		cueMesh.draw();

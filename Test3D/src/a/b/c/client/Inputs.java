@@ -14,6 +14,8 @@ import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.dom.client.MouseWheelEvent;
 import com.google.gwt.event.dom.client.MouseWheelHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.RootPanel;
 
 public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 		MouseMoveHandler, MouseWheelHandler {
@@ -25,6 +27,7 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 	protected Vector3D inputSpin = Vector3D.ZERO;
 	protected double cueSwing = 0;
 	private double swingBegin = 0;
+	private boolean active = false;
 	
 	/** Mouse handler registration */
 	private HandlerRegistration mouseDownRegistration, mouseUpRegistration,
@@ -52,11 +55,15 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 		if (swingBegin == 0)
 			swingBegin = t;
 		
-		cueSwing = Math.sin((t-swingBegin) * 10.0 * inputSpeed);
+		cueSwing = Math.sin((t-swingBegin) * 5.0 * inputSpeed);
+		cueSwing *= cueSwing;
 	}
 	
 	@Override
 	public void onMouseMove(MouseMoveEvent event) {
+		if (!active)
+			return;
+		
 		if (event.isShiftKeyDown())
 		{
 			double horizontal = 1.5 * (double) (event.getX()-width/2.0) / width;
@@ -72,23 +79,29 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 		
 		inputAngle = ((double) event.getX() / width) * 2.5 * Math.PI;
 		inputDir = new Vector3D(Math.sin(inputAngle),Math.cos(inputAngle), 0);
-
+		swingBegin = 0;
 	}
 
 	@Override
 	public void onMouseUp(MouseUpEvent event) {
+		active = false;
+		DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "default");
 	}
 
 	@Override
 	public void onMouseDown(MouseDownEvent event) {
+		active = true;
+	    DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "crosshair");
+
 		if (event.getNativeButton() == NativeEvent.BUTTON_RIGHT)
 		{
-			event.stopPropagation();
+			DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "all-scroll");
 		}
 	}
 
 	@Override
 	public void onMouseWheel(MouseWheelEvent event) {
+		swingBegin = 0;
 		inputSpeed += event.isNorth() ? 0.1 : -0.1;
 		if (inputSpeed < 0.1) inputSpeed = 0.1;
 		if (inputSpeed > 1.0) inputSpeed = 1.0;

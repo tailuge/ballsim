@@ -64,6 +64,7 @@ public class BilliardsViewImpl extends Inputs implements BilliardsView {
 	@Override
 	public void setAim(Aim aim) {
 		camera.setAimView(aim.pos, aim.dir);
+		
 	}
 
 }

@@ -17,13 +17,25 @@ public class Camera {
 	}
 
 	public void setAimView(Vector3D pos, Vector3D dir) {
-		Vector3D eye = pos.add(-25, dir);
+		Vector3D eye = pos.add(-27, dir);
 		PROJECTION.pushIdentity();
 		PROJECTION.perspective(45, 1, .1f, 120);
 		PROJECTION.lookAt((float) -eye.getX(), (float) -eye.getY(), 15f,
-				(float) -pos.getX(), (float) -pos.getY(), 7f, 0, 0, 1);
+				(float) -pos.getX(), (float) -pos.getY(), 5f, 0, 0, 1);
 		gl.uniformMatrix(shader.getUniformLocation("uPMatrix"),
 				PROJECTION.get());
 		PROJECTION.pop();
 	}
+	
+	public void setSpectatorView(Vector3D pos, Vector3D dir) {
+		Vector3D eye = Vector3D.ZERO.add(-35, dir);
+		PROJECTION.pushIdentity();
+		PROJECTION.perspective(45, 1, .1f, 120);
+		PROJECTION.lookAt((float) -eye.getX(), (float) -eye.getY(), 75f,
+				(float) -pos.getX()/10, (float) -pos.getY()/10, 1f, 0, 0, 1);
+		gl.uniformMatrix(shader.getUniformLocation("uPMatrix"),
+				PROJECTION.get());
+		PROJECTION.pop();
+	}
+
 }

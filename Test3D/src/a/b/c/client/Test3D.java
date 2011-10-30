@@ -12,6 +12,8 @@ import gwt.g3d.client.gl2.enums.DepthFunction;
 import gwt.g3d.client.gl2.enums.EnableCap;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ContextMenuEvent;
+import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -49,6 +51,14 @@ public class Test3D implements EntryPoint {
 		gl.clear(ClearBufferMask.COLOR_BUFFER_BIT,
 				ClearBufferMask.DEPTH_BUFFER_BIT);
 
+		RootPanel.get().addDomHandler(new ContextMenuHandler() {
+
+			@Override public void onContextMenu(ContextMenuEvent event) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
+		}, ContextMenuEvent.getType());
+		
 		Rack.rack(table, "2", "");
 		table.generateSequence();
 		
