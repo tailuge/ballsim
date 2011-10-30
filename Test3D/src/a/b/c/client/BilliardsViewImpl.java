@@ -10,6 +10,7 @@ import java.util.List;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.physics.ball.Ball;
 import org.motion.ballsim.physics.ball.Event;
+import org.motion.ballsim.physics.game.Aim;
 import org.motion.ballsim.physics.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.util.Interpolate;
 
@@ -22,7 +23,7 @@ import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 public class BilliardsViewImpl extends Render implements 
-MouseDownHandler, MouseUpHandler, MouseMoveHandler {
+MouseDownHandler, MouseUpHandler, MouseMoveHandler, BilliardsView {
 
 	/** Mouse handler registration */
 	private HandlerRegistration mouseDownRegistration, mouseUpRegistration,
@@ -51,8 +52,10 @@ MouseDownHandler, MouseUpHandler, MouseMoveHandler {
 
 		prepareDraw();
 
-				setView((float) (Math.sin(angle) * 40.0),
-						(float) (Math.cos(angle) * 40.0));
+		Vector3D aimDir = new Vector3D(Math.sin(angle),Math.cos(angle),0);
+		Aim aim = new Aim(0, events.get(0).pos, aimDir, new Vector3D(0,0,0), 0);
+
+		setAim(aim);
 
 		MODELVIEW.push();
 
@@ -61,7 +64,7 @@ MouseDownHandler, MouseUpHandler, MouseMoveHandler {
 
 		placeTable();
 				
-		placeCue(0,0,angle,Math.sin(t*3));
+		placeCue(events.get(0).pos.getX(),events.get(0).pos.getY(),angle,Math.sin(t*3));
 
 
 		MODELVIEW.pop();
@@ -80,17 +83,24 @@ MouseDownHandler, MouseUpHandler, MouseMoveHandler {
 	@Override
 	public void onMouseMove(MouseMoveEvent event) {
 		angle = ((double)event.getX() / 500.0)*2.0*Math.PI;
-		
-	}
+			}
 
 	@Override
 	public void onMouseUp(MouseUpEvent event) {
-		
-	}
+			}
 
 	@Override
-	public void onMouseDown(MouseDownEvent event) {
+	public void onMouseDown(MouseDownEvent event) {		
+	}
+
+
+	@Override
+	public void setAim(Aim aim) {
+		
+		setAimView(aim.pos,aim.dir);
 		
 		
 	}
+	
+	
 }

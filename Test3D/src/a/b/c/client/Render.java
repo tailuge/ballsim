@@ -3,6 +3,8 @@ package a.b.c.client;
 import static gwt.g3d.client.math.MatrixStack.MODELVIEW;
 import static gwt.g3d.client.math.MatrixStack.PROJECTION;
 
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
+
 public class Render extends Assets {
 
 	protected void placeTable() {
@@ -103,11 +105,12 @@ public class Render extends Assets {
 		ballMesh.draw();
 		MODELVIEW.pop();
 	}
-	
-	protected void setView(float x, float y) {
+
+	protected void setAimView(Vector3D pos, Vector3D dir) {
+		Vector3D eye = pos.add(-25,dir);
 		PROJECTION.pushIdentity();
 		PROJECTION.perspective(45, 1, .1f, 120);
-		PROJECTION.lookAt(x, y, 20, 0, 0, 0, 0, 0, 1);
+		PROJECTION.lookAt((float)-eye.getX(), (float)-eye.getY(), 15f, (float)-pos.getX(), (float)-pos.getY(), 7f, 0, 0, 1);
 		gl.uniformMatrix(shader.getUniformLocation("uPMatrix"),
 				PROJECTION.get());
 		PROJECTION.pop();

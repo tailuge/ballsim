@@ -193,7 +193,7 @@ public class Assets implements GLDisposable {
 					}
 				});
 
-		ballMesh = new StaticMesh(gl, PrimitiveFactory.makeSphere(10, 10));
+		ballMesh = new StaticMesh(gl, PrimitiveFactory.makeSphere(13, 13));
 		ballMesh.setPositionIndex(shader
 				.getAttributeLocation("aVertexPosition"));
 		ballMesh.setNormalIndex(shader.getAttributeLocation("aVertexNormal"));
