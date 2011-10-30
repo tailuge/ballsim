@@ -32,13 +32,11 @@ public class BilliardsViewImpl extends Inputs implements BilliardsView {
 
 		prepareDraw();
 
-		Vector3D aimDir = new Vector3D(Math.sin(inputAngle),
-				Math.cos(inputAngle), 0);
-		Aim aim = new Aim(0, events.get(0).pos, aimDir, new Vector3D(0, 0, 0),
-				0);
+		inputPos = events.get(0).pos;
+		Aim aim = new Aim(0, inputPos, inputDir, inputSpin,	0);
 
 		setAim(aim);
-
+		
 		MODELVIEW.push();
 
 		for (Event event : events)
@@ -46,8 +44,8 @@ public class BilliardsViewImpl extends Inputs implements BilliardsView {
 
 		placeTable();
 
-		placeCue(events.get(0).pos.getX(), events.get(0).pos.getY(),
-				inputAngle, Math.sin(t * 10 * speed));
+		updateThrust(t);
+		placeCue(inputPos, inputAngle, inputSpin, cueSwing);
 
 		MODELVIEW.pop();
 

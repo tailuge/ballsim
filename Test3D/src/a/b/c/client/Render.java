@@ -2,6 +2,8 @@ package a.b.c.client;
 
 import static gwt.g3d.client.math.MatrixStack.MODELVIEW;
 
+import org.motion.ballsim.physics.gwtsafe.Vector3D;
+
 public class Render extends Assets {
 
 	protected void placeTable() {
@@ -48,14 +50,14 @@ public class Render extends Assets {
 		MODELVIEW.pop();
 	}
 
-	protected void placeCue(double x, double y, double angle, double thrust) {
+	protected void placeCue(Vector3D inputPos, double inputAngle, Vector3D inputSpin, double thrust) {
 		if (cueTexture != null) {
 			cueTexture.bind();
 		}
 		MODELVIEW.push();
-		MODELVIEW.translate((float) -x, (float) -y, 0f);
-		MODELVIEW.rotateZ((float) (-angle + Math.PI));
-		MODELVIEW.translate(0f, (float) thrust, 0f);
+		MODELVIEW.translate((float) -inputPos.getX(), (float) -inputPos.getY(), 0f);
+		MODELVIEW.rotateZ((float) (-inputAngle + Math.PI));
+		MODELVIEW.translate((float)inputSpin.getX(), (float) thrust, 0.5f - (float)inputSpin.getY());
 		MODELVIEW.scale(1, 1, 1);
 		setMatrixUniforms();
 		cueMesh.draw();
