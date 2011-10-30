@@ -1,9 +1,6 @@
 package a.b.c.client;
 
 import static gwt.g3d.client.math.MatrixStack.MODELVIEW;
-import static gwt.g3d.client.math.MatrixStack.PROJECTION;
-
-import org.motion.ballsim.physics.gwtsafe.Vector3D;
 
 public class Render extends Assets {
 
@@ -19,81 +16,70 @@ public class Render extends Assets {
 		MODELVIEW.pop();
 	}
 
-	protected void placeBall(int ballId,
-			double x, double y,
-			double px,double py,double pz,
-			double ux,double uy,double uz,
-			double cx,double cy,double cz
-			) {
+	protected void placeBall(int ballId, double x, double y, double px,
+			double py, double pz, double ux, double uy, double uz, double cx,
+			double cy, double cz) {
 		if (ballTextures.containsKey(ballId)) {
 			ballTextures.get(ballId).bind();
 		}
 		MODELVIEW.push();
 		MODELVIEW.translate((float) -x, (float) -y, 0);
-		MODELVIEW.lookAt(
-				0, 0, 0, 
-				(float)-px, (float)-py, (float)-pz,
-				(float)-ux, (float)-uy, (float)-uz
-				);
+		MODELVIEW.lookAt(0, 0, 0, (float) -px, (float) -py, (float) -pz,
+				(float) -ux, (float) -uy, (float) -uz);
 		setMatrixUniforms();
 		ballMesh.draw();
 		MODELVIEW.pop();
 
-		placeShadow(x,y);
-		//debugRoll(-x,-y,-px,-py,-pz);
-		//debugRoll(-x,-y,-ux,-uy,-uz);
+		placeShadow(x, y);
+		// debugRoll(-x,-y,-px,-py,-pz);
+		// debugRoll(-x,-y,-ux,-uy,-uz);
 	}
 
-	protected void placeShadow(double x, double y)
-	{
+	protected void placeShadow(double x, double y) {
 		if (shadowTexture != null) {
 			shadowTexture.bind();
 		}
 		MODELVIEW.push();
 		MODELVIEW.translate((float) -x, (float) -y, -0.99f);
 		MODELVIEW.scale(1, 1, 0.01f);
-		MODELVIEW.rotateX((float)Math.PI/2);
+		MODELVIEW.rotateX((float) Math.PI / 2);
 		setMatrixUniforms();
 		shadowMesh.draw();
-		MODELVIEW.pop();		
+		MODELVIEW.pop();
 	}
 
-	protected void placeCue(double x, double y,double angle, double thrust)
-	{
+	protected void placeCue(double x, double y, double angle, double thrust) {
 		if (cueTexture != null) {
 			cueTexture.bind();
 		}
 		MODELVIEW.push();
 		MODELVIEW.translate((float) -x, (float) -y, 0f);
-		MODELVIEW.rotateZ((float)(-angle + Math.PI));
-		MODELVIEW.translate(0f,(float)thrust,0f);		
+		MODELVIEW.rotateZ((float) (-angle + Math.PI));
+		MODELVIEW.translate(0f, (float) thrust, 0f);
 		MODELVIEW.scale(1, 1, 1);
 		setMatrixUniforms();
 		cueMesh.draw();
-		MODELVIEW.pop();		
-		
-		//placeCueShadow(x, y, angle);
+		MODELVIEW.pop();
+
+		// placeCueShadow(x, y, angle);
 	}
 
-	protected void placeCueShadow(double x, double y, double angle)
-	{
+	protected void placeCueShadow(double x, double y, double angle) {
 		if (shadowTexture != null) {
 			shadowTexture.bind();
 		}
 		MODELVIEW.push();
 		MODELVIEW.translate((float) -x, (float) -y - 24f, -0.99f);
-		MODELVIEW.rotateZ((float)(-angle + Math.PI));
+		MODELVIEW.rotateZ((float) (-angle + Math.PI));
 		MODELVIEW.scale(0.25f, 20, 1);
-		MODELVIEW.rotateX((float)Math.PI/2);
+		MODELVIEW.rotateX((float) Math.PI / 2);
 
 		setMatrixUniforms();
 		cueShadowMesh.draw();
-		MODELVIEW.pop();		
+		MODELVIEW.pop();
 	}
 
-	protected void debugRoll(double x, double y,
-			double px,double py,double pz
-			) {
+	protected void debugRoll(double x, double y, double px, double py, double pz) {
 		if (shadowTexture != null) {
 			shadowTexture.bind();
 		}
@@ -106,13 +92,4 @@ public class Render extends Assets {
 		MODELVIEW.pop();
 	}
 
-	protected void setAimView(Vector3D pos, Vector3D dir) {
-		Vector3D eye = pos.add(-25,dir);
-		PROJECTION.pushIdentity();
-		PROJECTION.perspective(45, 1, .1f, 120);
-		PROJECTION.lookAt((float)-eye.getX(), (float)-eye.getY(), 15f, (float)-pos.getX(), (float)-pos.getY(), 7f, 0, 0, 1);
-		gl.uniformMatrix(shader.getUniformLocation("uPMatrix"),
-				PROJECTION.get());
-		PROJECTION.pop();
-	}
 }

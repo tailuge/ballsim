@@ -64,6 +64,8 @@ public class Assets implements GLDisposable {
 
 	private final Matrix3f nMatrix = new Matrix3f();
 
+	public Camera camera;
+	
 	protected void initBaseImpl() {
 		try {
 			ShaderResource shaderResource = ((ShaderResource) getClientBundle()
@@ -88,6 +90,7 @@ public class Assets implements GLDisposable {
 	public final void init(GL2 gl) {
 		this.gl = gl;
 		initImpl();
+		camera = new Camera(gl,shader);
 	}
 
 	protected Assets() {
