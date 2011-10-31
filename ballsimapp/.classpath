@@ -8,5 +8,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/guava-10.0-rc2.jar"/>
 	<classpathentry kind="lib" path="lib/mockito-all-1.8.5.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-g3d-v007.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
