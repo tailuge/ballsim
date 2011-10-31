@@ -6,6 +6,14 @@ import org.motion.ballsim.physics.gwtsafe.Vector3D;
 
 public class Render extends Assets {
 
+	final protected Camera camera;
+
+	public Render ()
+	{
+		super();
+		camera = new Camera(gl,shader);
+	}
+	
 	protected void placeTable() {
 		if (tableTexture != null) {
 			tableTexture.bind();

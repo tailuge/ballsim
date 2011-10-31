@@ -15,22 +15,12 @@
  */
 package a.b.c.client;
 
-import static gwt.g3d.client.math.MatrixStack.MODELVIEW;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import gwt.g3d.client.gl2.GL2;
-import gwt.g3d.client.gl2.GLDisposable;
 import gwt.g3d.client.gl2.enums.ClearBufferMask;
 import gwt.g3d.client.gl2.enums.TextureMagFilter;
 import gwt.g3d.client.gl2.enums.TextureMinFilter;
-import gwt.g3d.client.gl2.enums.TextureUnit;
 import gwt.g3d.client.gl2.enums.TextureWrapMode;
 import gwt.g3d.client.mesh.StaticMesh;
 import gwt.g3d.client.primitive.PrimitiveFactory;
-import gwt.g3d.client.shader.AbstractShader;
-import gwt.g3d.client.shader.ShaderException;
 import gwt.g3d.client.texture.Texture2D;
 import gwt.g3d.resources.client.ExternalMeshResource;
 import gwt.g3d.resources.client.ExternalTexture2DResource;
@@ -38,11 +28,12 @@ import gwt.g3d.resources.client.GenerateMipmap;
 import gwt.g3d.resources.client.MagFilter;
 import gwt.g3d.resources.client.MeshResource;
 import gwt.g3d.resources.client.MinFilter;
-import gwt.g3d.resources.client.ShaderResource;
 import gwt.g3d.resources.client.Texture2DResource;
 import gwt.g3d.resources.client.WrapMode;
 
-import javax.vecmath.Matrix3f;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.vecmath.Vector3f;
 
 import com.google.gwt.core.client.GWT;
@@ -51,49 +42,17 @@ import com.google.gwt.resources.client.ResourceCallback;
 import com.google.gwt.resources.client.ResourceException;
 import com.google.gwt.user.client.Window;
 
-public class Assets implements GLDisposable {
-
-	protected GL2 gl;
-
-	protected AbstractShader shader;
+public class Assets extends SurfaceElement {
 
 	protected StaticMesh tableMesh, cueMesh;
 	protected StaticMesh cueShadowMesh, shadowMesh, ballMesh;
 	final protected Map<Integer,Texture2D> ballTextures = new HashMap<Integer,Texture2D>(); 
 	protected Texture2D tableTexture, shadowTexture, cueTexture;
 
-	private final Matrix3f nMatrix = new Matrix3f();
-
-	public Camera camera;
 	
-	protected void initBaseImpl() {
-		try {
-			ShaderResource shaderResource = ((ShaderResource) getClientBundle()
-					.getResource("shader"));
-			shader = shaderResource.createShader(gl);
-			shader.bind();
-		} catch (ShaderException e) {
-			Window.alert(e.getMessage());
-			return;
-		}
-
-		gl.activeTexture(TextureUnit.TEXTURE0);
-		gl.uniform1i(shader.getUniformLocation("uSampler"), 0);
-
-	}
-
-	/**
-	 * Initializes the demo.
-	 * 
-	 * @param gl
-	 */
-	public final void init(GL2 gl) {
-		this.gl = gl;
-		initImpl();
-		camera = new Camera(gl,shader);
-	}
-
 	protected Assets() {
+		super();
+		loadResources();		
 	}
 
 	@Override
@@ -142,9 +101,9 @@ public class Assets implements GLDisposable {
 				});
 		
 	}
-	protected void initImpl() {
-		initBaseImpl();
-
+	
+	protected void loadResources() {
+		
 		loadTexture(Resources.INSTANCE.ball0(),0);
 		loadTexture(Resources.INSTANCE.ball1(),1);
 		loadTexture(Resources.INSTANCE.ball2(),2);
@@ -221,12 +180,7 @@ public class Assets implements GLDisposable {
 		loadCue();
 	}
 
-	protected void setMatrixUniforms() {
-		gl.uniformMatrix(shader.getUniformLocation("uMVMatrix"),
-				MODELVIEW.get());
-		MODELVIEW.getInvertTranspose(nMatrix);
-		gl.uniformMatrix(shader.getUniformLocation("uNMatrix"), nMatrix);
-	}
+
 
 	/** Resource files. */
 	interface Resources extends ClientBundleWithLookup {
@@ -237,9 +191,6 @@ public class Assets implements GLDisposable {
 
 		@Source("models/cue.obj")
 		ExternalMeshResource cue();
-
-		@Source({ "shaders/lesson12.vp", "shaders/lesson12.fp" })
-		ShaderResource shader();
 
 		@Source("images/ball0.png")
 		@MagFilter(TextureMagFilter.LINEAR)

@@ -1,7 +1,6 @@
 package a.b.c.client;
 
 import static gwt.g3d.client.math.MatrixStack.MODELVIEW;
-import gwt.g3d.client.Surface3D;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +14,8 @@ import org.motion.ballsim.physics.util.Interpolate;
 
 public class BilliardsViewImpl extends Inputs implements BilliardsView {
 
-	public BilliardsViewImpl(Surface3D surface) {
-		super(surface);
+	public BilliardsViewImpl() {
+		super();
 	}
 
 	public void showTable(Table table) {

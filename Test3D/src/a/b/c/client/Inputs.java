@@ -1,7 +1,5 @@
 package a.b.c.client;
 
-import gwt.g3d.client.Surface3D;
-
 import org.motion.ballsim.physics.gwtsafe.Vector3D;
 
 import com.google.gwt.dom.client.NativeEvent;
@@ -33,7 +31,8 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 	private HandlerRegistration mouseDownRegistration, mouseUpRegistration,
 			mouseMoveRegistration, mouseWheelHandler;
 
-	public Inputs(Surface3D surface) {
+	public Inputs() {
+		super();
 		mouseDownRegistration = surface.addMouseDownHandler(this);
 		mouseUpRegistration = surface.addMouseUpHandler(this);
 		mouseMoveRegistration = surface.addMouseMoveHandler(this);
@@ -66,6 +65,7 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 		
 		if (event.isShiftKeyDown())
 		{
+			DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "all-scroll");
 			double horizontal = 1.5 * (double) (event.getX()-width/2.0) / width;
 			double vertical = 1.5 * (double) (event.getY()-height/2.0) / height;
 			if (vertical > 1) vertical = 1;
@@ -77,6 +77,8 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 			return;
 		}
 		
+	    DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "crosshair");
+	
 		inputAngle = ((double) event.getX() / width) * 2.5 * Math.PI;
 		inputDir = new Vector3D(Math.sin(inputAngle),Math.cos(inputAngle), 0);
 		swingBegin = 0;
@@ -91,11 +93,10 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 	@Override
 	public void onMouseDown(MouseDownEvent event) {
 		active = true;
-	    DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "crosshair");
-
+	
 		if (event.getNativeButton() == NativeEvent.BUTTON_RIGHT)
 		{
-			DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "all-scroll");
+	
 		}
 	}
 
