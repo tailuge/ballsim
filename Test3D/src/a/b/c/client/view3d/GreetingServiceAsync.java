@@ -1,4 +1,4 @@
-package a.b.c.client;
+package a.b.c.client.view3d;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

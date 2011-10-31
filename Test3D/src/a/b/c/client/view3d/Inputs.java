@@ -1,4 +1,4 @@
-package a.b.c.client;
+package a.b.c.client.view3d;
 
 import org.motion.ballsim.physics.gwtsafe.Vector3D;
 
@@ -24,8 +24,12 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 	protected Vector3D inputDir = Vector3D.PLUS_J;
 	protected Vector3D inputSpin = Vector3D.ZERO;
 	protected double cueSwing = 0;
+
 	private double swingBegin = 0;
 	private boolean active = false;
+	private int initialX = 0;
+	private int initialY = 0;
+	private double initialAngle = 0;
 	
 	/** Mouse handler registration */
 	private HandlerRegistration mouseDownRegistration, mouseUpRegistration,
@@ -57,17 +61,25 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 		cueSwing = Math.sin((t-swingBegin) * 5.0 * inputSpeed);
 		cueSwing *= cueSwing;
 	}
-	
+
+	@Override
+	public void onMouseDown(MouseDownEvent event) {
+		active = true;
+		initialX = event.getX();
+		initialY = event.getY();
+		initialAngle = inputAngle;
+	}
+
 	@Override
 	public void onMouseMove(MouseMoveEvent event) {
 		if (!active)
 			return;
 		
-		if (event.isShiftKeyDown())
+		if (event.getNativeButton() == NativeEvent.BUTTON_RIGHT)
 		{
 			DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "all-scroll");
-			double horizontal = 1.5 * (double) (event.getX()-width/2.0) / width;
-			double vertical = 1.5 * (double) (event.getY()-height/2.0) / height;
+			double horizontal = 3.5 * (double) (event.getX()-initialX) / width;
+			double vertical = 3.5 * (double) (event.getY()-initialY) / height;
 			if (vertical > 1) vertical = 1;
 			if (vertical < -1) vertical = -1;
 			if (horizontal > 1) horizontal = 1;
@@ -79,7 +91,8 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 		
 	    DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "crosshair");
 	
-		inputAngle = ((double) event.getX() / width) * 2.5 * Math.PI;
+	    int offset = event.getX()-initialX;
+		inputAngle = initialAngle + 0.1 * Math.signum(offset)*(Math.pow(Math.abs(offset),1.7) / width) * Math.PI;
 		inputDir = new Vector3D(Math.sin(inputAngle),Math.cos(inputAngle), 0);
 		swingBegin = 0;
 	}
@@ -90,15 +103,6 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 		DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "default");
 	}
 
-	@Override
-	public void onMouseDown(MouseDownEvent event) {
-		active = true;
-	
-		if (event.getNativeButton() == NativeEvent.BUTTON_RIGHT)
-		{
-	
-		}
-	}
 
 	@Override
 	public void onMouseWheel(MouseWheelEvent event) {

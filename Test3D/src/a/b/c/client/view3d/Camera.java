@@ -1,4 +1,4 @@
-package a.b.c.client;
+package a.b.c.client.view3d;
 
 import static gwt.g3d.client.math.MatrixStack.PROJECTION;
 import gwt.g3d.client.gl2.GL2;

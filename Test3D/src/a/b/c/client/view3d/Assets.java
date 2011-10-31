@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package a.b.c.client;
+package a.b.c.client.view3d;
 
 import gwt.g3d.client.gl2.enums.ClearBufferMask;
 import gwt.g3d.client.gl2.enums.TextureMagFilter;

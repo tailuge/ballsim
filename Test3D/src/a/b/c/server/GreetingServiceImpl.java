@@ -1,6 +1,6 @@
 package a.b.c.server;
 
-import a.b.c.client.GreetingService;
+import a.b.c.client.view3d.GreetingService;
 import a.b.c.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 

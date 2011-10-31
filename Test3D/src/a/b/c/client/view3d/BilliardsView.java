@@ -1,4 +1,4 @@
-package a.b.c.client;
+package a.b.c.client.view3d;
 
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.physics.game.Aim;

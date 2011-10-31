@@ -1,4 +1,4 @@
-package a.b.c.client;
+package a.b.c.client.view3d;
 
 import static gwt.g3d.client.math.MatrixStack.MODELVIEW;
 
@@ -110,7 +110,7 @@ public class SurfaceElement implements GLDisposable {
 	interface Resources extends ClientBundleWithLookup {
 		Resources INSTANCE = GWT.create(Resources.class);
 
-		@Source({ "shaders/lesson12.vp", "shaders/lesson12.fp" })
+		@Source({ "shaders/shader2.vp", "shaders/shader1.fp" })
 		ShaderResource shader();
 	}
 }
