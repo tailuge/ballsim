@@ -12,13 +12,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class BilliardsViewImpl extends BilliardsViewLayout implements
-		BilliardsView {
+public class BilliardsViewImpl extends BilliardsViewLayout implements TableView {
 
-	private final ChatView chatView;
 	private final Timer timer = new Timer() {
 		public void run() {
-			appendMessage("out of time !");
 			hit();
 		}
 	};
@@ -26,28 +23,11 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 	public BilliardsViewImpl(int width, String layoutId, String defaultId) {
 		super(width, layoutId);
 
-		chatView = new ChatView(width, layoutId);
-		
-		playerId.setText(defaultId);
-
 		actionButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				hit();
 			}
 		});
-
-		loginButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				login();
-			}
-		});
-
-	}
-
-	private void login() {
-		loginButton.setEnabled(false);
-		playerId.setEnabled(false);
-		eventHandler.handleEvent(BilliardsEventFactory.beginLogin());
 	}
 
 	private void hit() {
@@ -59,14 +39,8 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 	}
 
 	@Override
-	public void appendMessage(String message) {
-		chatView.appendMessage(message);
-	}
-
-	@Override
 	public void setEventHandler(GWTGameEventHandler eventHandler) {
 		this.eventHandler = eventHandler;
-		chatView.setEventHandler(eventHandler);
 	}
 
 	@Override
@@ -74,7 +48,7 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 		Event cueBall = Interpolate.toTime(table.ball(1), 0);
 		aim.setCueBallPosition(cueBall.pos);
 		tableCanvas.plotAtTime(table, 0);
-	}
+		}
 
 	@Override
 	public void aim(int timeout) {
@@ -99,11 +73,14 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 		aim.hide();
 		actionButton.setEnabled(false);
 		@SuppressWarnings("unused")
-		Animation showAnimation = new Animation(table, tableCanvas,
-				eventHandler);
-
+		Animation showAnimation = new Animation(table, this, eventHandler);
 	}
 
+	@Override
+	public void plotAtTime(Table table, double t) {
+		tableCanvas.plotAtTime(table, t);
+	}
+	
 	@Override
 	public void setAim(Aim aim) {
 		spin.setSpin(aim.spin);
@@ -122,16 +99,6 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 	}
 
 	@Override
-	public String getPlayerId() {
-		return playerId.getText();
-	}
-
-	@Override
-	public String getPassword() {
-		return password.getText();
-	}
-
-	@Override
 	public void watch() {
 		actionButton.setEnabled(false);
 	}
@@ -144,16 +111,6 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements
 		RootPanel.get(layoutId + ".inputspin").setVisible(visibility);
 		RootPanel.get(layoutId + ".inputpower").setVisible(visibility);
 		RootPanel.get(layoutId + ".tablebg").setVisible(visibility);
-	}
-
-	@Override
-	public void setChatEnable(boolean enable) {
-		chatView.setChatEnable(enable);
-	}
-
-	@Override
-	public void clearMessage() {
-		chatView.clearMessage();
 	}
 
 }

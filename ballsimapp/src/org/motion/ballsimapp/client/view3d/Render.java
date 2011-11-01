@@ -8,9 +8,9 @@ public class Render extends Assets {
 
 	final protected Camera camera;
 
-	public Render ()
+	public Render (String layoutId)
 	{
-		super();
+		super(layoutId);
 		camera = new Camera(gl,shader);
 	}
 	
@@ -22,7 +22,8 @@ public class Render extends Assets {
 		MODELVIEW.translate(0, 0, 0.0f);
 		MODELVIEW.scale(1f, 1f, 1f);
 		setMatrixUniforms();
-		tableMesh.draw();
+		if (tableMesh != null)
+			tableMesh.draw();
 		MODELVIEW.pop();
 	}
 
@@ -68,7 +69,8 @@ public class Render extends Assets {
 		MODELVIEW.translate((float)inputSpin.getX(), (float) -thrust*2, 0.0f - (float)inputSpin.getY());
 		MODELVIEW.scale(1, 1, 1);
 		setMatrixUniforms();
-		cueMesh.draw();
+		if (cueMesh != null)
+			cueMesh.draw();
 		MODELVIEW.pop();
 
 		// placeCueShadow(x, y, angle);

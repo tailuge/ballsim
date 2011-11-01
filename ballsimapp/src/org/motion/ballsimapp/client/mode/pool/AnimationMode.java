@@ -8,7 +8,8 @@ import java.util.List;
 import org.motion.ballsimapp.client.mode.BilliardsMode;
 import org.motion.ballsimapp.client.mode.ChatMode;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
-import org.motion.ballsimapp.client.pool.BilliardsView;
+import org.motion.ballsimapp.client.pool.InfoView;
+import org.motion.ballsimapp.client.pool.TableView;
 import org.motion.ballsimapp.shared.GameEvent;
 
 import com.google.gwt.core.client.Scheduler;
@@ -17,9 +18,9 @@ public class AnimationMode extends ChatMode {
 
 	final List<GameEvent> pending = new ArrayList<GameEvent>();
 
-	public AnimationMode(BilliardsModel model, BilliardsView view) {
-		super(model, view);
-		view.animate(model.table);
+	public AnimationMode(BilliardsModel model, TableView tableView, InfoView infoView) {
+		super(model, tableView, infoView);
+		tableView.animate(model.table);
 	}
 
 	@Override
@@ -28,14 +29,14 @@ public class AnimationMode extends ChatMode {
 		if (event.hasAttribute(ANIMATION_COMPLETE)) {
 			model.table.beginNewShot();
 
-			view.showTable(model.table);
+			tableView.showTable(model.table);
 			Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
 				@Override
 				public void execute() {
 					replayPendingEvents(pending);
 				}
 			});
-			return new AnimationCompleteMode(model, view);
+			return new AnimationCompleteMode(model, tableView, infoView);
 		}
 
 		if (!handleChat(event))

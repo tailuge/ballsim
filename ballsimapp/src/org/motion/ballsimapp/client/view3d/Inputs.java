@@ -35,8 +35,8 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 	private HandlerRegistration mouseDownRegistration, mouseUpRegistration,
 			mouseMoveRegistration, mouseWheelHandler;
 
-	public Inputs() {
-		super();
+	public Inputs(String layoutId) {
+		super(layoutId);
 		mouseDownRegistration = surface.addMouseDownHandler(this);
 		mouseUpRegistration = surface.addMouseUpHandler(this);
 		mouseMoveRegistration = surface.addMouseMoveHandler(this);

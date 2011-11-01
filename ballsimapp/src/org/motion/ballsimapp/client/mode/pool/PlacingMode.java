@@ -8,16 +8,17 @@ import org.motion.ballsimapp.client.mode.BilliardsMode;
 import org.motion.ballsimapp.client.mode.ChatMode;
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
-import org.motion.ballsimapp.client.pool.BilliardsView;
+import org.motion.ballsimapp.client.pool.InfoView;
+import org.motion.ballsimapp.client.pool.TableView;
 import org.motion.ballsimapp.shared.GameEvent;
 
 import com.google.gwt.core.client.GWT;
 
 public class PlacingMode extends ChatMode {
 
-	public PlacingMode(BilliardsModel model, BilliardsView view) {
-		super(model, view);
-		view.place(15);
+	public PlacingMode(BilliardsModel model, TableView tableView, InfoView infoView) {
+		super(model, tableView, infoView);
+		tableView.place(15);
 	}
 
 	@Override
@@ -27,9 +28,9 @@ public class PlacingMode extends ChatMode {
 			Aim input = BilliardsMarshaller.aimFromEvent(event);
 			model.table.placeBall(input.ballId, input.pos);
 			model.sendPlaceBallUpdate(input);
-			view.setAim(input);
-			view.showPlacer();
-			view.showTable(model.table);
+			tableView.setAim(input);
+			tableView.showPlacer();
+			tableView.showTable(model.table);
 			return this;
 		}
 
@@ -37,7 +38,7 @@ public class PlacingMode extends ChatMode {
 			Aim input = BilliardsMarshaller.aimFromEvent(event);
 			model.table.placeBall(input.ballId, input.pos);
 			model.sendPlaceBall(input);
-			return new AimingMode(model, view);
+			return new AimingMode(model, tableView, infoView);
 		}
 
 		if (handleChat(event))
