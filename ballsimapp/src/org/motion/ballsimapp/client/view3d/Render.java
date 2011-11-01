@@ -8,9 +8,9 @@ public class Render extends Assets {
 
 	final protected Camera camera;
 
-	public Render (String layoutId)
+	public Render (int width, String layoutId)
 	{
-		super(layoutId);
+		super(width, layoutId);
 		camera = new Camera(gl,shader);
 	}
 	

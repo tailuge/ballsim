@@ -25,22 +25,27 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 public class SurfaceElement implements GLDisposable {
 
-	final protected Surface3D surface = new Surface3D(500, 500,
-			new WebGLContextAttributes() {
-				{
-					setStencilEnable(true);
-				}
-			});
+	final protected Surface3D surface;
 
 	final protected GL2 gl;
 
 	protected AbstractShader shader;
 
 	protected final Matrix3f nMatrix = new Matrix3f();
+	protected final int width;
+	public SurfaceElement(int width, String layoutId) {
 
-	public SurfaceElement(String layoutId) {
-
-		RootPanel.get(layoutId + ".view3d").add(surface);
+		this.width = width;
+		surface = new Surface3D(width, width,
+				new WebGLContextAttributes() {
+					{
+						setStencilEnable(true);
+					}
+				});
+		
+		RootPanel.get(layoutId + ".tableactive").add(surface);
+		RootPanel.get(layoutId+".pad").setSize(width+"px", width+"px");
+		
 		gl = surface.getGL();
 		if (gl == null) {
 			Window.alert("No WebGL context found. Exiting.");

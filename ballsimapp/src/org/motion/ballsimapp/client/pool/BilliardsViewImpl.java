@@ -20,7 +20,7 @@ public class BilliardsViewImpl extends BilliardsViewLayout implements TableView 
 		}
 	};
 
-	public BilliardsViewImpl(int width, String layoutId, String defaultId) {
+	public BilliardsViewImpl(int width, String layoutId) {
 		super(width, layoutId);
 
 		actionButton.addClickHandler(new ClickHandler() {

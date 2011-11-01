@@ -6,6 +6,7 @@ import org.motion.ballsimapp.client.pool.BilliardsViewImpl;
 import org.motion.ballsimapp.client.pool.InfoView;
 import org.motion.ballsimapp.client.pool.InfoViewImpl;
 import org.motion.ballsimapp.client.pool.TableView;
+import org.motion.ballsimapp.client.view3d.BilliardsView3DImpl;
 
 import com.google.gwt.core.client.EntryPoint;
 
@@ -26,11 +27,12 @@ public class Ballsimapp implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 
-		int width = 400;
+		int width = 500;
 
 		// player 1
 		BilliardsModel gameModelP1 = new BilliardsModel();
-		TableView tableViewP1 = new BilliardsViewImpl(width / 2, "player1","bob");
+//		TableView tableViewP1 = new BilliardsViewImpl(width / 2, "player1");
+		TableView tableViewP1 = new BilliardsView3DImpl(width / 1, "player1");	
 		InfoView infoViewP1 = new InfoViewImpl(width / 2, "player1","bob");
 		gamePresenterP1 = new BilliardsPresenter(gameModelP1, infoViewP1, tableViewP1);
 		/*						

@@ -50,8 +50,8 @@ public class Assets extends SurfaceElement {
 	protected Texture2D tableTexture, shadowTexture, cueTexture;
 
 	
-	protected Assets(String layoutId) {
-		super(layoutId);
+	protected Assets(int width, String layoutId) {
+		super(width, layoutId);
 		loadResources();		
 	}
 

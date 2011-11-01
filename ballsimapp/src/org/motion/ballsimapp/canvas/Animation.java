@@ -5,7 +5,6 @@ import static org.motion.ballsimapp.shared.Events.ANIMATION_COMPLETE;
 import org.motion.ballsim.physics.Table;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
 import org.motion.ballsimapp.client.pool.TableView;
-import org.motion.ballsimapp.client.view3d.BilliardsView3DImpl;
 import org.motion.ballsimapp.shared.Events;
 
 import com.google.gwt.user.client.Timer;
