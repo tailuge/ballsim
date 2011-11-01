@@ -4,25 +4,19 @@ import org.motion.ballsim.physics.Table;
 import org.motion.ballsim.physics.game.Aim;
 import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
 
-
-public interface BilliardsView {
+public interface TableView {
 
 	void setEventHandler(GWTGameEventHandler eventHandler);
 
 	void aim(int timeout);
 	void place(int timeout);
 	void watch();
-	void setChatEnable(boolean enable);
-	void appendMessage(String message);
-	void clearMessage();
-	
 	void showTable(Table table);
 	void animate(Table shotSequence);
+	void plotAtTime(Table table, double t);
 	void setAim(Aim aim);
 	void showAim();
 	void showPlacer();
 	void setVisibility(boolean visible);
 	
-	String getPlayerId();
-	String getPassword();
 }

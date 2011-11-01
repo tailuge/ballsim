@@ -38,9 +38,9 @@ public class SurfaceElement implements GLDisposable {
 
 	protected final Matrix3f nMatrix = new Matrix3f();
 
-	public SurfaceElement() {
+	public SurfaceElement(String layoutId) {
 
-		RootPanel.get().add(surface);
+		RootPanel.get(layoutId + ".view3d").add(surface);
 		gl = surface.getGL();
 		if (gl == null) {
 			Window.alert("No WebGL context found. Exiting.");

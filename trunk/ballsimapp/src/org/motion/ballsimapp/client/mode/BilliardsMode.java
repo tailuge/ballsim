@@ -7,17 +7,20 @@ import java.util.List;
 import org.motion.ballsimapp.client.mode.pool.AimingMode;
 import org.motion.ballsimapp.client.mode.pool.PlacingMode;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
-import org.motion.ballsimapp.client.pool.BilliardsView;
+import org.motion.ballsimapp.client.pool.InfoView;
+import org.motion.ballsimapp.client.pool.TableView;
 import org.motion.ballsimapp.shared.GameEvent;
 
 public abstract class BilliardsMode {
 
 	protected final BilliardsModel model;
-	protected final BilliardsView view;
+	protected final TableView tableView;
+	protected final InfoView infoView;
 
-	public BilliardsMode(BilliardsModel model, BilliardsView view) {
+	public BilliardsMode(BilliardsModel model, TableView tableView, InfoView infoView) {
 		this.model = model;
-		this.view = view;
+		this.tableView = tableView;
+		this.infoView = infoView;
 	}
 
 	public abstract BilliardsMode handle(GameEvent event);
@@ -31,9 +34,9 @@ public abstract class BilliardsMode {
 	protected BilliardsMode selectAimingMode(GameEvent event) {
 		if (event.hasAttribute(BALL_IN_HAND)
 				&& event.getAttribute(BALL_IN_HAND).getValue().equals("true"))
-			return new PlacingMode(model, view);
+			return new PlacingMode(model, tableView, infoView);
 		else
-			return new AimingMode(model, view);
+			return new AimingMode(model, tableView, infoView);
 	}
 
 

@@ -6,17 +6,18 @@ import static org.motion.ballsimapp.shared.Events.CHAT_MESSAGE;
 import org.motion.ballsim.physics.util.Rack;
 import org.motion.ballsimapp.client.mode.pool.AnimationMode;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
-import org.motion.ballsimapp.client.pool.BilliardsView;
+import org.motion.ballsimapp.client.pool.InfoView;
+import org.motion.ballsimapp.client.pool.TableView;
 import org.motion.ballsimapp.shared.Events;
 import org.motion.ballsimapp.shared.GameEvent;
 
 public class DebugMode extends BilliardsMode {
 
-	public DebugMode(BilliardsModel model, BilliardsView view) {
-		super(model, view);
-		view.setChatEnable(true);
-		view.setVisibility(true);
-		view.appendMessage("DEBUG MODE");
+	public DebugMode(BilliardsModel model, TableView tableView, InfoView infoView) {
+		super(model, tableView, infoView);
+		infoView.setChatEnable(true);
+		tableView.setVisibility(true);
+		infoView.appendMessage("DEBUG MODE");
 	}
 
 	@Override
@@ -26,8 +27,8 @@ public class DebugMode extends BilliardsMode {
 			String message = event.getAttribute(CHAT_MESSAGE).getValue();
 			Rack.rack(model.table, message, "");
 			model.table.generateSequence();
-			view.appendMessage("CHECKSUM:" + model.table.getChecksum());
-			return new AnimationMode(model, view);
+			infoView.appendMessage("CHECKSUM:" + model.table.getChecksum());
+			return new AnimationMode(model, tableView, infoView);
 		}
 
 		return this;
@@ -38,7 +39,7 @@ public class DebugMode extends BilliardsMode {
 		if (Events.isAction(event, CHAT)) {
 			String message = event.getAttribute(CHAT_MESSAGE).getValue();
 			if (message.isEmpty()) {
-				return new DebugMode(mode.model, mode.view);
+				return new DebugMode(mode.model, mode.tableView, mode.infoView);
 			}
 		}
 		

@@ -3,12 +3,15 @@ package org.motion.ballsimapp.client.mode;
 import static org.motion.ballsimapp.shared.Events.AWAITING_GAME;
 import static org.motion.ballsimapp.shared.Events.BEGIN_AIMING;
 import static org.motion.ballsimapp.shared.Events.BEGIN_VIEWING;
-import static org.motion.ballsimapp.shared.Events.*;
+import static org.motion.ballsimapp.shared.Events.GAME_ID;
+import static org.motion.ballsimapp.shared.Events.GAME_RACK_SEED;
+import static org.motion.ballsimapp.shared.Events.GAME_RACK_TYPE;
 
 import org.motion.ballsim.physics.util.Rack;
 import org.motion.ballsimapp.client.mode.pool.ViewingMode;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
-import org.motion.ballsimapp.client.pool.BilliardsView;
+import org.motion.ballsimapp.client.pool.InfoView;
+import org.motion.ballsimapp.client.pool.TableView;
 import org.motion.ballsimapp.shared.Events;
 import org.motion.ballsimapp.shared.GameEvent;
 
@@ -16,11 +19,11 @@ import com.google.gwt.core.client.GWT;
 
 public class RequestGameMode extends BilliardsMode {
 
-	public RequestGameMode(BilliardsModel model, BilliardsView view) {
-		super(model, view);
-		view.appendMessage("requesting game");
+	public RequestGameMode(BilliardsModel model, TableView tableView, InfoView infoView) {
+		super(model, tableView, infoView);
+		infoView.appendMessage("requesting game");
 		model.gameId = "";
-		model.notify(Events.requestGame(view.getPlayerId()));			
+		model.notify(Events.requestGame(infoView.getPlayerId()));			
 	}
 
 	@Override
@@ -28,7 +31,7 @@ public class RequestGameMode extends BilliardsMode {
 		
 		if (Events.isState(event,AWAITING_GAME))
 		{			
-			view.appendMessage("awaiting game...");
+			infoView.appendMessage("awaiting game...");
 			return this;
 		}
 
@@ -37,8 +40,8 @@ public class RequestGameMode extends BilliardsMode {
 			processRack(event);
 			model.gameId = event.getAttribute(GAME_ID).getValue();
 			model.opponentId = event.getAttribute("player.notinplay").getValue(); 
-			view.clearMessage();
-			view.appendMessage(model.playerId + " vs " + model.opponentId);
+			infoView.clearMessage();
+			infoView.appendMessage(model.playerId + " vs " + model.opponentId);
 			return selectAimingMode(event);
 		}
 
@@ -47,9 +50,9 @@ public class RequestGameMode extends BilliardsMode {
 			processRack(event);
 			model.gameId = event.getAttribute(GAME_ID).getValue();
 			model.opponentId = event.getAttribute("player.inplay").getValue();
-			view.clearMessage();
-			view.appendMessage(model.playerId + " vs " + model.opponentId);
-			return new ViewingMode(model,view);
+			infoView.clearMessage();
+			infoView.appendMessage(model.playerId + " vs " + model.opponentId);
+			return new ViewingMode(model,tableView,infoView);
 		}
 
 		GWT.log("RequestGameMode handled unexpected event:" + event);

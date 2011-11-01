@@ -11,7 +11,8 @@ import org.motion.ballsimapp.client.mode.BilliardsMode;
 import org.motion.ballsimapp.client.mode.ChatMode;
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
-import org.motion.ballsimapp.client.pool.BilliardsView;
+import org.motion.ballsimapp.client.pool.InfoView;
+import org.motion.ballsimapp.client.pool.TableView;
 import org.motion.ballsimapp.shared.Events;
 import org.motion.ballsimapp.shared.GameEvent;
 
@@ -25,9 +26,9 @@ public class CalculationMode extends ChatMode implements RepeatingCommand {
 	final Aim aim;
 	final boolean sendResult;
 	
-	public CalculationMode(BilliardsModel model, BilliardsView view, GameEvent event,
+	public CalculationMode(BilliardsModel model,TableView tableView, InfoView infoView, GameEvent event,
 			boolean sendResult) {
-		super(model, view);
+		super(model, tableView, infoView);
 		
 		Aim aim = BilliardsMarshaller.aimFromEvent(event);
 		this.sendResult = sendResult;
@@ -73,7 +74,7 @@ public class CalculationMode extends ChatMode implements RepeatingCommand {
 	public BilliardsMode handle(GameEvent event) {
 
 		if (event.hasAttribute(CALCULATION_COMPLETE)) {
-			return new AnimationMode(model, view);
+			return new AnimationMode(model, tableView, infoView);
 		}
 
 		// Events received in this mode must be placed in

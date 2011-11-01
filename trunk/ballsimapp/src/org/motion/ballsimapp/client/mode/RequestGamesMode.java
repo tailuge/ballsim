@@ -6,7 +6,8 @@ import static org.motion.ballsimapp.shared.Events.WATCHING;
 import org.motion.ballsimapp.client.mode.pool.ViewingMode;
 import org.motion.ballsimapp.client.pool.BilliardsMarshaller;
 import org.motion.ballsimapp.client.pool.BilliardsModel;
-import org.motion.ballsimapp.client.pool.BilliardsView;
+import org.motion.ballsimapp.client.pool.InfoView;
+import org.motion.ballsimapp.client.pool.TableView;
 import org.motion.ballsimapp.shared.Events;
 import org.motion.ballsimapp.shared.GameEvent;
 
@@ -17,11 +18,11 @@ public class RequestGamesMode extends BilliardsMode {
 	private Games games = new Games();
 	private String description = "";
 	
-	public RequestGamesMode(BilliardsModel model, BilliardsView view) {
-		super(model, view);
-		view.appendMessage("requesting to be a spectator");
+	public RequestGamesMode(BilliardsModel model, TableView tableView, InfoView infoView) {
+		super(model, tableView, infoView);
+		infoView.appendMessage("requesting to be a spectator");
 		model.gameId = "";
-		model.notify(Events.requestGames(view.getPlayerId()));			
+		model.notify(Events.requestGames(infoView.getPlayerId()));			
 	}
 
 	@Override
@@ -30,7 +31,7 @@ public class RequestGamesMode extends BilliardsMode {
 		
 		if (games.handle(event))
 		{			
-			view.appendMessage("active games " + games.active());
+			infoView.appendMessage("active games " + games.active());
 			
 			// for now pick first and request to watch it
 			
@@ -38,7 +39,7 @@ public class RequestGamesMode extends BilliardsMode {
 			{
 				String id = games.getAnyGameId();
 				description = games.active().get(id);
-				view.appendMessage("request to watch game " + description);
+				infoView.appendMessage("request to watch game " + description);
 				model.notify(Events.requestWatchGame(id));
 			}
 			
@@ -47,8 +48,8 @@ public class RequestGamesMode extends BilliardsMode {
 
 		if (Events.isState(event, WATCHING))
 		{
-			view.clearMessage();
-			view.appendMessage("now watching " + description);
+			infoView.clearMessage();
+			infoView.appendMessage("now watching " + description);
 			// if this if from another machine, synchronise all balls position to begin the shot
 			if (event.hasAttribute(TABLE_STATE))
 			{
@@ -56,7 +57,7 @@ public class RequestGamesMode extends BilliardsMode {
 					BilliardsMarshaller.unmarshalToTable(model.table,event.getAttribute(TABLE_STATE).getValue());
 			}
 			
-			return new ViewingMode(model,view);
+			return new ViewingMode(model,tableView,infoView);
 		}
 
 		GWT.log("RequestGamesMode handled unexpected event:" + event);

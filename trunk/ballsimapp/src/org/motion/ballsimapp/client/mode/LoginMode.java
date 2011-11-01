@@ -5,15 +5,16 @@ import static org.motion.ballsimapp.shared.Events.INITIATE_CONNECT;
 import static org.motion.ballsimapp.shared.Events.LOGIN_SUCCESS;
 
 import org.motion.ballsimapp.client.pool.BilliardsModel;
-import org.motion.ballsimapp.client.pool.BilliardsView;
+import org.motion.ballsimapp.client.pool.InfoView;
+import org.motion.ballsimapp.client.pool.TableView;
 import org.motion.ballsimapp.shared.Events;
 import org.motion.ballsimapp.shared.GameEvent;
 
 public class LoginMode extends BilliardsMode {
 
-	public LoginMode(BilliardsModel model, BilliardsView view) {
-		super(model, view);
-		view.setVisibility(false);
+	public LoginMode(BilliardsModel model, TableView tableView, InfoView infoView) {
+		super(model, tableView, infoView);
+		tableView.setVisibility(false);
 	}
 
 	@Override
@@ -21,33 +22,33 @@ public class LoginMode extends BilliardsMode {
 		
 		if (event.hasAttribute(INITIATE_CONNECT))
 		{
-			if (view.getPlayerId().isEmpty())
+			if (infoView.getPlayerId().isEmpty())
 			{
-				view.appendMessage("enter name");
+				infoView.appendMessage("enter name");
 				return this;
 			}				
 			
-			view.setVisibility(true);
-			view.appendMessage("connecting...");
-			model.connect(view.getPlayerId());
+			tableView.setVisibility(true);
+			infoView.appendMessage("connecting...");
+			model.connect(infoView.getPlayerId());
 			return this;
 		}
 		
 		if (event.hasAttribute(CHANNEL_CONNECTED))
 		{
-			view.appendMessage("connected to server.");
-			view.appendMessage("logging in as " + view.getPlayerId() + "...");
-			model.notify(Events.login(view.getPlayerId(), view.getPassword()));
+			infoView.appendMessage("connected to server.");
+			infoView.appendMessage("logging in as " + infoView.getPlayerId() + "...");
+			model.notify(Events.login(infoView.getPlayerId(), infoView.getPassword()));
 			return this;
 		}
 		
 		if (Events.isState(event,LOGIN_SUCCESS))
 		{			
-			view.appendMessage("login successfull.");
-			if (view.getPlayerId().contains("spec"))
-				return new RequestGamesMode(model, view);
+			infoView.appendMessage("login successfull.");
+			if (infoView.getPlayerId().contains("spec"))
+				return new RequestGamesMode(model, tableView, infoView);
 			else
-				return new RequestGameMode(model, view);
+				return new RequestGameMode(model, tableView, infoView);
 		}
 		
 		return DebugMode.filter(this, event);

@@ -9,9 +9,7 @@ import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
 import org.motion.ballsimapp.client.pool.handlers.AimChange;
 
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 
 public class BilliardsViewLayout implements AimChange {
 
@@ -19,17 +17,14 @@ public class BilliardsViewLayout implements AimChange {
 	protected final PowerInputCanvas power;
 	protected final AimInputCanvas aim;
 	protected final Button actionButton = new Button("Hit");
-	protected final Button loginButton = new Button("Login");
 	protected final TableCanvas tableCanvas;
-	protected final TextBox playerId = new TextBox();
-	protected final PasswordTextBox password = new PasswordTextBox();
 
 	protected GWTGameEventHandler eventHandler;
 
 	protected final String layoutId;
 	
 	protected boolean aiming;
-
+	
 	public BilliardsViewLayout(int width, String layoutId) {
 		
 		int height = width * 2;
@@ -40,23 +35,17 @@ public class BilliardsViewLayout implements AimChange {
 		power = new PowerInputCanvas(width - 2*inputHeight, inputHeight, this);
 		aim = new AimInputCanvas(width, height, this);
 		tableCanvas = new TableCanvas(width, height);
-		this.playerId.setWidth(width/3  + "px");
-		this.password.setWidth(width/3  + "px");
-		this.password.setText("secret");
 		actionButton.setWidth(inputHeight+"px");
 		actionButton.setHeight(inputHeight+"px");
-		loginButton.setEnabled(true);
 		
 		addElementsToRoot();
 
 		RootPanel.get(layoutId+".tablebg").setSize(width+"px", height+"px");	
 		RootPanel.get(layoutId+".pad").setSize(width+"px", height+"px");	
+		
 	}
 
 	protected void addElementsToRoot() {
-		RootPanel.get(layoutId+".login").add(playerId);
-		RootPanel.get(layoutId+".login").add(password);
-		RootPanel.get(layoutId+".login").add(loginButton);
 		RootPanel.get(layoutId+".table").add(tableCanvas.getInitialisedCanvas());
 		RootPanel.get(layoutId+".tableactive").add(aim.canvas);
 		RootPanel.get(layoutId+".inputspin").add(spin.getInitialisedCanvas());

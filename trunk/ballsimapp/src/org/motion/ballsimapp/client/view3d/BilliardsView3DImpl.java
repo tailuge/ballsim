@@ -11,30 +11,35 @@ import org.motion.ballsim.physics.ball.Event;
 import org.motion.ballsim.physics.game.Aim;
 import org.motion.ballsim.physics.gwtsafe.Vector3D;
 import org.motion.ballsim.physics.util.Interpolate;
+import org.motion.ballsimapp.client.comms.GWTGameEventHandler;
+import org.motion.ballsimapp.client.pool.TableView;
 
-public class BilliardsViewImpl extends Inputs implements BilliardsView {
+public class BilliardsView3DImpl extends Inputs implements TableView {
 
-	public BilliardsViewImpl() {
-		super();
+	private Table table;
+	
+	public BilliardsView3DImpl(String layoutId) {
+		super(layoutId);
 	}
 
 	public void showTable(Table table) {
+		this.table = table;
 		plotAtTime(table, 0);
 	}
 
 	public void plotAtTime(Table table, double t) {
-
+		this.table = table;
 		List<Event> events = new ArrayList<Event>();
 
 		for (Ball ball : table.balls())
 			events.add(Interpolate.toTime(ball, t));
-
+		
 		prepareDraw();
 
 		inputPos = events.get(0).pos;
-		Aim aim = new Aim(0, inputPos, inputDir, inputSpin,	0);
+		//Aim aim = new Aim(0, inputPos, inputDir, inputSpin,	0);
 
-		setAim(aim);
+		//setAim(aim);
 		
 		MODELVIEW.push();
 
@@ -63,6 +68,55 @@ public class BilliardsViewImpl extends Inputs implements BilliardsView {
 	@Override
 	public void setAim(Aim aim) {
 		camera.setAimView(aim.pos, aim.dir);
+		if (table != null)
+			showTable(table);
+	}
+
+	@Override
+	public void setEventHandler(GWTGameEventHandler eventHandler) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void aim(int timeout) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void place(int timeout) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void watch() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void animate(Table shotSequence) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showAim() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showPlacer() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setVisibility(boolean visible) {
+		// TODO Auto-generated method stub
 		
 	}
 
