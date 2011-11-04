@@ -36,6 +36,10 @@ public class AnimationMode extends ChatMode {
 					replayPendingEvents(pending);
 				}
 			});
+			
+			if (debugMode)
+				return new AimingMode(model, tableView, infoView);
+			
 			return new AnimationCompleteMode(model, tableView, infoView);
 		}
 

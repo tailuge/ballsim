@@ -31,26 +31,26 @@ public final class Rack {
 			table.ball(1).setFirstEvent(
 					UtilEvent.stationary(new Vector3D(0, Ball.R * 15, 0)));
 			Vector3D pos = new Vector3D(0, -Ball.R * 15, 0);
-			int b = 2;
-			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			//int b = 2;
+			table.ball(3).setFirstEvent(UtilEvent.stationary(pos));
 			pos = pos.add(triangleDownLeft);
-			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			table.ball(4).setFirstEvent(UtilEvent.stationary(pos));
 			pos = pos.add(across);
-			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
-			pos = pos.add(triangleDownLeft);
-			pos = pos.add(-1, across);
-			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
-			pos = pos.add(across);
-			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
-			pos = pos.add(across);
-			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			table.ball(5).setFirstEvent(UtilEvent.stationary(pos));
 			pos = pos.add(triangleDownLeft);
 			pos = pos.add(-1, across);
-			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			table.ball(6).setFirstEvent(UtilEvent.stationary(pos));
 			pos = pos.add(across);
-			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			table.ball(10).setFirstEvent(UtilEvent.stationary(pos));
+			pos = pos.add(across);
+			table.ball(7).setFirstEvent(UtilEvent.stationary(pos));
 			pos = pos.add(triangleDownLeft);
-			table.ball(b++).setFirstEvent(UtilEvent.stationary(pos));
+			pos = pos.add(-1, across);
+			table.ball(8).setFirstEvent(UtilEvent.stationary(pos));
+			pos = pos.add(across);
+			table.ball(9).setFirstEvent(UtilEvent.stationary(pos));
+			pos = pos.add(triangleDownLeft);
+			table.ball(2).setFirstEvent(UtilEvent.stationary(pos));
 			return;
 		}
 

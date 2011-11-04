@@ -63,9 +63,7 @@ public class BilliardsView3DImpl extends Inputs implements TableView {
 
 		placeTable();
 
-		updateThrust(t);
-		if (aiming)
-			placeCue(inputPos, inputAngle, inputSpin, cueSwing);
+		placeCue(inputPos, inputAngle, inputSpin, getCueSwing(t));
 
 		MODELVIEW.pop();
 
@@ -98,6 +96,7 @@ public class BilliardsView3DImpl extends Inputs implements TableView {
 	@Override
 	public void aim(int timeout) {
 		aiming = true;		
+		showTable();
 	}
 
 	@Override
@@ -107,6 +106,7 @@ public class BilliardsView3DImpl extends Inputs implements TableView {
 	@Override
 	public void watch() {
 		aiming = false;		
+		showTable();
 	}
 
 	@Override
