@@ -16,7 +16,8 @@ public abstract class BilliardsMode {
 	protected final BilliardsModel model;
 	protected final TableView tableView;
 	protected final InfoView infoView;
-
+	protected static boolean debugMode = false;
+	
 	public BilliardsMode(BilliardsModel model, TableView tableView, InfoView infoView) {
 		this.model = model;
 		this.tableView = tableView;

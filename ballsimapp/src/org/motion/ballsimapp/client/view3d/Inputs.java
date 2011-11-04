@@ -21,10 +21,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 		MouseMoveHandler, MouseWheelHandler {
 
-	protected double inputAngle = 0;
+	protected double inputAngle = Math.PI;
 	protected double inputSpeed = 0.5;
 	protected Vector3D inputPos = Vector3D.ZERO;
-	protected Vector3D inputDir = Vector3D.PLUS_J;
+	protected Vector3D inputDir = Vector3D.MINUS_J;
 	protected Vector3D inputSpin = Vector3D.ZERO;
 	protected double cueSwing = 0;
 
@@ -55,12 +55,13 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 		mouseWheelHandler.removeHandler();
 	}
 
-	protected void updateThrust(double t) {
+	protected double getCueSwing(double t) {
 		if (swingBegin == 0)
 			swingBegin = t;
 
 		cueSwing = Math.sin((t - swingBegin) * 5.0 * inputSpeed);
 		cueSwing *= cueSwing;
+		return cueSwing + t * t;
 	}
 
 	@Override
@@ -76,38 +77,39 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 		if (!active)
 			return;
 
-		if (event.getNativeButton() == NativeEvent.BUTTON_MIDDLE)
-			return;
-		
-		if (event.getNativeButton() == NativeEvent.BUTTON_RIGHT) {
-			DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor",
-					"all-scroll");
-			double horizontal = 3.5 * (double) (event.getX() - initialX)
-					/ width;
-			double vertical = 3.5 * (double) (event.getY() - initialY) / width;
-			if (vertical > 1)
-				vertical = 1;
-			if (vertical < -1)
-				vertical = -1;
-			if (horizontal > 1)
-				horizontal = 1;
-			if (horizontal < -1)
-				horizontal = -1;
-			inputSpin = new Vector3D(horizontal, vertical, 0);
-			swingBegin = 0;
-		} else {
-			DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor",
-					"crosshair");
+		if (event.getNativeButton() == NativeEvent.BUTTON_LEFT) {
+			if (initialY > width * 2 / 3)
+				updateSpin(event);
+			else
+				updateAim(event);
 
-			int offset = event.getX() - initialX;
-			inputAngle = initialAngle + 0.1 * Math.signum(offset)
-					* (Math.pow(Math.abs(offset), 1.7) / width) * Math.PI;
-			inputDir = new Vector3D(Math.sin(inputAngle), Math.cos(inputAngle),
-					0);
-			swingBegin = 0;
+			eventHandler.handleEvent(BilliardsEventFactory
+					.cursorInput(getAim()));
 		}
-		
-		eventHandler.handleEvent(BilliardsEventFactory.cursorInput(getAim()));
+
+	}
+
+	private void updateAim(MouseMoveEvent event) {
+		int offset = event.getX() - initialX;
+		inputAngle = initialAngle + 0.1 * Math.signum(offset)
+				* (Math.pow(Math.abs(offset), 1.7) / width) * Math.PI;
+		inputDir = new Vector3D(Math.sin(inputAngle), Math.cos(inputAngle), 0);
+		swingBegin = 0;
+	}
+
+	private void updateSpin(MouseMoveEvent event) {
+		double horizontal = 3.5 * (double) (event.getX() - initialX) / width;
+		double vertical = 3.5 * (double) (event.getY() - initialY) / width;
+		if (vertical > 1)
+			vertical = 1;
+		if (vertical < -1)
+			vertical = -1;
+		if (horizontal > 1)
+			horizontal = 1;
+		if (horizontal < -1)
+			horizontal = -1;
+		inputSpin = new Vector3D(horizontal, vertical, 0);
+		swingBegin = 0;
 
 	}
 
@@ -116,7 +118,8 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 		active = false;
 		DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "default");
 		if (event.getNativeButton() == NativeEvent.BUTTON_MIDDLE) {
-			eventHandler.handleEvent(BilliardsEventFactory.inputComplete(getAim()));
+			eventHandler.handleEvent(BilliardsEventFactory
+					.inputComplete(getAim()));
 		}
 	}
 
@@ -128,10 +131,13 @@ public class Inputs extends Render implements MouseDownHandler, MouseUpHandler,
 			inputSpeed = 0.1;
 		if (inputSpeed > 1.0)
 			inputSpeed = 1.0;
+
+		camera.changeEyeHeight(event.isNorth() ? 1 : -1);
+
+		eventHandler.handleEvent(BilliardsEventFactory.cursorInput(getAim()));
 	}
 
-	private Aim getAim()
-	{
+	private Aim getAim() {
 		return new Aim(0, inputPos, inputDir, inputSpin, inputSpeed);
 	}
 }

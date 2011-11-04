@@ -10,7 +10,9 @@ public class Camera {
 
 	final protected GL2 gl;
 	final protected AbstractShader shader;
-
+	
+	float eyeHeight = 15f;
+	
 	public Camera(GL2 gl, AbstractShader shader) {
 		this.gl = gl;
 		this.shader = shader;
@@ -20,7 +22,7 @@ public class Camera {
 		Vector3D eye = pos.add(-27, dir);
 		PROJECTION.pushIdentity();
 		PROJECTION.perspective(45, 1, .1f, 120);
-		PROJECTION.lookAt((float) -eye.getX(), (float) -eye.getY(), 15f,
+		PROJECTION.lookAt((float) -eye.getX(), (float) -eye.getY(), eyeHeight,
 				(float) -pos.getX(), (float) -pos.getY(), 5f, 0, 0, 1);
 		gl.uniformMatrix(shader.getUniformLocation("uPMatrix"),
 				PROJECTION.get());
@@ -38,4 +40,11 @@ public class Camera {
 		PROJECTION.pop();
 	}
 
+	public void changeEyeHeight(float delta)
+	{
+		eyeHeight += delta;
+		if (eyeHeight < 10.0) eyeHeight = 10.0f;
+		if (eyeHeight > 30.0) eyeHeight = 30.0f;		
+	}
+	
 }
