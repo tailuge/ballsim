@@ -68,3 +68,14 @@ in this plot only scoring shots are shown. the slightly thicker hit (off 4 cushi
 [http://ballsim.googlecode.com/files/canvas.png]
 
 start of a simple viewer using javascript and canvas tag in html5
+
+
+
+
+== 9 ==
+
+[http://ballsim.googlecode.com/files/ballsimappv51.png]
+
+online 2 player demo using google app engine
+
+
