@@ -53,15 +53,15 @@ public class InARowTextUI extends AbstractTextUI {
 	private static final PositionEvaluator POSITION_EVALUATOR = new InARowPositionEvaluator(
 			4);
 
-	private InARowTextUI() {
+	private InARowTextUI(int depth) {
 		super(POSITION_EVALUATOR, MOVE_INTERPRETER, new NegaMaxMoveSelector(
 				new NegaMaxPositionEvaluator(POSITION_EVALUATOR,
-						new InARowMoveGeneator()), 4), new CheckerFormatter(),
+						new InARowMoveGeneator()), depth), new CheckerFormatter(),
 				BOARD_GENERATOR);
 	}
 
 	public static void main(String[] args) throws Exception {
-		new InARowTextUI().run();
+		new InARowTextUI(9).run();
 	}
 
 	@Override
