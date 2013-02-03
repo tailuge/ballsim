@@ -49,15 +49,17 @@ public class TicTacToeTexUI extends AbstractTextUI {
 
 	private static final TicTacToePositionEvaluator POSITION_EVALUATOR = new TicTacToePositionEvaluator();
 
-	private TicTacToeTexUI() {
+	
+	
+	private TicTacToeTexUI(int depth) {
 		super(POSITION_EVALUATOR, MOVE_INTERPRETER, new NegaMaxMoveSelector(
 				new NegaMaxPositionEvaluator(POSITION_EVALUATOR,
-						new TicTacToeMoveGenerator()), 9),
+						new TicTacToeMoveGenerator()), depth),
 				new CheckerFormatter(), BOARD_GENERATOR);
 	}
 
 	public static void main(String[] args) throws Exception {
-		new TicTacToeTexUI().run();
+		new TicTacToeTexUI(9).run();
 	}
 
 	@Override
