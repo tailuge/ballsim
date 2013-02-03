@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.oxtail.play.Board;
 import org.oxtail.play.minimax.NegaMaxMoveSelector;
 import org.oxtail.play.minimax.NegaMaxPositionEvaluator;
-import org.oxtail.play.tictactoe.ui.TicTacToeFormatter;
+import org.oxtail.play.ui.CheckerFormatter;
 
 //@formatter:off
 public class TestTicTacToePositionEvaluation {
@@ -14,7 +14,7 @@ public class TestTicTacToePositionEvaluation {
 	private NegaMaxPositionEvaluator evaluator;
 	private TicTacToeBoardLoader boardLoader;
 	private NegaMaxMoveSelector positionSelector;
-	private TicTacToeFormatter formatter = new TicTacToeFormatter();
+	private CheckerFormatter formatter = new CheckerFormatter();
 	
 	@Before
 	public void before() {

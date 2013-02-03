@@ -12,7 +12,8 @@ public class NegaMaxMoveSelector implements MoveSelector {
 	private double beta = Double.POSITIVE_INFINITY;
 	private int depth = 9;
 
-	public NegaMaxMoveSelector(NegaMaxPositionEvaluator positionEvaluator, int depth) {
+	public NegaMaxMoveSelector(NegaMaxPositionEvaluator positionEvaluator,
+			int depth) {
 		this.positionEvaluator = positionEvaluator;
 		this.depth = depth;
 	}
@@ -32,6 +33,10 @@ public class NegaMaxMoveSelector implements MoveSelector {
 				board)) {
 			Board position = board.doMove(move);
 			double v = eval1(position, color);
+			if (bestMove == null) {
+				bestMove = move;
+				continue;
+			}
 			if (v > max) {
 				max = v;
 				bestMove = move;

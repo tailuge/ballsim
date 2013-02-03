@@ -128,6 +128,8 @@ public abstract class AbstractTextUI {
 
 	}
 
+	protected abstract String getMovePrompt();
+	
 	private class HumanToPlay extends PlayState {
 
 		private HumanToPlay(Board board, boolean isPlayerOne) {
@@ -136,7 +138,7 @@ public abstract class AbstractTextUI {
 
 		@Override
 		public String prompt() {
-			return "enter move [1-9] ?";
+			return getMovePrompt();
 		}
 
 		@Override
@@ -181,6 +183,9 @@ public abstract class AbstractTextUI {
 		@Override
 		public AbstractPlayState execute(String cmd) {
 			Move move = getMoveSelector().selectBestContinuation(getBoard());
+			if (move == null) {
+				throw new RuntimeException("Failed to determine move!");
+			}
 			Board board = doMove(move);
 			printBoard(board);
 			return checkForGameOver(board,

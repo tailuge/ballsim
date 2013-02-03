@@ -1,10 +1,10 @@
-package org.oxtail.play.tictactoe;
+package org.oxtail.play;
 
-public enum TicTacToeSquare {
+public enum Checker {
 
-	NOUGHT(1, 'O'), CROSS(-1, 'X'), NULL(0, '.');
+	WHITE(1, 'O'), BLACK(-1, 'X'), NULL(0, '.');
 
-	private TicTacToeSquare(int intValue, char charValue) {
+	private Checker(int intValue, char charValue) {
 		this.intValue = intValue;
 		this.charValue = charValue;
 	}
@@ -12,28 +12,28 @@ public enum TicTacToeSquare {
 	private final int intValue;
 	private final char charValue;
 
-	public static TicTacToeSquare fromInt(int i) {
+	public static Checker fromInt(int i) {
 		if (i == NULL.intValue)
 			return NULL;
-		if (i == NOUGHT.intValue)
-			return NOUGHT;
-		if (i == CROSS.intValue)
-			return CROSS;
+		if (i == WHITE.intValue)
+			return WHITE;
+		if (i == BLACK.intValue)
+			return BLACK;
 		throw new IllegalArgumentException(i + "?");
 	}
 
-	public static TicTacToeSquare fromChar(char i) {
+	public static Checker fromChar(char i) {
 		if (i == NULL.charValue)
 			return NULL;
-		if (i == NOUGHT.charValue)
-			return NOUGHT;
-		if (i == CROSS.charValue)
-			return CROSS;
+		if (i == WHITE.charValue)
+			return WHITE;
+		if (i == BLACK.charValue)
+			return BLACK;
 		throw new IllegalArgumentException(i + "?");
 	}
 
-	public static TicTacToeSquare forPlayer(boolean player1InPlayer) {
-		return player1InPlayer ? NOUGHT : CROSS;
+	public static Checker forPlayer(boolean player1InPlayer) {
+		return player1InPlayer ? WHITE : BLACK;
 	}
 
 	public int getIntValue() {
