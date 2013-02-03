@@ -10,13 +10,13 @@ public final class Board {
 	private boolean player1ToPlay = true;
 
 	public Board(int x, int y) {
-		this.board = new byte[x][y];
+		this.board = new byte[y][x];
 	}
 
 	public Board doMove(Move move) {
 		Board newBoard = copy();
 		newBoard.player1ToPlay = !player1ToPlay;
-		newBoard.board[move.getX()][move.getY()] = move.getPiece();
+		newBoard.board[move.getY()][move.getX()] = move.getPiece();
 		return newBoard;
 	}
 
@@ -32,8 +32,16 @@ public final class Board {
 		return true;
 	}
 
+	public int getFreeYForX(int x) {
+		for (int y = 0; y < height(); ++y)
+			if (!hasPiece(x, y)) {
+				return y;
+			}
+		return -1;
+	}
+
 	public byte getPiece(int x, int y) {
-		return board[x][y];
+		return board[y][x];
 	}
 
 	public boolean onBoard(int x, int y) {
@@ -63,17 +71,17 @@ public final class Board {
 
 	private Board copy() {
 		Board copy = new Board(width(), height());
-		for (int i = 0; i < width(); ++i) {
-			System.arraycopy(board[i], 0, copy.board[i], 0, height());
+		for (int i = 0; i < height(); ++i) {
+			System.arraycopy(board[i], 0, copy.board[i], 0, width());
 		}
 		copy.player1ToPlay = player1ToPlay;
 		return copy;
 	}
 
 	public void apply(BoardFunction function) {
-		for (int j = 0; j < height(); ++j)
-			for (int i = 0; i < width(); ++i)
-				function.apply(this, i, j);
+		for (int y = height() - 1; y >= 0; --y)
+			for (int x = 0; x < width(); ++x)
+				function.apply(this, x, y);
 	}
 
 	public <T> T forPiece(int x, int y, PieceFunction<T> function) {
@@ -109,7 +117,7 @@ public final class Board {
 
 		@Override
 		public void apply(Board board, int x, int y) {
-			if (y > this.y) {
+			if (y != this.y) {
 				sb.append("\n");
 				this.y = y;
 			}

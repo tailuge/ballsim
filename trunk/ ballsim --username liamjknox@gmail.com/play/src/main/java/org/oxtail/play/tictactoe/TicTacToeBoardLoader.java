@@ -1,16 +1,11 @@
 package org.oxtail.play.tictactoe;
 
-import org.oxtail.play.io.AbstractBoardLoader;
+import org.oxtail.play.io.CheckerBoardLoader;
 
-public class TicTacToeBoardLoader extends AbstractBoardLoader {
+public class TicTacToeBoardLoader extends CheckerBoardLoader {
 
 	public TicTacToeBoardLoader() {
 		super(3, 3);
-	}
-
-	@Override
-	protected int fromChar(char charAt) {
-		return TicTacToeSquare.fromChar(charAt).getIntValue();
 	}
 
 }

@@ -1,18 +1,22 @@
-package org.oxtail.play.tictactoe.ui;
+package org.oxtail.play.inarow.ui;
 
 import org.oxtail.play.Board;
 import org.oxtail.play.BoardGenerator;
 import org.oxtail.play.Move;
+import org.oxtail.play.PositionEvaluator;
+import org.oxtail.play.inarow.InARowMoveGeneator;
+import org.oxtail.play.inarow.InARowPositionEvaluator;
 import org.oxtail.play.minimax.NegaMaxMoveSelector;
 import org.oxtail.play.minimax.NegaMaxPositionEvaluator;
-import org.oxtail.play.tictactoe.TicTacToeMoveGenerator;
-import org.oxtail.play.tictactoe.TicTacToePositionEvaluator;
 import org.oxtail.play.ui.AbstractTextUI;
+import org.oxtail.play.ui.CheckerFormatter;
 import org.oxtail.play.ui.IllegalMoveException;
 import org.oxtail.play.ui.MoveInterpreter;
-import org.oxtail.play.ui.CheckerFormatter;
 
-public class TicTacToeTexUI extends AbstractTextUI {
+public class InARowTextUI extends AbstractTextUI {
+
+	private static final int WIDTH = 7;
+	private static final int HEIGHT = 6;
 
 	private static final MoveInterpreter MOVE_INTERPRETER = new MoveInterpreter() {
 
@@ -21,20 +25,19 @@ public class TicTacToeTexUI extends AbstractTextUI {
 				throws IllegalMoveException {
 			try {
 				int move = Integer.parseInt(input);
-				if (!(move >= 1 && move <= 9))
-					throw new IllegalMoveException("move not in range 1..9: "
-							+ move);
-				--move;
-				int y = move / 3;
-				int x = move % 3;
+				if (!(move >= 1 && move <= WIDTH))
+					throw new IllegalMoveException("move not in range 1.."
+							+ WIDTH + ": " + move);
+				int x = move - 1;
 				int piece = isPlayerOne ? 1 : -1;
-				if (board.hasPiece(x, y)) {
-					throw new IllegalMoveException("move already made");
+				int y = board.getFreeYForX(x);
+				if (y == -1) {
+					throw new IllegalMoveException("colum full");
 				}
 				return new Move(x, y, piece);
 			} catch (NumberFormatException e) {
-				throw new IllegalMoveException("move not in range 1..9"
-						+ e.getMessage());
+				throw new IllegalMoveException("move not in range 1.." + WIDTH
+						+ ": " + e.getMessage());
 			}
 		}
 	};
@@ -43,28 +46,27 @@ public class TicTacToeTexUI extends AbstractTextUI {
 
 		@Override
 		public Board generate() {
-			return new Board(3, 3);
+			return new Board(WIDTH, HEIGHT);
 		}
 	};
 
-	private static final TicTacToePositionEvaluator POSITION_EVALUATOR = new TicTacToePositionEvaluator();
+	private static final PositionEvaluator POSITION_EVALUATOR = new InARowPositionEvaluator(
+			4);
 
-	private TicTacToeTexUI() {
+	private InARowTextUI() {
 		super(POSITION_EVALUATOR, MOVE_INTERPRETER, new NegaMaxMoveSelector(
 				new NegaMaxPositionEvaluator(POSITION_EVALUATOR,
-						new TicTacToeMoveGenerator()), 9),
-				new CheckerFormatter(), BOARD_GENERATOR);
+						new InARowMoveGeneator()), 4), new CheckerFormatter(),
+				BOARD_GENERATOR);
 	}
 
 	public static void main(String[] args) throws Exception {
-		new TicTacToeTexUI().run();
+		new InARowTextUI().run();
 	}
 
 	@Override
 	protected String getMovePrompt() {
-		return "enter move 1..9?";
+		return "enter move 1.."+WIDTH+"?";
 	}
 
-	
-	
 }
