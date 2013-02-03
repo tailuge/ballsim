@@ -32,7 +32,7 @@ public class InARowTextUI extends AbstractTextUI {
 				int piece = isPlayerOne ? 1 : -1;
 				int y = board.getFreeYForX(x);
 				if (y == -1) {
-					throw new IllegalMoveException("colum full");
+					throw new IllegalMoveException("column full");
 				}
 				return new Move(x, y, piece);
 			} catch (NumberFormatException e) {
