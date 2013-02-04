@@ -69,6 +69,22 @@ public final class Board {
 		return toString(PLAIN_FORMAT);
 	}
 
+	public int maxMatchCount(Indexes indexes, int match) {
+		int cnt = 0;
+		int max = 0;
+		for (org.oxtail.play.Indexes.Index index : indexes.getIndexes()) {
+			byte piece = board[index.getY()][index.getX()];
+			if (match == piece) {
+				++cnt;
+				if (max < cnt)
+					max = cnt;
+			} else {
+				cnt = 0;
+			}
+		}
+		return max;
+	}
+
 	private Board copy() {
 		Board copy = new Board(width(), height());
 		for (int i = 0; i < height(); ++i) {

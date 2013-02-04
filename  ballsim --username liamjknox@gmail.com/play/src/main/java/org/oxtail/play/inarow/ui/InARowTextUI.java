@@ -3,11 +3,12 @@ package org.oxtail.play.inarow.ui;
 import org.oxtail.play.Board;
 import org.oxtail.play.BoardGenerator;
 import org.oxtail.play.Move;
+import org.oxtail.play.MoveSelector;
 import org.oxtail.play.PositionEvaluator;
 import org.oxtail.play.inarow.InARowMoveGeneator;
 import org.oxtail.play.inarow.InARowPositionEvaluator;
-import org.oxtail.play.minimax.NegaMaxMoveSelector;
 import org.oxtail.play.minimax.NegaMaxPositionEvaluator;
+import org.oxtail.play.minimax.concurrent.ForkJoinNegaMaxPositionSelector;
 import org.oxtail.play.ui.AbstractTextUI;
 import org.oxtail.play.ui.CheckerFormatter;
 import org.oxtail.play.ui.IllegalMoveException;
@@ -50,18 +51,18 @@ public class InARowTextUI extends AbstractTextUI {
 		}
 	};
 
-	private static final PositionEvaluator POSITION_EVALUATOR = new InARowPositionEvaluator(
-			4);
+	private static final PositionEvaluator POSITION_EVALUATOR = new InARowPositionEvaluator(4);
 
-	private InARowTextUI(int depth) {
-		super(POSITION_EVALUATOR, MOVE_INTERPRETER, new NegaMaxMoveSelector(
-				new NegaMaxPositionEvaluator(POSITION_EVALUATOR,
-						new InARowMoveGeneator()), depth), new CheckerFormatter(),
+	private InARowTextUI(PositionEvaluator positionEvaluator, MoveSelector moveSelector) {
+		super(POSITION_EVALUATOR, MOVE_INTERPRETER, moveSelector, new CheckerFormatter(),
 				BOARD_GENERATOR);
 	}
 
 	public static void main(String[] args) throws Exception {
-		new InARowTextUI(9).run();
+		NegaMaxPositionEvaluator negaMaxPositionEvaluator = new NegaMaxPositionEvaluator(POSITION_EVALUATOR, new InARowMoveGeneator());
+		MoveSelector selector = new ForkJoinNegaMaxPositionSelector(negaMaxPositionEvaluator, 11);
+		
+		new InARowTextUI(POSITION_EVALUATOR,selector).run();
 	}
 
 	@Override

@@ -182,9 +182,11 @@ public abstract class AbstractTextUI {
 
 		@Override
 		public AbstractPlayState execute(String cmd) {
+			long start = System.currentTimeMillis();
 			Move move = getMoveSelector().selectBestContinuation(getBoard());
+			print(System.currentTimeMillis()-start+"ms");
 			if (move == null) {
-				throw new RuntimeException("Failed to determine move!");
+				throw new AssertionError("Failed to determine move!");
 			}
 			Board board = doMove(move);
 			printBoard(board);

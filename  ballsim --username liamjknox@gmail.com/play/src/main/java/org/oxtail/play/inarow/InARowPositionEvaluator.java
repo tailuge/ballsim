@@ -4,7 +4,7 @@ import org.oxtail.play.Board;
 import org.oxtail.play.PositionEvaluation;
 import org.oxtail.play.PositionEvaluator;
 
-public class InARowPositionEvaluator implements PositionEvaluator {
+public final class InARowPositionEvaluator implements PositionEvaluator {
 
 	private int size;
 
@@ -66,6 +66,7 @@ public class InARowPositionEvaluator implements PositionEvaluator {
 				}
 			}
 		return score;
+
 	}
 
 	private double weight(int score) {
@@ -100,8 +101,12 @@ public class InARowPositionEvaluator implements PositionEvaluator {
 			int yinc, int cnt) {
 		x += xinc;
 		y += yinc;
-		return board.samePieceAt(x, y, (byte) match) ? inARow(board, x, y,
-				match, xinc, yinc, ++cnt) : cnt;
+		while (board.samePieceAt(x, y, (byte) match)) {
+			x += xinc;
+			y += yinc;
+			++cnt;	
+		}
+		return cnt;
 	}
 
 	public int getSize() {

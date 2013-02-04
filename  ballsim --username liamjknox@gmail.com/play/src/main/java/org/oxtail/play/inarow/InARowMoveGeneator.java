@@ -11,14 +11,14 @@ public final class InARowMoveGeneator implements MoveGenerator {
 
 	@Override
 	public Move[] possibleMoves(Board board) {
-		final List<Move> moves = new ArrayList<>();
+		final List<Move> moves = new ArrayList<>(7);
 		int piece = board.isPlayer1ToPlay() ? 1 : -1;
 		for (int x = 0; x < board.width(); ++x) {
 			int y = board.getFreeYForX(x);
 			if (y != -1)
 				moves.add(new Move(x, y, piece));
 		}
-		if (moves.isEmpty()) throw new AssertionError("No moves");
+		if (moves.isEmpty()) throw new AssertionError("No moves found");
 		return moves.toArray(new Move[0]);
 	}
 
