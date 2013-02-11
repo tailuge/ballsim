@@ -166,6 +166,7 @@ public final class Board {
 			sb.append(format.forPiece(board.getPiece(x, y)));
 		}
 
+		@Override
 		public String toString() {
 			return sb.toString();
 		}
