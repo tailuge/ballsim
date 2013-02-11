@@ -1,5 +1,7 @@
 package org.oxtail.play;
 
+import java.util.Arrays;
+
 /**
  * Very simple 2 player board
  */
@@ -28,6 +30,14 @@ public final class Board {
 		for (int y = 0; y < height(); ++y)
 			for (int x = 0; x < width(); ++x)
 				if (!hasPiece(x, y))
+					return false;
+		return true;
+	}
+
+	public boolean isEmpty() {
+		for (int y = 0; y < height(); ++y)
+			for (int x = 0; x < width(); ++x)
+				if (hasPiece(x, y))
 					return false;
 		return true;
 	}
@@ -112,10 +122,26 @@ public final class Board {
 		return new ToStringFunction(this, pieceFunction).toString();
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(board);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Board other = (Board) obj;
+		if (!Arrays.equals(board, other.board))
+			return false;
+		return true;
+	}
+
 	private static final PieceFunction<String> PLAIN_FORMAT = new PieceFunction<String>() {
 		@Override
 		public String forPiece(byte piece) {
-			return String.valueOf(piece);
+			return String.valueOf((char) piece);
 		}
 	};
 

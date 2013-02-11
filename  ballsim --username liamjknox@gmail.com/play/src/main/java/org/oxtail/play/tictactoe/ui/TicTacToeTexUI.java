@@ -4,13 +4,12 @@ import org.oxtail.play.Board;
 import org.oxtail.play.BoardGenerator;
 import org.oxtail.play.Move;
 import org.oxtail.play.minimax.NegaMaxMoveSelector;
-import org.oxtail.play.minimax.NegaMaxPositionEvaluator;
 import org.oxtail.play.tictactoe.TicTacToeMoveGenerator;
 import org.oxtail.play.tictactoe.TicTacToePositionEvaluator;
 import org.oxtail.play.ui.AbstractTextUI;
+import org.oxtail.play.ui.CheckerFormatter;
 import org.oxtail.play.ui.IllegalMoveException;
 import org.oxtail.play.ui.MoveInterpreter;
-import org.oxtail.play.ui.CheckerFormatter;
 
 public class TicTacToeTexUI extends AbstractTextUI {
 
@@ -53,7 +52,7 @@ public class TicTacToeTexUI extends AbstractTextUI {
 	
 	private TicTacToeTexUI(int depth) {
 		super(POSITION_EVALUATOR, MOVE_INTERPRETER, new NegaMaxMoveSelector(
-				new NegaMaxPositionEvaluator(POSITION_EVALUATOR,
+				new org.oxtail.play.minimax.NegaMaxPositionEvaluator(POSITION_EVALUATOR,
 						new TicTacToeMoveGenerator()), depth),
 				new CheckerFormatter(), BOARD_GENERATOR);
 	}

@@ -6,13 +6,13 @@ import org.oxtail.play.Move;
 
 public class NegaMaxMoveSelector implements MoveSelector {
 
-	private NegaMaxPositionEvaluator positionEvaluator;
+	private MiniMaxEvaluator positionEvaluator;
 
 	private double alpha = Double.NEGATIVE_INFINITY;
 	private double beta = Double.POSITIVE_INFINITY;
-	private int depth = 9;
+	private final int depth;
 
-	public NegaMaxMoveSelector(NegaMaxPositionEvaluator positionEvaluator,
+	public NegaMaxMoveSelector(MiniMaxEvaluator positionEvaluator,
 			int depth) {
 		this.positionEvaluator = positionEvaluator;
 		this.depth = depth;
