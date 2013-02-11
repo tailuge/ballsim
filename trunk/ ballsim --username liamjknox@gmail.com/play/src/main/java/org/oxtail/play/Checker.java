@@ -1,5 +1,8 @@
 package org.oxtail.play;
 
+/**
+ * Represents a piece in a checker (black/white) based game
+ */
 public enum Checker {
 
 	WHITE(1, 'O'), BLACK(-1, 'X'), NULL(0, '.');
