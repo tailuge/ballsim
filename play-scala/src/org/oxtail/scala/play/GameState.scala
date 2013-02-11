@@ -1,5 +1,8 @@
 package org.oxtail.scala.play
 
+/**
+ * All possible games states
+ */
 object GameState extends Enumeration {
 
   type GameState = Value
