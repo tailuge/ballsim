@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings version="1.0">
+	<category name="main.c">
+		<category name="Window">
+			<property name="Left" type="integer">30</property>
+			<property name="Top" type="integer">30</property>
+			<property name="Right" type="integer">1470</property>
+			<property name="Bottom" type="integer">544</property>
+			<property name="Maximized" type="integer">0</property>
+			<property name="Active" type="integer">0</property>
+		</category>
+	</category>
+	<category name="tictactoe.c">
+		<category name="Window">
+			<property name="Left" type="integer">-9</property>
+			<property name="Top" type="integer">-36</property>
+			<property name="Right" type="integer">153</property>
+			<property name="Bottom" type="integer">9</property>
+			<property name="Maximized" type="integer">1</property>
+			<property name="Active" type="integer">1</property>
+		</category>
+		<category name="Breakpoints">
+			<category name="Breakpoint1">
+				<property name="Line" type="integer">53</property>
+				<property name="Enabled" type="integer">1</property>
+				<property name="HitCount" type="integer">0</property>
+				<property name="Expression" type="string" />			</category>
+		</category>
+	</category>
+	<category name="tictactoe.h">
+		<category name="Window">
+			<property name="Left" type="integer">90</property>
+			<property name="Top" type="integer">90</property>
+			<property name="Right" type="integer">1530</property>
+			<property name="Bottom" type="integer">604</property>
+			<property name="Maximized" type="integer">0</property>
+			<property name="Active" type="integer">0</property>
+		</category>
+	</category>
+	<category name="common.h">
+		<category name="Window">
+			<property name="Left" type="integer">120</property>
+			<property name="Top" type="integer">120</property>
+			<property name="Right" type="integer">1560</property>
+			<property name="Bottom" type="integer">634</property>
+			<property name="Maximized" type="integer">0</property>
+			<property name="Active" type="integer">0</property>
+		</category>
+	</category>
+	<category name="common.c">
+		<category name="Window">
+			<property name="Left" type="integer">150</property>
+			<property name="Top" type="integer">150</property>
+			<property name="Right" type="integer">1590</property>
+			<property name="Bottom" type="integer">664</property>
+			<property name="Maximized" type="integer">0</property>
+			<property name="Active" type="integer">0</property>
+		</category>
+	</category>
+</settings>
