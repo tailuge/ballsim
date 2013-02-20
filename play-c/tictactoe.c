@@ -3,24 +3,6 @@
 #include "common.h"
 #include "board.h"
 
-
-char for_vpiece(char c) {
-   if (c == PLAYER1_VPIECE) 
-	 return PLAYER1_PIECE;
-   if (c == PLAYER2_VPIECE)
-	 return PLAYER2_PIECE;
-   return NO_PIECE;
-}
-
-/** returns visual representation of the piece */
-char for_piece(char c) {
-   if (c == PLAYER1_PIECE) 
-	 return PLAYER1_VPIECE;
-   if (c == PLAYER2_PIECE)
-	 return PLAYER2_VPIECE;
-   return NO_VPIECE;
-}
-
 int horz_win(int i, char** board, int match) {
  	int rtn = board[i][0] == match && board[i][1] == match && board[i][2] == match;
     return rtn; 
@@ -52,32 +34,24 @@ float do_evaluate(char** board, char match, float winScore) {
 	return 0;	
 }
 
-Evaluation evaluate(Board board) {
-   float s = do_evaluate(board.pieces,PLAYER1_PIECE,PLAYER1_WIN_SCORE);
-   if (s == PLAYER1_WIN_SCORE) {
-     return (Evaluation){ s, PLAYER1_WIN };
-   } 
-   s = do_evaluate(board.pieces,PLAYER2_PIECE,PLAYER2_WIN_SCORE);
+Evaluation tictactoe_evaluate(Board board) {
+   float score = do_evaluate(board.pieces,PLAYER1_PIECE,PLAYER1_WIN_SCORE);
+   if (score == PLAYER1_WIN_SCORE)
+     return p1_win();
+   
+   score = do_evaluate(board.pieces,PLAYER2_PIECE,PLAYER2_WIN_SCORE);
        
-   if (s == PLAYER2_WIN_SCORE) {
-   	  return (Evaluation){ s, PLAYER2_WIN }; 
-   }  
+   if (score == PLAYER2_WIN_SCORE)
+   	  return p2_win(); 
+    
    if (no_free_squares(board))
-     return (Evaluation){ s, DRAW };   
+     return draw();   
 
-   return (Evaluation){ s, IN_PLAY };  
+   return in_play(score);  
 }
 
-int free_squares(Board board) {
-  int cnt = 0; 
-  for (int y=0;y<3;++y)
-     for (int x=0;x<3;++x)
-        if (board.pieces[y][x] == NO_PIECE) ++cnt; 
-  return cnt;
-}
-
-Moves possible_moves(Board board, char piece) {
-   int n = free_squares(board);
+Moves tictactoe_possible_moves(Board board, char piece) {
+   int n = number_of_free_squares(board);
    int i = 0;
    Move* moves = malloc(n * sizeof(Move));
    for (int y=0;y<3;++y)
@@ -88,13 +62,8 @@ Moves possible_moves(Board board, char piece) {
    return (Moves){ moves, n };
 } 
 
-Board create_board(char* s) {
-   Board board = alloc_board(3,3);
-   for (int i=0;i<9;++i) {
-        int x = i % 3;
-        int y = i / 3;  
-        board.pieces[y][x] = for_vpiece(s[i]);        
-   }
-   return board;
+Board tictactoe_create_board(char* s) {
+   return create_board(s,3,3,from_visual_checker_piece);
 }
+
 
