@@ -23,4 +23,5 @@ typedef struct evaluation {
   GameState state;   
 } Evaluation;
 
+
 #endif
