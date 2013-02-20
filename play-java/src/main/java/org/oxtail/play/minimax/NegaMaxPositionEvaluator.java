@@ -42,7 +42,7 @@ public final class NegaMaxPositionEvaluator implements MiniMaxEvaluator {
 			if (value >= beta) {
 				return value;
 			}
-			if (value >= alpha)
+			if (value > alpha)
 				alpha = value;
 
 		}

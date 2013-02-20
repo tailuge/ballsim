@@ -82,12 +82,6 @@ public class TestTicTacToePositionEvaluation {
 				         "...", Double.NEGATIVE_INFINITY);
 	}
 
-	@Test
-	public void testForceWinForCross2() {
-		assertEvaluation(".O."+ 
-	                     "..."+ 
-				         "...", Double.NEGATIVE_INFINITY);
-	}
 
 	private void showSelection(Board board) {
 		System.out.println(formatter.format(board));

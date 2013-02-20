@@ -40,27 +40,28 @@ public final class InARowPositionEvaluator implements PositionEvaluator {
 
 				int cnt = horizontalInARow(board, x, y, match) + 1;
 				score += weight(cnt);
-
+				
 				if (winBy(cnt)) {
 					return Double.POSITIVE_INFINITY;
 				}
 
 				cnt = verticalInARow(board, x, y, match) + 1;
 				score += weight(cnt);
-
+				
 				if (winBy(cnt)) {
 					return Double.POSITIVE_INFINITY;
 				}
 
 				cnt = forwardDiagonalInARow(board, x, y, match) + 1;
-
+				
 				score += weight(cnt);
+				
 				if (winBy(cnt)) {
 					return Double.POSITIVE_INFINITY;
 				}
 				cnt = backwardDiagonalInARow(board, x, y, match) + 1;
 				score += weight(cnt);
-
+				
 				if (winBy(cnt)) {
 					return Double.POSITIVE_INFINITY;
 				}
